@@ -9,7 +9,32 @@
 		<property name="dataSource" ref="datasource"/>
 		<property name="mapperLocations">
 			<list>
-				<value>classpath:com/camper/main/dao/*_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/ageadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/answeradm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/blindadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/campingadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/memberadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/reviewadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/stopadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/titleadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/togetheradm_mapper.xml</value>
+				<value>classpath:com/camper/camping/dao/camping_mapper.xml</value>
+				<value>classpath:com/camper/camping/dao/campingapi_mapper.xml</value>
+				<value>classpath:com/camper/camping/dao/campinglike_mapper.xml</value>
+				<value>classpath:com/camper/chat/dao/chat_mapper.xml</value>
+				<value>classpath:com/camper/crew/dao/together_mapper.xml</value>
+				<value>classpath:com/camper/lib/dao/common_mapper.xml</value>
+				<value>classpath:com/camper/login/dao/login_mapper.xml</value>
+				<value>classpath:com/camper/main/dao/main_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/myblock_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/mycampinglike_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/mychat_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/mycrew_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/myinfo_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/myinquiry_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/myreview_mapper.xml</value>
+				<value>classpath:com/camper/mypage/dao/mytogether_mapper.xml</value>
+				<value>classpath:com/camper/profile/dao/profile_mapper.xml</value>
 			</list>
 		</property>
 		<property name="configLocation" value="classpath:config/aliase.xml"/>
