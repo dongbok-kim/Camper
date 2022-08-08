@@ -78,6 +78,41 @@ public class LoginController {
 	}
 	
 	
+	//회원가입
+	@RequestMapping(value = "/join.do")
+	public String join(Model model, HttpServletRequest request) {
+		
+		String id = request.getParameter("id"); //아이디
+		String pw = request.getParameter("password"); //비밀번호
+		String pwchk =  request.getParameter("passwordcheck"); //비밀번호 확인
+		String email = request.getParameter("email"); //이메일
+		String nickname = request.getParameter("nickname"); //닉네임
+		String name = request.getParameter("name"); //이름
+		String gender = request.getParameter("gender"); //성별
+		String age = request.getParameter("age"); //연령대
+		String postcode = request.getParameter("sample6_postcode"); //우편번호
+		String addr = request.getParameter("sample6_address"); //주소
+		String detailaddr = request.getParameter("sample6_detailAddress"); //상세주소
+		
+		logger.info("id : "+id);
+		logger.info("pw : "+pw);
+		logger.info("pwchk : "+pwchk);
+		logger.info("email : "+email);
+		logger.info("nickname : "+nickname);
+		logger.info("name : "+name);
+		logger.info("gender : "+gender);
+		logger.info("age : "+age);
+		logger.info("postcode : "+postcode);
+		logger.info("addr : "+addr);
+		logger.info("detailaddr : "+detailaddr);
+		
+		//String msg = "아이디 혹은 비번이 틀렸습니다";
+		//String page = "login/join";
+		
+		return "login/join";
+	}
+	
+	
 	
 	
 	
