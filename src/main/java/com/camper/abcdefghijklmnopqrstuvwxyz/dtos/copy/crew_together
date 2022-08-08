@@ -1,0 +1,20 @@
+import java.sql.Date;
+
+	private int ct_idx;
+	private String ct_title;
+	private String ct_content;
+	private short ct_people_cnt;
+	private String ct_gender;
+	private byte ct_age;
+	private Date ct_wish_start;
+	private Date ct_wish_end;
+	private byte ct_tool;
+	private String ct_camping_type;
+	private byte ct_pet;
+	private byte ct_deadline;
+	private Timestamp ct_deadline_datetime;
+	private byte ct_end;
+	private Timestamp ct_end_datetime;
+	private Timestamp ct_datetime;
+	private String mb_id;
+	private int ca_idx;

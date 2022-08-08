@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource"/>
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:com/camper/main/dao/*_mapper.xml</value>
+			</list>
+		</property>
+		<property name="configLocation" value="classpath:config/aliase.xml"/>
+		<property name="environment" value="classpath:config/pool.xml"/>
+	</bean>
+	
+	<mybatis-spring:scan base-package="com.camper.admin.dao"/>
+	<mybatis-spring:scan base-package="com.camper.camping.dao"/>
+	<mybatis-spring:scan base-package="com.camper.chat.dao"/>
+	<mybatis-spring:scan base-package="com.camper.crew.dao"/>
+	<mybatis-spring:scan base-package="com.camper.lib.dao"/>
+	<mybatis-spring:scan base-package="com.camper.login.dao"/>
+	<mybatis-spring:scan base-package="com.camper.main.dao"/>
+	<mybatis-spring:scan base-package="com.camper.mypage.dao"/>
+	<mybatis-spring:scan base-package="com.camper.profile.dao"/>
+
+</beans>

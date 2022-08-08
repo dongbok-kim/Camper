@@ -1,0 +1,4 @@
+	private int mt_idx;
+	private String mt_name;
+	private int mt_count;
+	private short mt_degree;

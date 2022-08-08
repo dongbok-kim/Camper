@@ -1,0 +1,4 @@
+	private byte cc_is_join;
+	private String cc_crew;
+	private int ct_idx;
+	private String mb_id;

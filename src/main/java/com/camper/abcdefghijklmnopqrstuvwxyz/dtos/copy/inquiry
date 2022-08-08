@@ -1,0 +1,8 @@
+import java.sql.Timestamp;
+
+	private int in_idx;
+	private String in_title;
+	private Timestamp in_datetime;
+	private String in_content;
+	private String in_status;
+	private String mb_id;

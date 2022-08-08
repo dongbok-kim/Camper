@@ -1,0 +1,10 @@
+import java.sql.Timestamp;
+
+	private int mr_idx;
+	private String mr_assessment;
+	private short mr_score;
+	private String mr_content;
+	private Timestamp mr_datetime;
+	private String mr_id;
+	private String mb_id;
+	private int ct_idx;

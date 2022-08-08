@@ -1,0 +1,9 @@
+import java.sql.Timestamp;
+
+	private int cr_idx;
+	private String cr_content;
+	private String cr_assessment;
+	private Timestamp cr_datetime;
+	private String mb_id;
+	private int ct_idx;
+	private int ca_idx;

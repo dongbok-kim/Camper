@@ -1,0 +1,8 @@
+import java.sql.Date;
+
+	private int ms_idx;
+	private Date ms_start_date;
+	private Date ms_end_date;
+	private String ms_admin_id;
+	private String ms_reason;
+	private String mb_id;

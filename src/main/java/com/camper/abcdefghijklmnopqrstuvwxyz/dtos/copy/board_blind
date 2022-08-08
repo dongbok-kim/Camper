@@ -1,0 +1,8 @@
+import java.sql.Timestamp;
+
+	private int bb_idx;
+	private String bb_relation;
+	private int bb_relation_idx;
+	private String bb_reason;
+	private Timestamp bb_datetime;
+	private String mb_id;

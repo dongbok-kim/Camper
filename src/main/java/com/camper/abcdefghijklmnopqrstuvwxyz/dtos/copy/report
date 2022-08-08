@@ -1,0 +1,10 @@
+import java.sql.Timestamp;
+
+	private int rp_idx;
+	private String rp_content;
+	private Timestamp rp_datetime;
+	private String rp_id;
+	private String rp_status;
+	private Timestamp rp_proc_date;
+	private String rp_admin;
+	private String mb_id;

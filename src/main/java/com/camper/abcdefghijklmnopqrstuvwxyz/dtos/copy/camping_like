@@ -1,0 +1,6 @@
+import java.sql.Timestamp;
+
+	private int cl_idx;
+	private Timestamp cl_datetime;
+	private String mb_id;
+	private int ca_idx;

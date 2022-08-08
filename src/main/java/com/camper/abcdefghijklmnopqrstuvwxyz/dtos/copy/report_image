@@ -1,0 +1,4 @@
+	private int ri_idx;
+	private String ri_ori_name;
+	private String ri_new_name;
+	private int rp_idx;

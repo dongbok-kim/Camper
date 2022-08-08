@@ -1,0 +1,19 @@
+import java.sql.Timestamp;
+
+	private String mb_id;
+	private String mb_pw;
+	private String mb_email;
+	private String mb_name;
+	private String mb_nickname;
+	private String mb_gender;
+	private String mb_sido;
+	private String mb_sigungu;
+	private String mb_postcode;
+	private String mb_addr_default;
+	private String mb_addr_detail;
+	private short mb_fire;
+	private String mb_grade;
+	private String mb_status;
+	private Timestamp mb_date;
+	private int mt_idx;
+	private int ma_idx;

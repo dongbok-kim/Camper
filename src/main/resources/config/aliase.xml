@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		
+		
+		
+		<!-- 공통 -->
+		<typeAlias type="com.camper.lib.dto.CommonDTO" alias="libCommon"/><!-- 지윤이꺼 -->
+		<typeAlias type="com.camper.lib.dto.PageMakerDTO" alias="libPageMaker"/><!-- 이 파일은 건드리지 말 것 부득이하게 건드릴 경우 조장에게 보고 -->
+		
+		
+		
+		<!-- 조장 -->
+		<typeAlias type="com.camper.chat.dto.ChatDTO" alias="chat"/>
+		<typeAlias type="com.camper.mypage.dto.MyChatDTO" alias="mypgChat"/>
+		
+		<!-- 성민 -->
+		<typeAlias type="com.camper.camping.dto.CampingApiDTO" alias="cpCampingAPI"/>
+		<typeAlias type="com.camper.camping.dto.CampingDTO" alias="cpCamping"/>
+		<typeAlias type="com.camper.camping.dto.CampingLikeDTO" alias="cpCampingLike"/>
+		
+		<!-- 현정 -->
+		<typeAlias type="com.camper.crew.dto.TogetherDTO" alias="crTogether"/>
+		
+		<!-- 지윤 -->
+		<typeAlias type="com.camper.admin.dto.AgeAdmDTO" alias="admAge"/>
+		<typeAlias type="com.camper.admin.dto.AnswerAdmDTO" alias="admAnswer"/>
+		<typeAlias type="com.camper.admin.dto.BlindAdmDTO" alias="admBlind"/>
+		<typeAlias type="com.camper.admin.dto.CampingAdmDTO" alias="admCamping"/>
+		<typeAlias type="com.camper.admin.dto.MemberAdmDTO" alias="admMember"/>
+		<typeAlias type="com.camper.admin.dto.ReviewAdmDTO" alias="admReview"/>
+		<typeAlias type="com.camper.admin.dto.StopAdmDTO" alias="admStop"/>
+		<typeAlias type="com.camper.admin.dto.TogetherAdmDTO" alias="admTogether"/>
+		
+		<!-- 희수 -->
+		<typeAlias type="com.camper.profile.dto.ProfileDTO" alias="profile"/>
+		<typeAlias type="com.camper.main.dto.MainDTO" alias="main"/>
+		
+		<!-- 승진 -->
+		<typeAlias type="com.camper.admin.dto.TitleAdmDTO" alias="admTitle"/>
+		<typeAlias type="com.camper.mypage.dto.MyBlockDTO" alias="mypgBlock"/>
+		<typeAlias type="com.camper.mypage.dto.MyCrewDTO" alias="mypgCrew"/>
+		<typeAlias type="com.camper.mypage.dto.MyInquiryDTO" alias="mypgInquiry"/>
+		<typeAlias type="com.camper.mypage.dto.MyCampingLikeDTO" alias="mypgLike"/>
+		<typeAlias type="com.camper.mypage.dto.MyInfoDTO" alias="mypgMyInfo"/>
+		<typeAlias type="com.camper.mypage.dto.MyTogetherDTO" alias="mypgMyTogether"/>
+		<typeAlias type="com.camper.mypage.dto.MyReviewDTO" alias="mypgReview"/>
+		
+		<!-- 대환 -->
+		<typeAlias type="com.camper.login.dto.LoginDTO" alias="logIn"/>
+		
+		
+		
+	</typeAliases>
+</configuration>
