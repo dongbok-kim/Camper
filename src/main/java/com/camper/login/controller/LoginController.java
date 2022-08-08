@@ -93,6 +93,8 @@ public class LoginController {
 		String postcode = request.getParameter("sample6_postcode"); //우편번호
 		String addr = request.getParameter("sample6_address"); //주소
 		String detailaddr = request.getParameter("sample6_detailAddress"); //상세주소
+		String sido = request.getParameter("sample6_sido"); // 시/도
+		String sigungu = request.getParameter("sample6_sigungu"); // 시/군/구
 		
 		logger.info("id : "+id);
 		logger.info("pw : "+pw);
@@ -105,11 +107,13 @@ public class LoginController {
 		logger.info("postcode : "+postcode);
 		logger.info("addr : "+addr);
 		logger.info("detailaddr : "+detailaddr);
+		logger.info("sido : "+sido);
+		logger.info("sigungu : "+sigungu);
 		
-		//String msg = "아이디 혹은 비번이 틀렸습니다";
-		//String page = "login/join";
+		String msg = "아이디 혹은 비번이 틀렸습니다";
+		String page = "login/join";
 		
-		return "login/join";
+		return page;
 	}
 	
 	

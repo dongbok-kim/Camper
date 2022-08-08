@@ -77,14 +77,17 @@
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 				<input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
 				<input type="text" id="sample6_detailAddress" name="sample6_detailAddress"placeholder="상세주소">
+				
+				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
+				
+				<input type="hidden" id="sample6_sido" name="sample6_sido" > <!-- 시/도 -->
+				<input type="hidden" id="sample6_sigungu" name="sample6_sigungu" > <!-- 시/군/구 -->
 				</td>
             </tr>
         </table>
-        <!-- 상세보기 값 확인용 hidden (나중에 지우기) -->
-        <input type="button" onclick="sang()" value="상세" />
         
-        <input type="submit" value="회원가입" onclick="" />
+        <input type="submit" value="회원가입" />
         <input type="button" value="취소" onclick="location.href='login.go'" />
         </form>
 </body>
@@ -136,18 +139,18 @@
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("sample6_detailAddress").focus();
                 
-                console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
-                console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
-                console.log(data.zonecode); // 우편번호 (14255)
-                console.log(addr); // 기본 주소 (사용자가 선택한 값에따라 지번, 도로명 으로 표시)
+              
+                // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
+                document.getElementById('sample6_sido').value = data.sido;
+                
+                // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
+                document.getElementById('sample6_sigungu').value = data.sigungu;
+                
+                
             }
         }).open();
     }
 
-	// 상세보기 값 확인 (나중에 지워야됨)
-	function sang() {
-		console.log($("#sample6_detailAddress").val()); //상세주소 값 가져오기
-	}
 	
 	var msg = "${msg}";
 	if(msg != "") {
