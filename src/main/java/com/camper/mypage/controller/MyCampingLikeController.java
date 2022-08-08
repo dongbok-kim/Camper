@@ -1,6 +1,6 @@
 package com.camper.mypage.controller;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +19,21 @@ public class MyCampingLikeController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	// 캠핑장 찜 목록
+	// by. 승진 2022-08-08
 	@RequestMapping(value = "/myCampingLikeList.go")
-	public ModelAndView myCampingLikeList() {
-		return service.myCampingLikeList();
+	public ModelAndView myCampingLikeList(HttpSession session) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String temporaryId = "jin";
+		return service.myCampingLikeList(temporaryId);
+	}
+	
+	// 캠핑장 찜해제
+	// by. 승진 2022-08-08
+	@RequestMapping(value = "/myCampingLikeDelete.do")
+	public ModelAndView myCampingLikeDelete(@RequestParam String idx) {
+		logger.info("idx: "+idx);
+		return service.myCampingLikeDelete(idx);
 	}
 	
 }

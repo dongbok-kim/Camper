@@ -3,8 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyCampingLikeDAO">
 
-	<select id="myCampingLikeList" resultType="com.camper.mypage.dto.MyCampingLikeDTO">
-		SELECT ccl.cl_datetime, b.ca_name FROM cp_camping_like ccl, cp_camping b WHERE ccl.mb_id='jin' AND ccl.ca_idx= b.ca_idx
+	<select id="myCampingLikeList" resultType="com.camper.mypage.dto.MyCampingLikeDTO" parameterType="String">
+		SELECT ccl.cl_idx, ccl.cl_datetime, b.ca_name FROM cp_camping_like ccl, cp_camping b WHERE ccl.mb_id=#{param1} AND ccl.ca_idx= b.ca_idx
 	</select>
+	
+	<delete id="myCampingLikeDelete" parameterType="String">
+		DELETE FROM cp_camping_like WHERE cl_idx = #{param1}
+	</delete>
 
 </mapper>

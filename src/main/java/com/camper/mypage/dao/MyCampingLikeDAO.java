@@ -6,6 +6,8 @@ import com.camper.mypage.dto.MyCampingLikeDTO;
 
 public interface MyCampingLikeDAO {
 
-	ArrayList<MyCampingLikeDTO> myCampingLikeList();
+	ArrayList<MyCampingLikeDTO> myCampingLikeList(String temporaryId);
+
+	void myCampingLikeDelete(String idx);
 
 }

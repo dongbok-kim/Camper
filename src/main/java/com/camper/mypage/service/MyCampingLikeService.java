@@ -18,12 +18,19 @@ public class MyCampingLikeService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ModelAndView myCampingLikeList() {
-		logger.info("서비스 도착");
-		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList();
+	public ModelAndView myCampingLikeList(String temporaryId) {
+		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList(temporaryId);
 		logger.info("list 갯수 : "+list.size());
+		int listSize = list.size();
 		ModelAndView mav = new  ModelAndView("mypage/myCampingLike");
 		mav.addObject("list", list);
+		mav.addObject("listSize", listSize);
+		return mav;
+	}
+
+	public ModelAndView myCampingLikeDelete(String idx) {
+		dao.myCampingLikeDelete(idx);
+		ModelAndView mav = new  ModelAndView("redirect:/myCampingLikeList.go");
 		return mav;
 	}
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -17,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>찜한 캠핑장</h3>
-					찜한 캠핑장 수 : 건
+					찜한 캠핑장 수 : ${listSize}건
 					<table>
 						<thead>
 							<tr>
@@ -27,6 +28,16 @@
 								<th>찜해제</th>
 							</tr>
 						</thead>
+						<tbody>
+							<c:forEach items="${list}" var="bbs">
+								<tr>
+									<td>${bbs.cl_idx}</td>
+									<td>${bbs.ca_name}</td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
+									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">삭제</a></td>
+								</tr>		
+							</c:forEach>
+						</tbody>
 					</table>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
