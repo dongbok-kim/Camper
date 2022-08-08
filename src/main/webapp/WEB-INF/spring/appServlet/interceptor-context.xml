@@ -7,6 +7,12 @@
 		
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/마이페이지요청명모두나열1"/>
+			<mvc:mapping path="/마이페이지요청명모두나열2"/>
+			<mvc:mapping path="/마이페이지요청명모두나열3"/>
+			<bean class="com.camper.lib.utils.MypgValidationInter"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/관리자요청명모두나열1"/>
 			<mvc:mapping path="/관리자요청명모두나열2"/>
 			<mvc:mapping path="/관리자요청명모두나열3"/>
