@@ -18,6 +18,8 @@ public class MyCampingLikeService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	// 캠핑장 찜 목록
+	// by. 승진 2022-08-08
 	public ModelAndView myCampingLikeList(String temporaryId) {
 		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList(temporaryId);
 		logger.info("list 갯수 : "+list.size());
@@ -28,8 +30,10 @@ public class MyCampingLikeService {
 		return mav;
 	}
 
-	public ModelAndView myCampingLikeDelete(String idx) {
-		dao.myCampingLikeDelete(idx);
+	// 캠핑장 찜해제
+	// by. 승진 2022-08-08
+	public ModelAndView myCampingLikeDelete(String idx, String temporaryId) {
+		dao.myCampingLikeDelete(idx, temporaryId);
 		ModelAndView mav = new  ModelAndView("redirect:/myCampingLikeList.go");
 		return mav;
 	}

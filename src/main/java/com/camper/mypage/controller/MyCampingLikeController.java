@@ -32,8 +32,9 @@ public class MyCampingLikeController {
 	// by. 승진 2022-08-08
 	@RequestMapping(value = "/myCampingLikeDelete.do")
 	public ModelAndView myCampingLikeDelete(@RequestParam String idx) {
-		logger.info("idx: "+idx);
-		return service.myCampingLikeDelete(idx);
+		// String loginId = (String) session.getAttribute("loginId");
+		String temporaryId = "jin";
+		return service.myCampingLikeDelete(idx, temporaryId);
 	}
 	
 }
