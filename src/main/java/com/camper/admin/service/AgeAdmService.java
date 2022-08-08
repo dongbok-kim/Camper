@@ -14,4 +14,9 @@ public class AgeAdmService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	public int ageReg(int age) {
+		return dao.ageReg(age);
+		
+	}
+
 }
