@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camper.mypage.dao.LikeDAO">
+<mapper namespace="com.camper.mypage.dao.MyCampingLikeDAO">
+
+	<select id="myCampingLikeList" resultType="com.camper.mypage.dto.MyCampingLikeDTO">
+		SELECT ccl.cl_datetime, b.ca_name FROM cp_camping_like ccl, cp_camping b WHERE ccl.mb_id='jin' AND ccl.ca_idx= b.ca_idx
+	</select>
 
 </mapper>
