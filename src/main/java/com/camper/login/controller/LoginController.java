@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.camper.login.service.LoginService;
@@ -117,9 +118,32 @@ public class LoginController {
 	}
 	
 	
+	//아이디 중복 체크
+	@RequestMapping("/doubleCheckId.ajax")
+	@ResponseBody
+	public HashMap<String, Object> doubleCheckId(@RequestParam String chkId) {
+				
+	logger.info("아이디 중복 체크 : "+chkId);
+	return service.doubleCheckId(chkId);
+	}
 	
-	
-	
+	//이메일 중복 체크
+	@RequestMapping("/doubleCheckEmail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> doubleCheckEmail(@RequestParam String chkEmail) {
+					
+	logger.info("이메일 중복 체크 : "+chkEmail);
+	return service.doubleCheckEmail(chkEmail);
+	}
+		
+	//닉네임 중복 체크
+	@RequestMapping("/doubleCheckNickname.ajax")
+	@ResponseBody
+	public HashMap<String, Object> doubleCheckNickname(@RequestParam String chkNickname) {
+						
+	logger.info("닉네임 중복 체크 : "+chkNickname);
+	return service.doubleCheckNickname(chkNickname);
+	}
 	
 	
 }

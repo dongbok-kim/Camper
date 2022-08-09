@@ -3,4 +3,16 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.login.dao.LoginDAO">
 
+<select id="doubleCheckId" parameterType="String" resultType="String">
+	SELECT mb_id FROM cp_member WHERE mb_id= #{chkId}
+</select>
+
+<select id="doubleCheckEmail" parameterType="String" resultType="String">
+	SELECT mb_email FROM cp_member WHERE mb_email = #{chkEmail}
+</select>
+
+<select id="doubleCheckNickname" parameterType="String" resultType="String">
+	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
+</select>
+
 </mapper>
