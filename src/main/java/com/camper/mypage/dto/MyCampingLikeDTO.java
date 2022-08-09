@@ -2,6 +2,9 @@ package com.camper.mypage.dto;
 
 import java.sql.Timestamp;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("mypgLike")
 public class MyCampingLikeDTO {
 	
 	private int cl_idx;

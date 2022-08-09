@@ -7,7 +7,7 @@
 					<ul>
 						<li><a href="">내 정보 수정</a></li>
 						<li class="active"><a href="">찜한 캠핑장</a></li>
-						<li><a href="">내가 쓴 모집글</a></li>
+						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="">캠핑장 후기</a></li>
 						<li><a href="">크루 후기</a></li>
 						<li><a href="">참여한 크루 목록</a></li>
@@ -18,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>찜한 캠핑장</h3>
-					찜한 캠핑장 수 : ${listSize}건
+					찜한 캠핑장 수 : ${list.size()} 건
 					<table>
 						<thead>
 							<tr>
@@ -29,10 +29,13 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:if test="${list.size() == 0}">
+								<tr><td colspan="4">찜한 캠핑장이 없습니다.</td></tr>
+							</c:if>
 							<c:forEach items="${list}" var="bbs">
 								<tr>
 									<td>${bbs.cl_idx}</td>
-									<td>${bbs.ca_name}</td>
+									<td><a href="">${bbs.ca_name}</a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
 									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">삭제</a></td>
 								</tr>		

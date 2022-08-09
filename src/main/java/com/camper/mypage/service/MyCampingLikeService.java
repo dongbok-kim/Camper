@@ -23,10 +23,8 @@ public class MyCampingLikeService {
 	public ModelAndView myCampingLikeList(String temporaryId) {
 		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList(temporaryId);
 		logger.info("list 갯수 : "+list.size());
-		int listSize = list.size();
 		ModelAndView mav = new  ModelAndView("mypage/myCampingLike");
 		mav.addObject("list", list);
-		mav.addObject("listSize", listSize);
 		return mav;
 	}
 

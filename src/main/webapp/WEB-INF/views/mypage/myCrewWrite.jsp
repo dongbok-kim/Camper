@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -17,6 +18,34 @@
 				</aside>
 				<div>
 					<h3>내 정보 수정</h3>
+					총 크루모집글 수 : ${list.size()} 건
+					<table>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>모집인원 수</th>
+								<th>크루모집현황</th>
+								<th>작성일자</th>
+								<th>삭제</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${list.size() == 0}">
+								<tr><td colspan="6">등록된 크루모집글이 없습니다.</td></tr>
+							</c:if>
+							<c:forEach items="${list}" var="my">
+								<tr>
+									<td>${my.ct_idx}</td>
+									<td><a href="">${my.ct_title}</a></td>
+									<td>${my.ct_people_cnt} 명</td>
+									<td>${my.nowCnt} 명</td>
+									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>
+									<td><a href="myCrewWriteDelete.do?idx=${my.ct_idx}">삭제</a></td>
+								</tr>		
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script></script>

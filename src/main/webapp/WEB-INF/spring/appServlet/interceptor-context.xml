@@ -9,7 +9,7 @@
 		<mvc:interceptor>
 			<mvc:mapping path="/myCampingLikeList.go"/>
 			<mvc:mapping path="/myCampingLikeDelete.do"/>
-			<mvc:mapping path="/마이페이지요청명모두나열3"/>
+			<mvc:mapping path="/myCrewWriteList.go"/>
 			<bean class="com.camper.lib.utils.MypgValidationInter"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
