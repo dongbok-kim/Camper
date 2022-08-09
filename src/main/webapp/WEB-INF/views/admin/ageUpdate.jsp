@@ -10,23 +10,25 @@
 <style></style>
 </head>
 <body>
+<%@ include file="../../../resources/inc/header.jsp" %>
 	<h2>연령대 추가</h2>
 	<div>
-		<form action="ageReg.do" name="agefm" method="get">
+		<form action="ageUpdate.do" name="agefm" method="get">
 			<table border="1">
 				<tr>
-					<th>연령대</th>
-					<td><input type="text" pattern="[0-9]+" name="ma_age">대</td>
+					<th><input type="hidden" name="ma_idx" value="${age.ma_idx }"> 연령대</th>
+					<td><input type="text" name="ma_age" value="${age.ma_age }">대</td>
 				</tr>
 			</table>
-			<input type="button" onclick=add() value="추가"/>
+			<input type="button" onclick=up() value="수정"/>
 			<input type="button" onclick="location.href='ageList' " value="목록"/>
 		</form>
 	</div>
+<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
 <script>
-function add() {
-	if (confirm("추가하시겠습니까?") == true){
+function up() {
+	if (confirm("수정하시겠습니까?") == true){
 		document.agefm.submit();
 	}
 }

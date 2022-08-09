@@ -14,7 +14,18 @@
 	<div><button onclick="location.href='ageReg' ">연령대 추가</button></div>
 	<div>
 		<table>
-			
+			<tr>
+				<th>번호</th>
+				<th>연령대</th>
+				<th>수정</th>
+			</tr>
+			<c:forEach items="${list }" var="age">
+				<tr>
+					<td>${age.ma_idx}</td>
+					<td>${age.ma_age}대</td>
+					<td><button onclick="location.href='ageUpdate.go?ma_idx=${age.ma_idx}' " >연령대 수정</button></td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 </body>
