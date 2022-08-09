@@ -20,6 +20,13 @@ public class ReportAdmService {
 
 	public void reportList(Model model) {
 		ArrayList<ReportAdmDTO> list = dao.reportList();
+		model.addAttribute("list",list);
+		
+	}
+
+	public void reportView(Model model, int rp_idx) {
+		ReportAdmDTO dto = dao.reportView(rp_idx);
+		model.addAttribute("report", dto);
 		
 	}
 

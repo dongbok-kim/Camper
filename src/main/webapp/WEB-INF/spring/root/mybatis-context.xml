@@ -10,6 +10,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:com/camper/admin/dao/ageadm_mapper.xml</value>
+				<value>classpath:com/camper/admin/dao/reportadm_mapper.xml</value>
 				<value>classpath:com/camper/admin/dao/answeradm_mapper.xml</value>
 				<value>classpath:com/camper/admin/dao/blindadm_mapper.xml</value>
 				<value>classpath:com/camper/admin/dao/campingadm_mapper.xml</value>

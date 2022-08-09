@@ -12,8 +12,15 @@ public class ReportAdmDTO {
 	private Timestamp rp_proc_date;
 	private String rp_admin;
 	private String mb_id;
+	private int rp_count;
 	
 	
+	public int getRp_count() {
+		return rp_count;
+	}
+	public void setRp_count(int rp_count) {
+		this.rp_count = rp_count;
+	}
 	public int getRp_idx() {
 		return rp_idx;
 	}

@@ -3,6 +3,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.ReportAdmDAO">
 	
+	<select id="reportList" resultType="com.camper.admin.dto.ReportAdmDTO">
+		SELECT rp_idx, rp_content, rp_datetime, rp_id, rp_status, mb_id,
+			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
+		FROM cp_report cr
+		ORDER BY rp_idx DESC
+	</select>
+	
+	<select id="reportView" resultType="com.camper.admin.dto.ReportAdmDTO">
+		SELECT mb_id, rp_id, rp_content, rp_datetime, rp_admin, rp_proc_date, rp_status, 
+			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
+		FROM cp_report cr
+		WHERE rp_idx = #{param1}
+	</select>
 	
 	
 </mapper>
