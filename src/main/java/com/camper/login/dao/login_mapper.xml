@@ -3,4 +3,36 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.login.dao.LoginDAO">
 
+<select id="doubleCheckId" parameterType="String" resultType="String">
+	SELECT mb_id FROM cp_member WHERE mb_id= #{chkId}
+</select>
+
+<select id="doubleCheckEmail" parameterType="String" resultType="String">
+	SELECT mb_email FROM cp_member WHERE mb_email = #{chkEmail}
+</select>
+
+<select id="doubleCheckNickname" parameterType="String" resultType="String">
+	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
+</select>
+
+<insert id="join" parameterType="logIn" >
+	INSERT INTO cp_member(mb_id, mb_pw, mb_email,  mb_name, mb_nickname, mb_gender, mb_sido, mb_sigungu, mb_postcode, mb_addr_default, mb_addr_detail, mb_fire, mb_grade, mb_status, mb_datetime, ma_idx)
+		values(#{mb_id},#{mb_pw},#{mb_email},#{mb_name},#{mb_nickname}, #{mb_gender},
+<choose><when test="#{mb_sido}.equals('제주특별자치도')">'제주도'</when><otherwise>#{mb_sido}</otherwise></choose>
+,#{mb_sigungu},#{mb_postcode},#{mb_addr_default},#{mb_addr_detail},'500', '회원', '정상',now(),#{ma_idx})
+</insert>
+
+<select id="login" resultType="String">
+	SELECT mb_pw FROM cp_member 
+			WHERE mb_id = #{param1}
+</select>
+
+<select id="idFind" resultType="String">
+	SELECT mb_id FROM cp_member WHERE mb_name = #{param1} AND mb_email = #{param2}
+</select>
+
+<select id="pwFind" resultType="String" parameterType="logIn">
+	SELECT mb_id FROM cp_member WHERE mb_id = #{mb_id} AND mb_email = #{mb_email}
+</select>
+
 </mapper>
