@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,7 +58,7 @@ public class LoginController {
 		
 	//비밀번호 찾기 페이지 이동
 	@RequestMapping(value = "/pwFind.go")
-	public String PWFindPage(Model model) {
+	public String PwFindPage(Model model) {
 			
 		return "login/pwfind";
 	}
@@ -77,6 +78,7 @@ public class LoginController {
 		if(match == true ) {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
+			logger.info("로그인 성공");
 			msg = id + "님 환영합니다";			
 			page = "main";			
 		} else {			
@@ -143,6 +145,42 @@ public class LoginController {
 						
 	logger.info("닉네임 중복 체크 : "+chkNickname);
 	return service.doubleCheckNickname(chkNickname);
+	}
+	
+	//아이디 찾기
+	@RequestMapping(value = "/idFind.do")
+	public String IdFind(Model model, @RequestParam String name, @RequestParam String email) {
+			
+		String page = "login/idfind";
+		
+		String idFind = service.idFind(name , email);
+		
+		if (idFind == null ) {
+			model.addAttribute("msg", "이름 또는 이메일이 일치하지 않습니다.");
+		} else {
+			model.addAttribute("msg", "당신의 아이디 :  "+idFind);
+		}
+		
+		return page;
+	}
+	
+	
+	//비밀번호 찾기 페이지 이동
+	@RequestMapping(value = "/pwFind.do")
+	public String PwFind(Model model, @ModelAttribute LoginDTO dto) {
+		
+		String page = "login/pwfind";
+		
+		String pwFind = service.pwFind(dto.getMb_id(), dto.getMb_email());
+		
+		if(pwFind == null) {
+			model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
+		} else {
+			model.addAttribute("msg", "비밀번호 변경 가능");
+			
+		}
+		
+		return page;
 	}
 	
 	

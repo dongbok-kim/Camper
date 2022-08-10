@@ -90,6 +90,18 @@ public class LoginService {
 		
 		return mav;
 	}
+
+	public String idFind(String name, String email) {
+		
+		return dao.idFind(name, email);
+	}
+
+	public String pwFind(String mb_id, String mb_email) {
+		
+		return dao.pwFind(mb_id, mb_email);
+	}
+
+	
 	
 	
 	

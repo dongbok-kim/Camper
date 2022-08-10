@@ -10,26 +10,28 @@
 </head>
 <body>
 	<h3>ID 찾기</h3>
+		<form action="idFind.do">
 		<table>
 			<tr>
-				<th>아이디</th>
+				<th>이름</th>
 				<td>
-					<input type="id"  id = "id"/>  
+					<input type="text"  name = "name"/>  
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 				<td>
-					<input type="email"  id = "email"/>
+					<input type="email"  name = "email"/>
 				</td>
 			</tr>
 		</table>
 		<div>
-			<input type="button" value="ID찾기" onclick="location.href='##'" />
+			<input type="submit" value="ID찾기" onclick="location.href='##'" />
 			<!-- 아이디찾기 명령어-->
 			<input type="button" value="취소" onclick="location.href='login.go'" />
 			<!-- 로그인 페이지 링크 -->
 		</div>
+		</form>
 </body>
 <script>
 	var msg = "${msg}"

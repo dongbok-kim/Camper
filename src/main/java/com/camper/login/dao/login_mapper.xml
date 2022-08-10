@@ -27,4 +27,12 @@
 			WHERE mb_id = #{param1}
 </select>
 
+<select id="idFind" resultType="String">
+	SELECT mb_id FROM cp_member WHERE mb_name = #{param1} AND mb_email = #{param2}
+</select>
+
+<select id="pwFind" resultType="String" parameterType="logIn">
+	SELECT mb_id FROM cp_member WHERE mb_id = #{mb_id} AND mb_email = #{mb_email}
+</select>
+
 </mapper>

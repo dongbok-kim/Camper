@@ -14,4 +14,10 @@ public interface LoginDAO {
 
 	String login(String id);
 
+	String idFind(String name, String email);
+
+	String pwFind(String mb_id, String mb_email);
+
+	
+
 }

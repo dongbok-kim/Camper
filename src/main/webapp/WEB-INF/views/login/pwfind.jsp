@@ -10,26 +10,29 @@
 </head>
 <body>
 	<h3>비밀번호 찾기</h3>
+		<form action="pwFind.do" onsubmit="return submitCheck()">
+		
+		
         <table>
             <tr>
                 <th>아이디</th>
                 <td>
-                    <input type="id"  id = "id"/>  
+                    <input type="text"  name = "mb_id"/>  
                 </td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="email"  id = "email"/>
+                    <input type="email"  name = "mb_email"/>
                 </td>
             </tr>
         </table>
 
         <div>
-            <input type="button" value="아이디, 이메일 확인" onclick="###()" />
+            <input type="submit" value="아이디, 이메일 확인" onclick="###()" />
             <!-- 회원 아이디, 이메일이 이치하는지 확인 -->
         </div>
-
+		</form>
         <br/><br/>
 
         <table>
@@ -42,7 +45,7 @@
             <tr>
                 <th>비밀번호 확인</th>
                 <td>
-                    <input type="passwordcheck" id = "passwordcheck"/>
+                    <input type="password" id = "passwordcheck"/>
                 </td>
             </tr>
         </table>
@@ -52,5 +55,16 @@
         </div>
 </body>
 <script>
+
+function submitCheck() {
+	
+	var pattern1 = /[0-9]/;				// 숫자
+	var pattern2 = /[a-zA-Z]/;			// 문자
+	var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
+	
+	
+	
+}
+
 </script>
 </html>
