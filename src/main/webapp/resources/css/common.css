@@ -28,6 +28,10 @@ a:hover {
 	color: #333;
 }
 
+textarea {
+	overflow-y: scroll;
+}
+
 #wrap {
 	margin: 0 auto;
 	width: 100%;

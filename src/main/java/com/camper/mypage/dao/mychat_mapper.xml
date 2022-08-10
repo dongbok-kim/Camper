@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camper.mypage.dao.ChatDAO">
+<mapper namespace="com.camper.mypage.dao.MyChatDAO">
+
+	<select id="myChatList" parameterType="String" resultType="mypgChat">
+		SELECT 
+			a.cg_idx, 
+			a.cg_limit, 
+			c.ct_title, 
+			(SELECT COUNT(cg_idx) FROM cp_chat_join WHERE cg_idx = a.cg_idx AND cj_ban = 0) AS cntJoin, 
+			(SELECT COUNT(mb_id) AS cnt FROM cp_camping_crew WHERE cc_is_join = 1 AND cc_crew = '크루원' AND ct_idx = c.ct_idx) AS cntCrew 
+			
+		FROM 
+			cp_chat_group a 
+			
+		JOIN 
+			cp_chat_join b 
+			
+		ON 
+			a.cg_idx = b.cg_idx 
+			
+		JOIN 
+			cp_crew_together c 
+			
+		ON 
+			a.ct_idx = c.ct_idx 
+			
+		WHERE 
+			b.mb_id = #{loginId}
+	</select>
 
 </mapper>
