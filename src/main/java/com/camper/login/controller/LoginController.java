@@ -165,7 +165,7 @@ public class LoginController {
 	}
 	
 	
-	//비밀번호 찾기 페이지 이동
+	//비밀번호 찾기
 	@RequestMapping(value = "/pwFind.do")
 	public String PwFind(Model model, @ModelAttribute LoginDTO dto) {
 		
@@ -182,6 +182,25 @@ public class LoginController {
 		
 		return page;
 	}
+	
+	
+		//비밀번호 재설정
+		@RequestMapping(value = "/pwRework.do")
+		public String PwRework(Model model, @ModelAttribute LoginDTO dto) {
+			
+			String page = "login/pwfind";
+			
+			String pwFind = service.pwFind(dto.getMb_id(), dto.getMb_email());
+			
+			if(pwFind == null) {
+				model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
+			} else {
+				model.addAttribute("msg", "비밀번호 변경 가능");
+				
+			}
+			
+			return page;
+		}
 	
 	
 }

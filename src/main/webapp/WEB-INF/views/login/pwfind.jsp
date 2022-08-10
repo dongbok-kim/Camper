@@ -10,10 +10,8 @@
 </head>
 <body>
 	<h3>비밀번호 찾기</h3>
-		<form action="pwFind.do" onsubmit="return submitCheck()">
-		
-		
-        <table>
+		<form action="pwFind.do" method = "post">
+			<table>
             <tr>
                 <th>아이디</th>
                 <td>
@@ -35,6 +33,7 @@
 		</form>
         <br/><br/>
 
+		<form action="pwRework.do">
         <table>
             <tr>
                 <th>비밀번호 재설정</th>
@@ -50,9 +49,10 @@
             </tr>
         </table>
         <div>
-            <input type="submit" value="비밀번호 재설정" onclick="">
+            <input type="submit" value="비밀번호 재설정" onclick="'location.href=/login.go'">
             <!-- 로그인 페이지 링크 -->
         </div>
+        </form>
 </body>
 <script>
 
