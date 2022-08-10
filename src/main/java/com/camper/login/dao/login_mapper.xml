@@ -22,4 +22,9 @@
 ,#{mb_sigungu},#{mb_postcode},#{mb_addr_default},#{mb_addr_detail},'500', '회원', '정상',now(),#{ma_idx})
 </insert>
 
+<select id="login" resultType="String">
+	SELECT mb_pw FROM cp_member 
+			WHERE mb_id = #{param1}
+</select>
+
 </mapper>

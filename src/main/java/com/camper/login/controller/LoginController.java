@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +32,7 @@ public class LoginController {
 	@Autowired LoginService service;
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
+	
 	
 	//로그인 페이지 이동
 	@RequestMapping(value = "/login.go")
@@ -62,21 +64,21 @@ public class LoginController {
 	
 	//로그인
 	@RequestMapping(value = "/login.do")
-	public String login(Model model, HttpServletRequest request) {
+	public String login(@RequestParam String id, @RequestParam String pw, Model model, HttpServletRequest request) {
 		
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
-		String loginId = service.login(id, pw);
+		String loginPw = service.login(id);		
+		boolean match = encoder.matches(pw, loginPw);
 		
 		String msg = "아이디 혹은 비번이 틀렸습니다";
 		String page = "login/login";
 		
-		if(loginId != null ) {
+		if(match == true ) {
 			HttpSession session = request.getSession();
-			session.setAttribute("loginId", loginId);
-			msg = loginId + "님 환영합니다";			
-			page = "redirect:/main";			
+			session.setAttribute("loginId", id);
+			msg = id + "님 환영합니다";			
+			page = "main";			
 		} else {			
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
@@ -85,6 +87,13 @@ public class LoginController {
 		return page;
 	}
 	
+	//로그아웃
+	@RequestMapping(value = "/logout.do")
+	public String Logout(Model model, HttpSession session) {
+		session.removeAttribute("loginId");
+		model.addAttribute("msg", "로그아웃 되었습니다.");
+		return "login/login";
+	}
 	
 	//회원가입
 	@RequestMapping(value = "/join.do")

@@ -12,4 +12,6 @@ public interface LoginDAO {
 
 	int join(LoginDTO dto);
 
+	String login(String id);
+
 }

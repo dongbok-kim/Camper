@@ -24,9 +24,9 @@ public class LoginService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public String login(String id, String pw) {
-		// TODO Auto-generated method stub
-		return null;
+	public String login(String id) {
+		
+		return dao.login(id);
 	}
 
 	public HashMap<String, Object> doubleCheckId(String chkId) {
