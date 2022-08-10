@@ -43,11 +43,38 @@
 		WHERE rp_idx=#{param1}
 	</select>
 	
-	<select id="reportSearch" resultType="com.camper.admin.dto.ReportAdmDTO">
+	<select id="reportSearch" parameterType="hashmap" resultType="com.camper.admin.dto.ReportAdmDTO">
 		SELECT rp_idx, rp_content, rp_datetime, rp_id, rp_status, mb_id,
 			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
-		FROM cp_report cr
-		WHERE rp_status = #{rp_status}
+		FROM cp_report cr WHERE
+			<choose>
+				<when test="rp_status.equals('처리상태')">
+					<if test="option.equals('전체')">
+						mb_id LIKE CONCAT ("%",#{keyword},"%")
+						OR rp_id LIKE CONCAT ("%",#{keyword},"%")
+						OR rp_content LIKE CONCAT ("%",#{keyword},"%")
+					</if>
+					<if test="option.equals('신고당한회원')">mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
+					<if test="option.equals('신고자')">rp_id LIKE CONCAT ("%",#{keyword},"%")</if>
+					<if test="option.equals('신고내용')">rp_content LIKE CONCAT ("%",#{keyword},"%")</if>
+				</when>
+				<otherwise>
+					<choose>
+						<when test="keyword=='' ">rp_status = #{rp_status}</when>
+						<otherwise>
+							rp_status = #{rp_status}  AND
+							<if test="option.equals('전체')">
+								mb_id LIKE CONCAT ("%",#{keyword},"%")
+								OR rp_id LIKE CONCAT ("%",#{keyword},"%")
+								OR rp_content LIKE CONCAT ("%",#{keyword},"%")
+							</if>
+							<if test="option.equals('신고당한회원')">mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
+							<if test="option.equals('신고자')">rp_id LIKE CONCAT ("%",#{keyword},"%")</if>
+							<if test="option.equals('신고내용')">rp_content LIKE CONCAT ("%",#{keyword},"%")</if>
+						</otherwise>
+					</choose>
+				</otherwise>
+			</choose>
 	</select>
 	
 	

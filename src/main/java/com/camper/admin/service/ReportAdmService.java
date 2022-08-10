@@ -87,7 +87,7 @@ public class ReportAdmService {
 
 	public ModelAndView reportSearch(HashMap<String, String> params) {
 		ArrayList<ReportAdmDTO> list = dao.reportSearch(params);
-		ModelAndView mav = new ModelAndView("reportList");
+		ModelAndView mav = new ModelAndView("admin/reportAdmList");
 		mav.addObject("list",list);
 		return mav;
 	}

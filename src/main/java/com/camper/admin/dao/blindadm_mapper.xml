@@ -2,5 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.BlindAdmDAO">
-
+	
+	<select id="reportList" resultType="com.camper.admin.dto.BlindAdmDTO">
+		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
+		FROM cp_board_blind ORDER BY bb_datetime DESC
+	</select>
+	
 </mapper>
