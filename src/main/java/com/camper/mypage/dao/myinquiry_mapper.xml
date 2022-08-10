@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camper.mypage.dao.InquiryDAO">
+<mapper namespace="com.camper.mypage.dao.MyInquiryDAO">
+
+	<select id="myInquiryList" parameterType="String" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_status FROM cp_inquiry WHERE mb_id = #{param1} ORDER BY in_idx DESC
+	</select>
+
+	<insert id="inquiryWrite" parameterType="hashmap">
+		INSERT INTO cp_inquiry(in_title,in_content,mb_id, in_status) VALUES(#{subject}, #{content}, #{loginId}, '답변대기')
+	</insert>
+
+	<!-- 문의 상세보기 -->
+	<select id="inquiryDetail" parameterType="String" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_content, in_status, mb_id FROM cp_inquiry WHERE in_idx = #{idx}
+	</select>
 
 </mapper>

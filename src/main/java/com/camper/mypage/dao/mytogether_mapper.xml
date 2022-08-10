@@ -3,4 +3,15 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyTogetherDAO">
 
+	<select id="myCrewWriteList" resultType="mypgMyTogether" parameterType="String">
+		SELECT cct.ct_idx, cct.ct_title, cct.ct_people_cnt, (SELECT count(ct_idx) FROM cp_camping_crew WHERE cc_crew='크루원' AND cct.ct_idx = ct_idx) as nowCnt, cct.ct_datetime
+		FROM cp_crew_together cct 
+		WHERE cct.mb_id =#{param1} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+		ORDER BY cct.ct_idx DESC
+	</select>
+
+	<delete id="myCrewWriteDelete" parameterType="String">
+		INSERT INTO cp_board_blind(bb_relation, bb_relation_idx, bb_reason, mb_id) VALUES('cp_crew_together', #{param1},'본인삭제', #{param2})
+	</delete>
+	
 </mapper>
