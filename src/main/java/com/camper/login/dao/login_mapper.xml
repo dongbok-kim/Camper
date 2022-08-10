@@ -15,4 +15,11 @@
 	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
 </select>
 
+<insert id="join" parameterType="logIn" >
+	INSERT INTO cp_member(mb_id, mb_pw, mb_email,  mb_name, mb_nickname, mb_gender, mb_sido, mb_sigungu, mb_postcode, mb_addr_default, mb_addr_detail, mb_fire, mb_grade, mb_status, mb_datetime, ma_idx)
+		values(#{mb_id},#{mb_pw},#{mb_email},#{mb_name},#{mb_nickname}, #{mb_gender},
+<choose><when test="#{mb_sido}.equals('제주특별자치도')">'제주도'</when><otherwise>#{mb_sido}</otherwise></choose>
+,#{mb_sigungu},#{mb_postcode},#{mb_addr_default},#{mb_addr_detail},'500', '회원', '정상',now(),#{ma_idx})
+</insert>
+
 </mapper>

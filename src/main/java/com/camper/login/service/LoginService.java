@@ -2,9 +2,12 @@ package com.camper.login.service;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +18,9 @@ import com.camper.login.dto.LoginDTO;
 public class LoginService {
 
 	@Autowired LoginDAO dao;
+	
+	String plainText = "";
+	String hashText = "";
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -56,8 +62,33 @@ public class LoginService {
 
 
 	public ModelAndView join(LoginDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String mb_pw = dto.getMb_pw();
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		dto.setMb_pw(encoder.encode(mb_pw));
+		
+		hashText = encoder.encode(mb_pw);
+		
+		boolean match = encoder.matches(mb_pw, hashText);
+		logger.info("일치 여부 : "+match);
+		
+		int row = dao.join(dto);
+		
+		logger.info("join success : "+row);
+		
+		ModelAndView mav = new ModelAndView();
+		String msg = "회원가입에 실패 했습니다.";
+		String page = "login/join";
+		
+		if(row > 0) {
+			msg = "회원가입에 성공 했습니다.";
+			page = "login/login";
+		}
+		
+		mav.addObject("msg", msg);
+		mav.setViewName(page);
+		
+		return mav;
 	}
 	
 	

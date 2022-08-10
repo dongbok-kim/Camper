@@ -1,6 +1,10 @@
 package com.camper.login.controller;
 
 import java.util.HashMap;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -84,7 +88,8 @@ public class LoginController {
 	
 	//회원가입
 	@RequestMapping(value = "/join.do")
-	public ModelAndView join(Model model, @ModelAttribute LoginDTO dto) {
+	@ResponseBody
+	public ModelAndView join(Model model, @ModelAttribute LoginDTO dto, HttpServletRequest request) {
 		
 		logger.info("id : "+dto.getMb_id());
 		logger.info("pw : "+dto.getMb_pw());
@@ -98,6 +103,7 @@ public class LoginController {
 		logger.info("detailaddr : "+dto.getMb_addr_detail());
 		logger.info("sido : "+dto.getMb_sido());
 		logger.info("sigungu : "+dto.getMb_sigungu());
+		
 		
 		return service.join(dto);
 	}
