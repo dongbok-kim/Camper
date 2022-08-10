@@ -21,6 +21,7 @@
 	right:200px;
 	
 	
+	
 	}
 	
 	#camplist {	
@@ -51,23 +52,29 @@
 	}
 	
 	
-	#crewlist {
-	
+	#crewlist {	
 	padding: 10px;
 	position: relative;
-	display: block;
+	display: inline-block;
 	left : 250px;
 	margin:0;
 	float: left;
 	width:300px;
-	background-color:#DCDCDC
+	height: 400px;
+	background-color:#DCDCDC;
+	text-align: left;
+	
 	}
 	
 	#title1{
 	color:green;
-	font-size:18px;
+	font-size:18px;		
+	}
 	
-	
+	#title2{
+	font-size:16px;
+	font-weight: bold;
+	text-align:center;
 	}
 	
 	#date {
@@ -79,6 +86,14 @@
 	bottom:350px;
 	font-size:15px;
 	opacity: 0.7;
+	}
+	
+	#text {
+	margin:0;
+	font-size:12px;
+	width:10px;
+	text-align:right;	
+	color:gray;
 	}
 
 
@@ -121,10 +136,10 @@
 			<tr>
 				<td>
 					<c:if test="${crew.img ne ''}">
-						<img src="${crew.img}" alt="모집사진" width="200">
+						<img src="${crew.img}" alt="모집사진" width="200" height="150">
 					</c:if>					
 					<c:if test="${crew.img eq ''}">
-						<img src="https://cdn.icon-icons.com/icons2/2582/PNG/512/picture_image_images_icon_153987.png" width="200">
+						<img src="https://cdn.icon-icons.com/icons2/2582/PNG/512/picture_image_images_icon_153987.png" width="200" height="150">
 					</c:if>
 				
 				</td>
@@ -133,6 +148,10 @@
 			</tr>
 			<tr>									
 				<td id="title1">모집중</td>
+				
+			</tr>
+			
+			<tr>
 				<td id="title2">${crew.ct_title}</td>
 			</tr>
 			<tr>
@@ -140,9 +159,9 @@
 			</tr>
 			<tr>
 				<td>${crew.name}&nbsp;</td>
-				<td>${crew.ct_age}대&nbsp;</td>
-				<td>${crew.ct_gender}&nbsp;</td>
-				<td>모집인원&nbsp;${crew.ct_people_cnt}명</td>								
+			</tr>
+			<tr>				
+				<td id="text">${crew.ct_age}대&nbsp;${crew.ct_gender}&nbsp;모집인원&nbsp;${crew.ct_people_cnt}명</td>											
 			</tr>					
 	</table>
 	
