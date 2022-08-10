@@ -16,7 +16,7 @@
             <tr>
                 <th>아이디</th>
                 <td>
-                    <input type="text" name = "id" id= "id" value="" />
+                    <input type="text" name ="mb_id" id= "id" />
                     <input type="button" value="아이디 중복 확인" onclick="doubleCheckId()" />
                     <!-- 아이디 중복 확인은 ajax 명령으로 -->
                 </td>
@@ -24,7 +24,7 @@
             <tr>
                 <th>비밀번호</th>
                 <td>
-                    <input type="password"  name = "password" id="password"/>
+                    <input type="password"  name = "mb_pw" id="password"/>
                 </td>
             </tr>
             <tr>
@@ -36,7 +36,7 @@
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="email"  name = "email" id="email"/>
+                    <input type="email"  name = "mb_email" id="email"/>
                     <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
                     <!-- 이메일 중복 확인은 ajax 명령으로 -->
                 </td>
@@ -44,7 +44,7 @@
             <tr>
                 <th>닉네임</th>
                 <td>
-                <input type="text"  name = "nickname" id="nickname"/>
+                <input type="text"  name = "mb_nickname" id="nickname"/>
                 <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
                 <!-- 닉네임 중복 확인은 ajax 명령으로 -->
                 </td>
@@ -52,37 +52,37 @@
             <tr>
                 <th>이름</th>
                 <td>
-                    <input type="text"  name = "name" id= "name"/>
+                    <input type="text"  name = "mb_name" id= "name"/>
                 </td>
                 <th>성별</th>
                 <td>
-                 <input type="radio" value="남" name = "gender" /> 남 
-                 <input type="radio" value="여" name = "gender" /> 여 
+                 <input type="radio" value="남" name = "mb_gender" /> 남 
+                 <input type="radio" value="여" name = "mb_gender" /> 여 
                 </td>
             </tr>
             <tr>
                 <th>연령대</th>
                 <td>
-                   <input type="radio" name="age" value="20" /> 20대 
-                   <input type="radio" name="age" value="30" /> 30대 
-                   <input type="radio" name="age" value="40" /> 40대 
-                   <input type="radio" name="age" value="50" /> 50대 
-                   <input type="radio" name="age" value="60" /> 60대 
+                   <input type="radio" name="ma_idx" value="1" /> 20대 
+                   <input type="radio" name="ma_idx" value="2" /> 30대 
+                   <input type="radio" name="ma_idx" value="3" /> 40대 
+                   <input type="radio" name="ma_idx" value="4" /> 50대 
+                   <input type="radio" name="ma_idx" value="5" /> 60대 
                 </td>
             </tr>
             <tr>
             	<th>주소</th>
                 <td>
-                <input type="text" id="sample6_postcode" name="sample6_postcode" placeholder="우편번호">
+                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호">
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="sample6_address" placeholder="주소"><br>
-				<input type="text" id="sample6_detailAddress" name="sample6_detailAddress"placeholder="상세주소">
+				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소"><br>
+				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소">
 				
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
 				
-				<input type="hidden" id="sample6_sido" name="sample6_sido" > <!-- 시/도 -->
-				<input type="hidden" id="sample6_sigungu" name="sample6_sigungu" > <!-- 시/군/구 -->
+				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->
+				<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
 				</td>
             </tr>
         </table>
@@ -135,15 +135,17 @@
 
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample6_postcode').value = data.zonecode;
+                // console.log(data.zonecode);
                 document.getElementById("sample6_address").value = addr;
+                // console.log(addr);
                 // 커서를 상세주소 필드로 이동한다.
                 document.getElementById("sample6_detailAddress").focus();
                 
               
-                // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
+               // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
                 document.getElementById('sample6_sido').value = data.sido;
                 
-                // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
+               // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
                 document.getElementById('sample6_sigungu').value = data.sigungu;
                 
                 
@@ -285,20 +287,20 @@
 			var name = $('#name').val(); //이름
 			// console.log($('#name').val());	
 			
-			var gender = $('input[name=gender]:checked').val(); //성별
-			// console.log($('input[name=gender]:checked').val());
+			var gender = $('input[name=mb_gender]:checked').val(); //성별
+			// console.log($('input[name=mb_gender]:checked').val());
 			
-			var age = $('input[name=age]:checked').val(); //나이대
-			// console.log($('input[name=age]:checked').val());	
+			var age = $('input[name=ma_idx]:checked').val(); //나이대
+			// console.log($('input[name=ma_idx]:checked').val());	
 			
-			var postcode = $('#sample6_postcode').val(); //우편번호
-			// console.log($('#sample6_postcode').val());
+			var postcode = $('input[name=mb_postcode]').val(); //우편번호
+			console.log($('input[name=mb_postcode]').val());
 			
-			var addr = $("#sample6_address").val(); //주소
-			// console.log($('#sample6_address').val());
+			var addr = $('input[name=mb_addr_default]').val(); //주소
+			console.log($('input[name=mb_addr_default]').val());
 			
-			var detailaddr = $("#sample6_detailAddress").val(); //상세주소
-			// console.log($('#sample6_detailAddress').val());
+			var detailaddr = $('input[name=mb_addr_detail]').val(); //상세주소
+			console.log($('input[name=mb_addr_detail]').val());
 			
 			var sido = $("#sample6_sido").val(); // 시/도 (서울, 경기, 경북 등으로 표시)
 			// console.log($('#sample6_sido').val());

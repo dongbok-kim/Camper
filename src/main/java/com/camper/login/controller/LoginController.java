@@ -10,12 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.camper.login.dto.LoginDTO;
 import com.camper.login.service.LoginService;
 
 @Controller
@@ -81,40 +84,22 @@ public class LoginController {
 	
 	//회원가입
 	@RequestMapping(value = "/join.do")
-	public String join(Model model, HttpServletRequest request) {
+	public ModelAndView join(Model model, @ModelAttribute LoginDTO dto) {
 		
-		String id = request.getParameter("id"); //아이디
-		String pw = request.getParameter("password"); //비밀번호
-		String pwchk =  request.getParameter("passwordcheck"); //비밀번호 확인
-		String email = request.getParameter("email"); //이메일
-		String nickname = request.getParameter("nickname"); //닉네임
-		String name = request.getParameter("name"); //이름
-		String gender = request.getParameter("gender"); //성별
-		String age = request.getParameter("age"); //연령대
-		String postcode = request.getParameter("sample6_postcode"); //우편번호
-		String addr = request.getParameter("sample6_address"); //주소
-		String detailaddr = request.getParameter("sample6_detailAddress"); //상세주소
-		String sido = request.getParameter("sample6_sido"); // 시/도
-		String sigungu = request.getParameter("sample6_sigungu"); // 시/군/구
+		logger.info("id : "+dto.getMb_id());
+		logger.info("pw : "+dto.getMb_pw());
+		logger.info("email : "+dto.getMb_email());
+		logger.info("nickname : "+dto.getMb_nickname());
+		logger.info("name : "+dto.getMb_name());
+		logger.info("gender : "+dto.getMb_gender());
+		logger.info("age : "+dto.getMa_idx());
+		logger.info("postcode : "+dto.getMb_postcode());
+		logger.info("addr : "+dto.getMb_addr_default());
+		logger.info("detailaddr : "+dto.getMb_addr_detail());
+		logger.info("sido : "+dto.getMb_sido());
+		logger.info("sigungu : "+dto.getMb_sigungu());
 		
-		logger.info("id : "+id);
-		logger.info("pw : "+pw);
-		logger.info("pwchk : "+pwchk);
-		logger.info("email : "+email);
-		logger.info("nickname : "+nickname);
-		logger.info("name : "+name);
-		logger.info("gender : "+gender);
-		logger.info("age : "+age);
-		logger.info("postcode : "+postcode);
-		logger.info("addr : "+addr);
-		logger.info("detailaddr : "+detailaddr);
-		logger.info("sido : "+sido);
-		logger.info("sigungu : "+sigungu);
-		
-		String msg = "아이디 혹은 비번이 틀렸습니다";
-		String page = "login/join";
-		
-		return page;
+		return service.join(dto);
 	}
 	
 	

@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.login.dao.LoginDAO;
+import com.camper.login.dto.LoginDTO;
 
 @Service
 public class LoginService {
@@ -50,6 +52,12 @@ public class LoginService {
 		map.put("doubleNickname", over);
 		
 		return map;
+	}
+
+
+	public ModelAndView join(LoginDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
