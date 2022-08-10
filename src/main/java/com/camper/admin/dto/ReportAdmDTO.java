@@ -71,6 +71,33 @@ public class ReportAdmDTO {
 	}
 	
 	
+	// report_image
+	private int ri_idx;
+	private String ri_ori_name;
+	private String ri_new_name;
+
+
+	public int getRi_idx() {
+		return ri_idx;
+	}
+	public void setRi_idx(int ri_idx) {
+		this.ri_idx = ri_idx;
+	}
+	public String getRi_ori_name() {
+		return ri_ori_name;
+	}
+	public void setRi_ori_name(String ri_ori_name) {
+		this.ri_ori_name = ri_ori_name;
+	}
+	public String getRi_new_name() {
+		return ri_new_name;
+	}
+	public void setRi_new_name(String ri_new_name) {
+		this.ri_new_name = ri_new_name;
+	}
+	
+	
+	
 	
 	
 }

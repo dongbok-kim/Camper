@@ -11,10 +11,36 @@
 	</select>
 	
 	<select id="reportView" resultType="com.camper.admin.dto.ReportAdmDTO">
-		SELECT mb_id, rp_id, rp_content, rp_datetime, rp_admin, rp_proc_date, rp_status, 
+		SELECT mb_id, rp_id, rp_content, rp_datetime, rp_admin, rp_proc_date, rp_status, rp_idx,
 			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
 		FROM cp_report cr
 		WHERE rp_idx = #{param1}
+	</select>
+	
+	<update id="reportUpdate" parameterType="hashmap">
+		UPDATE cp_report 
+		<set>
+			<choose>
+				<when test="rp_status.equals('처리완료')">
+					rp_status=#{rp_status}, rp_admin="admin" , rp_proc_date=now()
+				</when>
+				<otherwise>
+					rp_status=#{rp_status} 
+				</otherwise>			
+			</choose>
+		</set> 
+		WHERE  rp_idx=#{rp_idx}
+	</update>
+	
+	<insert id="fileWrite">
+		INSERT INTO cp_report_image(ri_ori_name, ri_new_name, rp_idx)
+			VALUES(#{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<select id="photoList" resultType="com.camper.admin.dto.ReportAdmDTO">
+		SELECT ri_idx, ri_new_name, rp_idx
+		FROM cp_report_image
+		WHERE rp_idx=#{param1}
 	</select>
 	
 	
