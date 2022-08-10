@@ -41,15 +41,21 @@ public class MyCrewService {
 		return mav;
 	}
 
+	
+	// 캠핑 참여 회원 확인
+	// by.승진 2022-08-10
 	public ModelAndView crewUpdate(String[] crew_chk, String idx) {
 		for (int i = 0; i < crew_chk.length; i++) {            
 			logger.info("id : "+crew_chk[i]);
 			dao.crewUpdate(crew_chk[i],idx);
 		}
-		ModelAndView mav = new ModelAndView("mypage/popupCrewUpdate");
+		ModelAndView mav = new ModelAndView("mypage/popupClose");
 		return mav;
 	}
 
+	
+	// 크루모집글 캠핑완료
+	// by.승진 2022-08-10
 	public void crewTogetherUpdate(String idx) {
 		dao.crewTogetherUpdate(idx);
 		

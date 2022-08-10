@@ -21,29 +21,10 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<!-- 
-		<button>완료</button>
-		<button onclick="window.close();">닫기</button>  -->
-		<input type="submit" value="완료" onclick="chkarr(idx)"/>
+		<input type="submit" value="완료"/>
 		<input type="button" value="닫기" onclick="window.close();"/>
 	</form>
 </body>
 <script>
-	function chkarr(idx){
-		
-		var form = document.crewForm;
-		/*
-		var obj = $("[name=crew_chk]");        
-		var chkArray = new Array(); // 배열 선언         
-		
-		$('input:checkbox[name=crew_chk]:checked').each(function() { // 체크된 체크박스의 value 값을 가지고 온다.           
-			 chkArray.push(this.value);        
-		});       
-			 
-		$('#hiddenValue').val(chkArray);                
-		console.log(chkArray);*/
-		// form.submit(); 
-		console.log(idx);
-	}
 </script>
 </html>

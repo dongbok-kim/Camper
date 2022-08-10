@@ -13,6 +13,7 @@
 			<mvc:mapping path="/myCrewWriteDelete.do"/>
 			<mvc:mapping path="/myCrewList.go"/>
 			<mvc:mapping path="/crewUpdate.go"/>
+			<mvc:mapping path="/crewUpdate.do"/>
 			<bean class="com.camper.lib.utils.MypgValidationInter"/>
 		</mvc:interceptor>
 		<mvc:interceptor>

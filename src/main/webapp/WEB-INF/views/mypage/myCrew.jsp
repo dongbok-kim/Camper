@@ -42,7 +42,6 @@
 									<c:choose>
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 0}">			
 											<td>${my.cc_crew}<br/>
-												<!--<button>크루인원 확정</button>  -->
 												<a onclick="popup('${my.ct_idx}')">크루인원 확정</a>
 											</td>
 										</c:when>	
