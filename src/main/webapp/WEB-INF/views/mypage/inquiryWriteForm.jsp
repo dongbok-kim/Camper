@@ -18,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>1:1 문의하기</h3>
-					<form action="inquiryWrite.do" method="post" name="form">
+					<form action="inquiryWrite.do" method="post" name="inquiryForm">
 						<table>
 							<tr>
 								<th>작성자</th>
@@ -34,7 +34,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<input type="submit" value="완료" />
+									<input type="button" value="완료"  onclick="yn()"/>
 									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
 								</th>
 							</tr>
@@ -43,5 +43,15 @@
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
+		function yn(){
+			var form = document.inquiryForm;
+			
+			var cf = confirm("등록하시겠습니까?");
+			if (cf == true) {
+				form.submit();
+			} else{
+				
+			}
+		}
 	</script>
 </html>
