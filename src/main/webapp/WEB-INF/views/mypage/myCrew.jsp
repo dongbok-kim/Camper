@@ -41,7 +41,10 @@
 									<td>${my.ct_wish_start} ~ ${my.ct_wish_end}</td>
 									<c:choose>
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 0}">			
-											<td>${my.cc_crew}<br/><button>크루인원 확정</button></td>
+											<td>${my.cc_crew}<br/>
+												<!--<button>크루인원 확정</button>  -->
+												<a onclick="popup('${my.ct_idx}')">크루인원 확정</a>
+											</td>
 										</c:when>	
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 1}">			
 											<td>${my.cc_crew}</td>
@@ -67,5 +70,22 @@
 					</table>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+		function popup(ct_idx){
+			
+			var w = 400;
+			var h = 600;
+			
+			var screenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+	        var screenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+	 
+	        width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+	        height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+	 
+	        var left = ((width / 2) - (w / 2)) + screenLeft;
+	        var top = ((height / 2) - (h / 2)) + screenTop;
+	 
+	        window.open('/crewUpdate.go?idx='+ct_idx, 'pop', 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+		}
+	</script>
 </html>

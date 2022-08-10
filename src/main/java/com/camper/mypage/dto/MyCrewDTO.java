@@ -17,7 +17,14 @@ public class MyCrewDTO {
 	private byte cc_is_join;
 	private String cc_crew;
 	private String ca_name;
+	private String mb_nickname;
 	
+	public String getMb_nickname() {
+		return mb_nickname;
+	}
+	public void setMb_nickname(String mb_nickname) {
+		this.mb_nickname = mb_nickname;
+	}
 	public String getCa_name() {
 		return ca_name;
 	}
