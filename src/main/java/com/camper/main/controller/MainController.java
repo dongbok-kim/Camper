@@ -1,12 +1,16 @@
 package com.camper.main.controller;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.camper.main.dto.MainDTO;
 import com.camper.main.service.MainService;
 
 @Controller
@@ -17,7 +21,15 @@ public class MainController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main() {
+	public String main(Model model) {
+		
+		ArrayList<MainDTO>list = service.list();
+		model.addAttribute("list", list);
+		
+		ArrayList<MainDTO>crew = service.crew();
+		model.addAttribute("crew", crew);
+		logger.info("메인입니다.");
+			
 		return "main";
 	}
 	
