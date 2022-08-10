@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camper.mypage.dao.CrewDAO">
+<mapper namespace="com.camper.mypage.dao.MyCrewDAO">
+
+	<select id="myCrewList" resultType="mypgCrew" parameterType="String">
+		SELECT cct.ct_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end
+		FROM cp_crew_together cct
+		JOIN cp_camping_crew ccc on ccc.ct_idx = cct.ct_idx
+		JOIN cp_camping cc ON cc.ca_idx = cct.ca_idx
+		WHERE ccc.mb_id = #{param1} AND cct.ct_idx not in (select bb_relation_idx from cp_board_blind where bb_relation = 'cp_crew_together') order by cct.ct_idx desc;
+	</select>
+	
+	<select id="myCrewTogetherInfo" parameterType="String" resultType="hashmap">
+		SELECT cc.ca_name, cct.ct_wish_start, cct.ct_wish_end 
+		FROM cp_crew_together cct, cp_camping cc  
+		WHERE cct.ca_idx = cc.ca_idx AND cct.ct_idx = #{param1}
+	</select>
+	
+	<select id="crewList" parameterType="String" resultType="mypgCrew">
+		SELECT cm.mb_nickname, ccc.mb_id, ccc.ct_idx FROM cp_camping_crew ccc, cp_member cm WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id
+	</select>
+	
+	<!-- 크루인원 확정 (캠핑 다녀온 회원들의 cc_is_join을 1로 update) -->
+	<update id="crewUpdate" parameterType="String">
+		UPDATE cp_camping_crew SET cc_is_join = 1 where mb_id = #{param1} AND ct_idx = #{param2}
+	</update>
+	
+	<!-- 크루모집글의 캠핑 완료 여부를 1로 update -->
+	<update id="crewTogetherUpdate" parameterType="String">
+		UPDATE cp_crew_together SET ct_end = 1 WHERE ct_idx = #{param1}
+	</update>
 
 </mapper>
