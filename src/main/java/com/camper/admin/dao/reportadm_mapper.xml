@@ -43,5 +43,12 @@
 		WHERE rp_idx=#{param1}
 	</select>
 	
+	<select id="reportSearch" resultType="com.camper.admin.dto.ReportAdmDTO">
+		SELECT rp_idx, rp_content, rp_datetime, rp_id, rp_status, mb_id,
+			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
+		FROM cp_report cr
+		WHERE
+	</select>
+	
 	
 </mapper>

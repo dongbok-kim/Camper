@@ -46,10 +46,26 @@
 		</table>
 	</div>
 	<div>
-		검색
+		<form action="reportSearch.do" method="post">
+			<select name="rp_status">
+				<option value="처리상태">처리상태</option>
+				<option value="미처리">미처리</option>
+				<option value="처리중">처리중</option>
+				<option value="처리완료">처리완료</option>
+			</select>
+			<select name="option">
+				<option value="전체">전체</option>
+				<option value="신고당한회원">신고당한회원</option>
+				<option value="신고자">신고자</option>
+				<option value="신고내용">신고내용</option>
+			</select>
+			<input type="text" name="keyword" placeholder="검색"/>
+			<input type="submit" value="search"/>
+		</form>
 	</div>
 	<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
 <script>
+
 </script>
 </html>

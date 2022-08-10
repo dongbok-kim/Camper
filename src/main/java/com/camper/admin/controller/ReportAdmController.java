@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.ReportAdmService;
 
@@ -46,6 +47,14 @@ public class ReportAdmController {
 		
 		String page = "redirect:/reportView?rp_idx="+params.get("rp_idx");
 		return page;
+	}
+	
+	@RequestMapping(value = "/reportSearch.do")
+	public ModelAndView reportSearch(
+			@RequestParam HashMap<String, String> params) {
+		logger.info("파람 : {}",params);
+		
+		return service.reportSearch(params);
 	}
 	
 

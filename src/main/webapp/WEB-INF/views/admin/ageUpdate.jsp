@@ -4,7 +4,7 @@
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
-						<li class="active"><a href="">회원 관리</a></li>
+						<li><a href="">회원 관리</a></li>
 						<li><a href="">신고 관리</a></li>
 						<li><a href="">정지 회원 관리</a></li>
 						<li><a href="">블라인드 관리</a></li>
@@ -17,7 +17,7 @@
 					</ul>
 				</aside>
 				<div>
-					<h3>연령대 추가</h3>
+					<h3>연령대 수정</h3>
 				</div>
 <body>
 	<div>

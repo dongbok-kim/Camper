@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.dao.ReportAdmDAO;
 import com.camper.admin.dto.ReportAdmDTO;
@@ -82,6 +83,13 @@ public class ReportAdmService {
 			}
 		}
 		
+	}
+
+	public ModelAndView reportSearch(HashMap<String, String> params) {
+		ArrayList<ReportAdmDTO> list = dao.reportSearch(params);
+		ModelAndView mav = new ModelAndView("reportList");
+		mav.addObject("list",list);
+		return mav;
 	}
 
 }

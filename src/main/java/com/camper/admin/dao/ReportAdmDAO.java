@@ -17,4 +17,6 @@ public interface ReportAdmDAO {
 
 	ArrayList<ReportAdmDTO> photoList(int rp_idx);
 
+	ArrayList<ReportAdmDTO> reportSearch(HashMap<String, String> params);
+
 }
