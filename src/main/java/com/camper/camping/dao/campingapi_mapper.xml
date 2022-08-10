@@ -3,4 +3,57 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.camping.dao.CampingApiDAO">
 
+	<insert id="setCampingApi" parameterType="com.camper.camping.dto.CampingApiDTO">
+		INSERT INTO cp_camping_api (
+			ca_idx,
+			ca_name,
+			ca_intro,
+			ca_manage_status,
+			ca_induty,
+			ca_sido,
+			ca_sigungu,
+			ca_postcode,
+			ca_addr_default,
+			ca_addr_detail,
+			ca_mapX,
+			ca_mapY,
+			ca_tel,
+			ca_oper_period,
+			ca_oper_date,
+			ca_fire_cnt,
+			ca_sub_facility,
+			ca_possibilty,
+			ca_environment,
+			ca_theme,
+			ca_tool,
+			ca_pet,
+			ca_img
+		)VALUES(
+			#{ca_idx},
+			#{ca_name},
+			#{ca_intro},
+			#{ca_manage_status},
+			#{ca_induty},
+			#{ca_sido},
+			#{ca_sigungu},
+			#{ca_postcode},
+			#{ca_addr_default},
+			#{ca_addr_detail},
+			#{ca_mapX},
+			#{ca_mapY},
+			#{ca_tel},
+			#{ca_oper_period},
+			#{ca_oper_date},
+			#{ca_fire_cnt},
+			#{ca_sub_facility},
+			#{ca_possibilty},
+			#{ca_environment},
+			#{ca_theme},
+			#{ca_tool},
+			#{ca_pet},
+			#{ca_img}
+		)
+	</insert>
+
+
 </mapper>
