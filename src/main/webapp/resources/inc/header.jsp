@@ -17,7 +17,7 @@
 		<div id="wrap">
 			<header>
 				<a href="/"><img src="resources/images/logo.jpg" id="logo" alt="Camper" /></a>
-				<a href="">캠핑장</a>
+				<a href="campingList.go">캠핑장</a>
 				<a href="">크루모집</a>
 				<div>
 					<a href=""><i class="xi-forum xi-2x"></i></a>

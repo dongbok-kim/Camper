@@ -3,4 +3,27 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.camping.dao.CampingDAO">
 
+	<!-- <select id="campingList" resultType="cpCamping">
+		SELECT * FROM cp_camping ORDER BY ca_idx DESC
+	</select>
+ -->
+	<select id="campingList" resultType="cpCamping">	
+		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido,
+		(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
+		(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview 
+		from cp_camping a ORDER BY ca_idx DESC;
+	</select>
+	
+	<select id="campingView" parameterType="String" resultType="cpCamping">
+		SELECT * FROM cp_camping WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<select id="campingView_review" parameterType="String" resultType="cpCamping">
+		SELECT * FROM cp_camping_review WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<select id="campingView_together" parameterType="String" resultType="cpCamping">
+		SELECT * FROM cp_crew_together WHERE ca_idx = #{ca_idx}
+	</select>
+
 </mapper>
