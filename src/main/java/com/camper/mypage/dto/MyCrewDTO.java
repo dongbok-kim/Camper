@@ -18,7 +18,21 @@ public class MyCrewDTO {
 	private String cc_crew;
 	private String ca_name;
 	private String mb_nickname;
+	private int cntCR;
+	private int cntMR;
 	
+	public int getCntCR() {
+		return cntCR;
+	}
+	public void setCntCR(int cntCR) {
+		this.cntCR = cntCR;
+	}
+	public int getCntMR() {
+		return cntMR;
+	}
+	public void setCntMR(int cntMR) {
+		this.cntMR = cntMR;
+	}
 	public String getMb_nickname() {
 		return mb_nickname;
 	}

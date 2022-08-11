@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>크루인원 확정</title>
+<title>팝업창 닫기</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style></style>
 </head>

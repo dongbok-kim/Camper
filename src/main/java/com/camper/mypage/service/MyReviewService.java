@@ -1,5 +1,7 @@
 package com.camper.mypage.service;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +26,18 @@ public class MyReviewService {
 		String nickname = dao.nickname(loginId);
 		mav.addObject("dto", dto);
 		mav.addObject("nickname", nickname);
-		mav.addObject("loginId", loginId);
 		return mav;
 	}
 
+	
+	// 캠핑장 후기 작성
+	// by.승진 2022-08-11
+	public ModelAndView campingReviewWrite(HashMap<String, String> params) {
+		ModelAndView mav = new ModelAndView("mypage/popupClose");
+		dao.campingReviewWrite(params);
+		return mav;
+	}
+	
 	
 	// 크루원 후기 작성 페이지
 	// by.승진 2022-08-11
@@ -35,5 +45,6 @@ public class MyReviewService {
 		ModelAndView mav = new ModelAndView("mypage/popupCrewReview");
 		return mav;
 	}
+
 
 }

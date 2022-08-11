@@ -9,12 +9,13 @@
 <style></style>
 </head>
 <body>
-	<form action="campingReviewWrite.do" method="post">
+	<form action="campingReviewWrite.do" method="post" name="campingReivewForm">
 		<table>
 			<tr>
 				<th>캠핑장명</th>
 				<td>[${dto.ca_sido} ${dto.ca_sigungu}] ${dto.ca_name}
 					<input type="hidden" name="ca_idx" value="${dto.ca_idx}"/>
+					<input type="hidden" name="ct_idx" value="${dto.ct_idx}"/>
 				</td>
 			</tr>
 			<tr>
@@ -23,14 +24,14 @@
 			</tr>
 			<tr>
 				<th>닉네임</th>
-				<td>${nickname}<input type="hidden" name="loginId" value="${loginId}"/></td>
+				<td>${nickname}</td>
 			</tr>
 			<tr>
 				<th>캠핑장 평가</th>
 				<td>
-					<input type="radio" name="chk_info" value="싫어요"/>싫어요
-					<input type="radio" name="chk_info" value="보통"/>보통
-					<input type="radio" name="chk_info" value="좋아요"/>좋아요
+					<input type="radio" name="assessment" value="싫어요"/>싫어요
+					<input type="radio" name="assessment" value="보통"/>보통
+					<input type="radio" name="assessment" value="좋아요"/>좋아요
 				</td>
 			</tr>
 			<tr>
@@ -38,10 +39,22 @@
 				<td><textarea name="content"></textarea></td>
 			</tr>
 		</table>
-		<input type="submit" value="완료"/>
+		<input type="button" value="등록" onclick="radioChk()"/>
 		<input type="button" value="닫기" onclick="window.close();"/>
 	</form>
 </body>
 <script>
+	
+	function radioChk(){
+		
+		var form = document.campingReivewForm;
+		
+		if ($('input[type=radio][name="assessment"]:checked').val()) {
+			form.submit();
+		} else {
+			alert('캠핑장 평가 항목을 선택해주세요.');
+		}
+	}
+	
 </script>
 </html>

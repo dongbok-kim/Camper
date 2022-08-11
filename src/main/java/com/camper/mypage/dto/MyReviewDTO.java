@@ -18,7 +18,16 @@ public class MyReviewDTO {
 	private int cr_idx;
 	private String cr_content;
 	private String cr_assessment;
+	private Timestamp cr_datetime;
+	private String mb_id;
+	private int ct_idx;
 	
+	public int getCt_idx() {
+		return ct_idx;
+	}
+	public void setCt_idx(int ct_idx) {
+		this.ct_idx = ct_idx;
+	}
 	public String getCa_sido() {
 		return ca_sido;
 	}
@@ -91,14 +100,4 @@ public class MyReviewDTO {
 	public void setMb_id(String mb_id) {
 		this.mb_id = mb_id;
 	}
-	public int getCt_idx() {
-		return ct_idx;
-	}
-	public void setCt_idx(int ct_idx) {
-		this.ct_idx = ct_idx;
-	}
-	private Timestamp cr_datetime;
-	private String mb_id;
-	private int ct_idx;
-
 }
