@@ -21,7 +21,21 @@ public class MyReviewDTO {
 	private Timestamp cr_datetime;
 	private String mb_id;
 	private int ct_idx;
+	private Date delAvail;
+	private Date today;
 	
+	public Date getToday() {
+		return today;
+	}
+	public void setToday(Date today) {
+		this.today = today;
+	}
+	public Date getDelAvail() {
+		return delAvail;
+	}
+	public void setDelAvail(Date delAvail) {
+		this.delAvail = delAvail;
+	}
 	public int getCt_idx() {
 		return ct_idx;
 	}

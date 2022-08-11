@@ -1,6 +1,7 @@
 package com.camper.mypage.controller;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
@@ -44,6 +45,34 @@ public class MyReviewController {
 	}
 	
 	
+	// 캠핑장 후기 목록
+	// by.승진 2022-08-11
+	@RequestMapping(value = "/myCampingReview.go", method = RequestMethod.GET)
+	public ModelAndView campingReviewList(HttpSession session) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.campingReviewList(loginId);
+	}
+	
+	
+	// 캠핑장 후기 삭제
+	// by.승진 2022-08-11
+		@RequestMapping(value = "/campingReviewDelete.do", method = RequestMethod.GET)
+	public ModelAndView campingReviewDelete (HttpSession session, @RequestParam String idx) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.campingReviewDelete(idx, loginId);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// 크루원 후기작성
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/crewReviewForm.go", method = RequestMethod.GET)
@@ -51,6 +80,22 @@ public class MyReviewController {
 		// String loginId = (String) session.getAttribute("loginId");
 		String loginId = "jin";
 		return service.crewReviewForm(idx, loginId);
+	}
+	
+	
+	@RequestMapping(value = "/crewReview.do", method = RequestMethod.POST)
+	public ModelAndView crewReview(HttpSession session, @RequestParam HashMap<String, String> params) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		logger.info("params : "+params);
+		HashMap<String, String> review = new HashMap<String, String>();
+		for (Entry<String, String> entry: params.entrySet()) {
+			logger.info("key : "+entry.getKey()+"value : "+entry.getValue());
+			if (entry.getKey().equals("ct_idx")) {
+				review.put("ct_idx", entry.getValue());
+			}
+		}
+		return null;
 	}
 	
 }

@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyReviewDAO">
 
-	<select id="campingReviewForm" resultType="mypgReview">
+	<select id="reviewForm" resultType="mypgReview">
 		SELECT cc.ca_idx, cc.ca_name, cc.ca_sido, cc.ca_sigungu, cct.ct_wish_start, cct.ct_wish_end, cct.ct_idx
 		FROM cp_crew_together cct 
 		JOIN cp_camping cc ON cct.ca_idx = cc.ca_idx 
@@ -16,7 +16,24 @@
 	
 	<insert id="campingReviewWrite" parameterType="hashmap">
 		INSERT INTO cp_camping_review(cr_content, cr_assessment, mb_id, ct_idx, ca_idx) 
-		VALUES(#{assessment}, #{content}, #{loginId}, #{ct_idx}, #{ca_idx})
+		VALUES(#{content}, #{assessment}, #{loginId}, #{ct_idx}, #{ca_idx})
 	</insert>
+	
+	<select id="crewList" resultType="mypgReview">
+		SELECT cm.mb_nickname, ccc.mb_id, ccc.ct_idx 
+		FROM cp_camping_crew ccc, cp_member cm 
+		WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id and not ccc.mb_id in (#{param2});
+	</select>
+	
+	<!-- 캠핑장 후기 목록 -->
+	<select id="campingReviewList" parameterType="String" resultType="mypgReview">
+		SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cr_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
+		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
+		WHERE mb_id = #{param1} ORDER BY cr_idx DESC
+	</select>
+	
+	<delete id="campingReviewDelete">
+		DELETE FROM cp_camping_review WHERE cr_idx = #{param1} and mb_id = #{param2}
+	</delete>
 
 </mapper>

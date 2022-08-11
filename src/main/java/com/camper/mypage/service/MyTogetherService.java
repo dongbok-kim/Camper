@@ -21,8 +21,8 @@ public class MyTogetherService {
 
 	// 내가 쓴 크루모집글 목록
 	// by. 승진 2022-08-09
-	public ModelAndView myCrewWriteList(String temporaryId) {
-		ArrayList<MyTogetherDTO> list = dao.myCrewWriteList(temporaryId);
+	public ModelAndView myCrewWriteList(String loginId) {
+		ArrayList<MyTogetherDTO> list = dao.myCrewWriteList(loginId);
 		logger.info("list 갯수: "+list.size());
 		ModelAndView mav = new ModelAndView("mypage/myCrewWrite");
 		mav.addObject("list", list);
@@ -31,8 +31,8 @@ public class MyTogetherService {
 	
 	// 내가 쓴 크루모집글 삭제
 	// by. 승진 2022-08-09
-	public ModelAndView myCrewWriteDelete(String idx, String temporaryId) {
-		dao.myCrewWriteDelete(idx, temporaryId);
+	public ModelAndView myCrewWriteDelete(String idx, String loginId) {
+		dao.myCrewWriteDelete(idx, loginId);
 		ModelAndView mav = new ModelAndView("redirect:/myCrewWriteList.go");
 		return mav;
 	}
