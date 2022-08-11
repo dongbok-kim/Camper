@@ -6,8 +6,17 @@ public class ProfileDTO {
 	private String mb_nickname;
 	private String mb_gender;
 	private int mb_fire;
+	private int age;
 	
 	
+	
+	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
 	public String getMb_id() {
 		return mb_id;
 	}

@@ -4,6 +4,7 @@
 <mapper namespace="com.camper.main.dao.MainDAO">
 
 
+<!-- 캠핑장 랜덤 4개 -->
 <select id="list" resultType="com.camper.main.dto.MainDTO">	
 	SELECT (select count(cl_idx) from cp_camping_like where ca_idx = c.ca_idx) as cl_cnt, 
 	(select count(cr_idx) from cp_camping_review where ca_idx = c.ca_idx) as cr_cnt, c.ca_name, c.ca_intro, c.ca_sido, c.ca_sigungu, c.ca_addr_default, c.ca_addr_detail, c.ca_img 	
@@ -11,8 +12,9 @@ FROM cp_camping c ORDER by rand() limit 4;
 </select>
 
 
+<!-- 크루모집 랜덤 4개 -->
 <select id="crew" resultType="com.camper.main.dto.MainDTO">	
-	SELECT ct_title, ct_people_cnt, ct_gender, ct_age, ct_wish_start, ct_wish_end, (select mb_nickname from cp_member where mb_id = cct.mb_id) as name,
+	SELECT ct_title, ct_people_cnt, ct_gender, ct_age, ct_wish_start, ct_wish_end, mb_id, (select mb_nickname from cp_member where mb_id = cct.mb_id) as name,
 	(select ca_name from cp_camping where ca_idx=cct.ca_idx) as camp_name, (select ca_img from cp_camping where ca_idx=cct.ca_idx) as img,
 	(select ca_sido from cp_camping where ca_idx=cct.ca_idx) as sido
 FROM cp_crew_together cct WHERE ct_deadline=0  ORDER by rand() limit 4;	

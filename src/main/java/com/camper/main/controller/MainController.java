@@ -23,9 +23,11 @@ public class MainController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model) {
 		
+		//캠핑장 랜덤 리스트
 		ArrayList<MainDTO>list = service.list();
 		model.addAttribute("list", list);
 		
+		//크루모집 랜덤 리스트
 		ArrayList<MainDTO>crew = service.crew();
 		model.addAttribute("crew", crew);
 		logger.info("메인입니다.");

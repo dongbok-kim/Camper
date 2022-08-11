@@ -3,4 +3,32 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.profile.dao.ProfileDAO">
 
+  
+<!-- 차단하기 -mb_id가 차단당한 회원-->
+<insert id="MemberBlock" parameterType="String">
+INSERT INTO cp_member_block(mb_id, bl_mb) VALUES(#{param1},#{param2})
+</insert>
+
+
+<!-- 차단해제 -->
+<delete id="MemberBlockDelete" parameterType="String">
+DELETE FROM cp_member_block WHERE mb_id=#{param1} and bl_mb=#{param2}
+</delete>
+
+
+ 
+<!-- 차단 확인 --><!--
+<select id="MemberBlockCheck" resultType="int">
+SELECT bl_idx FROM cp_member_block WHERE mb_id=#{param1} and bl_mb=#{param2}
+</select>
+ -->
+
+
+<!-- 프로필 조회 -->
+<select id="profileView" parameterType="String" resultType="com.camper.profile.dto.ProfileDTO">
+SELECT mb_id,mb_nickname, mb_gender, mb_fire , (select ma_age from cp_member_age cma where cma.ma_idx = m.ma_idx) as age 
+FROM cp_member m WHERE mb_id = #{mb_id}
+</select>
+
+
 </mapper>

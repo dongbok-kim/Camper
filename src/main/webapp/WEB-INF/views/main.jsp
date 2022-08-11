@@ -110,7 +110,7 @@
 						<img src="${camp.ca_img}" alt="캠핑장사진" width="300">
 					</c:if>					
 					<c:if test="${camp.ca_img eq ''}">
-						<img src="https://cdn.icon-icons.com/icons2/2582/PNG/512/picture_image_images_icon_153987.png" width="300">
+						<img src="resources/images/no_picture.png" width="300">
 					</c:if>
 				</td>
 				<td id="name">[${camp.ca_sido}&nbsp;${camp.ca_sigungu}]${camp.ca_name}</td>
@@ -133,13 +133,14 @@
 	
 	<c:forEach items="${crew}" var="crew">
 	<table id ="crewlist">
+			
 			<tr>
 				<td>
 					<c:if test="${crew.img ne ''}">
 						<img src="${crew.img}" alt="모집사진" width="200" height="150">
 					</c:if>					
 					<c:if test="${crew.img eq ''}">
-						<img src="https://cdn.icon-icons.com/icons2/2582/PNG/512/picture_image_images_icon_153987.png" width="200" height="150">
+						<img src="resources/images/no_picture.png" width="200" height="150">
 					</c:if>
 				
 				</td>
@@ -162,12 +163,21 @@
 			</tr>
 			<tr>				
 				<td id="text">${crew.ct_age}대&nbsp;${crew.ct_gender}&nbsp;모집인원&nbsp;${crew.ct_people_cnt}명</td>											
-			</tr>					
+			</tr>			
+			<tr>								
+				<td><a href="profile?mb_id=${crew.mb_id}">프로필&nbsp;${crew.name}</a></td>					
+				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=900, height=800');">
+				팝업:${crew.name}</button></td>
+			</tr>		
 	</table>
 	
 	</c:forEach>
 	
 	</body>
 	
-	<script></script>
+	<script>
+	
+		
+	
+	</script>
 </html>
