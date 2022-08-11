@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.camper.mypage.dao.ReviewDAO">
+<mapper namespace="com.camper.mypage.dao.MyReviewDAO">
+
+	<select id="campingReviewForm" resultType="mypgReview">
+		SELECT cc.ca_idx, cc.ca_name, cc.ca_sido, cc.ca_sigungu, cct.ct_wish_start, cct.ct_wish_end 
+		FROM cp_crew_together cct 
+		JOIN cp_camping cc ON cct.ca_idx = cc.ca_idx 
+		WHERE cct.ct_idx = #{param1}
+	</select>
+	
+	<select id="nickname" resultType="String">
+		SELECT mb_nickname FROM cp_member WHERE mb_id = #{param1}
+	</select>
 
 </mapper>

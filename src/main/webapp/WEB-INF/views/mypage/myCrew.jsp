@@ -60,9 +60,11 @@
 											<td style="color:red">불참석</td>
 										</c:otherwise>
 									</c:choose>
-									<c:if test="${my.cc_is_join == 1}">
-										<td><button>캠핑장 후기</button><br/><button>크루 후기</button></td>
-									</c:if>
+									<c:choose>
+										<c:when test="${my.cc_is_join == 1}">
+											<td><a onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a><br/><a onclick="popupCrew('${my.ct_idx}')">크루 후기</a>
+										</c:when>
+									</c:choose>
 								</tr>		
 							</c:forEach>
 						</tbody>
@@ -70,6 +72,7 @@
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
+		
 		function popup(ct_idx){
 			
 			var w = 400;
@@ -86,5 +89,41 @@
 	 
 	        window.open('/crewUpdate.go?idx='+ct_idx, 'pop', 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 		}
+		
+		function popupCamping(ct_idx){
+			
+			var w = 400;
+			var h = 600;
+			
+			var screenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+	        var screenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+	 
+	        width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+	        height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+	 
+	        var left = ((width / 2) - (w / 2)) + screenLeft;
+	        var top = ((height / 2) - (h / 2)) + screenTop;
+	 
+	        window.open('/campingReviewForm.go?idx='+ct_idx, 'pop', 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+		}
+		
+		function popupCrew(ct_idx){
+			
+			var w = 400;
+			var h = 600;
+			
+			var screenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+	        var screenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+	 
+	        width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+	        height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+	 
+	        var left = ((width / 2) - (w / 2)) + screenLeft;
+	        var top = ((height / 2) - (h / 2)) + screenTop;
+	 
+	        window.open('/crewReviewForm.go?idx='+ct_idx, 'pop', 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+		}
+		
+		
 	</script>
 </html>
