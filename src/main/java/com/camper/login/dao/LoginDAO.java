@@ -20,6 +20,8 @@ public interface LoginDAO {
 
 	int pwRework(LoginDTO dto);
 
+	String mbgrade(String id);
+
 	
 
 }

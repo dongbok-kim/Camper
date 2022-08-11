@@ -39,4 +39,8 @@
 	UPDATE cp_member SET mb_pw=#{mb_pw} WHERE mb_id=#{mb_id}
 </update>
 
+<select id="mbgrade" resultType="String">
+	SELECT mb_grade FROM cp_member WHERE mb_id = #{param1}
+</select>
+
 </mapper>

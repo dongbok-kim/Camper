@@ -69,7 +69,10 @@ public class LoginController {
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
-		String loginPw = service.login(id);		
+		
+		
+		String loginPw = service.login(id);
+		String mb_grade = service.mbgrade(id);
 		boolean match = encoder.matches(pw, loginPw);
 		
 		String msg = "아이디 혹은 비번이 틀렸습니다";
@@ -79,6 +82,11 @@ public class LoginController {
 			HttpSession session = request.getSession();
 			session.setAttribute("loginId", id);
 			logger.info("로그인 성공");
+			
+			logger.info("mb_grade : "+mb_grade);
+			session.setAttribute("mb_grade", mb_grade);
+			
+			
 			msg = id + "님 환영합니다";			
 			page = "main";			
 		} else {			
