@@ -42,6 +42,27 @@ public class MyInquiryService {
 		return mav;
 	}
 
+	// 문의글 삭제
+	// by.승진 2022-08-10
+	public ModelAndView myInquiryDelete(String idx, String loginId) {
+		ModelAndView mav = new ModelAndView("redirect:/myInquiryList.go");
+		dao.myInquiryDelete(idx, loginId);
+		return mav;
+	}
+
+	// 문의글 수정 페이지
+	// by.승진 2022-08-11
+	public ModelAndView myInquiryUpdateForm(String idx, String loginId) {
+		ModelAndView mav = new ModelAndView("mypage/myInquiryUpdate");
+		MyInquiryDTO dto = dao.myInquiryUpdateForm(idx,loginId);
+		mav.addObject("dto", dto);
+		return mav;
+	}
+
+	public void myInquiryUpdate(HashMap<String, String> params) {
+		dao.myInquiryUpdate(params);
+	}
+
 	
 
 }

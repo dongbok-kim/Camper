@@ -13,4 +13,10 @@ public interface MyInquiryDAO {
 
 	MyInquiryDTO inquiryDetail(String idx);
 
+	void myInquiryDelete(String idx, String loginId);
+
+	MyInquiryDTO myInquiryUpdateForm(String idx, String loginId);
+
+	void myInquiryUpdate(HashMap<String, String> params);
+
 }

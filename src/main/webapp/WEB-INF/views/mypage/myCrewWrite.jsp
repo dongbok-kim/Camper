@@ -18,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>내가 쓴 모집글</h3>
-					참여한 크루 목록 수 : ${list.size()} 건
+					<h4>참여한 크루 목록 수 : ${list.size()} 건</h4>
 					<table>
 						<thead>
 							<tr>

@@ -11,14 +11,14 @@
 						<li><a href="">캠핑장 후기</a></li>
 						<li><a href="">크루 후기</a></li>
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
-						<li><a href="">참여 중인 채팅방</a></li>
+						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="">차단 회원</a></li>
 						<li><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
 				<div>
 					<h3>찜한 캠핑장</h3>
-					찜한 캠핑장 수 : ${list.size()} 건
+					<h4>찜한 캠핑장 수 : ${list.size()} 건</h4>
 					<table>
 						<thead>
 							<tr>

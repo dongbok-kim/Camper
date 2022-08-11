@@ -20,9 +20,8 @@ public class MyCampingLikeService {
 
 	// 캠핑장 찜 목록
 	// by. 승진 2022-08-08
-	public ModelAndView myCampingLikeList(String temporaryId) {
-		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList(temporaryId);
-		logger.info("list 갯수 : "+list.size());
+	public ModelAndView myCampingLikeList(String loginId) {
+		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeList(loginId);
 		ModelAndView mav = new  ModelAndView("mypage/myCampingLike");
 		mav.addObject("list", list);
 		return mav;

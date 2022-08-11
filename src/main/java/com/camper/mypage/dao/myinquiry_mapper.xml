@@ -15,5 +15,19 @@
 	<select id="inquiryDetail" parameterType="String" resultType="mypgInquiry">
 		SELECT in_idx, in_title, in_datetime, in_content, in_status, mb_id FROM cp_inquiry WHERE in_idx = #{idx}
 	</select>
+	
+	<!-- 문의 삭제 -->
+	<delete id="myInquiryDelete">
+		DELETE FROM cp_inquiry WHERE in_idx = #{param1} AND mb_id = #{param2}
+	</delete>
+	
+	<select id="myInquiryUpdateForm" resultType="mypgInquiry">
+		SELECT mb_id, in_idx, in_title, in_content FROM cp_inquiry WHERE in_idx = #{param1} AND mb_id = #{param2}
+	</select>
+	
+	<!-- 문의 수정 -->
+	<update id="myInquiryUpdate" parameterType="hashmap">
+		UPDATE cp_inquiry SET in_title = #{subject}, in_content = #{content} WHERE in_idx = #{idx} AND mb_id = #{loginId}
+	</update>
 
 </mapper>

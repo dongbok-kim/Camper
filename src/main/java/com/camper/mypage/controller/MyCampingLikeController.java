@@ -26,8 +26,8 @@ public class MyCampingLikeController {
 	@RequestMapping(value = "/myCampingLikeList.go", method = RequestMethod.GET)
 	public ModelAndView myCampingLikeList(HttpSession session) {
 		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		return service.myCampingLikeList(temporaryId);
+		String loginId = "jin";
+		return service.myCampingLikeList(loginId);
 	}
 	
 	// 캠핑장 찜해제
