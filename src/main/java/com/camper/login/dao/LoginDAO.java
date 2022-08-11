@@ -16,7 +16,9 @@ public interface LoginDAO {
 
 	String idFind(String name, String email);
 
-	String pwFind(String mb_id, String mb_email);
+	int pwFind(String mb_id, String mb_email);
+
+	int pwRework(LoginDTO dto);
 
 	
 

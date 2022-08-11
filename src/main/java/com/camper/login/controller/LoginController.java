@@ -165,41 +165,25 @@ public class LoginController {
 	}
 	
 	
-	//비밀번호 찾기
-	@RequestMapping(value = "/pwFind.do")
-	public String PwFind(Model model, @ModelAttribute LoginDTO dto) {
+	//아이디, 비밀번호 확인
+	@RequestMapping(value = "/pwFind.ajax")
+	@ResponseBody
+	public HashMap<String, Object> PwCheck(@RequestParam String mb_id , @RequestParam String mb_email) {
 		
-		String page = "login/pwfind";
-		
-		String pwFind = service.pwFind(dto.getMb_id(), dto.getMb_email());
-		
-		if(pwFind == null) {
-			model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
-		} else {
-			model.addAttribute("msg", "비밀번호 변경 가능");
-			
-		}
-		
-		return page;
+		logger.info("아이디 , 비밀번호 확인");
+		return service.pwFind(mb_id, mb_email);
 	}
 	
 	
 		//비밀번호 재설정
 		@RequestMapping(value = "/pwRework.do")
-		public String PwRework(Model model, @ModelAttribute LoginDTO dto) {
+		public ModelAndView PwRework(Model model, @ModelAttribute LoginDTO dto) {
 			
-			String page = "login/pwfind";
+			logger.info("수정할 아이디 : "+dto.getMb_id());
+			logger.info("수정할 pw : "+dto.getMb_pw());
+			logger.info("수정할 이메일 : "+dto.getMb_email());
 			
-			String pwFind = service.pwFind(dto.getMb_id(), dto.getMb_email());
-			
-			if(pwFind == null) {
-				model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
-			} else {
-				model.addAttribute("msg", "비밀번호 변경 가능");
-				
-			}
-			
-			return page;
+			return service.pwRework(dto);
 		}
 	
 	

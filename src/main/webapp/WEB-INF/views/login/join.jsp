@@ -262,7 +262,7 @@
 	
 	
 	
-		function submitCheck() {
+		function submitCheck() {  //회원가입 하기전 체크
 			
 			var pattern1 = /[0-9]/;				// 숫자
 			var pattern2 = /[a-zA-Z]/;			// 문자
