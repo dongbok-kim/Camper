@@ -1,6 +1,7 @@
 package com.camper.admin.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,20 @@ public class BlindAdmService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ModelAndView reportList() {
-		ArrayList<BlindAdmDTO> list = dao.reportList();
+	public ModelAndView blindList() {
+		ArrayList<BlindAdmDTO> list = dao.blindList();
 		ModelAndView mav = new ModelAndView("admin/blindAdmList");
 		mav.addObject("list",list);
 		return mav;
 	}
+
+	public ModelAndView blindSearch(HashMap<String, String> params) {
+		ArrayList<BlindAdmDTO> list = dao.blindSearch(params);
+		ModelAndView mav = new ModelAndView("admin/blindAdmList");
+		mav.addObject("list",list);
+		return mav;
+	}
+	
+	
 
 }

@@ -33,7 +33,11 @@
 			<c:forEach items="${list }" var="blind">
 				<tr>
 					<td>${blind.bb_idx}</td>
-					<td>${blind.bb_relation}</td>
+					<td>
+					<c:if test="${blind.bb_relation eq 'cp_crew_together'}">모집글</c:if>
+					<c:if test="${blind.bb_relation eq 'cp_member_review'}">회원 후기</c:if>
+					<c:if test="${blind.bb_relation eq 'cp_camping_review'}">캠핑장 후기</c:if>
+					</td>
 					<td>${blind.bb_reason}</td>
 					<td>${blind.mb_id}</td>
 					<td>${blind.bb_datetime}</td>
@@ -44,12 +48,13 @@
 	<div>
 		<form action="blindAdmSearch.do" method="post">
 			<select name="bb_relation">
+				<option value="relation">구분</option>
 				<option value="cp_camping_review">캠핑장 후기</option>
 				<option value="cp_member_review">회원 후기</option>
-				<option value="cp_camping_together">처리중</option>
+				<option value="cp_camping_together">모집글</option>
 			</select>
 			<select name="option">
-				<option value="전체">전체</option>
+				<option value="all">전체</option>
 				<option value="bb_reason">블라인드 사유</option>
 				<option value="mb_id">블라인드 처리자</option>
 			</select>
