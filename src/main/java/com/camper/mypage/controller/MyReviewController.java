@@ -1,5 +1,6 @@
 package com.camper.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -79,6 +80,8 @@ public class MyReviewController {
 	public ModelAndView crewReviewForm(HttpSession session, @RequestParam String idx) {
 		// String loginId = (String) session.getAttribute("loginId");
 		String loginId = "jin";
+		session.removeAttribute("idx");
+		session.setAttribute("idx", idx);
 		return service.crewReviewForm(idx, loginId);
 	}
 	
@@ -87,14 +90,47 @@ public class MyReviewController {
 	public ModelAndView crewReview(HttpSession session, @RequestParam HashMap<String, String> params) {
 		// String loginId = (String) session.getAttribute("loginId");
 		String loginId = "jin";
+		String idx = (String) session.getAttribute("idx");
+		logger.info("크루 모집 번호는 = "+idx);
 		logger.info("params : "+params);
-		HashMap<String, String> review = new HashMap<String, String>();
+		
+		ArrayList<String> list = new ArrayList<String>();
+
 		for (Entry<String, String> entry: params.entrySet()) {
 			logger.info("key : "+entry.getKey()+"value : "+entry.getValue());
-			if (entry.getKey().equals("ct_idx")) {
-				review.put("ct_idx", entry.getValue());
+			
+			if (entry.getKey().contains("assessment")) {
+				// 키 값 가져오기
+				String id = entry.getKey();
+				logger.info(id);
+				
+				// 키 값에서 아이디 추출
+				String getId = id.substring(11, id.length()-1);
+				logger.info(getId);
+				
+				list.add(idx);
+				list.add(getId);
+				// 평가 항목(싫어요, 보통, 좋아요)
+				list.add(entry.getValue());
+
+			} else if (entry.getKey().contains("content")){
+				String content = entry.getValue();
+				list.add(content);
 			}
+			
+			logger.info("리스트는 : "+list);
+			
+			String[] result = list.toArray(new String[0]);
+			
+			for (int i = 0; i < result.length; i++) {
+				logger.info("result : "+result[i]);
+			}
+			
 		}
+		
+
+		
+		
 		return null;
 	}
 	

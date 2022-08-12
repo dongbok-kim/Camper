@@ -27,12 +27,4 @@ public class MyCampingLikeService {
 		return mav;
 	}
 
-	// 캠핑장 찜해제
-	// by. 승진 2022-08-08
-	public ModelAndView myCampingLikeDelete(String idx, String temporaryId) {
-		dao.myCampingLikeDelete(idx, temporaryId);
-		ModelAndView mav = new  ModelAndView("redirect:/myCampingLikeList.go");
-		return mav;
-	}
-
 }

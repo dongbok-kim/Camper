@@ -1,5 +1,7 @@
 package com.camper.lib.service;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +20,28 @@ public class CommonService {
 	
 	// 캠핑장 찜해제
 	// by. 승진 2022-08-11
-	public ModelAndView campingLikeDelete(String idx, String loginId) {
+	public void campingLikeDelete(String idx, String loginId) {
 		dao.campingLikeDelete(idx, loginId);
-		ModelAndView mav = new  ModelAndView("redirect:/myCampingLikeList.go");
-		return mav;
 	}
 
 	
-	// 블라인드 등록
+	// 블라인드 등록(마이페이지 - 모집글 삭제)
 	// by.승진 2022-08-11
-	public ModelAndView blind(String idx, String loginId) {
-		dao.blind(idx, loginId);
-		ModelAndView mav = new ModelAndView("redirect:/myCrewWriteList.go");
-		return mav;
+	public void blindSelf(String idx, String loginId) {
+		dao.blindSelf(idx, loginId);
+	}
+	
+	
+	// 블라인드 등록(관리자)
+	// by.승진 2022-08-12
+	public void blind(HashMap<String, String>  params) {
+		dao.blind(params);
+	}
+	
+	// 차단 회원 해제
+	// by.승진 2022-08-12
+	public void blockDelete(String idx, String loginId) {
+		dao.blockDelete(idx, loginId);
 	}
 
 

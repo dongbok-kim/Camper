@@ -8,6 +8,4 @@ public interface MyCampingLikeDAO {
 
 	ArrayList<MyCampingLikeDTO> myCampingLikeList(String temporaryId);
 
-	void myCampingLikeDelete(String idx, String temporaryId);
-
 }

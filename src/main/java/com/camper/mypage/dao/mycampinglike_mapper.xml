@@ -9,10 +9,4 @@
 		SELECT ccl.cl_idx, ccl.cl_datetime, b.ca_name FROM cp_camping_like ccl, cp_camping b WHERE ccl.mb_id=#{param1} AND ccl.ca_idx= b.ca_idx ORDER BY cl_idx DESC
 	</select>
 	
-	<!-- 캠핑장 찜해제 -->
-	<!-- by.승진 2022-08-08 -->
-	<delete id="myCampingLikeDelete" parameterType="String">
-		DELETE FROM cp_camping_like WHERE cl_idx = #{param1} AND mb_id = #{param2}
-	</delete>
-
 </mapper>

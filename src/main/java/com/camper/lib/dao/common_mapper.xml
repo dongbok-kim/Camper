@@ -9,12 +9,22 @@
 		DELETE FROM cp_camping_like WHERE cl_idx = #{param1} AND mb_id = #{param2}
 	</delete>
 	
-	<!-- 블라인드 등록 -->
+	<!-- 블라인드 등록(마이페이지 - 모집글 삭제) -->
 	<!-- by.승진 2022-08-11 -->
-	<insert id="blind" parameterType="String">
+	<insert id="blindSelf" parameterType="String">
 		INSERT INTO cp_board_blind(bb_relation, bb_relation_idx, bb_reason, mb_id) VALUES('cp_crew_together', #{param1},'본인삭제', #{param2})
 	</insert>
 	
+	<!-- 블라인드 등록(관리자) -->
+	<!-- by.승진 2022-08-12 -->
+	<insert id="blind" parameterType="hashmap">
+		INSERT INTO cp_board_blind(bb_relation, bb_relation_idx, bb_reason, mb_id) VALUES(#{relation}, #{idx}, #{reason}, #{mb_id})
+	</insert>
 	
-
+	<!-- 차단 회원 해제 -->
+	<!-- by.승진 2022-08-12 -->
+	<delete id="blockDelete">
+		DELETE FROM cp_member_block WHERE bl_idx = #{param1} and bl_mb = #{param2}
+	</delete>
+	
 </mapper>

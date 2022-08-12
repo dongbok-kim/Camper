@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.lib.service.CommonService;
 import com.camper.mypage.service.MyCampingLikeService;
 
 @Controller
 public class MyCampingLikeController {
 
 	@Autowired MyCampingLikeService service;
+	@Autowired CommonService c_service;
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -33,10 +35,11 @@ public class MyCampingLikeController {
 	// 캠핑장 찜해제
 	// by. 승진 2022-08-08
 	@RequestMapping(value = "/myCampingLikeDelete.do", method = RequestMethod.GET)
-	public ModelAndView myCampingLikeDelete(HttpSession session, @RequestParam String idx) {
+	public String myCampingLikeDelete(HttpSession session, @RequestParam String idx) {
 		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		return service.myCampingLikeDelete(idx, temporaryId);
+		String loginId = "jin";
+		c_service.campingLikeDelete(idx, loginId);
+		return "redirect:/myCampingLikeList.go";
 	}
 	
 }

@@ -13,9 +13,7 @@
 		<table>
 			<tr>
 				<th>캠핑장명</th>
-				<td>[${dto.ca_sido} ${dto.ca_sigungu}] ${dto.ca_name}
-					<input type="hidden" name="ct_idx" value="${dto.ct_idx}"/>
-				</td>
+				<td>[${dto.ca_sido} ${dto.ca_sigungu}] ${dto.ca_name}</td>
 			</tr>
 			<tr>
 				<th>캠핑 기간</th>
