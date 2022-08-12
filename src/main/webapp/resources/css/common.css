@@ -166,3 +166,8 @@ header > div > a:hover > i {
 	max-width: 1000px;
 	width: 100%;
 }
+
+#wrap > #container > #full {
+	max-width: 1200px;
+	clear: both;
+}
