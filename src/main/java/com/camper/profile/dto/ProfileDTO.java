@@ -1,5 +1,7 @@
 package com.camper.profile.dto;
 
+import java.sql.Date;
+
 public class ProfileDTO {
 	
 	private String mb_id;
@@ -8,9 +10,56 @@ public class ProfileDTO {
 	private int mb_fire;
 	private int age;
 	
+	private String name;
+	private String ct_title;
+	private Date ct_wish_start;
+	private Date ct_wish_end;
+	
+	
+	private String mr_assessment;
+	private String mr_content;
 	
 	
 	
+	
+	
+	
+	public String getMr_assessment() {
+		return mr_assessment;
+	}
+	public void setMr_assessment(String mr_assessment) {
+		this.mr_assessment = mr_assessment;
+	}
+	public String getMr_content() {
+		return mr_content;
+	}
+	public void setMr_content(String mr_content) {
+		this.mr_content = mr_content;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getCt_title() {
+		return ct_title;
+	}
+	public void setCt_title(String ct_title) {
+		this.ct_title = ct_title;
+	}
+	public Date getCt_wish_start() {
+		return ct_wish_start;
+	}
+	public void setCt_wish_start(Date ct_wish_start) {
+		this.ct_wish_start = ct_wish_start;
+	}
+	public Date getCt_wish_end() {
+		return ct_wish_end;
+	}
+	public void setCt_wish_end(Date ct_wish_end) {
+		this.ct_wish_end = ct_wish_end;
+	}
 	public int getAge() {
 		return age;
 	}

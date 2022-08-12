@@ -2,6 +2,8 @@ package com.camper.profile.service;
 
 
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,12 +25,18 @@ public class ProfileService {
 
 
 	//프로필 조회
-	public ModelAndView profileView(HttpSession session, String mb_id) {
+	public ModelAndView profileView(String loginId, String mb_id) {
 		String page = "profile";
 		ModelAndView mav = new ModelAndView();
 		ProfileDTO profileView = dao.profileView(mb_id);
-		mav.addObject("profileView", profileView);
+		ArrayList<ProfileDTO>profileTogether = dao.profileTogether(mb_id);
+		ArrayList<ProfileDTO>profileReview = dao.profileReview(mb_id);
+		String blockCheck = dao.blockCheck(mb_id, loginId);
 		
+		mav.addObject("profileView", profileView); //프로필보기
+		mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
+		mav.addObject("profileTogether", profileTogether); //프로필의 작성모집글
+		mav.addObject("profileReview", profileReview); //프로필의 받은리뷰
 		
 		mav.setViewName(page);
 		return mav;
