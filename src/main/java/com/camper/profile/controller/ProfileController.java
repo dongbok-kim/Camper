@@ -27,8 +27,10 @@ public class ProfileController {
 	//회원 프로필 불러오기
 	@RequestMapping (value = "/profile", method = RequestMethod.GET)
     public ModelAndView profileView(HttpSession session, @RequestParam String mb_id) {
-		logger.info(mb_id + "요청");
-    	return service.profileView(session, mb_id);	
+		logger.info(mb_id + "프로필 요청");
+		//String loginId = (String) session.getAttribute("loginId");로그인한 아이디
+		String loginId= "uihwan91";	
+    	return service.profileView(loginId, mb_id);	
     }
 		
 	
