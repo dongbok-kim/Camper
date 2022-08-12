@@ -10,8 +10,12 @@ public interface CampingDAO {
 
 	CampingDTO campingView(String ca_idx);
 
-	CampingDTO campingView_review(String ca_idx);
+	ArrayList<CampingDTO> campingView_review(String ca_idx);
 
-	CampingDTO campingView_together(String ca_idx);
+	ArrayList<CampingDTO> campingView_together(String ca_idx);
+
+	int campingCnt();
+
+	ArrayList<CampingDTO> campingRecom();
 
 }

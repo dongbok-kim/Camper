@@ -35,10 +35,26 @@ public class CampingDTO {
 	private Timestamp ca_create_date;
 	private Timestamp ca_modified_date;
 	
-	//리뷰, 좋아요 수
+	//리뷰, 좋아요 수, 캠핑장 수
 	private int cntLike;
 	private int cntReview;
+	private int cntCamping;
 	
+	//랭킹
+	private int ranking;
+	
+	public int getRanking() {
+		return ranking;
+	}
+	public void setRanking(int ranking) {
+		this.ranking = ranking;
+	}
+	public int getCntCamping() {
+		return cntCamping;
+	}
+	public void setCntCamping(int cntCamping) {
+		this.cntCamping = cntCamping;
+	}
 	//크루모집 리스트
 	private int ct_idx;
 	private String ct_title;
