@@ -3,4 +3,11 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.TogetherAdmDAO">
 
+	<select id="togetherList" resultType="com.camper.admin.dto.TogetherAdmDTO">
+		SELECT ct_idx, ct_title, mb_id, ct_datetime,
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cct.ct_idx) as bb_count
+		FROM cp_crew_together cct
+	</select>
+
+
 </mapper>

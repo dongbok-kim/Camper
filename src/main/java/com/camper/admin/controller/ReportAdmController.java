@@ -21,19 +21,19 @@ public class ReportAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/reportList")
-	public String reportList(Model model) {
+	@RequestMapping(value = "/reportAdmList")
+	public String reportAdmList(Model model) {
 		
 		service.reportList(model);
-		return "admin/reportList";
+		return "admin/reportAdmList";
 	}
 	
-	@RequestMapping(value = "/reportView")
-	public String reportView(Model model,
+	@RequestMapping(value = "/reportAdmView")
+	public String reportAdmView(Model model,
 			@RequestParam int rp_idx) {
 		
 		service.reportView(model, rp_idx);
-		return "admin/reportView";
+		return "admin/reportAdmView";
 	}
 	
 	@RequestMapping(value = "/reportUpdate.do")
@@ -45,7 +45,7 @@ public class ReportAdmController {
 		logger.info("selected : "+ params);
 		service.reportUpdate(params, rp_img);
 		
-		String page = "redirect:/reportView?rp_idx="+params.get("rp_idx");
+		String page = "redirect:/reportAdmView?rp_idx="+params.get("rp_idx");
 		return page;
 	}
 	
