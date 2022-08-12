@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/resources/inc/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,6 +34,7 @@
 		</div>
 		</form>
 </body>
+<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 	var msg = "${msg}"
     if (msg != "") {

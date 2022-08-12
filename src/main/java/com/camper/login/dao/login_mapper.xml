@@ -31,8 +31,16 @@
 	SELECT mb_id FROM cp_member WHERE mb_name = #{param1} AND mb_email = #{param2}
 </select>
 
-<select id="pwFind" resultType="String" parameterType="logIn">
-	SELECT mb_id FROM cp_member WHERE mb_id = #{mb_id} AND mb_email = #{mb_email}
+<select id="pwFind" resultType="int" parameterType="logIn">
+	SELECT COUNT(mb_id) FROM cp_member WHERE mb_id = #{param1} AND mb_email = #{param2}
+</select>
+
+<update id="pwRework" parameterType="logIn">
+	UPDATE cp_member SET mb_pw=#{mb_pw} WHERE mb_id=#{mb_id}
+</update>
+
+<select id="mbgrade" resultType="String">
+	SELECT mb_grade FROM cp_member WHERE mb_id = #{param1}
 </select>
 
 </mapper>
