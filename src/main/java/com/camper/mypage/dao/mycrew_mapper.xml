@@ -4,11 +4,14 @@
 <mapper namespace="com.camper.mypage.dao.MyCrewDAO">
 
 	<select id="myCrewList" resultType="mypgCrew" parameterType="String">
-		SELECT cct.ct_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end
+		SELECT cct.ct_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end,
+			(select count(cr_idx) from cp_camping_review ccr where mb_id = #{param1} and ct_idx = cct.ct_idx) as cntCR,
+			(select count(mr_idx) from cp_member_review cmr where mb_id = #{param1} and ct_idx = cct.ct_idx) as cntMR
 		FROM cp_crew_together cct
 		JOIN cp_camping_crew ccc on ccc.ct_idx = cct.ct_idx
 		JOIN cp_camping cc ON cc.ca_idx = cct.ca_idx
-		WHERE ccc.mb_id = #{param1} AND cct.ct_idx not in (select bb_relation_idx from cp_board_blind where bb_relation = 'cp_crew_together') order by cct.ct_idx desc;
+		WHERE ccc.mb_id = #{param1} AND cct.ct_idx not in (SELECT bb_relation_idx from cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+		ORDER BY cct.ct_idx DESC;
 	</select>
 	
 	<select id="myCrewTogetherInfo" parameterType="String" resultType="hashmap">

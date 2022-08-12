@@ -10,8 +10,8 @@
 		ORDER BY cct.ct_idx DESC
 	</select>
 
-	<delete id="myCrewWriteDelete" parameterType="String">
+	<insert id="myCrewWriteDelete" parameterType="String">
 		INSERT INTO cp_board_blind(bb_relation, bb_relation_idx, bb_reason, mb_id) VALUES('cp_crew_together', #{param1},'본인삭제', #{param2})
-	</delete>
+	</insert>
 	
 </mapper>

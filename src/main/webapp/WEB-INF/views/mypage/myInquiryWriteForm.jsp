@@ -13,41 +13,45 @@
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="/myBlockList.go">차단 회원</a></li>
-						<li class="active"><a href="">1:1 문의</a></li>
+						<li class="active"><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
 				<div>
-					<h3>1:1 문의<a href="/inquiryWrite.go">1:1 문의하기</a></h3>
-					<h4>총 문의 수 : ${list.size()} 건</h4>
-					<table>
-						<thead>
+					<h3>1:1 문의하기</h3>
+					<form action="inquiryWrite.do" method="post" name="inquiryForm">
+						<table>
 							<tr>
-								<th>번호</th>
-								<th>제목</th>
-								<th>작성일</th>
-								<th>답변상태</th>
+								<th>작성자</th>
+								<td><input type="hidden" name="loginId" value="${loginId}"/>${loginId}</td>
 							</tr>
-						</thead>
-						<tbody>
-							<c:if test="${list.size() == 0}">
-								<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
-							</c:if>
-							<c:forEach items="${list}" var="ask">
-								<tr>
-									<td>${ask.in_idx}</td>
-									<td><a href="inquiryDetail.go?idx=${ask.in_idx}">${ask.in_title}</a></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
-									<td>${ask.in_status}</td>
-								</tr>		
-							</c:forEach>
-						</tbody>
-					</table>
+							<tr>
+								<th>제목</th>
+								<td><input type="text" name="subject"/></td>
+							</tr>
+							<tr>
+								<th>내용</th>
+								<td><textarea name="content"></textarea></td>
+							</tr>
+							<tr>
+								<th colspan="2">
+									<input type="button" value="완료"  onclick="yn()"/>
+									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
+								</th>
+							</tr>
+						</table>
+					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
-		var msg = "${msg}";
-		if(msg != ""){
-			alert(msg);
+		function yn(){
+			var form = document.inquiryForm;
+			
+			var cf = confirm("등록하시겠습니까?");
+			if (cf == true) {
+				form.submit();
+			} else{
+				
+			}
 		}
 	</script>
 </html>

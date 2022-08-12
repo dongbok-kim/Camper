@@ -29,8 +29,8 @@ public class MyInquiryController {
 	@RequestMapping(value = "/myInquiryList.go", method = RequestMethod.GET)
 	public ModelAndView myInquiryList(HttpSession session) {
 		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		return service.myInquiryList(temporaryId);
+		String loginId = "jin";
+		return service.myInquiryList(loginId);
 	}
 	
 	
@@ -39,16 +39,16 @@ public class MyInquiryController {
 	@RequestMapping(value = "/inquiryWrite.go", method = RequestMethod.GET)
 	public String inquiryWriteForm(HttpSession session, Model model) {
 		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		model.addAttribute("loginId", temporaryId);
-		return "mypage/inquiryWriteForm";
+		String loginId = "jin";
+		model.addAttribute("loginId", loginId);
+		return "mypage/myInquiryWriteForm";
 	}
 	
 	
 	// 문의글 작성
 	// by. 승진 2022-08-10
 	@RequestMapping(value = "/inquiryWrite.do", method = RequestMethod.POST)
-	public String inquiryWrite(@RequestParam HashMap<String, String> params, Model model, RedirectAttributes rAttr) {
+	public String inquiryWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		logger.info("params:"+params);
 		if (params.get("subject").equals("") || params.get("content").equals("")) {
 			rAttr.addFlashAttribute("msg", "글쓰기에 실패했습니다.");
@@ -64,8 +64,42 @@ public class MyInquiryController {
 	@RequestMapping(value = "/inquiryDetail.go", method = RequestMethod.GET)
 	public ModelAndView inquiryDetail(HttpSession session, @RequestParam String idx) {
 		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
+		String loginId = "jin";
 		return service.inquiryDetail(idx);
+	}
+	
+	
+	// 문의글 삭제
+	// by.승진 2022-08-10
+	@RequestMapping(value = "/myInquiryDelete.do", method = RequestMethod.GET)
+	public ModelAndView myInquiryDelete(HttpSession session, @RequestParam String idx) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.myInquiryDelete(idx, loginId);
+	}
+	
+	
+	// 문의글 수정
+	// by.승진 2022-08-11
+	@RequestMapping(value = "/myInquiryUpdate.go", method = RequestMethod.GET)
+	public ModelAndView myInquiryUpdateForm(HttpSession session, @RequestParam String idx) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.myInquiryUpdateForm(idx, loginId);
+	}
+	
+	
+	// 문의글 수정
+	// by. 승진 2022-08-11
+	@RequestMapping(value = "/myInquiryUpdate.do", method = RequestMethod.POST)
+	public String myInquiryUpdate(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
+		logger.info("params:"+params);
+		if (params.get("subject").equals("") || params.get("content").equals("")) {
+			rAttr.addFlashAttribute("msg", "수정에 실패했습니다.");
+		} else {
+			service.myInquiryUpdate(params);
+		}
+		return "redirect:/myInquiryList.go";
 	}
 	
 	
