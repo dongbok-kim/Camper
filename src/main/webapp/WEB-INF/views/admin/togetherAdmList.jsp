@@ -44,43 +44,36 @@ textarea {
 						<li><a href="">타이틀 관리</a></li>
 						<li><a href="ageAdmList">연령대 관리</a></li>
 						<li><a href="campingAdmList">캠핑장 관리</a></li>
-						<li class="active"><a href="reviewAdmList">후기 관리</a></li>
-						<li><a href="togetherAdmList">모집글 관리</a></li>
+						<li><a href="reviewAdmList">후기 관리</a></li>
+						<li class="active"><a href="togetherAdmList">모집글 관리</a></li>
 					</ul>
 				</aside>
 				<div>
-					<h3>후기 관리</h3>
+					<h3>모집글 관리</h3>
 				</div>
 <body>
-	<div>
-		<a href="reviewAdmList">캠핑장 후기</a>
-		<a href="reviewMemberAdmList">회원 후기</a>
-	</div>
-	<div>등록된 캠핑장 후기 수 : ${list.size()}건</div>
+	<div>모집글 수 : ${list.size()}건</div>
 	<div>
 		<table>
 			<tr>
 				<th>번호</th>
-				<th>캠핑장명 및 후기내용</th>
-				<th>평가항목</th>
+				<th>제목</th>
 				<th>작성자</th>
 				<th>작성일시</th>
 				<th>블라인드</th>
 			</tr>
-			<c:forEach items="${list }" var="review">
+			<c:forEach items="${list }" var="together">
 				<tr>
-					<td>${review.cr_idx}</td>
+					<td>${together.ct_idx}</td>
 					<td>
-					${review.ca_name }<br/>
-					<a class="cr_content" onclick="openClose()">${review.cr_content }</a>
+					<a href="togetherAdmView">${together.ct_title }</a>
 					</td>
-					<td>${review.cr_assessment}</td>
-					<td>${review.mb_id}</td>
-					<td>${review.cr_datetime}</td>
+					<td>${together.mb_id}</td>
+					<td>${together.ct_datetime}</td>
 					<td>
-						<c:if test="${review.bb_count eq 0}">
-							<button class="blind_button" data-target="#insertBlind" data-content="${review.cr_content }" data-writer="${review.mb_id}" data-idx="${review.cr_idx}">
-							블라인드
+						<c:if test="${together.bb_count eq 0}">
+							<button class="blind_button" data-target="#insertBlind" data-title="${together.ct_title }" data-writer="${together.mb_id}" data-idx="${together.ct_idx}">
+								블라인드
 							</button>
 						</c:if>
 					</td>
@@ -90,16 +83,11 @@ textarea {
 	</div>
 	<div>
 		<form action="reviewCampSearch.do" method="post">
-			<select name="cr_assessment">
-				<option value="평가항목">평가항목</option>
-				<option value="좋아요">좋아요</option>
-				<option value="싫어요">싫어요</option>
-				<option value="보통이에요">보통이에요</option>
-			</select>
 			<select name="option">
 				<option value="all">전체</option>
-				<option value="mb_id">작성자명</option>
-				<option value="ca_name">캠핑장명</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="mb_id">작성자</option>
 			</select>
 			<input type="text" name="keyword" placeholder="검색"/>
 			<input type="submit" value="search"/>
@@ -110,18 +98,18 @@ textarea {
 	<div class="modal" id="insertBlind">
 		<div class="modal_content" title="후기 블라인드">
 			<h2>후기 블라인드</h2>
-			<form action="blindCamping.do" method="post">
+			<form action="blindTogether.do" method="post">
 				<table class="md_table">
 					<tr>
-						<th id="md_cr_content" colspan="2">후기 내용</th>
+						<th id="md_ct_title" colspan="2">후기 내용</th>
 					</tr>
 					<tr>
 						<th>작성자 아이디</th>
-						<td id="md_cr_writer">후기 작성자</td>
+						<td id="md_ct_writer">후기 작성자</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="hidden" name="md_cr_idx" value="idx"/>
+							<input type="hidden" name="md_ct_idx" value="idx"/>
 							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
@@ -139,17 +127,7 @@ textarea {
 	<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
 <script>
-// 후기내용 생략
-$('.cr_content').each(function(){
-	var length = 10;
-	$(this).each(function(){
-		if($(this).text().length >= length) {
-			$(this).text($(this).text().substr(0, length)+'...');
-		}
-	});
-});
-
-// 블라인드 모달창 
+//블라인드 모달창 
 $(function(){
 	
 	// 블라인드 버튼 클릭시
@@ -157,17 +135,17 @@ $(function(){
 		$(".modal").fadeIn();  // 모달창 띄우기
 		
 		// 후기내용, 후기 작성자 가져오기 ㅠㅠ
-		var content= $(this).data('content');
+		var title= $(this).data('title');
 		var writer= $(this).data('writer');
 		var idx = $(this).data('idx');
 		console.log(idx);
 		// 후기내용 길면 생략해서 가져오기,,ㅠㅠ
-		$("#md_cr_writer").html(writer);
-		$("input[name='md_cr_idx']").val(idx);
-		if (content.length>20){
-			$("#md_cr_content").html(content.substr(0,20)+'...');		
+		$("#md_ct_writer").html(writer);
+		$("input[name='md_ct_idx']").val(idx);
+		if (title.length>20){
+			$("#md_ct_title").html(title.substr(0,20)+'...');		
 		}else{
-			$("#md_cr_content").html(content);
+			$("#md_ct_title").html(title);
 		}	
 	});
 	
@@ -177,6 +155,5 @@ $(function(){
 	});
 
 });
-
 </script>
 </html>
