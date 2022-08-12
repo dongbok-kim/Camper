@@ -4,3 +4,106 @@ html, body {
 	height: 100%;
 	overflow-y: hidden;
 }
+
+#chat {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 800px;
+}
+
+#left {
+	float: left;
+	max-width: 600px;
+	width: 100%;
+}
+
+@keyframes messageNotice{
+	0%{}
+	50%{color:#fff;}
+	100%{color:#ffff00;}
+}
+#notice {
+	animation-name: messageNotice;
+	animation-iteration-count: infinite;
+	animation-duration: 2s;
+	padding: 5px;
+	text-align: center;
+	color: #fff;
+	background-color: #000;
+}
+
+#msgList {
+	padding: 10px;
+	height: 500px;
+	overflow-y: scroll;
+	border: 1px solid #000;
+}
+
+.me {
+	text-align: right;
+}
+
+.me > span {
+	margin-right: 12px;
+	padding: 5px 10px;
+	display: inline-block;
+	position: relative;
+	background: #ffff00;
+	border-radius: 0.2em;
+}
+
+.me > span:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 24%;
+	width: 0;
+	height: 0;
+	border: 12px solid transparent;
+	border-left-color: #ffff00;
+	border-right: 0;
+	border-top: 0;
+	margin-right: -12px;
+}
+
+.you > span {
+	margin-left: 12px;
+	padding: 5px 10px;
+	display: inline-block;
+	position: relative;
+	color: #fff;
+	background: #787878;
+	border-radius: 0.2em;
+}
+
+.you > span:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 24%;
+	width: 0;
+	height: 0;
+	border: 12px solid transparent;
+	border-right-color: #787878;
+	border-left: 0;
+	border-top: 0;
+	margin-left: -12px;
+}
+
+#msgBox {
+	border: 1px solid #000;
+}
+
+#left > input[type="text"] {
+	padding: 9px;
+	width: 100%;
+	outline: none;
+	box-sizing: border-box;
+	border: 1px solid #000;
+}
+
+#right {
+	float: left;
+	max-width: 200px;
+	width: 100%;
+}

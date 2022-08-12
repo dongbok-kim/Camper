@@ -14,8 +14,22 @@
 		<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css" />
 	</head>
 	<body>
-		<div>
-			공지 메시지
+		<div id="chat">
+			<div id="left">
+				<div id="notice">
+					공지 메시지 영역
+				</div>
+				<div id="msgList">
+					<p class="you"><span>상대방이 작성한 메시지</span></p>
+					<p class="me"><span>내가 작성한 메시지</span></p>
+					<p class="you"><span>상대방이 작성한 메시지</span></p>
+					<p class="me"><span>내가 작성한 메시지</span></p>
+				</div>
+				<input type="text" />
+			</div>
+			<div id="right">
+				현재 참여중인 회원 목록 영역 및 버튼 영역 등
+			</div>
 		</div>
 	</body>
 	<script></script>
