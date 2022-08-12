@@ -8,14 +8,27 @@
 	</select>
  -->
 	<select id="campingList" resultType="cpCamping">	
-		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido,
-		(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
-		(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview 
-		from cp_camping a ORDER BY ca_idx DESC;
+		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
+			(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
+			from cp_camping a ORDER BY ca_idx DESC
+	</select>
+	
+	<select id="campingRecom" resultType="cpCamping">
+		SELECT *, ((SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERE cr_assessment = '좋아요' AND ca_idx = a.ca_idx) 
+				- (SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERe cr_assessment = '싫어요' AND ca_idx = a.ca_idx)) 
+			AS ranking from cp_camping a ORDER BY ranking desc limit 4 offset 0
+	
+	</select>
+	
+	<select id="campingCnt" resultType="int">
+		select count(ca_idx) from cp_camping
 	</select>
 	
 	<select id="campingView" parameterType="String" resultType="cpCamping">
-		SELECT * FROM cp_camping WHERE ca_idx = #{ca_idx}
+		SELECT *,
+			(select count(cl_idx) from cp_camping_like where ca_idx = #{ca_idx}) as cntLike
+		FROM cp_camping WHERE ca_idx = #{ca_idx}
 	</select>
 	
 	<select id="campingView_review" parameterType="String" resultType="cpCamping">
