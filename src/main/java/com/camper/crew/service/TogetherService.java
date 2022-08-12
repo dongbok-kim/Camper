@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.crew.dao.TogetherDAO;
 import com.camper.crew.dto.TogetherDTO;
@@ -26,6 +27,15 @@ public class TogetherService {
 	public TogetherDTO view(int ct_idx) {
 		return dao.view(ct_idx);
 	}
+
+	public void crewTogetherDelete(String ct_idx) {
+		dao.crewTogetherDelete(ct_idx);
+		
+	}
+
+
+
+	
 
 
 }
