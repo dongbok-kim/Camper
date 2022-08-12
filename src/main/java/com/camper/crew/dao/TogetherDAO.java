@@ -10,6 +10,9 @@ public interface TogetherDAO {
 
 	ArrayList<TogetherDTO> list();
 
+	void crewTogetherDelete(String ct_idx);
+
+
 	
 
 }

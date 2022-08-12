@@ -10,4 +10,8 @@
 	<select id="view" parameterType="int" resultType="crTogether">
 		SELECT * FROM cp_crew_together WHERE ct_idx=#{ct_idx}
 	</select> 
+	
+	<delete id="crewTogetherDelete" parameterType="String">
+		Delete FROM cp_crew_camping WHERE ct_idx=#{ct_idx}
+	</delete>
 </mapper>
