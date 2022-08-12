@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 public class TogetherDTO {
 
+	//크루모집
 	private int ct_idx;
 	private String ct_title;
 	private String ct_content;
@@ -24,6 +25,44 @@ public class TogetherDTO {
 	private String mb_id;
 	private int ca_idx;
 	
+	//캠핑장
+	private String ca_name;
+	private String ca_img;
+	
+	private String mb_nickname;
+	private String mb_gender;
+	private byte ma_age;
+
+	public String getMb_nickname() {
+		return mb_nickname;
+	}
+	public void setMb_nickname(String mb_nickname) {
+		this.mb_nickname = mb_nickname;
+	}
+	public String getMb_gender() {
+		return mb_gender;
+	}
+	public void setMb_gender(String mb_gender) {
+		this.mb_gender = mb_gender;
+	}
+	public byte getMa_age() {
+		return ma_age;
+	}
+	public void setMa_age(byte ma_age) {
+		this.ma_age = ma_age;
+	}
+	public String getCa_img() {
+		return ca_img;
+	}
+	public void setCa_img(String ca_img) {
+		this.ca_img = ca_img;
+	}
+	public String getCa_name() {
+		return ca_name;
+	}
+	public void setCa_name(String ca_name) {
+		this.ca_name = ca_name;
+	}
 	public int getCt_idx() {
 		return ct_idx;
 	}

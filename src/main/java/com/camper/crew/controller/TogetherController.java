@@ -2,6 +2,8 @@ package com.camper.crew.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.crew.service.TogetherService;
@@ -44,6 +47,25 @@ public class TogetherController {
 		return page;
 			
 	}
+	
+	//크루추천
+	@RequestMapping(value="/crewTogetherRecommend.go")
+	public String crewTogetherRecommend (Model model) {
+		String page ="crewTogetherRecommend";
+		
+		ArrayList<TogetherDTO>list=service.list();
+		return page;
+		
+	}
+	
+	//모집삭제하기
+	@RequestMapping (value="/crewTogetherDelete.do")
+	public String delete(Model model, @RequestParam String ct_idx) {
+		service.crewTogetherDelete(ct_idx);
+		return "redirect:/crewTogetherList";
+	}
+	
+	
 	
 	
 	
