@@ -20,6 +20,7 @@ public class TogetherAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	//모집글 목록
 	@RequestMapping(value = "/togetherAdmList")
 	public ModelAndView togetherAdmList() {
 			
@@ -31,6 +32,13 @@ public class TogetherAdmController {
 	public ModelAndView blindTogether(@RequestParam HashMap<String, String> params) {
 		logger.info("params"+params);
 		return null;
+	}
+	
+	// 모집글 상세보기 불러오기
+	@RequestMapping(value = "/togetherAdmView")
+	public ModelAndView blindTogetherView(@RequestParam int ct_idx) {
+		logger.info("모집글 상세보기 요청"+ct_idx);
+		return service.togetherView(ct_idx);
 	}
 	
 }

@@ -49,10 +49,9 @@ textarea {
 					</ul>
 				</aside>
 				<div>
-					<h3>모집글 관리</h3>
+					<h3>모집글 상세보기</h3>
 				</div>
 <body>
-	<div>모집글 수 : ${list.size()}건</div>
 	<div>
 		<table>
 			<tr>

@@ -9,4 +9,5 @@
 		FROM cp_crew_together cct
 	</select>
 
+
 </mapper>

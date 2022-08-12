@@ -25,4 +25,12 @@ public class TogetherAdmService {
 		return mav;
 	}
 
+	public ModelAndView togetherView(int ct_idx) {
+		TogetherAdmDTO dto = dao.togetherView(ct_idx);
+		ModelAndView mav = new ModelAndView("admin/togetherAdmView");
+		mav.addObject("dto", dto);
+		
+		return mav;
+	}
+
 }

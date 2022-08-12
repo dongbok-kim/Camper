@@ -8,4 +8,6 @@ public interface TogetherAdmDAO {
 
 	ArrayList<TogetherAdmDTO> togetherList();
 
+	TogetherAdmDTO togetherView(int ct_idx);
+
 }
