@@ -20,18 +20,18 @@ public class AgeAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/ageList", method = RequestMethod.GET)
+	@RequestMapping(value = "/ageAdmList", method = RequestMethod.GET)
 	public String ageList(Model model) {
 		
-		String page ="admin/ageList";
+		String page ="admin/ageAdmList";
 		service.ageList(model);
 		return page;
 	}
 // 연령대 등록 페이지로
-	@RequestMapping(value = "/ageReg")
-	public String ageReg(Model model) {
+	@RequestMapping(value = "/ageAdmReg")
+	public String ageAdmReg(Model model) {
 		
-		return "admin/ageReg";
+		return "admin/ageAdmReg";
 	}
 	
 	@RequestMapping(value = "/ageReg.do")
@@ -39,7 +39,7 @@ public class AgeAdmController {
 		
 		int success = service.ageReg(ma_age);
 		logger.info("success:"+success);
-		return "admin/ageReg";
+		return "admin/ageAdmReg";
 	}
 	
 // 연령대 수정 페이지로 이동
@@ -47,7 +47,7 @@ public class AgeAdmController {
 	public String ageUpdate(Model model, @RequestParam int ma_idx) {
 		logger.info("age"+ma_idx);
 		service.ageUpdate(model,ma_idx);
-		return "admin/ageUpdate";
+		return "admin/ageAdmUpdate";
 	}
 // 연령대 수정	
 	@RequestMapping(value = "/ageUpdate.do")
@@ -55,7 +55,7 @@ public class AgeAdmController {
 			@RequestParam int ma_age, @RequestParam int ma_idx) {
 		logger.info("age"+ma_age+ma_idx);
 		int success = service.ageUpdateForm(model,ma_idx,ma_age);
-		return "redirect:/ageList";
+		return "redirect:/ageAdmList";
 	}
 	
 	

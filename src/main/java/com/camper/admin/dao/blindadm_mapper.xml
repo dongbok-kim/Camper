@@ -2,5 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.BlindAdmDAO">
-
+	
+	<select id="blindList" resultType="com.camper.admin.dto.BlindAdmDTO">
+		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
+		FROM cp_board_blind ORDER BY bb_datetime DESC
+	</select>
+	
+	<select id="blindSearch" parameterType="hashmap" resultType="com.camper.admin.dto.BlindAdmDTO">
+		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
+		FROM cp_board_blind WHERE
+			<choose>
+				<when test="bb_relation.equals('relation')">
+					<if test="option.equals('all')">
+						bb_reason LIKE CONCAT ("%",#{keyword},"%")
+						OR mb_id LIKE CONCAT ("%",#{keyword},"%")
+					</if>
+					<if test="option.equals('bb_reason')">bb_reason LIKE CONCAT ("%",#{keyword},"%")</if>
+					<if test="option.equals('mb_id')">mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
+				</when>
+				<otherwise>
+					bb_relation = #{bb_relation}
+					<if test="option.equals('all') and keyword != '' ">
+						AND
+						bb_reason LIKE CONCAT ("%",#{keyword},"%")
+						OR mb_id LIKE CONCAT ("%",#{keyword},"%")
+					</if>
+					<if test="option.equals('bb_reason') and keyword != '' ">AND bb_reason LIKE CONCAT ("%",#{keyword},"%")</if>
+					<if test="option.equals('mb_id') and keyword != '' ">AND mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
+				</otherwise>
+			</choose>
+		ORDER BY bb_datetime DESC 
+	</select>
+	
 </mapper>
