@@ -43,4 +43,8 @@
 	SELECT mb_grade FROM cp_member WHERE mb_id = #{param1}
 </select>
 
+<select id="mbstatus" resultType="String">
+	SELECT mb_status FROM cp_member WHERE mb_id = #{param1}
+</select>
+
 </mapper>

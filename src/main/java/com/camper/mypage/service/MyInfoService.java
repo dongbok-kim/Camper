@@ -20,4 +20,5 @@ public class MyInfoService {
 		return dao.myInfo(mb_id);
 	}
 
+
 }

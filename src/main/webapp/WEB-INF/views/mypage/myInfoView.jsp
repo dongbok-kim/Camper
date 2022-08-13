@@ -55,7 +55,7 @@
                 <th>아이디</th>
                 <td>${myInfo.mb_id}</td>
                 <td style="background-color: red ">정지</td>
-                <td>0회</td>
+                <td>0회</td><!-- 정지 나중에 해나야됨 -->
             </tr>
             <tr>
                 <th>현재 비밀번호</th>
@@ -146,7 +146,7 @@
 	<br/>
 	</form>
 	<h3>회원탈퇴</h3>
-	<form action="" onsubmit="return submitCheck()">
+	<form action="secession.do" onsubmit="return submitCheck()">
 	<h5>탈퇴 안내</h5>
 	탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.<br/>
 	탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.
@@ -159,7 +159,7 @@
 		<tr>
 			<th>비밀번호</th>
 			<td>
-				<input type="password" name = "mb_pw" id="secession_password" />
+				<input type="password" name = "secession_pw" id="secession_password" />
 			</td>
 		</tr>
 	</table> <br/>

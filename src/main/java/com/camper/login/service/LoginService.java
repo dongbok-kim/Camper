@@ -155,6 +155,11 @@ public class LoginService {
 		return dao.mbgrade(id);
 	}
 
+	public String mbstatus(String id) {
+		
+		return dao.mbstatus(id);
+	}
+
 
 	
 	

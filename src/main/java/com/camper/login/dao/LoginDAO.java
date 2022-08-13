@@ -22,6 +22,8 @@ public interface LoginDAO {
 
 	String mbgrade(String id);
 
+	String mbstatus(String id);
+
 	
 
 }
