@@ -146,7 +146,7 @@
 	<br/>
 	</form>
 	<h3>회원탈퇴</h3>
-	<form action="secession.do" onsubmit="return submitCheck()">
+	<form action="secession.do" onsubmit="return submitCheck_two()">
 	<h5>탈퇴 안내</h5>
 	탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.<br/>
 	탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.
@@ -251,5 +251,31 @@ if($("input[name='ma_idx']").val() == 5 ) {
 	$("input:radio[name='ma_idx']:radio[value='5']").attr("checked" , true);
 }
 
+
+function submitCheck_two() {
+	
+	console.log($('#secession_password').val());
+	
+	if($('#secession_password').val() == null || $('#secession_password').val() == "") {
+		alert("비밀번호를 입력해 주세요.");
+		return false;
+	} else {
+		if(confirm("정말 탈퇴하시겠습니까?") == true) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
+	
+}
+
+
+	var msg = "${msg}"
+    if (msg != "") {
+        alert(msg);
+    }
 </script>
 </html>

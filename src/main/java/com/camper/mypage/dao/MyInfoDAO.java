@@ -6,4 +6,8 @@ public interface MyInfoDAO {
 
 	MyInfoDTO myInfo(String mb_id);
 
+	String login(String mb_id);
+
+	void secession(String mb_id);
+
 }

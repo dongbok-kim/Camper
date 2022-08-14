@@ -7,4 +7,13 @@
 	SELECT * FROM cp_member where mb_id = #{param1}
 </select>
 
+<select id="login" resultType="String">
+	SELECT mb_pw FROM cp_member 
+			WHERE mb_id = #{param1}
+</select>
+
+<update id="secession">
+	UPDATE cp_member SET mb_status='탈퇴' WHERE mb_id=#{param1}
+</update>
+
 </mapper>

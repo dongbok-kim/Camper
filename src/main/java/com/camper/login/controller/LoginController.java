@@ -114,7 +114,7 @@ public class LoginController {
 		session.removeAttribute("mb_grade");
 		session.removeAttribute("mb_status");
 		model.addAttribute("msg", "로그아웃 되었습니다.");
-		return "login/login";
+		return "main";
 	}
 	
 	//회원가입
