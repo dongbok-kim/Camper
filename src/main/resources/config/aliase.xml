@@ -44,7 +44,7 @@
 		<typeAlias type="com.camper.mypage.dto.MyCrewDTO" alias="mypgCrew"/>
 		<typeAlias type="com.camper.mypage.dto.MyInquiryDTO" alias="mypgInquiry"/>
 		<typeAlias type="com.camper.mypage.dto.MyCampingLikeDTO" alias="mypgLike"/>
-		<typeAlias type="com.camper.mypage.dto.MyInfoDTO" alias="mypgMyInfo"/>
+		<typeAlias type="com.camper.mypage.dto.MyInfoDTO" alias="mypgMyInfo"/>	<!-- 대환 -->
 		<typeAlias type="com.camper.mypage.dto.MyTogetherDTO" alias="mypgMyTogether"/>
 		<typeAlias type="com.camper.mypage.dto.MyReviewDTO" alias="mypgReview"/>
 		
