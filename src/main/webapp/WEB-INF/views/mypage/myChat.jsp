@@ -28,6 +28,13 @@
 							</tr>
 						</thead>
 						<tbody>
+						<c:choose>
+							<c:when test="${listCnt eq 0}">
+							<tr align="center" height="180">
+								<td colspan="4">참여 중인 채팅방이 없습니다. 크루모집에 참여해 보세요</td>
+							</tr>
+							</c:when>
+							<c:otherwise>
 							<c:forEach items="${list}" var="list" varStatus="i">
 							<tr>
 								<td>${listCnt-i.index}</td>
@@ -36,6 +43,8 @@
 								<td>${list.cntCrew}</td>
 							</tr>
 							</c:forEach>
+							</c:otherwise>
+						</c:choose>
 						</tbody>
 					</table>
 				</div>

@@ -22,6 +22,20 @@ public class ChatDTO {
 	//회원
 	private String mb_id;
 	private String mb_nickname;
+	private String mb_status;
+	
+	//회원차단
+	private String bl_mb;
+	
+	//크루모집
+	private int ct_idx;
+	private byte ct_deadline;
+	
+	//크루
+	private String cc_crew;
+	
+	//기타
+	private int cnt;
 	
 	public int getCg_idx() {
 		return cg_idx;
@@ -88,6 +102,42 @@ public class ChatDTO {
 	}
 	public void setMb_nickname(String mb_nickname) {
 		this.mb_nickname = mb_nickname;
+	}
+	public String getMb_status() {
+		return mb_status;
+	}
+	public void setMb_status(String mb_status) {
+		this.mb_status = mb_status;
+	}
+	public String getBl_mb() {
+		return bl_mb;
+	}
+	public void setBl_mb(String bl_mb) {
+		this.bl_mb = bl_mb;
+	}
+	public int getCt_idx() {
+		return ct_idx;
+	}
+	public void setCt_idx(int ct_idx) {
+		this.ct_idx = ct_idx;
+	}
+	public byte getCt_deadline() {
+		return ct_deadline;
+	}
+	public void setCt_deadline(byte ct_deadline) {
+		this.ct_deadline = ct_deadline;
+	}
+	public String getCc_crew() {
+		return cc_crew;
+	}
+	public void setCc_crew(String cc_crew) {
+		this.cc_crew = cc_crew;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 
 }
