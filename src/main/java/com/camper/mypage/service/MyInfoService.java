@@ -1,5 +1,7 @@
 package com.camper.mypage.service;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -57,6 +59,32 @@ public class MyInfoService {
 		// mav.addObject("msg", msg);
 					
 		return mav;
+	}
+
+	public HashMap<String, Object> doubleCheckEmail(String chkEmail) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String doubleEmail = dao.doubleCheckEmail(chkEmail);
+		
+		logger.info("중복 이메일이 있나? "+doubleEmail);
+		boolean over = doubleEmail == null ? false : true;
+		
+		map.put("doubleEmail", over);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> doubleCheckNickname(String chkNickname) {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String doubleNickname = dao.doubleCheckNickname(chkNickname);
+		logger.info("중복 닉네임이 있나? "+doubleNickname);
+		
+		boolean over = doubleNickname == null ? false : true;
+		map.put("doubleNickname", over);
+		
+		return map;
 	}
 
 

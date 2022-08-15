@@ -250,6 +250,80 @@ if($("input[name='ma_idx']").val() == 4 ) {
 if($("input[name='ma_idx']").val() == 5 ) {
 	$("input:radio[name='ma_idx']:radio[value='5']").attr("checked" , true);
 }
+
+
+
+var checkEmail = false; // 이메일 중복체크 여부
+function doubleCheckEmail() {
+	
+	var email = $("#email").val();
+	// console.log($("#email").val());
+	
+	 if(email == "" || email == null){
+         alert("이메일를 입력해주세요");
+         return false;
+      }
+	 console.log('이메일 중복 체크 : '+email);		
+		$.ajax({
+			type:'get',
+			url:'myinfodoubleCheckEmail.ajax',
+			data:{chkEmail:email},
+			dataType:'JSON',
+			success:function(data){
+				// console.log(data);
+			 if(data.doubleEmail){
+					alert("이미 사용중인 이메일 입니다.");
+				}else{
+					alert("사용 가능한 이메일 입니다.");
+					checkEmail = true;
+				}
+				 
+			},
+			error:function(e){
+				console.log(e);
+			}			
+		});
+	
+}
+
+
+
+var checkNickname = false; // 닉네임 중복체크 여부
+function doubleCheckNickname() {
+	
+	var nickname = $("#nickname").val();
+	// console.log($("#nickname").val());
+	
+	 if(nickname == "" || nickname == null){
+         alert("닉네임을 입력해주세요");
+         return false;
+      }
+	 console.log('닉네임 중복 체크 : '+nickname);		
+		$.ajax({
+			type:'get',
+			url:'myinfodoubleCheckNickname.ajax',
+			data:{chkNickname:nickname},
+			dataType:'JSON',
+			success:function(data){
+				// console.log(data);
+			 if(data.doubleNickname){
+					alert("이미 사용중인 닉네임 입니다.");
+				}else{
+					alert("사용 가능한 닉네임 입니다.");
+					checkNickname = true;
+				}
+				 
+			},
+			error:function(e){
+				console.log(e);
+			}			
+		});
+	
+}
+
+
+
+
     
 function submitCheck() {
 	
@@ -260,6 +334,14 @@ function submitCheck() {
 	var newpassword = $('#newpassword').val();
 	var newpasswordcheck = $('#newpasswordcheck').val();
 	
+	if($('#email').val() == $('#hidden_email').val()) {
+		checkEmail = true;
+	}
+	
+	if($('#nickname').val() == $('#hidden_nickname').val()) {
+		checkNickname = true;
+	}
+	
 	
 	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
 		alert('현재 비밀번호를 입력해 주세요');
@@ -267,11 +349,17 @@ function submitCheck() {
 	} else if (newpassword != newpasswordcheck){
 		alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
 		return false;
-	} else if (newpassword !="") {
-		alert('비밀번호 변경 원할때');
-		
+	} else if (newpassword !="" && (!pattern1.test(newpassword) || !pattern2.test(newpassword) || !pattern3.test(newpassword) || newpassword.length < 4)) {
+		//비밀번호 변경 원할때
+		alert("비밀번호는 영문 , 숫자 , 특수문자를 포함 4자리 이상 입니다.");
 		return false;
-	}
+	} else if (checkEmail == false) {
+		 alert("이메일 중복확인을 진행해 주세요.");
+		 return  false;
+	} else if (checkNickname == false) {
+		 alert("닉네임 중복확인을 진행해 주세요.");
+		 return false;
+	 }
 	
 	
 	

@@ -16,4 +16,12 @@
 	UPDATE cp_member SET mb_status='탈퇴' WHERE mb_id=#{param1}
 </update>
 
+<select id="doubleCheckEmail" parameterType="String" resultType="String">
+	SELECT mb_email FROM cp_member WHERE mb_email = #{chkEmail}
+</select>
+
+<select id="doubleCheckNickname" parameterType="String" resultType="String">
+	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
+</select>
+
 </mapper>

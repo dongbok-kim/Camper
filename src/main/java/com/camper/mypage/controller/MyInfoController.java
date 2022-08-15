@@ -1,5 +1,7 @@
 package com.camper.mypage.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -92,5 +94,30 @@ public class MyInfoController {
 			
 			return page;
 		}
+		
+		
+		//이메일 중복 체크
+		@RequestMapping("/myinfodoubleCheckEmail.ajax")
+		@ResponseBody
+		public HashMap<String, Object> doubleCheckEmail(@RequestParam String chkEmail) {
+						
+		logger.info("이메일 중복 체크 : "+chkEmail);
+		return service.doubleCheckEmail(chkEmail);
+		}
+		
+		
+		//닉네임 중복 체크
+		@RequestMapping("/myinfodoubleCheckNickname.ajax")
+		@ResponseBody
+		public HashMap<String, Object> doubleCheckNickname(@RequestParam String chkNickname) {
+							
+		logger.info("닉네임 중복 체크 : "+chkNickname);
+		return service.doubleCheckNickname(chkNickname);
+		}
+		
+		
+		
+		
+		
 	
 }

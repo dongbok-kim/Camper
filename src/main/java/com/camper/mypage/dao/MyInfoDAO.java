@@ -10,4 +10,8 @@ public interface MyInfoDAO {
 
 	void secession(String mb_id);
 
+	String doubleCheckEmail(String chkEmail);
+
+	String doubleCheckNickname(String chkNickname);
+
 }
