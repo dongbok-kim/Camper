@@ -59,5 +59,38 @@ public class MyInfoController {
 			
 			return service.secession(mb_id, mb_pw, rttr, session);
 		}
+		
+		
+		// 내정보 수정
+		@RequestMapping(value = "myInfoUpdate.do")
+		public String myInfoUpdate(Model model, HttpSession session, HttpServletRequest request, RedirectAttributes rttr) {
+			
+			String page = "mypage/myInfoView";
+			
+			String mb_id = (String) session.getAttribute("loginId");
+			
+			String orimb_pw = request.getParameter("orimb_pw");
+			logger.info("내가 입력한 비밀번호  : "+orimb_pw);
+			
+			String mb_pw = request.getParameter("mb_pw");
+			logger.info("원래 비밀번호 : "+mb_pw);
+			
+			MyInfoDTO myInfo = service.myInfo(mb_id);
+			model.addAttribute("myInfo", myInfo);
+			
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			boolean match = encoder.matches(orimb_pw, mb_pw); // 비밀번호 일치 여부
+			logger.info("일치여부 : "+match);
+			
+			if(match == true) {
+				model.addAttribute("msg", "비밀번호가 일치합니다.");
+				
+				
+			} else {
+				model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
+			}
+			
+			return page;
+		}
 	
 }

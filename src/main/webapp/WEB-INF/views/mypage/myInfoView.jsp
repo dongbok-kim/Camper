@@ -49,7 +49,7 @@
 	<section>
 	<article>
 	<h3>내 정보 수정</h3>
-	<form action="" method="POST" onsubmit="return submitCheck()">
+	<form action="myInfoUpdate.do" method="POST" onsubmit="return submitCheck()">
 	<table>
 		<tr>
                 <th>아이디</th>
@@ -60,7 +60,7 @@
             <tr>
                 <th>현재 비밀번호</th>
                 <td colspan="4">
-                    <input type="password" name = "mb_pw" id="password" />
+                    <input type="password" name = "orimb_pw" id="password" />
                     <input type="hidden" name = "mb_pw" id="hidden_password" value="${myInfo.mb_pw}"/>
                 </td>
             </tr>
@@ -122,9 +122,9 @@
             <tr>
             	<th>주소</th>
                 <td colspan="4">
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}">
+                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}"><br>
+				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
 				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}">
 				
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
@@ -250,6 +250,50 @@ if($("input[name='ma_idx']").val() == 4 ) {
 if($("input[name='ma_idx']").val() == 5 ) {
 	$("input:radio[name='ma_idx']:radio[value='5']").attr("checked" , true);
 }
+    
+function submitCheck() {
+	
+	var pattern1 = /[0-9]/;				// 숫자
+	var pattern2 = /[a-zA-Z]/;			// 문자
+	var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
+	
+	var newpassword = $('#newpassword').val();
+	var newpasswordcheck = $('#newpasswordcheck').val();
+	
+	
+	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
+		alert('현재 비밀번호를 입력해 주세요');
+		return false;
+		
+	} else {	//원래 비밀번호 입력하면
+		
+		// 확인창 출력
+		if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
+			
+			
+			if (newpassword != $('#newpasswordcheck').val()) {
+				alert('새 비밀번호와 새비밀번호 확인이 일치하지 않습니다');
+				return false;
+			} else {
+				return true;
+			}
+			
+			
+			
+			
+		} else {	// 확인창 취소 눌럿을때
+			return false;
+		}
+		
+		
+	}
+	
+	
+}
+
+
+
+
 
 
 function submitCheck_two() {

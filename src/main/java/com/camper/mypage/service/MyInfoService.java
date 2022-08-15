@@ -47,7 +47,7 @@ public class MyInfoService {
 			session.removeAttribute("mb_status");
 			msg = "탈퇴되었습니다.";
 			rttr.addFlashAttribute("msg", msg);	
-			page = "redirect:/";
+			page = "redirect:/login.go";
 		} else {
 			rttr.addFlashAttribute("msg", msg);		// redirect 로 메시지 보내기
 			page = "redirect:/mypageInfo.go";

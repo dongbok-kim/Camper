@@ -74,9 +74,9 @@
             <tr>
             	<th>주소</th>
                 <td>
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호">
+                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소"><br>
+				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" readonly><br>
 				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소">
 				
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
