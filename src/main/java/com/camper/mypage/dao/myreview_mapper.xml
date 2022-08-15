@@ -11,7 +11,9 @@
 	</select>
 	
 	<select id="nickname" resultType="String">
-		SELECT mb_nickname FROM cp_member WHERE mb_id = #{param1}
+		SELECT mb_nickname 
+		FROM cp_member WHERE 
+		mb_id = #{param1}
 	</select>
 	
 	<insert id="campingReviewWrite" parameterType="hashmap">
@@ -33,7 +35,22 @@
 	</select>
 	
 	<delete id="campingReviewDelete">
-		DELETE FROM cp_camping_review WHERE cr_idx = #{param1} and mb_id = #{param2}
+		DELETE FROM cp_camping_review 
+		WHERE cr_idx = #{param1} and mb_id = #{param2}
 	</delete>
+	
+	<!-- 받은 후기 -->
+	<select id="crewReviewR" resultType="mypgReview">
+		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, mr_id 
+		FROM cp_member_review 
+		WHERE mb_id = #{param1}
+	</select>
+	
+	<!-- 작성 후기 -->
+	<select id="crewReviewW" resultType="mypgReview">
+		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, cmr.mb_id, date_format(date_add(ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today 
+		FROM cp_member_review cmr JOIN cp_crew_together cct ON cct.ct_idx = cmr.ct_idx 
+		WHERE mr_id = #{param1}
+	</select>
 
 </mapper>

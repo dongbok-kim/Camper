@@ -134,4 +134,23 @@ public class MyReviewController {
 		return null;
 	}
 	
+	
+	// 크루 후기 페이지 (받은 후기)
+	// by.승진 2022-08-15
+	@RequestMapping(value = "/myCrewReviewR.go", method = RequestMethod.GET)
+	public ModelAndView crewReviewR(HttpSession session) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.crewReviewR(loginId);
+	}
+	
+	
+	// 크루 후기 페이지 (작성 후기)
+	// by.승진 2022-08-15
+	@RequestMapping(value = "/myCrewReviewW.go", method = RequestMethod.GET)
+	public ModelAndView crewReviewW(HttpSession session) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.crewReviewW(loginId);
+	}
 }

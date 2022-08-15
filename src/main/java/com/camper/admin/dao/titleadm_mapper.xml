@@ -3,4 +3,25 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.TitleAdmDAO">
 
+	<select id="titleList" resultType="admTitle">
+		SELECT mt_idx, mt_name, mt_count, mt_degree 
+		FROM cp_member_title 
+		ORDER BY mt_idx DESC
+	</select>
+	
+	<insert id="titleAdd" parameterType="hashmap">
+		INSERT INTO cp_member_title(mt_name, mt_count, mt_degree) 
+		VALUES(#{mt_name}, #{mt_count}, #{mt_degree})
+	</insert>
+	
+	<select id="titleUpdateForm" resultType="admTitle">
+		SELECT mt_idx, mt_name, mt_count, mt_degree 
+		FROM cp_member_title 
+		WHERE mt_idx = #{param1}
+	</select>
+	
+	<update id="titleUpdate" parameterType="hashmap">
+		UPDATE cp_member_title SET mt_name = #{mt_name}, mt_count = #{mt_count}, mt_degree = #{mt_degree}
+	</update>
+	
 </mapper>

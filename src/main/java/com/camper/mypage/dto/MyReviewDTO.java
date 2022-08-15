@@ -23,7 +23,49 @@ public class MyReviewDTO {
 	private int ct_idx;
 	private Date delAvail;
 	private Date today;
+	private int mr_idx;
+	private String mr_assessment;
+	private short mr_score;
+	private String mr_content;
+	private Timestamp mr_datetime;
+	private String mr_id;
 	
+	public int getMr_idx() {
+		return mr_idx;
+	}
+	public void setMr_idx(int mr_idx) {
+		this.mr_idx = mr_idx;
+	}
+	public String getMr_assessment() {
+		return mr_assessment;
+	}
+	public void setMr_assessment(String mr_assessment) {
+		this.mr_assessment = mr_assessment;
+	}
+	public short getMr_score() {
+		return mr_score;
+	}
+	public void setMr_score(short mr_score) {
+		this.mr_score = mr_score;
+	}
+	public String getMr_content() {
+		return mr_content;
+	}
+	public void setMr_content(String mr_content) {
+		this.mr_content = mr_content;
+	}
+	public Timestamp getMr_datetime() {
+		return mr_datetime;
+	}
+	public void setMr_datetime(Timestamp mr_datetime) {
+		this.mr_datetime = mr_datetime;
+	}
+	public String getMr_id() {
+		return mr_id;
+	}
+	public void setMr_id(String mr_id) {
+		this.mr_id = mr_id;
+	}
 	public Date getToday() {
 		return today;
 	}
