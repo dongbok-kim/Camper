@@ -21,12 +21,15 @@ public class MyChatService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private HttpSession session;
-
+	
+	private MyChatService(HttpSession session) {
+		this.session = session;
+	}
+	
 	public ModelAndView myChatList() {
 		ModelAndView mav = new ModelAndView("mypage/myChat");
 		
-//		ArrayList<MyChatDTO> list = dao.myChatList((String) session.getAttribute("loginId"));
-		ArrayList<MyChatDTO> list = dao.myChatList("jin");
+		ArrayList<MyChatDTO> list = dao.myChatList((String) session.getAttribute("loginId"));
 		
 		mav.addObject("listCnt", list.size());
 		mav.addObject("list", list);

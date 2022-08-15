@@ -1,5 +1,7 @@
-$('.contextMenu.contextMenuMember').on('click', function(e) {
+$(document).on('click', '.contextMenu.contextMenuMember[data-id]', function(e) {
 	e.preventDefault();
+	
+	$('.contextMenuList').hide();
 	
 	$('#contextMenuMember').css({
 		'display':'block',
