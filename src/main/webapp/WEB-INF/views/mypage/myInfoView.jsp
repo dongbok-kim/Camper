@@ -264,28 +264,32 @@ function submitCheck() {
 	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
 		alert('현재 비밀번호를 입력해 주세요');
 		return false;
+	} else if (newpassword != newpasswordcheck){
+		alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
+		return false;
+	} else if (newpassword !="") {
+		alert('비밀번호 변경 원할때');
 		
-	} else {	//원래 비밀번호 입력하면
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	else {
 		
 		// 확인창 출력
-		if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
-			
-			
-			if (newpassword != $('#newpasswordcheck').val()) {
-				alert('새 비밀번호와 새비밀번호 확인이 일치하지 않습니다');
+			if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
+				return true;	
+			} else {	// 확인창 취소 눌럿을때
 				return false;
-			} else {
-				return true;
 			}
-			
-			
-			
-			
-		} else {	// 확인창 취소 눌럿을때
-			return false;
-		}
-		
-		
 	}
 	
 	
