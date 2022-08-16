@@ -103,9 +103,9 @@
 </style>
 				<div id="full">
 					<h3>캠핑장 추천</h3>
-					
 					<ul id="campingVote">
 					<c:forEach items="${campingRecom}" var="campingRecom">
+					<%-- <a href="/campingNew.go?ca_idx=${campingRecom.ca_idx}">데이터비교</a> --%>
 						<li>
 							<a href="/campingView.go?ca_idx=${campingRecom.ca_idx}">
 								<c:choose>
@@ -124,7 +124,7 @@
 					</ul>
 					
 					<div id="searchBox">
-						<form action="campingSearch" method="post">
+						<form action="campingList.go" method="post">
 							<table>
 								<tbody>
 									<tr>
@@ -170,7 +170,7 @@
 									<tr>
 										<th>기타정보</th>
 										<td>
-											<label><input type="checkbox" name="ca_pet" value="1" /> 반려동물 동반 가능</label>
+											<label><input type="checkbox" name="ca_pet" value="가능" /> 반려동물 동반 가능</label>
 										</td>
 									</tr>
 									<tr>

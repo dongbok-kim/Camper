@@ -3,4 +3,12 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.camping.dao.CampingLikeDAO">
 
+	<insert id="campingLike" parameterType="String">
+		INSERT INTO cp_camping_like(cl_datetime, mb_id, ca_idx) VALUES(NOW(), #{param1}, #{param2})
+	</insert>
+	
+	<select id="clIdx" parameterType="String" resultType="String">
+		SELECT cl_idx FROM cp_camping_like WHERE mb_id = #{param2} AND ca_idx = #{param1}
+	</select>
+	
 </mapper>

@@ -16,8 +16,8 @@ public class CampingApiController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	//@Scheduled 예정
-	@RequestMapping (value = "/campingApi.go")
+	
+	//매주 월요일 마다 갱신
     public String setCampingApi() throws Exception {
     	return service.setCampingApi();	
     }
