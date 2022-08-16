@@ -31,6 +31,11 @@ button {
  	 border: none;
   	border-radius: 4px;
 	}
+	
+	
+	h3{
+	color:grey;
+	}
 
 
 </style>
@@ -40,8 +45,8 @@ button {
 	
 	<h2>${profileView.mb_nickname}(${profileView.title})</h2>
 	<h2><img src="resources/images/flame.png" width="20">${profileView.mb_fire}°C</h2>
-	<h2>${profileView.age}대&nbsp;/&nbsp;${profileView.mb_gender}성
-	</h2>
+	<h3>${profileView.age}대&nbsp;/&nbsp;${profileView.mb_gender}성
+	</h3>
 	
 	
 				

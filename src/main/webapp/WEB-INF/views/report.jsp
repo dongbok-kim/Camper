@@ -75,9 +75,10 @@
 		
 		if (confirm("이 회원을 신고하시겠습니까?") == true){
 			
-			if($('#textarea').val() == null){
+			if(document.getElementById("rp_content").value == ''){				
 				alert('신고 사유를 적어주세요');
 			} else {
+				console.log(document.getElementById("rp_content").value);
 				form.submit();
 			}
 										
