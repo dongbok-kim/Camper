@@ -21,12 +21,12 @@ public interface ProfileDAO {
 
 	ArrayList<ProfileDTO> profileReview(String mb_id);
 
-	ProfileDTO nickname(String mb_id);
-
-	ProfileDTO nickname2(String loginId);
-
 	int report(HashMap<String, String> params);
 
 	void photoSave(String photo_original, String photo_copy, int rp_idx);
+
+	ProfileDTO myInfo(String loginId);
+
+	ProfileDTO repoInfo(String mb_id);
 
 }

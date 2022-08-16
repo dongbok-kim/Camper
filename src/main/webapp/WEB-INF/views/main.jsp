@@ -166,7 +166,7 @@
 			</tr>			
 			<tr>								
 				<td><a href="profile?mb_id=${crew.mb_id}">프로필&nbsp;${crew.name}</a></td>					
-				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=900, height=800');">
+				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=800, height=700');">
 				팝업:${crew.name}</button></td>				
 				
 			

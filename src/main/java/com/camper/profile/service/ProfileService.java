@@ -53,12 +53,12 @@ public class ProfileService {
 	public ModelAndView report(String loginId, String mb_id) {
 		String page = "report";
 		ModelAndView mav = new ModelAndView();
-		ProfileDTO nickname = dao.nickname(mb_id);
-		ProfileDTO nickname2 = dao.nickname2(loginId);
+		ProfileDTO repoInfo = dao.repoInfo(mb_id);
+		ProfileDTO myInfo = dao.myInfo(loginId);
 		
 		
-		mav.addObject("nickname2", nickname2);
-		mav.addObject("nickname", nickname);
+		mav.addObject("myInfo", myInfo);
+		mav.addObject("repoInfo", repoInfo);
 				
 		
 		mav.setViewName(page);

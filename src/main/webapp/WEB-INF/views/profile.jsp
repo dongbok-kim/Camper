@@ -1,5 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원 프로필</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+
+button {
+	background-color: red;
+	color : white;
+  	-webkit-appearance: none;
+ 	 -moz-appearance: none;
+ 	 appearance: none;
+ 	 
+ 	 margin: 0;
+ 	 padding: 0.5rem 1rem;
+
+ 	 
+ 	 font-size: 1rem;
+ 	 font-weight: 400;
+	  text-align: center;
+	  text-decoration: none;
+
+	  display: inline-block;
+ 	 width: auto;
+
+ 	 border: none;
+  	border-radius: 4px;
+	}
+
+
+</style>
 
 	<body>
 	
@@ -12,7 +46,7 @@
 	
 				
 	<!-- 신고하기 -->
-	<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=800, height=700');">
+	<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=550, height=500');">
 				신고하기</button>
  
 	<!-- 차단회원이 아닌경우 -->
