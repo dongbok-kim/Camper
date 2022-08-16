@@ -9,13 +9,13 @@
 <style></style>
 </head>
 <body>
-	<form action="crewUpdate.do" method="post" name="crewForm">
+	<form action="stopAdmReg.do" method="post" name="crewForm">
 		<table>
 			<tr>
 				<th>회원아이디</th>
-				<td>${mb_id }</td>
+				<td><input type="hidden" name="mb_id" value="${mb_id }"/>${mb_id }</td>
 				<th>정지시킨 관리자</th>
-				<td>${sessionScope.logiId}</td>
+				<td>${sessionScope.loginId}</td>
 			</tr>
 			<tr>
 				<th>정지사유</th>
@@ -49,8 +49,12 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<input type="button" value="닫기" onclick="window.close();"/>
+		<input type="button" value="닫기" onclick="popupClose()"/>
 </body>
 <script>
+function popupClose(){
+	window.opener.location.reload(); // 팝업창 닫을 때 부모창 새로고침
+    window.close();
+}
 </script>
 </html>

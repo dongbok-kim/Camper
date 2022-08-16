@@ -36,7 +36,7 @@
 			<c:forEach items="${list }" var="stop">
 				<tr>
 					<td>${stop.ms_idx}</td>
-					<td><a onclick="stopPopup('${stop.mb_id}')">${stop.mb_id}</a></td>
+					<td class="contextMenu contextMenuMember" data-id="${stop.mb_id}">${stop.mb_id}</a></td>
 					<td>${stop.mb_name}</td>
 					<td>${stop.mb_nickname}</td>
 					<td>${stop.ms_reason}</td>
@@ -67,21 +67,6 @@
 	<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
 <script>
-function stopPopup(mb_id){
-	
-	var w = 600;
-	var h = 500;
-	
-	var screenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
-    var screenTop = window.screenTop != undefined ? window.screenTop : screen.top;
 
-    width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-    height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
-
-    var left = ((width / 2) - (w / 2)) + screenLeft;
-    var top = ((height / 2) - (h / 2)) + screenTop;
-    
-	window.open('/stopPopup.go?mb_id='+mb_id, 'pop', 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-}
 </script>
 </html>

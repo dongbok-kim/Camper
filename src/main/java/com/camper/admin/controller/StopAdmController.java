@@ -1,5 +1,7 @@
 package com.camper.admin.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -32,6 +34,17 @@ public class StopAdmController {
 	@RequestMapping(value = "/stopPopup.go", method = RequestMethod.GET)
 	public ModelAndView stopPopup(@RequestParam String mb_id) {
 		return service.stopPopup(mb_id);
+	}
+	
+	
+	// 팝업 > 회원 정지 실행
+	@RequestMapping(value = "/stopAdmReg.do", method = RequestMethod.POST)
+	public ModelAndView stopAdmReg(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		//String ms_admin = (String) session.getAttribute("loginId");
+		String ms_admin = "jyr";
+		params.put("ms_admin", ms_admin);
+		return service.stopAdmReg(params);
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.camper.admin.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,13 @@ public class StopAdmService {
 		
 		mav.addObject("list", list);
 		mav.addObject("mb_id", mb_id);
+		return mav;
+	}
+
+	public ModelAndView stopAdmReg(HashMap<String, String> params) {
+		String mb_id = params.get("mb_id");
+		ModelAndView mav = new ModelAndView("redirect:/stopPopup.go?mb_id="+mb_id);
+		dao.stopAdmReg(params);
 		return mav;
 	}
 
