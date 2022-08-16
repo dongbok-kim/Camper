@@ -77,6 +77,25 @@ public class MyInfoController {
 			String mb_pw = request.getParameter("mb_pw");
 			logger.info("원래 비밀번호 : "+mb_pw);
 			
+			String mb_newpassword = request.getParameter("newpassword");
+			logger.info("수정할 비밀번호 : "+mb_newpassword);
+			
+			String mb_nickname = request.getParameter("mb_nickname");
+			logger.info("수정할 닉네임 : "+mb_nickname);
+			
+			String mb_email = request.getParameter("mb_email");
+			logger.info("수정할 이메일 : "+mb_email);
+			
+			String mb_postcode = request.getParameter("mb_postcode");
+			logger.info("수정할 우편번호 : "+mb_postcode);
+			
+			String mb_addr_default = request.getParameter("mb_addr_default");
+			logger.info("수정할 일반주소 : "+mb_addr_default);
+			
+			String mb_addr_detail = request.getParameter("mb_addr_detail");
+			logger.info("수정할 상세 주소 : "+mb_addr_detail);
+			
+			
 			MyInfoDTO myInfo = service.myInfo(mb_id);
 			model.addAttribute("myInfo", myInfo);
 			

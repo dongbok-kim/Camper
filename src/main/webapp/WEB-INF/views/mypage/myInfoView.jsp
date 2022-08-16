@@ -86,7 +86,7 @@
                 <th>닉네임</th>
                 <td>
                 <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}"/>
-                <input type="hidden"  name = "mb_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
+                <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
                 </td>
                 <td colspan="2">
                 <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
@@ -112,7 +112,7 @@
                 <th>이메일</th>
                 <td>
                     <input type="email"  name = "mb_email" id="email" value="${myInfo.mb_email}"/>
-                    <input type="hidden"  name = "mb_email" id="hidden_email" value="${myInfo.mb_email}"/>
+                    <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
                 </td>
                 <td colspan="2">
                     <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
@@ -130,7 +130,10 @@
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
 				
-				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->
+				<input type="hidden" id="hidden_mb_sido" name="hidden_mb_sido" value="${myInfo.mb_sido }" >	<!-- 시/도 --> <!-- 원래 주소 -->
+				<input type="hidden" id="hidden_mb_sigungu" name="hidden_mb_sigungu" value="${myInfo.mb_sigungu }"> <!-- 시/군/구 -->
+				
+				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->	<!-- 주소찾기 했을때 입력되는값  -->
 				<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
 				</td>
             </tr>
@@ -333,6 +336,15 @@ function submitCheck() {
 	
 	var newpassword = $('#newpassword').val();
 	var newpasswordcheck = $('#newpasswordcheck').val();
+	
+	if ($('#sample6_sido').val() == "") {
+		document.getElementById('sample6_sido').value = $('#hidden_mb_sido').val();
+	}
+	
+	if ($('#sample6_sigungu').val() == "") {
+		document.getElementById('sample6_sigungu').value = $('#hidden_mb_sigungu').val();
+	}
+	
 	
 	if($('#email').val() == $('#hidden_email').val()) {
 		checkEmail = true;
