@@ -6,7 +6,7 @@
 	<!-- 캠핑장 후기 관리 -->
 	<select id="reviewCampList" resultType="com.camper.admin.dto.ReviewAdmDTO">
 		SELECT ccr.cr_idx, ccr.cr_content, ccr.cr_assessment, mb_id, ccr.cr_datetime, cc.ca_name,
-			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = ccr.cr_idx) as bb_count
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = ccr.cr_idx and cbb.bb_relation = "cp_camping_review") as bb_count
 		FROM cp_camping_review ccr 
 		JOIN cp_camping cc ON ccr.ca_idx = cc.ca_idx
 	</select>
@@ -15,7 +15,7 @@
 	<!-- 회원 후기 관리 -->
 	<select id="reviewMemberList" resultType="com.camper.admin.dto.ReviewAdmDTO">
 		SELECT mr_idx, mr_content, mr_id, mb_id, mr_assessment, mr_score, mr_datetime,
-			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cmr.mr_idx) as bb_count
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cmr.mr_idx and cbb.bb_relation = "cp_member_review") as bb_count
 		FROM cp_member_review cmr
 	</select>
 	

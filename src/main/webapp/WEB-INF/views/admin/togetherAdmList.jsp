@@ -96,20 +96,20 @@ textarea {
 	
 	<!-- 블라인드 모달창 -->
 	<div class="modal" id="insertBlind">
-		<div class="modal_content" title="후기 블라인드">
-			<h2>후기 블라인드</h2>
+		<div class="modal_content" title="모집글 블라인드">
+			<h2>모집글 블라인드</h2>
 			<form action="blindTogether.do" method="post">
 				<table class="md_table">
 					<tr>
-						<th id="md_ct_title" colspan="2">후기 내용</th>
+						<th id="md_ct_title" colspan="2">모집글 제목</th>
 					</tr>
 					<tr>
 						<th>작성자 아이디</th>
-						<td id="md_ct_writer">후기 작성자</td>
+						<td id="md_ct_writer">작성자</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="hidden" name="md_ct_idx" value="idx"/>
+							<input type="hidden" name="idx" value="idx"/>
 							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
@@ -141,7 +141,7 @@ $(function(){
 		console.log(idx);
 		// 후기내용 길면 생략해서 가져오기,,ㅠㅠ
 		$("#md_ct_writer").html(writer);
-		$("input[name='md_ct_idx']").val(idx);
+		$("input[name='idx']").val(idx);
 		if (title.length>20){
 			$("#md_ct_title").html(title.substr(0,20)+'...');		
 		}else{
