@@ -24,4 +24,21 @@
 	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
 </select>
 
+<update id="myInfoUpdate" parameterType="String">
+	UPDATE cp_member SET
+		mb_nickname = #{param2}, mb_email = #{param3},
+		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
+		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9},
+		mb_pw = #{param10}
+	WHERE mb_id=#{param1}
+</update>
+
+<update id="myInfoUpdateTwo" parameterType="String">
+	UPDATE cp_member SET
+		mb_nickname = #{param2}, mb_email = #{param3},
+		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
+		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9}
+	WHERE mb_id=#{param1}
+</update>
+
 </mapper>

@@ -95,6 +95,15 @@ public class MyInfoController {
 			String mb_addr_detail = request.getParameter("mb_addr_detail");
 			logger.info("수정할 상세 주소 : "+mb_addr_detail);
 			
+			//연령대, 시도 , 시군구
+			String ma_idx = request.getParameter("ma_idxradio");
+			logger.info("수정할 연령대 : "+ma_idx);
+			
+			String mb_sido = request.getParameter("mb_sido");
+			logger.info("수정할 시/도 : "+mb_sido);
+			
+			String mb_sigungu = request.getParameter("mb_sigungu");
+			logger.info("수정할 시/군/구 : "+mb_sigungu);
 			
 			MyInfoDTO myInfo = service.myInfo(mb_id);
 			model.addAttribute("myInfo", myInfo);
@@ -106,7 +115,15 @@ public class MyInfoController {
 			if(match == true) {
 				model.addAttribute("msg", "비밀번호가 일치합니다.");
 				
-				
+				if(mb_newpassword == null || mb_newpassword.equals("")) {
+					service.myInfoUpdateTwo(mb_id, mb_nickname, mb_email, mb_postcode,
+							mb_addr_default, mb_addr_detail, ma_idx, mb_sido, mb_sigungu);
+				} else {
+					service.myInfoUpdate(mb_id, mb_newpassword, mb_nickname, mb_email, mb_postcode,
+							mb_addr_default, mb_addr_detail, ma_idx, mb_sido, mb_sigungu);
+				}
+				rttr.addFlashAttribute("msg", "수정 되었습니다.");
+				page = "redirect:/mypageInfo.go";
 			} else {
 				model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
 			}

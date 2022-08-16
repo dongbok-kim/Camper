@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>마이페이지 - 내정보 수정</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	aside {
     width: 30%;
@@ -101,11 +102,11 @@
                 <td>연령대</td>
                 <td>
                 	<input type="hidden" name="ma_idx" value="${myInfo.ma_idx}" />
-                   <input type="radio" name="ma_idx" value="1" /> 20대 
-                   <input type="radio" name="ma_idx" value="2" /> 30대 
-                   <input type="radio" name="ma_idx" value="3" /> 40대 
-                   <input type="radio" name="ma_idx" value="4" /> 50대 
-                   <input type="radio" name="ma_idx" value="5" /> 60대 
+                   <input type="radio" name="ma_idxradio" value="1" /> 20대 
+                   <input type="radio" name="ma_idxradio" value="2" /> 30대 
+                   <input type="radio" name="ma_idxradio" value="3" /> 40대 
+                   <input type="radio" name="ma_idxradio" value="4" /> 50대 
+                   <input type="radio" name="ma_idxradio" value="5" /> 60대 
                 </td>
             </tr>
             <tr>
@@ -221,10 +222,10 @@ function sample6_execDaumPostcode() {
             
           
            // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
-            document.getElementById('sample6_sido').value = data.sido; //우편번호 찾으면 시/도에 값입력
+            document.getElementById('sample6_sido').value = data.sido;
             
            // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
-            document.getElementById('sample6_sigungu').value = data.sigungu; //우편번호 찾으면 시/군/구에 값입력
+            document.getElementById('sample6_sigungu').value = data.sigungu;
             
             
         }
@@ -235,23 +236,23 @@ function sample6_execDaumPostcode() {
 	// console.log($("input[name='ma_idx']").val());
 
 if($("input[name='ma_idx']").val() == 1 ) {
-	$("input:radio[name='ma_idx']:radio[value='1']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='1']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 2 ) {
-	$("input:radio[name='ma_idx']:radio[value='2']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='2']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 3 ) {
-	$("input:radio[name='ma_idx']:radio[value='3']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='3']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 4 ) {
-	$("input:radio[name='ma_idx']:radio[value='4']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='4']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 5 ) {
-	$("input:radio[name='ma_idx']:radio[value='5']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='5']").attr("checked" , true);
 }
 
 

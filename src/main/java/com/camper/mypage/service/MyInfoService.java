@@ -87,5 +87,26 @@ public class MyInfoService {
 		return map;
 	}
 
+	public void myInfoUpdate(String mb_id, String mb_newpassword, String mb_nickname, String mb_email,
+			String mb_postcode, String mb_addr_default, String mb_addr_detail, String ma_idx, String mb_sido, String mb_sigungu) {
+		
+		MyInfoDTO myInfo = new MyInfoDTO();
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		 dao.myInfoUpdate(mb_id, mb_nickname, mb_email,
+				mb_postcode, mb_addr_default, mb_addr_detail, ma_idx, mb_sido,
+				mb_sigungu, encoder.encode(mb_newpassword));
+		// myInfo.setMb_pw(encoder.encode(mb_newpassword));
+	}
+
+	public void myInfoUpdateTwo(String mb_id, String mb_nickname, String mb_email, String mb_postcode,
+			String mb_addr_default, String mb_addr_detail, String ma_idx, String mb_sido, String mb_sigungu) {
+		
+		dao.myInfoUpdateTwo(mb_id, mb_nickname, mb_email, mb_postcode,
+				mb_addr_default, mb_addr_detail, ma_idx, mb_sido, mb_sigungu);
+		
+	}
+
 
 }
