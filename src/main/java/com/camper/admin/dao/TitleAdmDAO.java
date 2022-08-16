@@ -15,4 +15,8 @@ public interface TitleAdmDAO {
 
 	void titleUpdate(HashMap<String, String> params);
 
+	ArrayList<TitleAdmDTO> getTitleIdx();
+
+	void memberUpdate(int mt_idx);
+
 }

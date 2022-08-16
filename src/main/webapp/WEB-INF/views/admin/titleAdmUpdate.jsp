@@ -22,7 +22,8 @@
 						<table>
 							<tr>
 								<th>타이틀 이름</th>
-								<td><input type="text" name="mt_name" value="${dto.mt_name }"></td>
+								<td><input type="hidden" name="mt_idx" value="${dto.mt_idx}">
+								<input type="text" name="mt_name" value="${dto.mt_name }"></td>
 							</tr>
 							<tr>
 								<th>기준 크루장 횟수</th>

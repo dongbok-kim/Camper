@@ -21,7 +21,17 @@
 	</select>
 	
 	<update id="titleUpdate" parameterType="hashmap">
-		UPDATE cp_member_title SET mt_name = #{mt_name}, mt_count = #{mt_count}, mt_degree = #{mt_degree}
+		UPDATE cp_member_title SET mt_name = #{mt_name}, mt_count = #{mt_count}, mt_degree = #{mt_degree} WHERE mt_idx = #{mt_idx}
+	</update>
+	
+	<select id="getTitleIdx" resultType="admTitle">
+		SELECT mt_idx FROM cp_member_title;
+	</select>
+	
+	<update id="memberUpdate">
+		UPDATE cp_member cm SET mt_idx = #{param1}
+		WHERE mb_fire >= (SELECT mt_degree FROM cp_member_title cmt WHERE mt_idx = #{param1}) 
+		AND (SELECT count(ct_idx) FROM cp_crew_together cct WHERE cct.mb_id = cm.mb_id) >= (SELECT mt_count FROM cp_member_title cmt WHERE mt_idx = #{param1});
 	</update>
 	
 </mapper>
