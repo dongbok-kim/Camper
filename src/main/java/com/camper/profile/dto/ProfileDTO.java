@@ -21,6 +21,7 @@ public class ProfileDTO {
 	
 	private String title;
 	
+	private int ct_idx;
 	
 	
 	
@@ -29,6 +30,17 @@ public class ProfileDTO {
 	
 	
 	
+	
+	
+	
+	
+	
+	public int getCt_idx() {
+		return ct_idx;
+	}
+	public void setCt_idx(int ct_idx) {
+		this.ct_idx = ct_idx;
+	}
 	public String getTitle() {
 		return title;
 	}

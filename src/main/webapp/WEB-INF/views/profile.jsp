@@ -66,11 +66,12 @@ button {
 	</c:if>
 	
 	
+	
 	<!-- 작성한 모집글 -->
 	<c:forEach items="${profileTogether}" var="Together">
 		<table>
 			<tr>
-				<td>${Together.ct_title}</td>
+				<td><a href="crewTogetherView.do?ct_idx=${Together.ct_idx}" target="_blank">${Together.ct_title}</a></td>
 				<td>${Together.name}&nbsp;${Together.ct_wish_start}&nbsp;~&nbsp;${Together.ct_wish_end}</td>
 			</tr>
 		</table>
