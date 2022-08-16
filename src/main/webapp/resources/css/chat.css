@@ -8,13 +8,28 @@ html, body {
 #chat {
 	margin: 0 auto;
 	width: 100%;
-	max-width: 800px;
+	max-width: 1200px;
 }
 
 #left {
 	float: left;
-	max-width: 600px;
+	max-width: 900px;
 	width: 100%;
+}
+
+.ban {
+	color: #ff0000;
+}
+
+.out {
+	font-size: 0;
+}
+
+.out:before {
+	margin-right: 3px;
+	font-size: 12px;
+	content: '(알 수 없음)';
+	color: #787878;
 }
 
 @keyframes messageNotice{
@@ -23,24 +38,43 @@ html, body {
 	100%{color:#ffff00;}
 }
 #notice {
+	padding: 5px;
+	text-align: center;
 	animation-name: messageNotice;
 	animation-iteration-count: infinite;
 	animation-duration: 2s;
-	padding: 5px;
-	text-align: center;
+	-webkit-user-select: none !important;
+	-moz-user-select: -moz-none !important;
+	-ms-user-select: none !important;
+	user-select: none !important;
 	color: #fff;
 	background-color: #000;
 }
 
+#notice::selection {
+	background-color: transparent;
+}
+
 #msgList {
+	margin: 0;
 	padding: 10px;
-	height: 500px;
+	height: 630px;
 	overflow-y: scroll;
 	border: 1px solid #000;
 }
 
+#msgList .dateTime {
+	color: #787878;
+}
+
 .me {
 	text-align: right;
+}
+
+.me > p {
+	margin-right: 12px;
+	line-height: 0;
+	font-size: 11px;
 }
 
 .me > span {
@@ -64,6 +98,12 @@ html, body {
 	border-right: 0;
 	border-top: 0;
 	margin-right: -12px;
+}
+
+.you > p {
+	margin-left: 12px;
+	line-height: 0;
+	font-size: 11px;
 }
 
 .you > span {
@@ -104,6 +144,137 @@ html, body {
 
 #right {
 	float: left;
-	max-width: 200px;
 	width: 100%;
+	max-width: 300px;
+}
+
+#joinList {
+	border: 1px solid #000;
+	background-color: #fafafa;
+}
+
+#right > .wrapper {
+	height: 630px;
+}
+
+#right > .wrapper > p, #joinList > p {
+	text-align: center;
+}
+
+#right > .wrapper > p > strong, #joinList > p > strong {
+	color: #0080ff;
+}
+
+#joinList > #chatMember {
+	height: 255px;
+	overflow-y: scroll;
+	background-color: #fff;
+}
+
+#joinList > #chatMember > ul {
+	list-style: none;
+}
+
+#joinList > #chatMember > ul > li {
+	margin-top: 12px;
+	position: relative;
+}
+
+#joinList > #chatMember > ul > li > input[type="checkbox"] {
+	position: absolute;
+	top: 2px;
+	left: -24px;
+	cursor: pointer;
+}
+
+#joinList > #chatMember > ul > li > span {
+	position: relative;
+}
+
+#joinList > #chatMember > ul > li > span:after {
+	content: '';
+	position: absolute;
+	display: inline-block;
+	top: 0;
+    background-repeat: no-repeat;
+}
+
+#joinList > #chatMember > ul > li > span.icoHand:after {
+	width: 22px;
+	height: 23px;
+	right: -27px;
+    background-image: url('../../resources/images/ico_chat_hand.jpg');
+}
+
+#joinList > #chatMember > ul > li > span.icoCrew:after {
+	width: 17px;
+	height: 22px;
+	right: -22px;
+	background-image: url('../../resources/images/ico_chat_stamp.jpg');
+}
+
+#joinList > #chatMember > ul > li > button[type="button"] {
+	margin-right: 5px;
+	float: right;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	color: #fff;
+	background-color: #ff0000;
+}
+
+#btn {
+	text-align: center;
+}
+
+#btn > button[type="button"] {
+	cursor: pointer;
+	outline: none;
+	border: none;
+}
+
+#btn > #btnCrewEnd {
+	margin: 0 auto;
+	display: block;
+	width: 90%;
+	height: 45px;
+	color: #fff;
+	background-color: #787878;
+}
+
+#btn > #btnJoin {
+	position: relative;
+	display: inline-block;
+	width: 45%;
+	height: 45px;
+	text-align: left;
+	color: #fff;
+	background-color: #32405d;
+}
+
+#btn > #btnJoin:before {
+	position: absolute;
+	left: 24px;
+	content: '참가의사 표시';
+}
+
+#btn > #btnJoin.active {
+	color: #ffff00;
+}
+
+#btn > #btnJoin.active:before {
+	content: '참가의사 철회';
+}
+
+#btn > #btnExit {
+	padding-left: 5px;
+	display: inline-block;
+	width: 45%;
+	height: 45px;
+	line-height: 45px;
+    vertical-align: top;
+	text-align: left;
+	box-sizing: border-box;
+	color: #fff;
+	background-color: #787878;
 }

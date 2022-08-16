@@ -3,4 +3,87 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.chat.dao.ChatDAO">
 
+	<select id="getChat" parameterType="chat" resultType="chat">
+		SELECT COUNT(cg_idx) AS cnt, cg_limit, ct_idx, (SELECT ct_deadline FROM cp_crew_together WHERE ct_idx = a.ct_idx) AS ct_deadline FROM cp_chat_group a WHERE cg_idx = #{cg_idx}
+	</select>
+	
+	<select id="getJoin" parameterType="chat" resultType="chat">
+		SELECT cj_go, cj_datetime, mb_id, IFNULL((SELECT cc_crew FROM cp_camping_crew WHERE mb_id = a.mb_id), '크루원') AS cc_crew FROM cp_chat_join a WHERE cg_idx = #{cg_idx} AND cj_ban = 0
+	</select>
+	
+	<select id="getBan" resultType="chat">
+		SELECT cj_ban FROM cp_chat_join WHERE cg_idx = #{param1} AND mb_id = #{param2}
+	</select>
+	
+	<insert id="chatJoin">
+		INSERT INTO cp_chat_join (cg_idx, mb_id)
+			VALUES (#{param1}, #{param2})
+	</insert>
+	
+	<update id="crewTogetherDeadline" parameterType="int">
+		UPDATE cp_crew_together SET ct_deadline = 1, ct_deadline_datetime = NOW() WHERE ct_idx = #{ct_idx}
+	</update>
+	
+	<insert id="msgSend" parameterType="chat" useGeneratedKeys="true" keyColumn="cm_idx" keyProperty="cm_idx">
+		INSERT INTO cp_chat_message (cm_content, cm_datetime, cg_idx, mb_id)
+			VALUES (#{cm_content}, #{cm_datetime}, #{cg_idx}, #{mb_id})
+	</insert>
+	
+	<update id="noticeCancel" parameterType="int">
+		UPDATE cp_chat_message SET cm_notice = 0 WHERE cg_idx = #{cg_idx}
+	</update>
+	
+	<update id="msgNotice" parameterType="int">
+		UPDATE cp_chat_message SET cm_notice = 1 WHERE cm_idx = #{cm_idx}
+	</update>
+	
+	<select id="getMsgNotice" parameterType="int" resultType="chat">
+		SELECT cm_content FROM cp_chat_message WHERE cg_idx = #{cg_idx} AND cm_notice = 1
+	</select>
+	
+	<update id="ban" parameterType="chat">
+		UPDATE cp_chat_join SET cj_go = 0, cj_ban = 1 WHERE cg_idx = #{cg_idx} AND mb_id = #{mb_id}
+	</update>
+	
+	<select id="isCrewLeader" resultType="chat">
+		SELECT mb_id, (SELECT ct_deadline FROM cp_crew_together WHERE ct_idx = a.ct_idx) AS ct_deadline FROM cp_camping_crew a WHERE cc_crew = '크루장' AND ct_idx = (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = #{cg_idx})
+	</select>
+	
+	<select id="isCrew" parameterType="chat" resultType="chat">
+		SELECT COUNT(ct_idx) AS cnt FROM cp_camping_crew WHERE cc_crew = '크루원' AND ct_idx = (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = #{cg_idx}) AND mb_id = #{mb_id}
+	</select>
+	
+	<select id="isGo" parameterType="chat" resultType="chat">
+		SELECT cj_go FROM cp_chat_join WHERE cg_idx = #{cg_idx} AND mb_id = #{mb_id}
+	</select>
+	
+	<insert id="crewConfirm" parameterType="chat">
+		INSERT INTO cp_camping_crew (cc_crew, ct_idx, mb_id)
+			VALUES (#{cc_crew}, (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = #{cg_idx}), #{mb_id})
+	</insert>
+	
+	<delete id="crewCancel" parameterType="chat">
+		DELETE FROM cp_camping_crew WHERE cc_crew = #{cc_crew} AND ct_idx = (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = #{cg_idx}) AND mb_id = #{mb_id}
+	</delete>
+	
+	<update id="crewExpression" parameterType="chat">
+		UPDATE cp_chat_join SET cj_go = #{cj_go} WHERE cg_idx = #{cg_idx} AND mb_id = #{mb_id}
+	</update>
+	
+	<delete id="chatJoinDel" parameterType="chat">
+		DELETE FROM cp_chat_join WHERE cg_idx = #{cg_idx} AND mb_id = #{mb_id}
+	</delete>
+	
+	<select id="getNickname" parameterType="chat" resultType="chat">
+		SELECT mb_nickname, mb_status, (SELECT mb_id FROM cp_member_block WHERE bl_mb = #{bl_mb} AND mb_id = #{mb_id}) AS bl_mb FROM cp_member WHERE mb_id = #{mb_id}
+	</select>
+	
+	<select id="getCrewCnt" parameterType="int" resultType="int">
+		SELECT COUNT(ct_idx) FROM cp_camping_crew WHERE cc_crew = '크루원' AND ct_idx = (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = #{cg_idx})
+	</select>
+	
+	<select id="getMsgList" parameterType="chat" resultType="chat">
+		SELECT cm_idx, cm_content, cm_datetime, mb_id FROM cp_chat_message WHERE cg_idx = #{cg_idx} AND cm_datetime >= (SELECT cj_datetime FROM cp_chat_join WHERE cg_idx = #{cg_idx} AND mb_id = #{mb_id})
+	</select>
+
 </mapper>
