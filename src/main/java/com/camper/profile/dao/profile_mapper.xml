@@ -30,6 +30,18 @@ FROM cp_member m WHERE mb_id = #{mb_id}
 </select>
 
 
+<!-- 닉네임 조회 -->
+<select id="nickname" parameterType="String" resultType="com.camper.profile.dto.ProfileDTO">
+SELECT mb_id, mb_nickname FROM cp_member WHERE mb_id = #{mb_id}
+</select>
+
+
+<!-- 로그인 닉네임 조회 -->
+<select id="nickname2" parameterType="String" resultType="com.camper.profile.dto.ProfileDTO">
+SELECT mb_id, mb_nickname FROM cp_member WHERE mb_id = #{loginId}
+</select>
+
+
 <!-- 프로필 작성 모집글 -->
 <select id="profileTogether" resultType="com.camper.profile.dto.ProfileDTO">
 SELECT ct_title, ct_wish_start , ct_wish_end, (select ca_name from cp_camping where ca_idx=cct.ca_idx) as name
@@ -41,5 +53,30 @@ FROM cp_crew_together cct WHERE mb_id= #{mb_id}
 SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id}
 </select>
 
+
+
+
+ <insert id="report" parameterType="hashmap">
+   
+   <selectKey keyProperty="rp_idx" resultType="String">
+            SELECT LAST_INSERT_ID()
+      </selectKey>
+      
+      
+    INSERT INTO cp_report (
+         rp_id, mb_id, rp_content
+       ) VALUES (
+          #{rp_id}
+          ,#{mb_id}
+          ,#{rp_content}
+       )
+   </insert>
+   
+   
+   
+    <insert id="photoSave">      
+      INSERT INTO cp_report_image(ri_ori_name, ri_new_name, rp_idx)
+         VALUES(#{param1},#{param2},#{param3} )   
+   </insert>
 
 </mapper>

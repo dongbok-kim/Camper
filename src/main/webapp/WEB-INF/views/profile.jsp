@@ -11,8 +11,8 @@
 	
 	
 				
-	<!-- 신고하기(수정중) -->
-	<button onclick="javascript:window.open('profile?mb_id=${profileView.mb_id}', 'report', 'width=900, height=800');">
+	<!-- 신고하기 -->
+	<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=800, height=700');">
 				신고하기</button>
  
 	<!-- 차단회원이 아닌경우 -->

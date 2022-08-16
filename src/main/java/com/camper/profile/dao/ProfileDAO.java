@@ -1,6 +1,7 @@
 package com.camper.profile.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.camper.profile.dto.ProfileDTO;
 
@@ -19,5 +20,13 @@ public interface ProfileDAO {
 	ArrayList<ProfileDTO> profileTogether(String mb_id);
 
 	ArrayList<ProfileDTO> profileReview(String mb_id);
+
+	ProfileDTO nickname(String mb_id);
+
+	ProfileDTO nickname2(String loginId);
+
+	int report(HashMap<String, String> params);
+
+	void photoSave(String photo_original, String photo_copy, int rp_idx);
 
 }
