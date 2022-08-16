@@ -209,7 +209,14 @@
 					<div id="btn">
 						<a href="" id="btnCrew">크루 모집하기</a>
 						<span id="likeCnt">좋아요 수 : ${campingView.cntLike}</span>
-						<a href="" id="btnLike">♡ 찜하기/♥ 찜해제</a>
+						<c:choose>
+							<c:when test="${clIdx eq null}">
+								<a href="campingLike.do?ca_idx=${campingView.ca_idx}" id="btnLike">♡ 찜하기</a>
+							</c:when>
+							<c:otherwise>
+								<a href="campingLikeDelete.do?ca_idx=${campingView.ca_idx}" id="btnLike">♥ 찜해제</a>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<div id="full">
@@ -380,5 +387,7 @@
 		map.relayout();
 		map.setCenter(mapPosition);
 	});
+	
+
 </script>
 </html>

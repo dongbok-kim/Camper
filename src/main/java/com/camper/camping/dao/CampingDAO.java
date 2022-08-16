@@ -1,12 +1,14 @@
 package com.camper.camping.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.camper.camping.dto.CampingDTO;
 
 public interface CampingDAO {
-
-	ArrayList<CampingDTO> campingList();
+	//0815 검색 추가 전 원래
+	//ArrayList<CampingDTO> campingList();
+	ArrayList<CampingDTO> campingList(HashMap<String, Object> map);
 
 	CampingDTO campingView(String ca_idx);
 
@@ -17,5 +19,12 @@ public interface CampingDAO {
 	int campingCnt();
 
 	ArrayList<CampingDTO> campingRecom();
+
+	ArrayList<CampingDTO> campingRecomUser(Object mb_id);
+
+	CampingDTO campingNewApi(String ca_idx);
+
+	CampingDTO campingNew(String ca_idx);
+
 
 }
