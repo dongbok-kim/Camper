@@ -58,7 +58,6 @@ public class TitleAdmService {
 		dao.titleUpdate(params);
 		// 회원 테이블 업데이트
 		ArrayList<TitleAdmDTO> list = dao.getTitleIdx();
-		logger.info("list : "+list);
 		for (TitleAdmDTO dto : list) {
 			logger.info("타이틀 번호 : "+dto.getMt_idx());
 			dao.memberUpdate(dto.getMt_idx());

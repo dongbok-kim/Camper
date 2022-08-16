@@ -29,9 +29,14 @@
 	
 	<!-- 캠핑장 후기 목록 -->
 	<select id="campingReviewList" parameterType="String" resultType="mypgReview">
-		SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cr_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
+	<!-- 	SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cr_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
 		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
-		WHERE mb_id = #{param1} ORDER BY cr_idx DESC
+		WHERE mb_id = #{param1} ORDER BY cr_idx DESC -->
+		
+		SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cct.ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
+		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
+		JOIN cp_crew_together cct on ccr.ct_idx = cct.ct_idx 
+		WHERE ccr.mb_id = #{param1} ORDER BY cr_idx DESC
 	</select>
 	
 	<delete id="campingReviewDelete">
@@ -44,6 +49,7 @@
 		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, mr_id 
 		FROM cp_member_review 
 		WHERE mb_id = #{param1}
+		ORDER BY mr_idx DESC
 	</select>
 	
 	<!-- 작성 후기 -->
@@ -51,6 +57,28 @@
 		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, cmr.mb_id, date_format(date_add(ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today 
 		FROM cp_member_review cmr JOIN cp_crew_together cct ON cct.ct_idx = cmr.ct_idx 
 		WHERE mr_id = #{param1}
+		ORDER BY mr_idx DESC
 	</select>
-
+	
+	<!-- 크루 후기 작성 -->
+	<insert id="crewReview">
+		INSERT INTO cp_member_review(mr_assessment, mr_score, mr_content, mr_datetime, mr_id, mb_id, ct_idx) 
+		VALUES(#{param1}, #{param2}, #{param3}, now(), #{param4}, #{param5}, #{param6})
+	</insert>
+	
+	<!-- 크루 후기 삭제 -->
+	<delete id="crewReviewDelete">
+		DELETE FROM cp_member_review WHERE mr_idx = #{param1} and mr_id = #{param2}
+	</delete>
+	
+	<!-- 회원 모닥불온도 업데이트 -->
+	<update id="memberUpdate">
+		UPDATE cp_member SET mb_fire = (SELECT ROUND(SUM(mr_score)/COUNT(mr_idx)) FROM cp_member_review cmr WHERE mb_id = #{param1}) WHERE mb_id = #{param1}
+	</update>
+	
+	<!-- 삭제 리뷰 대상 아이디 찾기 -->
+	<select id="getId" resultType="String">
+		SELECT mb_id FROM cp_member_review WHERE mr_idx = #{param1} and mr_id = #{param2}
+	</select>
+	
 </mapper>

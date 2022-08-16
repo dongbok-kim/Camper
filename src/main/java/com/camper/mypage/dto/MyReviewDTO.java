@@ -30,6 +30,7 @@ public class MyReviewDTO {
 	private Timestamp mr_datetime;
 	private String mr_id;
 	
+	
 	public int getMr_idx() {
 		return mr_idx;
 	}

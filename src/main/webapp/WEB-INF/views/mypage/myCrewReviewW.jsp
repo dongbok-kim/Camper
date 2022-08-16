@@ -41,7 +41,9 @@
 									<td>${rv.mb_id}</td>
 									<td>${rv.mr_assessment}<br/>(+${rv.mr_score })</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.mr_datetime}"/></td>
-									<td></td>
+									<c:if test="${rv.delAvail > rv.today}">
+										<td><a href="crewReviewDelete.do?idx=${rv.mr_idx}">삭제</a></td>
+									</c:if>
 								</tr>		
 							</c:forEach>
 						</tbody>

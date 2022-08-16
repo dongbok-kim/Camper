@@ -48,7 +48,7 @@ public class MyCrewController {
 	public ModelAndView crewUpdate(HttpSession session, @RequestParam String[] crew_chk) {
 		String idx = (String) session.getAttribute("idx");
 		session.removeAttribute("idx");
-		// 크루모집글의 캠핑 종료 여부를 1로 변경
+		// 크루모집글의 캠핑 종료 여부를 1로 변경, 캠핑완료 날짜에 현재 날짜 찍기
 		service.crewTogetherUpdate(idx);
 		// 캠핑 참여한 회원 확정
 		return service.crewUpdate(crew_chk,idx);
