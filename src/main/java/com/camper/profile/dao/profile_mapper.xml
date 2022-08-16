@@ -25,7 +25,7 @@ SELECT bl_idx FROM cp_member_block WHERE mb_id=#{param1} and bl_mb=#{param2}
 
 <!-- 프로필 조회 -->
 <select id="profileView" parameterType="String" resultType="com.camper.profile.dto.ProfileDTO">
-SELECT mb_id,mb_nickname, mb_gender, mb_fire , (select ma_age from cp_member_age cma where cma.ma_idx = m.ma_idx) as age 
+SELECT mb_id,mb_nickname, mb_gender, mb_fire , (select ma_age from cp_member_age cma where cma.ma_idx = m.ma_idx) as age, (select mt_name from cp_member_title cmt where cmt.mt_idx = m.mt_idx) as title 
 FROM cp_member m WHERE mb_id = #{mb_id}
 </select>
 

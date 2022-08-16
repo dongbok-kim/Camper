@@ -19,11 +19,22 @@ public class ProfileDTO {
 	private String mr_assessment;
 	private String mr_content;
 	
+	private String title;
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getMr_assessment() {
 		return mr_assessment;
 	}

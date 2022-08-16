@@ -38,8 +38,8 @@ button {
 	<body>
 	
 	
-	<h2>${profileView.mb_nickname}()</h2>
-	<h2>${profileView.mb_fire}°C</h2>
+	<h2>${profileView.mb_nickname}(${profileView.title})</h2>
+	<h2><img src="resources/images/flame.png" width="20">${profileView.mb_fire}°C</h2>
 	<h2>${profileView.age}대&nbsp;/&nbsp;${profileView.mb_gender}성
 	</h2>
 	
