@@ -9,7 +9,7 @@
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
-						<li><a href="">크루 후기</a></li>
+						<li><a href="/myCrewReviewR.go">크루 후기</a></li>
 						<li class="active"><a href="">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="/myBlockList.go">차단 회원</a></li>
@@ -66,6 +66,9 @@
 										</c:when>
 										<c:when test="${my.cc_is_join == 1 and my.cntCR == 1 and my.cntMR ==0}">
 											<td><a onclick="popupCrew('${my.ct_idx}')">크루 후기</a></td>
+										</c:when>
+										<c:when test="${my.cc_is_join == 1 and my.cntCR == 0 and my.cntMR != 0}">
+											<td><a onclick="popupCrew('${my.ct_idx}')">캠핑장 후기</a></td>
 										</c:when>
 										<c:otherwise>
 											<td></td>

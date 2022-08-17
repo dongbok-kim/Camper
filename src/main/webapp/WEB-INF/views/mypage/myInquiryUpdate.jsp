@@ -9,7 +9,7 @@
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
-						<li><a href="">크루 후기</a></li>
+						<li><a href="/myCrewReviewR.go">크루 후기</a></li>
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="/myBlockList.go">차단 회원</a></li>
@@ -35,7 +35,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<input type="button" value="완료"  onclick="yn()"/>
+									<input type="button" value="수정"  onclick="yn()"/>
 									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
 								</th>
 							</tr>

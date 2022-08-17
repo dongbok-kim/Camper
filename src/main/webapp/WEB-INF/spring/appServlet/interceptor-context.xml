@@ -7,13 +7,31 @@
 		
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/myBlockList.go"/>
+			<mvc:mapping path="/myBlockDelete.do"/>
 			<mvc:mapping path="/myCampingLikeList.go"/>
 			<mvc:mapping path="/myCampingLikeDelete.do"/>
-			<mvc:mapping path="/myCrewWriteList.go"/>
-			<mvc:mapping path="/myCrewWriteDelete.do"/>
 			<mvc:mapping path="/myCrewList.go"/>
 			<mvc:mapping path="/crewUpdate.go"/>
 			<mvc:mapping path="/crewUpdate.do"/>
+			<mvc:mapping path="/myInquiryList.go"/>
+			<mvc:mapping path="/inquiryWrite.go"/>
+			<mvc:mapping path="/inquiryWrite.do"/>
+			<mvc:mapping path="/inquiryDetail.go"/>
+			<mvc:mapping path="/myInquiryDelete.do"/>
+			<mvc:mapping path="/myInquiryUpdate.go"/>
+			<mvc:mapping path="/myInquiryUpdate.do"/>
+			<mvc:mapping path="/campingReviewForm.go"/>
+			<mvc:mapping path="/campingReviewWrite.do"/>
+			<mvc:mapping path="/myCampingReview.go"/>
+			<mvc:mapping path="/campingReviewDelete.do"/>
+			<mvc:mapping path="/crewReviewForm.go"/>
+			<mvc:mapping path="/crewReview.do"/>
+			<mvc:mapping path="/myCrewReviewR.go"/>
+			<mvc:mapping path="/myCrewReviewW.go"/>
+			<mvc:mapping path="/crewReviewDelete.do"/>
+			<mvc:mapping path="/myCrewWriteList.go"/>
+			<mvc:mapping path="/myCrewWriteDelete.do"/>
 			<bean class="com.camper.lib.utils.MypgValidationInter"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
