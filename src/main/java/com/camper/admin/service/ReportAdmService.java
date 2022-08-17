@@ -43,45 +43,11 @@ public class ReportAdmService {
 		
 	}
 
-	public String reportUpdate(@RequestParam HashMap<String, String> params, 
-			MultipartFile[] rp_img) {
+	public String reportUpdate(@RequestParam HashMap<String, String> params) {
 		
 		int row = dao.reportUpdate(params);
-		int rp_idx = Integer.parseInt(params.get("rp_idx"));
-		//이미지 저장 기능 임시작업
-		fileSave(rp_img, rp_idx);
+		logger.info("신고 처리 서비스 횟수: " +row);
 		return "admin/reportList";
-		
-	}
-
-	private void fileSave(MultipartFile[] rp_img, int rp_idx) {
-		//파일 업로드
-		logger.info("파일업로드");
-		for(MultipartFile photo : rp_img) {
-			String oriFileName = photo.getOriginalFilename();
-			if(!oriFileName.equals("")) {
-				logger.info("이미지 업로드 진행");
-				// 3-2. 확장자 분리
-				String ext = oriFileName.substring(oriFileName.lastIndexOf(".")).toLowerCase();
-				// 3-3. 새 이름 만들기
-				String newFileName = System.currentTimeMillis()+ext;
-				
-				logger.info(oriFileName + "=>" + newFileName); 
-				
-				// 3-4. 파일 받아서 저장하기
-				try {
-					byte[] arr = photo.getBytes();
-					Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\Camper\\src\\main\\webapp\\resources\\reportPhoto\\"+newFileName);
-					Files.write(path,arr);
-					logger.info(newFileName+" - save ok");
-					// 4. 업로드 후 photo 테이블에 데이터 입력
-					dao.fileWrite(oriFileName, newFileName, rp_idx);
-					
-				} catch (IOException e) {
-					e.printStackTrace();
-				}				
-			}
-		}
 		
 	}
 

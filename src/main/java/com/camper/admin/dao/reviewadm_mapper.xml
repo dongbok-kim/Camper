@@ -3,19 +3,76 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.ReviewAdmDAO">
 	
+	
+	<!-- 캠핑장 후기 총 갯수 가져오기(페이징 처리) -->
+	<select id="reviewTotal" parameterType="hashmap" resultType="int">
+		SELECT COUNT(ccr.cr_idx) FROM cp_camping_review ccr JOIN cp_camping cc ON ccr.ca_idx = cc.ca_idx
+		
+		<where>
+			<if test="keyword != null and !keyword.equals('')">
+			<choose>
+				<when test="type != null and type.equals('mb_id')">
+					ccr.mb_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cc.ca_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					(ccr.mb_id LIKE CONCAT('%', #{keyword}, '%') or cc.ca_name LIKE CONCAT('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
+			</if>
+		</where>
+	</select>
+	
+	
 	<!-- 캠핑장 후기 관리 -->
-	<select id="reviewCampList" resultType="com.camper.admin.dto.ReviewAdmDTO">
-		SELECT ccr.cr_idx, ccr.cr_content, ccr.cr_assessment, mb_id, ccr.cr_datetime, cc.ca_name,
-			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = ccr.cr_idx) as bb_count
-		FROM cp_camping_review ccr 
-		JOIN cp_camping cc ON ccr.ca_idx = cc.ca_idx
+	<select id="reviewCampList" parameterType="hashmap" resultType="admReview">
+		SELECT 
+			ccr.cr_idx, 
+			ccr.cr_content, 
+			ccr.cr_assessment, 
+			ccr.mb_id, 
+			ccr.cr_datetime, 
+			cc.ca_name,
+			(SELECT COUNT(bb_idx) FROM cp_board_blind cbb WHERE cbb.bb_relation_idx = ccr.cr_idx AND cbb.bb_relation = 'cp_camping_review') AS bb_count
+			
+		FROM 
+			cp_camping_review ccr 
+			
+		JOIN 
+			cp_camping cc 
+			
+		ON 
+			ccr.ca_idx = cc.ca_idx
+			
+		<where>
+			<if test="keyword != null and !keyword.equals('')">
+			<choose>
+				<when test="type != null and type.equals('mb_id')">
+					ccr.mb_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cc.ca_name LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					<if test="${keyword} != null and !keyword.equals('')">
+					(ccr.mb_id LIKE CONCAT('%', #{keyword}, '%') or cc.ca_name LIKE CONCAT('%', #{keyword}, '%'))
+					</if>
+				</otherwise>
+			</choose>
+			</if>
+		</where>
+		
+		LIMIT #{amount}
+		OFFSET #{skip}
 	</select>
 	
 	
 	<!-- 회원 후기 관리 -->
-	<select id="reviewMemberList" resultType="com.camper.admin.dto.ReviewAdmDTO">
+	<select id="reviewMemberList" resultType="admReview">
 		SELECT mr_idx, mr_content, mr_id, mb_id, mr_assessment, mr_score, mr_datetime,
-			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cmr.mr_idx) as bb_count
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cmr.mr_idx and cbb.bb_relation = 'cp_member_review') as bb_count
 		FROM cp_member_review cmr
 	</select>
 	

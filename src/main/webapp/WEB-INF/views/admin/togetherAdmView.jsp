@@ -55,30 +55,56 @@ textarea {
 	<div>
 		<table>
 			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일시</th>
-				<th>블라인드</th>
+				<th colspan="6">${dto.ct_title }</th>
 			</tr>
-			<c:forEach items="${list }" var="together">
-				<tr>
-					<td>${together.ct_idx}</td>
-					<td>
-					<a href="togetherAdmView?ct_idx=${together.ct_idx}">${together.ct_title }</a>
-					</td>
-					<td>${together.mb_id}</td>
-					<td>${together.ct_datetime}</td>
-					<td>
-						<c:if test="${together.bb_count eq 0}">
-							<button class="blind_button" data-target="#insertBlind" data-title="${together.ct_title }" data-writer="${together.mb_id}" data-idx="${together.ct_idx}">
-								블라인드
-							</button>
-						</c:if>
-					</td>
-				</tr>
-			</c:forEach>
+			<tr>
+				<th>작성자</th>
+				<td>${dto.mb_id }</td>
+				<th>닉네임</th>
+				<td>${dto.mb_nickname }</td>
+				<th>작성일시</th>
+				<td>${dto.ct_datetime }</td>
+			</tr>
+			<tr>
+				<th>성별</th>
+				<td>${dto.ct_gender }</td>
+				<th>연령대</th>
+				<td>${dto.ct_age }</td>
+				<th>모집인원</th>
+				<td>${dto.ct_people_cnt}</td>
+			</tr>
+			<tr>
+				<th>캠핑종류</th>
+				<td>${dto.ct_camping_type }</td>
+				<th>장비제공</th>
+				<td colspan="3">
+					<c:if test="${dto.ct_tool eq 1}">제공</c:if> 
+					<c:if test="${dto.ct_tool eq 0}">미제공</c:if> 
+				</td>
+			</tr>
+			<tr>
+				<th>애견동반</th>
+				<td>
+					<c:if test="${dto.ct_pet eq 1}">동반</c:if> 
+					<c:if test="${dto.ct_pet eq 0}">동반하지않음</c:if> 
+				</td>
+				<th>희망날짜</th>
+				<td colspan="3">${dto.ct_wish_start } - ${dto.ct_wish_end }</td>
+			</tr>
+			<tr>
+				<th>캠핑장명</th>
+				<td colspan="5">${dto.ca_name }</td>
+			</tr>
+			<tr>
+				<td colspan="6">${dto.ct_content }</td>
+			</tr>			
 		</table>
+		<c:if test="${dto.bb_count eq 0 }">
+			<button class="blind_button" data-target="#insertBlind" data-title="${dto.ct_title }" data-writer="${dto.mb_id}" data-idx="${dto.ct_idx}">
+				블라인드
+			</button>
+		</c:if>
+		<input type="button" onclick="location.href='/togetherAdmList' " value="목록">
 	</div>
 	<div>
 		<form action="reviewCampSearch.do" method="post">
@@ -95,20 +121,20 @@ textarea {
 	
 	<!-- 블라인드 모달창 -->
 	<div class="modal" id="insertBlind">
-		<div class="modal_content" title="후기 블라인드">
-			<h2>후기 블라인드</h2>
+		<div class="modal_content" title="모집글 블라인드">
+			<h2>모집글 블라인드</h2>
 			<form action="blindTogether.do" method="post">
 				<table class="md_table">
 					<tr>
-						<th id="md_ct_title" colspan="2">후기 내용</th>
+						<th id="md_ct_title" colspan="2">모집글 제목</th>
 					</tr>
 					<tr>
 						<th>작성자 아이디</th>
-						<td id="md_ct_writer">후기 작성자</td>
+						<td id="md_ct_writer">작성자</td>
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="hidden" name="md_ct_idx" value="idx"/>
+							<input type="hidden" name="idx" value="idx"/>
 							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
@@ -140,7 +166,7 @@ $(function(){
 		console.log(idx);
 		// 후기내용 길면 생략해서 가져오기,,ㅠㅠ
 		$("#md_ct_writer").html(writer);
-		$("input[name='md_ct_idx']").val(idx);
+		$("input[name='idx']").val(idx);
 		if (title.length>20){
 			$("#md_ct_title").html(title.substr(0,20)+'...');		
 		}else{

@@ -2,6 +2,8 @@ package com.camper.admin.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ public class ReportAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	// 회원 신고 목록
 	@RequestMapping(value = "/reportAdmList")
 	public String reportAdmList(Model model) {
 		
@@ -37,13 +40,14 @@ public class ReportAdmController {
 	}
 	
 	@RequestMapping(value = "/reportUpdate.do")
-	public String reportUpdate(Model model,
+	public String reportUpdate(HttpSession session,
 			@RequestParam HashMap<String, String> params
-			,  MultipartFile[] rp_img) {
+			) {
 		
-		// 이미지 저장 기능 임시작업
-		logger.info("selected : "+ params);
-		service.reportUpdate(params, rp_img);
+		//String rp_admin = (String) session.getAttribute("loginId"); //신고처리 관리자아이디
+		String rp_admin = "ryu"; //임시
+		params.put("rp_admin", rp_admin);
+		service.reportUpdate(params);
 		
 		String page = "redirect:/reportAdmView?rp_idx="+params.get("rp_idx");
 		return page;

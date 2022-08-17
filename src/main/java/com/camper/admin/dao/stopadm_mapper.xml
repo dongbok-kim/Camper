@@ -3,4 +3,47 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.StopAdmDAO">
 
+	<select id="stopList" resultType="com.camper.admin.dto.StopAdmDTO">
+		SELECT cms.ms_idx, cms.ms_start_date, cms.ms_end_date, cms.ms_admin_id, cms.ms_reason, cms.mb_id,
+					cm.mb_nickname , cm.mb_name,
+					(select count(ms_idx) +1 from cp_member_stop where mb_id = cms.mb_id and ms_idx <![CDATA[<]]>cms.ms_idx) as ms_count
+		FROM cp_member_stop cms 
+		JOIN cp_member cm ON cm.mb_id = cms.mb_id
+		ORDER BY cms.ms_end_date DESC
+	</select>
+	
+	<select id="stopPopup" resultType="com.camper.admin.dto.StopAdmDTO">
+		SELECT cms.ms_idx, cms.ms_start_date, cms.ms_end_date, cms.ms_admin_id, cms.ms_reason, cms.mb_id,
+					cm.mb_nickname , cm.mb_name,
+					(select count(ms_idx) +1 from cp_member_stop where mb_id = cms.mb_id and ms_idx <![CDATA[<]]>cms.ms_idx) as ms_count
+		FROM cp_member_stop cms 
+		JOIN cp_member cm ON cm.mb_id = cms.mb_id
+		WHERE cms.mb_id = #{param1}
+		ORDER BY cms.ms_end_date DESC
+	</select>
+	
+	<insert id="stopAdmReg" parameterType="hashmap">
+		INSERT INTO cp_member_stop SET 
+			ms_start_date = 
+			(
+				case 
+					when (SELECT COUNT(ms_idx) FROM cp_member_stop ALIAS_FOR_SUBQUERY WHERE mb_id = #{mb_id}) >= 1 then DATE_ADD((select ms_end_date from cp_member_stop ALIAS_FOR_SUBQUERY where mb_id = #{mb_id} order by ms_end_date desc limit 1), INTERVAL 1 DAY)
+					else now()
+				end	
+			),
+			ms_end_date = 
+			(
+			   CASE
+			      WHEN (SELECT COUNT(ms_idx) FROM cp_member_stop ALIAS_FOR_SUBQUERY WHERE mb_id = #{mb_id}) = 0 THEN DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+			      WHEN (SELECT COUNT(ms_idx) FROM cp_member_stop ALIAS_FOR_SUBQUERY WHERE mb_id = #{mb_id}) = 1 THEN DATE_ADD((select ms_end_date from cp_member_stop ALIAS_FOR_SUBQUERY where mb_id = #{mb_id} order by ms_end_date desc limit 1) , INTERVAL 7 DAY)
+			      ELSE '9999-12-31'
+			   END
+			),
+			ms_admin_id = #{ms_admin},
+			ms_reason = #{ms_reason},
+			mb_id = #{mb_id}
+	</insert>
+	
+	
+
 </mapper>
