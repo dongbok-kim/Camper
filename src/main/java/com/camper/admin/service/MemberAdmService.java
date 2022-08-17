@@ -20,8 +20,13 @@ public class MemberAdmService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	public ArrayList<MemberAdmDTO> memberAdmList() {
-		// TODO Auto-generated method stub
+		
 		return dao.memberAdmList();
+	}
+
+	public MemberAdmDTO memberAdmDetail(String mb_id) {
+		
+		return dao.memberAdmDetail(mb_id);
 	}
 
 	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.camper.admin.dto.MemberAdmDTO;
 import com.camper.admin.service.MemberAdmService;
@@ -36,5 +37,16 @@ public class MemberAdmController {
 		
 		return "admin/memberAdmList";
 	}
+	
+	
+	@RequestMapping(value = "/memberAdmDetail")
+	public String memberAdmDetail(Model model, HttpServletRequest request, @RequestParam String mb_id) {
+		
+		MemberAdmDTO dto = service.memberAdmDetail(mb_id);
+		model.addAttribute("dto", dto);
+		return "admin/memberAdmDetail";
+	}
+	
+	
 	
 }

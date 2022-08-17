@@ -8,4 +8,6 @@ public interface MemberAdmDAO {
 
 	ArrayList<MemberAdmDTO> memberAdmList();
 
+	MemberAdmDTO memberAdmDetail(String mb_id);
+
 }

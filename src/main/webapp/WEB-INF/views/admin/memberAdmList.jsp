@@ -51,7 +51,7 @@ table, th, td{
 					</ul>
 	</aside>
 	<section>
-	<h4>총 회원 수 : 건</h4>
+	<h4>총 회원 수 :  ${list.size() } 건</h4>
 	<table>
 		<thead>
 			<tr>
@@ -68,7 +68,7 @@ table, th, td{
 				<c:forEach items="${list }" var="member" varStatus="i"> 
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
-					<td>${member.mb_id}</td>
+					<td><a href="memberAdmDetail?mb_id=${member.mb_id}">${member.mb_id}</a></td>
 					<td>${member.mb_name }</td>
 					<td>${member.mb_nickname }</td>
 					<td>${member.mb_email }</td>
@@ -82,6 +82,13 @@ table, th, td{
 	<!-- 페이지 -->
 	
 	<!-- 검색 -->
+	<br/><br/>
+	<fieldset>
+		<form action="memberFind.do" method="post">
+			<input type="text" name="mb_id" /><!-- 회원 아이디별 검색 -->
+			<input type="submit" value="SEARCH" />
+		</form>
+	</fieldset>
 	
 	</section>
 </body>

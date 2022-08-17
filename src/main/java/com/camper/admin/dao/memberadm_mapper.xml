@@ -8,4 +8,8 @@
 	 cp_member WHERE mb_grade = '회원'
 </select>
 
+<select id="memberAdmDetail" resultType="admMember">
+	SELECT * FROM cp_member WHERE mb_id = #{param1}
+</select>
+
 </mapper>
