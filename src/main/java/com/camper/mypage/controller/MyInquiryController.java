@@ -52,9 +52,11 @@ public class MyInquiryController {
 	@RequestMapping(value = "/inquiryWrite.do", method = RequestMethod.POST)
 	public String inquiryWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		logger.info("params:"+params);
-		if (params.get("subject").equals("") || params.get("content").equals("")) {
-			rAttr.addFlashAttribute("msg", "글쓰기에 실패했습니다.");
-		} else {
+		if (params.get("subject").trim().equals("")) {
+			rAttr.addFlashAttribute("msg", "제목을 입력하세요");
+		} else if (params.get("content").trim().equals("")) {
+			rAttr.addFlashAttribute("msg", "내용을 입력하세요.");
+		}	else {
 			service.inquiryWrite(params);
 		}
 		return "redirect:/myInquiryList.go";
@@ -64,10 +66,12 @@ public class MyInquiryController {
 	// 문의글 상세보기
 	// by.승진 2022-08-10 
 	@RequestMapping(value = "/inquiryDetail.go", method = RequestMethod.GET)
-	public ModelAndView inquiryDetail(HttpSession session, @RequestParam String idx) {
+	public ModelAndView inquiryDetail(HttpSession session,@RequestParam String idx,  @RequestParam HashMap<String, Object> params) {
 		String loginId = (String) session.getAttribute("loginId");
+		params.put("loginId", loginId);
+		
 		// String loginId = "jin";
-		return service.inquiryDetail(idx);
+		return service.inquiryDetail(idx, loginId, params);
 	}
 	
 	
@@ -96,12 +100,14 @@ public class MyInquiryController {
 	@RequestMapping(value = "/myInquiryUpdate.do", method = RequestMethod.POST)
 	public String myInquiryUpdate(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		logger.info("params:"+params);
-		if (params.get("subject").equals("") || params.get("content").equals("")) {
-			rAttr.addFlashAttribute("msg", "수정에 실패했습니다.");
+		if (params.get("subject").trim().equals("")) {
+			rAttr.addFlashAttribute("msg", "제목을 입력하세요.");
+		} else if (params.get("content").trim().equals("")) {
+			rAttr.addFlashAttribute("msg", "내용을 입력하세요");
 		} else {
 			service.myInquiryUpdate(params);
 		}
-		return "redirect:/myInquiryList.go";
+		return "redirect:/inquiryDetail.go?idx="+params.get("idx");
 	}
 	
 	

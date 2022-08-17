@@ -35,7 +35,9 @@
 							<c:forEach items="${list}" var="ask" varStatus="i">
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
-									<td><a href="inquiryDetail.go?idx=${ask.in_idx}">${ask.in_title}</a></td>
+									<td>
+										<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
+									</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
 									<td>${ask.in_status}</td>
 								</tr>		
@@ -64,12 +66,12 @@
 							<option value="처리중">처리중</option>
 							<option value="답변완료">답변완료</option>
 						</select>
-						<select name="option">
+						<select name="type">
 							<option value="all">전체</option>
-							<option value="in_title">제목</option>
-							<option value="in_content">내용</option>
+							<option value="in_title" <c:if test="${type eq 'in_title'}">selected="selected"</c:if>>제목</option>
+							<option value="in_content"<c:if test="${type eq 'in_content'}">selected="selected"</c:if>>내용</option>
 						</select>
-						<input type="text" name="keyword" placeholder="검색"/>
+						<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
 						<input type="submit" value="search"/>
 					</form>
 				</div>

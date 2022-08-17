@@ -38,7 +38,7 @@ public class MyInquiryService {
 			mav.addObject("type", (String) params.get("type"));
 		}
 		
-		int total = (int) dao.total(params);
+		int total = dao.total(params);
 		mav.addObject("listCnt", total);
 		
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
@@ -73,11 +73,29 @@ public class MyInquiryService {
 		dao.inquiryWrite(params);
 	}
 
-	public ModelAndView inquiryDetail(String idx) {
+	public ModelAndView inquiryDetail(String idx, String loginId, HashMap<String, Object> params) {
 		logger.info("글 상세보기 idx : "+idx);
 		ModelAndView mav = new ModelAndView("mypage/myInquiryDetail");
 		MyInquiryDTO dto = dao.inquiryDetail(idx);
-		mav.addObject("dto", dto);
+		String type = (String) params.get("type");
+		String keyword = (String) params.get("keyword");
+		String pageNum = (String) params.get("pageNum");
+		if(type != null) {
+			mav.addObject("type", type);
+		}
+		if(keyword != null) {
+			mav.addObject("keyword", keyword);
+		}
+		if(pageNum != null) {
+			mav.addObject("pageNum", pageNum);
+		}
+		mav.addObject("pageNum", pageNum);
+		if (!dto.getMb_id().equals(loginId)) {
+			logger.info(dto.getMb_id()+" / "+loginId);
+			mav.setViewName("redirect:/myInquiryList.go");
+		} else {
+			mav.addObject("dto", dto);			
+		}
 		return mav;
 	}
 
@@ -93,8 +111,13 @@ public class MyInquiryService {
 	// by.승진 2022-08-11
 	public ModelAndView myInquiryUpdateForm(String idx, String loginId) {
 		ModelAndView mav = new ModelAndView("mypage/myInquiryUpdate");
-		MyInquiryDTO dto = dao.myInquiryUpdateForm(idx,loginId);
-		mav.addObject("dto", dto);
+		MyInquiryDTO dto = dao.myInquiryUpdateForm(idx);
+		if (!dto.getMb_id().equals(loginId)) {
+			logger.info(dto.getMb_id()+" / "+loginId);
+			mav.setViewName("redirect:/myInquiryList.go");
+		} else {
+			mav.addObject("dto", dto);			
+		}
 		return mav;
 	}
 

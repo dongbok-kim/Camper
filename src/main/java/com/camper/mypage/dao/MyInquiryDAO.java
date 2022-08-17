@@ -13,7 +13,7 @@ public interface MyInquiryDAO {
 
 	void myInquiryDelete(String idx, String loginId);
 
-	MyInquiryDTO myInquiryUpdateForm(String idx, String loginId);
+	MyInquiryDTO myInquiryUpdateForm(String idx);
 
 	void myInquiryUpdate(HashMap<String, String> params);
 

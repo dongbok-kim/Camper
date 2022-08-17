@@ -35,7 +35,7 @@
 						</tr>	
 						<tr>
 							<th colspan="6">
-								<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
+								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
 								<input type="button" value="수정" onclick="update(${dto.in_idx})"/>
 								<input type="button" value="삭제" onclick="del(${dto.in_idx})"/>
 							</th>

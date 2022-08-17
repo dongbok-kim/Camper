@@ -35,7 +35,7 @@
 							</tr>
 							<tr>
 								<th colspan="2">
-									<input type="button" value="완료"  onclick="yn()"/>
+									<input type="button" value="수정"  onclick="yn()"/>
 									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
 								</th>
 							</tr>

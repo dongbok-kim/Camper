@@ -4,21 +4,24 @@
 <mapper namespace="com.camper.mypage.dao.MyInquiryDAO">
 
 	<!-- 페이징 처리 -->
-	<select id="total" parameterType="hashmap" resultType="mypgInquiry">
-		SELECT in_idx, in_title, in_datetime, in_status 
+	<select id="total" parameterType="hashmap" resultType="int">
+		SELECT COUNT(in_idx)
 		FROM cp_inquiry 
 		WHERE mb_id = #{loginId}
+		<if test="keyword != null and !keyword.equals('')">
 		AND
-		<c:if test="keyword != null and !keyword.equals('')">
 			<choose>
-				<when test="type != null and type.equals('셀렉트 박스 밸류')" >
-					ccr.mb_id LIKE CONCET('%', #{keyword}, '%')
+				<when test="type != null and type.equals('in_title)" >
+					in_title LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('in_content')" >
+					in_content LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<otherwise>
-					(ccr.mb_id LIKE CONCET('%', #{keyword}, '%') or ccr.mb_id LIKE CONCET('%', #{keyword}, '%'))
+					(in_title LIKE CONCAT('%', #{keyword}, '%') or in_content LIKE CONCAT('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
-		</c:if>
+		</if>
 		ORDER BY in_idx DESC
 	</select>
 
@@ -26,7 +29,21 @@
 	<select id="myInquiryList" parameterType="hashmap" resultType="mypgInquiry">
 		SELECT in_idx, in_title, in_datetime, in_status 
 		FROM cp_inquiry 
-		WHERE mb_id = #{loginId} 
+		WHERE mb_id = #{loginId}
+		<if test="keyword != null and !keyword.equals('')">
+		AND
+			<choose>
+				<when test="type != null and type.equals('in_title)" >
+					in_title LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('in_content')" >
+					in_content LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					(in_title LIKE CONCAT('%', #{keyword}, '%') or in_content LIKE CONCAT('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
+		</if> 
 		ORDER BY in_idx DESC
 		LIMIT #{amount}
 		OFFSET #{skip}
@@ -48,7 +65,7 @@
 	</delete>
 	
 	<select id="myInquiryUpdateForm" resultType="mypgInquiry">
-		SELECT mb_id, in_idx, in_title, in_content FROM cp_inquiry WHERE in_idx = #{param1} AND mb_id = #{param2}
+		SELECT mb_id, in_idx, in_title, in_content FROM cp_inquiry WHERE in_idx = #{param1}
 	</select>
 	
 	<!-- 문의 수정 -->
