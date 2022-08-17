@@ -1,5 +1,7 @@
 package com.camper.mypage.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyTogetherService;
 
 @Controller
@@ -23,10 +26,11 @@ public class MyTogetherController {
 		// 내가 쓴 크루모집글 목록
 		// by. 승진 2022-08-09
 		@RequestMapping(value = "/myCrewWriteList.go", method = RequestMethod.GET)
-		public ModelAndView myCrewWriteList(HttpSession session) {
+		public ModelAndView myCrewWriteList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 			String loginId = (String) session.getAttribute("loginId");
 			// String loginId = "jin";
-			return service.myCrewWriteList(loginId);
+			params.put("loginId", loginId);
+			return service.myCrewWriteList(cri, params);
 		}
 		
 		
