@@ -1,5 +1,7 @@
 package com.camper.mypage.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.lib.service.CommonService;
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyCampingLikeService;
 
 @Controller
@@ -26,18 +29,19 @@ public class MyCampingLikeController {
 	// 캠핑장 찜 목록
 	// by. 승진 2022-08-08
 	@RequestMapping(value = "/myCampingLikeList.go", method = RequestMethod.GET)
-	public ModelAndView myCampingLikeList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
-		return service.myCampingLikeList(loginId);
+	public ModelAndView myCampingLikeList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		params.put("loginId", loginId);
+		return service.myCampingLikeList(cri, params);
 	}
 	
 	// 캠핑장 찜해제
 	// by. 승진 2022-08-08
 	@RequestMapping(value = "/myCampingLikeDelete.do", method = RequestMethod.GET)
 	public String myCampingLikeDelete(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		c_service.campingLikeDelete(idx, loginId);
 		return "redirect:/myCampingLikeList.go";
 	}

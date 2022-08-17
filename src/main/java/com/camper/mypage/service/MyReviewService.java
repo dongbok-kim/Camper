@@ -73,6 +73,46 @@ public class MyReviewService {
 	}
 
 
+	// 크루 후기 페이지 (받은 후기)
+	// by.승진 2022-08-15
+	public ModelAndView crewReviewR(String loginId) {
+		ModelAndView mav = new ModelAndView("mypage/myCrewReviewR");
+		ArrayList<MyReviewDTO> list = dao.crewReviewR(loginId);
+		mav.addObject("list", list);
+		return mav;
+	}
+
+
+	// 크루 후기 페이지 (작성 후기)
+	// by.승진 2022-08-15
+	public ModelAndView crewReviewW(String loginId) {
+		ModelAndView mav = new ModelAndView("mypage/myCrewReviewW");
+		ArrayList<MyReviewDTO> list = dao.crewReviewW(loginId);
+		mav.addObject("list", list);
+		return mav;
+	}
+
+
+	public void crewReview(String assessment, String score, String content, String loginId, String mb_id, String idx) {
+		dao.crewReview(assessment, score, content, loginId, mb_id, idx);
+	}
+
+
+	public void crewReviewDelete(String idx, String loginId) {
+		dao.crewReviewDelete(idx, loginId);
+	}
+
+
+	public void memberUpdate(String mb_id) {
+		dao.memberUpdate(mb_id);
+	}
+
+
+	public String getId(String idx, String loginId) {
+		return dao.getId(idx,loginId);
+	}
+
+
 
 
 

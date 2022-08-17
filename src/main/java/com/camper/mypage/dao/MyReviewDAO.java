@@ -19,4 +19,16 @@ public interface MyReviewDAO {
 
 	void campingReviewDelete(String idx, String loginId);
 
+	ArrayList<MyReviewDTO> crewReviewR(String loginId);
+
+	ArrayList<MyReviewDTO> crewReviewW(String loginId);
+
+	void crewReview(String assessment, String score, String content, String loginId, String mb_id, String idx);
+
+	void crewReviewDelete(String idx, String loginId);
+
+	void memberUpdate(String mb_id);
+
+	String getId(String idx, String loginId);
+
 }

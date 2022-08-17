@@ -9,7 +9,7 @@
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
-						<li><a href="">크루 후기</a></li>
+						<li><a href="/myCrewReviewR.go">크루 후기</a></li>
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="/myBlockList.go">차단 회원</a></li>
@@ -18,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>1:1 문의<a href="/inquiryWrite.go">1:1 문의하기</a></h3>
-					<h4>총 문의 수 : ${list.size()} 건</h4>
+					<h4>총 문의 수 : ${listCnt} 건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -32,16 +32,48 @@
 							<c:if test="${list.size() == 0}">
 								<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
 							</c:if>
-							<c:forEach items="${list}" var="ask">
+							<c:forEach items="${list}" var="ask" varStatus="i">
 								<tr>
-									<td>${ask.in_idx}</td>
-									<td><a href="inquiryDetail.go?idx=${ask.in_idx}">${ask.in_title}</a></td>
+									<td>${listCnt - skip - i.index}</td>
+									<td>
+										<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
+									</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
 									<td>${ask.in_status}</td>
 								</tr>		
 							</c:forEach>
 						</tbody>
 					</table>
+					<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+					</ul>
+					<form action="inquirySearch.do" method="post">
+						<select name="cr_assessment">
+							<option value="답변상태">답변상태</option>
+							<option value="답변대기">답변대기</option>
+							<option value="처리중">처리중</option>
+							<option value="답변완료">답변완료</option>
+						</select>
+						<select name="type">
+							<option value="all">전체</option>
+							<option value="in_title" <c:if test="${type eq 'in_title'}">selected="selected"</c:if>>제목</option>
+							<option value="in_content"<c:if test="${type eq 'in_content'}">selected="selected"</c:if>>내용</option>
+						</select>
+						<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
+						<input type="submit" value="search"/>
+					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
