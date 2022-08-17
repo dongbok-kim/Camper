@@ -3,9 +3,51 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.MemberAdmDAO">
 
-<select id="memberAdmList" resultType="admMember">
+<select id="memberTotal" resultType="int" parameterType="hashmap">
 	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
 	 cp_member WHERE mb_grade = '회원'
+	 
+	 <!--  
+	 <choose>
+	 	<when test="type != null and type.equals('mb_id')">
+	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<when test="type != null and type.equals('mb_name')">
+	 		AND mb_name LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<when test="type != null and type.equals('mb_nickname')">
+	 		AND mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<otherwise></otherwise>
+	 </choose>
+	 -->
+	 
+</select>
+
+
+
+
+<select id="memberAdmList" resultType="admMember" parameterType="hashmap">
+	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
+	 cp_member WHERE mb_grade = '회원'
+	 
+	 <!--  
+	 <choose>
+	 	<when test="type != null and type.equals('mb_id')">
+	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<when test="type != null and type.equals('mb_name')">
+	 		AND mb_name LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<when test="type != null and type.equals('mb_nickname')">
+	 		AND mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+	 	</when>
+	 	<otherwise></otherwise>
+	 </choose>
+	 -->
+	 LIMIT #{amount}
+	OFFSET #{skip}
+	 
 </select>
 
 <select id="memberAdmDetail" resultType="admMember">

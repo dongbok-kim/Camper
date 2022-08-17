@@ -28,6 +28,9 @@ public class MemberAdmDTO {
 	private int ma_idx;
 	
 	private int ma_age;
+	
+	private String type;
+	private String keyword;
 
 	public String getMb_id() {
 		return mb_id;
@@ -171,6 +174,22 @@ public class MemberAdmDTO {
 
 	public void setMa_age(int ma_age) {
 		this.ma_age = ma_age;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 	
 	

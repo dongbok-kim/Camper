@@ -51,7 +51,7 @@ table, th, td{
 					</ul>
 	</aside>
 	<section>
-	<h4>총 회원 수 :  ${list.size() } 건</h4>
+	<h4>총 회원 수 :  ${listCnt } 건</h4>
 	<table>
 		<thead>
 			<tr>
@@ -64,7 +64,13 @@ table, th, td{
 			</tr>
 			</thead>
 			<tbody>
-					
+				<c:choose>
+				<c:when test="${listCnt eq 0}">
+				<tr align="center">
+					<td colspan="6">데이터가 없습니다</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
 				<c:forEach items="${list }" var="member" varStatus="i"> 
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
@@ -75,16 +81,34 @@ table, th, td{
 					<td>${member.mb_status }</td>
 				</tr>
 				</c:forEach>
-
+				</c:otherwise>	
+			</c:choose>
 			</tbody>
 		</table>
 	
 	<!-- 페이지 -->
-	
+	<ul>
+			<!-- 이전페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!-- 다음페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+			</c:if>
+		</ul>
+		
+		
 	<!-- 검색 -->
 	<br/><br/>
 	<fieldset>
-		<form action="memberAdmList.go" method="post">
+		<form action="" method="post">
 			<select name="mb_status">
 			<option value="정상">정상</option>
 			<option value="정지">정지</option>
@@ -100,7 +124,6 @@ table, th, td{
 			<input type="submit" value="search" />
 		</form>
 	</fieldset>
-	
 	</section>
 </body>
 <script>

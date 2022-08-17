@@ -32,10 +32,43 @@ public class MemberAdmController {
 	@RequestMapping(value = "/memberAdmList.go")
 	public String memberList(Model model, HttpServletRequest request, Criteria cri, @RequestParam HashMap<String, Object> params) {
 		
+		cri.setAmount(15);
+		if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
+			cri.setKeyword((String) params.get("keyword"));
+			cri.setType((String) params.get("type"));
+			
+			
+			model.addAttribute("keyword", params.get("keyword"));
+			model.addAttribute("type", params.get("type"));
+		}
 		
-		ArrayList<MemberAdmDTO> list = service.memberAdmList();
+		int total = service.memberTotal(params);
+		model.addAttribute("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+		
+		int pageNum = cri.getPageNum();
+		
+		//현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+				}
+				
+		//DAO MAPPER OFFSET
+		int skip = (pageNum - 1) * cri.getAmount();
+			params.put("skip", skip);
+			model.addAttribute("skip", skip);
+				
+		//DAO MAPPER LIMIT
+		params.put("amount", cri.getAmount());
+				
+		
+		ArrayList<MemberAdmDTO> list = service.memberAdmList(params);
 		logger.info("list 갯수 : "+list.size());
 		model.addAttribute("list", list);
+		
+		model.addAttribute("pageMaker", pageMaker);
 		
 		return "admin/memberAdmList";
 	}
