@@ -29,7 +29,7 @@
 					<strong class="contextMenu contextMenuMember" data-id="${sessionScope.loginId}">${sessionScope.loginId}</strong> 님 <a href="/mypageInfo.go">마이페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 					<c:if test="${loginId != null && mb_grade == '관리자'}">
-					<strong class="contextMenu contextMenuMember" data-id="admin">${sessionScope.loginId}</strong> 님 <a href="">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
+					<strong class="contextMenu contextMenuMember" data-id="admin">${sessionScope.loginId}</strong> 님 <a href="/memberAdmList.go">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 				</div>
 			</header>

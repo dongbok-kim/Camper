@@ -3,4 +3,9 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.MemberAdmDAO">
 
+<select id="memberAdmList" resultType="admMember">
+	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
+	 cp_member WHERE mb_grade = '회원'
+</select>
+
 </mapper>

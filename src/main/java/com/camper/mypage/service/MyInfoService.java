@@ -97,7 +97,7 @@ public class MyInfoService {
 		 dao.myInfoUpdate(mb_id, mb_nickname, mb_email,
 				mb_postcode, mb_addr_default, mb_addr_detail, ma_idx, mb_sido,
 				mb_sigungu, encoder.encode(mb_newpassword));
-		// myInfo.setMb_pw(encoder.encode(mb_newpassword));
+		
 	}
 
 	public void myInfoUpdateTwo(String mb_id, String mb_nickname, String mb_email, String mb_postcode,
