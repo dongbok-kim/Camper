@@ -4,10 +4,9 @@
 <mapper namespace="com.camper.admin.dao.MemberAdmDAO">
 
 <select id="memberTotal" resultType="int" parameterType="hashmap">
-	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
+	SELECT COUNT(mb_id) FROM
 	 cp_member WHERE mb_grade = '회원'
 	 
-	 <!--  
 	 <choose>
 	 	<when test="type != null and type.equals('mb_id')">
 	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -20,7 +19,6 @@
 	 	</when>
 	 	<otherwise></otherwise>
 	 </choose>
-	 -->
 	 
 </select>
 
@@ -31,7 +29,6 @@
 	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
 	 cp_member WHERE mb_grade = '회원'
 	 
-	 <!--  
 	 <choose>
 	 	<when test="type != null and type.equals('mb_id')">
 	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -44,7 +41,6 @@
 	 	</when>
 	 	<otherwise></otherwise>
 	 </choose>
-	 -->
 	 LIMIT #{amount}
 	OFFSET #{skip}
 	 
