@@ -21,4 +21,6 @@ public interface MyInquiryDAO {
 
 	int total(HashMap<String, Object> params);
 
+	MyInquiryDTO inquiryAnswer(String idx);
+
 }

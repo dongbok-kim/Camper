@@ -72,5 +72,10 @@
 	<update id="myInquiryUpdate" parameterType="hashmap">
 		UPDATE cp_inquiry SET in_title = #{subject}, in_content = #{content} WHERE in_idx = #{idx} AND mb_id = #{loginId}
 	</update>
+	
+	<!-- 답변 보기 -->
+	<select id="inquiryAnswer" resultType="mypgInquiry">
+		SELECT ia_content, mb_id, ia_datetime FROM cp_inquiry_answer WHERE in_idx = #{param1}
+	</select>
 
 </mapper>

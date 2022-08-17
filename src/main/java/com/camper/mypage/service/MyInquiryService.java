@@ -73,10 +73,13 @@ public class MyInquiryService {
 		dao.inquiryWrite(params);
 	}
 
+	// 문의 상세보기
 	public ModelAndView inquiryDetail(String idx, String loginId, HashMap<String, Object> params) {
 		logger.info("글 상세보기 idx : "+idx);
-		ModelAndView mav = new ModelAndView("mypage/myInquiryDetail");
+		ModelAndView mav = new ModelAndView();
 		MyInquiryDTO dto = dao.inquiryDetail(idx);
+		
+		// 페이징 정보 
 		String type = (String) params.get("type");
 		String keyword = (String) params.get("keyword");
 		String pageNum = (String) params.get("pageNum");
@@ -90,12 +93,26 @@ public class MyInquiryService {
 			mav.addObject("pageNum", pageNum);
 		}
 		mav.addObject("pageNum", pageNum);
+		
+		// 다른사람 글보기 막기
 		if (!dto.getMb_id().equals(loginId)) {
+			
 			logger.info(dto.getMb_id()+" / "+loginId);
 			mav.setViewName("redirect:/myInquiryList.go");
+		
 		} else {
-			mav.addObject("dto", dto);			
+			
+			mav.setViewName("mypage/myInquiryDetail");
+			mav.addObject("dto", dto);
+			
+			// 답변이 있는 경우
+			if (dto.getIn_status().equals("답변완료")) {
+				MyInquiryDTO answer = dao.inquiryAnswer(idx);
+				mav.addObject("answer", answer);
+			}
+			
 		}
+		
 		return mav;
 	}
 

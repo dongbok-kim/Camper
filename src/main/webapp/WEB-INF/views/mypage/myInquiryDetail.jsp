@@ -32,7 +32,22 @@
 						</tr>
 						<tr>
 							<td colspan='6'>${dto.in_content}</td>
-						</tr>	
+						</tr>
+						<c:if test="${dto.in_status eq '답변완료'}">
+							<tr>
+								<table>
+									<tr>
+										<th>관리자</th>
+										<td>${answer.mb_id}</td>
+										<th>답변일시</th>
+										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${answer.ia_datetime}"/></td>
+									</tr>
+									<tr>
+										<td colspan='4'>${answer.ia_content}</td>
+									</tr>
+								</table>
+							</tr>
+						</c:if>
 						<tr>
 							<th colspan="6">
 								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
