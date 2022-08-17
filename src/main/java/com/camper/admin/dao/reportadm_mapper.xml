@@ -22,7 +22,7 @@
 		<set>
 			<choose>
 				<when test="rp_status.equals('처리완료')">
-					rp_status=#{rp_status}, rp_admin="admin" , rp_proc_date=now()
+					rp_status=#{rp_status}, rp_admin=#{rp_admin} , rp_proc_date=now()
 				</when>
 				<otherwise>
 					rp_status=#{rp_status} 

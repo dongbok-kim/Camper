@@ -22,6 +22,7 @@ public class TogetherAdmDTO {
 	private Timestamp ct_end_datetime;
 	private Timestamp ct_datetime;
 	private String mb_id;
+	private String mb_nickname;
 	private int ca_idx;
 	private String ca_name;
 	private int bb_count; // 블라인드 여부
@@ -146,6 +147,13 @@ public class TogetherAdmDTO {
 	public void setBb_count(int bb_count) {
 		this.bb_count = bb_count;
 	}
+	public String getMb_nickname() {
+		return mb_nickname;
+	}
+	public void setMb_nickname(String mb_nickname) {
+		this.mb_nickname = mb_nickname;
+	}
+	
 	
 	
 	

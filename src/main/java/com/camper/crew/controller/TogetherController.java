@@ -1,6 +1,7 @@
 package com.camper.crew.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -88,5 +89,35 @@ public class TogetherController {
 	
 	
 	
+	
+	
+	// 크루 모집글 이동
+		@RequestMapping (value="/togetherCrewReg.go")
+		public String crewReg() {
+			
+			return "togetherCrewReg";
+		}
+	
+	
+	// 크루 모집글 작성 - 캠핑장 검색 팝업
+	@RequestMapping (value="/campPopup.go")
+	public ModelAndView campPopup() {
+		
+		return service.campPopup();
+	}
+	
+	
+	// 크루 모집글 작성 하기
+	@RequestMapping (value="/crewReg.do")
+	public ModelAndView crewRegForm(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		//String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jyr";
+		params.put("loginId", loginId);
+				
+		logger.info("params : "+params);
+		return null;
+		//return service.crewRegFrom(params);
+	}
 	
 }
