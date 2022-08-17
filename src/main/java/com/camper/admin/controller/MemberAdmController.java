@@ -28,8 +28,10 @@ public class MemberAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	//회원 리스트
 	@RequestMapping(value = "/memberAdmList.go")
-	public String memberList(Model model, HttpServletRequest request, Criteria cri, HashMap<String, Object> params) {
+	public String memberList(Model model, HttpServletRequest request, Criteria cri, @RequestParam HashMap<String, Object> params) {
+		
 		
 		ArrayList<MemberAdmDTO> list = service.memberAdmList();
 		logger.info("list 갯수 : "+list.size());
@@ -38,7 +40,7 @@ public class MemberAdmController {
 		return "admin/memberAdmList";
 	}
 	
-	
+	//회원 상세보기
 	@RequestMapping(value = "/memberAdmDetail")
 	public String memberAdmDetail(Model model, HttpServletRequest request, @RequestParam String mb_id) {
 		
@@ -46,6 +48,7 @@ public class MemberAdmController {
 		model.addAttribute("dto", dto);
 		return "admin/memberAdmDetail";
 	}
+	
 	
 	
 	

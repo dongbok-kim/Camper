@@ -84,9 +84,20 @@ table, th, td{
 	<!-- 검색 -->
 	<br/><br/>
 	<fieldset>
-		<form action="memberFind.do" method="post">
-			<input type="text" name="mb_id" /><!-- 회원 아이디별 검색 -->
-			<input type="submit" value="SEARCH" />
+		<form action="memberAdmList.go" method="post">
+			<select name="mb_status">
+			<option value="정상">정상</option>
+			<option value="정지">정지</option>
+			<option value="탈퇴">탈퇴</option>
+			</select>
+			<select name="type">
+			<option value="all">전체</option>
+			<option value="mb_id" <c:if test="${type eq 'mb_id'}">selected="selected"</c:if>>회원 아이디</option>
+			<option value="mb_name" <c:if test="${type eq 'mb_name'}">selected="selected"</c:if>>이름</option>
+			<option value="mb_nickname" <c:if test="${type eq 'mb_nickname'}">selected="selected"</c:if>>닉네임</option>
+			</select>
+			<input type="text" name="keyword" value="${keyword }" placeholder="검색" />
+			<input type="submit" value="search" />
 		</form>
 	</fieldset>
 	
