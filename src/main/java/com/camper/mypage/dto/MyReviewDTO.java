@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("mypgReview")
+// @Alias("mypgReview")
 public class MyReviewDTO {
 	
 	private String ca_sido;

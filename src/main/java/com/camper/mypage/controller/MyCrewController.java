@@ -24,9 +24,9 @@ public class MyCrewController {
 	// by. 승진 2022-08-09
 	@RequestMapping(value = "/myCrewList.go", method = RequestMethod.GET)
 	public ModelAndView myCrewWriteList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		return service.myCrewList(temporaryId);
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		return service.myCrewList(loginId);
 	}
 	
 	
@@ -34,8 +34,8 @@ public class MyCrewController {
 	// by. 승진 2022-08-09
 	@RequestMapping(value = "/crewUpdate.go", method = RequestMethod.GET)
 	public ModelAndView crewUpdateList(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		session.removeAttribute("idx");
 		session.setAttribute("idx", idx);
 		return service.crewUpdateList(idx);

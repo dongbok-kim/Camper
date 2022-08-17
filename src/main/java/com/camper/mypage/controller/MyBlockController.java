@@ -26,8 +26,8 @@ public class MyBlockController {
 	// by.승진 2022-08-12
 	@RequestMapping(value = "/myBlockList.go", method = RequestMethod.GET)
 	public ModelAndView blockList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.blockList(loginId);
 	}
 	
@@ -36,8 +36,8 @@ public class MyBlockController {
 	// by.승진 2022-08-12
 	@RequestMapping(value = "/myBlockDelete.do", method = RequestMethod.GET)
 	public String blockDelete(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		c_service.blockDelete(idx, loginId);
 		return "redirect:/myBlockList.go";
 	}

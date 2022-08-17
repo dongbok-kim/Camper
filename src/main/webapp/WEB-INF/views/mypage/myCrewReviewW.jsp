@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<style>
+	#campingReview > tbody > tr > td.subject {
+		cursor: pointer;
+	}
+	#campingReview > tbody > tr > td.subject:not(.active) {
+		max-width: 200px;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+</style>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -19,7 +30,15 @@
 				<div>
 					<h3>크루 후기 - 작성 후기</h3>
 					<a href="/myCrewReviewR.go">받은 후기</a><a href="/myCrewReviewW.go">작성 후기</a>
-					<table>
+					<table id="campingReview">
+						<colgroup>
+								<col width="60"></col>
+								<col width="*"></col>
+								<col width="80"></col>
+								<col width="80"></col>
+								<col width="120"></col>
+								<col width="60"></col>
+							</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -37,7 +56,7 @@
 							<c:forEach items="${list}" var="rv">
 								<tr>
 									<td>${rv.mr_idx}</td>
-									<td>${rv.mr_content }</td>
+									<td  class="subject" >${rv.mr_content }</td>
 									<td>${rv.mb_id}</td>
 									<td>${rv.mr_assessment}<br/>(+${rv.mr_score })</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.mr_datetime}"/></td>
@@ -51,9 +70,9 @@
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
-		var msg = "${msg}";
-		if(msg != ""){
-			alert(msg);
-		}
+		$('#campingReview > tbody > tr > td.subject').on('click', function() {
+			$('#campingReview > tbody > tr > td.subject').removeClass('active');
+			$(this).addClass('active');
+		});
 	</script>
 </html>

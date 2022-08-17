@@ -28,8 +28,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/campingReviewForm.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewForm(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewForm(idx, loginId);
 	}
 	
@@ -38,8 +38,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/campingReviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView campingReviewWrite(HttpSession session, @RequestParam HashMap<String, String> params) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		params.put("loginId", loginId);
 		logger.info("params : "+ params);
 		return service.campingReviewWrite(params);
@@ -50,8 +50,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/myCampingReview.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewList(loginId);
 	}
 	
@@ -60,8 +60,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/campingReviewDelete.do", method = RequestMethod.GET)
 	public ModelAndView campingReviewDelete (HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewDelete(idx, loginId);
 	}
 	
@@ -70,8 +70,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/crewReviewForm.go", method = RequestMethod.GET)
 	public ModelAndView crewReviewForm(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		session.removeAttribute("idx");
 		session.setAttribute("idx", idx);
 		return service.crewReviewForm(idx, loginId);
@@ -82,8 +82,8 @@ public class MyReviewController {
 	// by.승진 2022-08-16
 	@RequestMapping(value = "/crewReview.do", method = RequestMethod.POST)
 	public String crewReview(HttpSession session, @RequestParam HashMap<String, String> params) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		String idx = (String) session.getAttribute("idx");
 		logger.info("크루 모집 번호는 = "+idx);
 		logger.info("params : "+params);
@@ -127,8 +127,8 @@ public class MyReviewController {
 	// by.승진 2022-08-15
 	@RequestMapping(value = "/myCrewReviewW.go", method = RequestMethod.GET)
 	public ModelAndView crewReviewW(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.crewReviewW(loginId);
 	}
 	
@@ -137,8 +137,8 @@ public class MyReviewController {
 	// by.승진 2022-08-16
 	@RequestMapping(value = "/crewReviewDelete.do", method = RequestMethod.GET)
 	public String crewReviewDelete (HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		String mb_id = service.getId(idx, loginId);
 		service.crewReviewDelete(idx, loginId);
 		// 리뷰받은 회원 모닥불온도 업데이트

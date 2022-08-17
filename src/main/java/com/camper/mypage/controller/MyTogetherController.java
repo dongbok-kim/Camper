@@ -24,8 +24,8 @@ public class MyTogetherController {
 		// by. 승진 2022-08-09
 		@RequestMapping(value = "/myCrewWriteList.go", method = RequestMethod.GET)
 		public ModelAndView myCrewWriteList(HttpSession session) {
-			// String loginId = (String) session.getAttribute("loginId");
-			String loginId = "jin";
+			String loginId = (String) session.getAttribute("loginId");
+			// String loginId = "jin";
 			return service.myCrewWriteList(loginId);
 		}
 		
@@ -34,8 +34,8 @@ public class MyTogetherController {
 		// by. 승진 2022-08-09
 		@RequestMapping(value = "/myCrewWriteDelete.do", method = RequestMethod.GET)
 		public ModelAndView myCrewWriteDelete(HttpSession session, @RequestParam String idx) {
-			// String loginId = (String) session.getAttribute("loginId");
-			String loginId = "jin";
+			String loginId = (String) session.getAttribute("loginId");
+			// String loginId = "jin";
 			return service.myCrewWriteDelete(idx, loginId);
 		}
 	

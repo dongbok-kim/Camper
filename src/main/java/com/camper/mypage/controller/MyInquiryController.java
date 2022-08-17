@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyInquiryService;
 
 @Controller
@@ -27,10 +28,11 @@ public class MyInquiryController {
 	// 1:1 문의 목록
 	// by. 승진 2022-08-10
 	@RequestMapping(value = "/myInquiryList.go", method = RequestMethod.GET)
-	public ModelAndView myInquiryList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
-		return service.myInquiryList(loginId);
+	public ModelAndView myInquiryList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		params.put("loginId", loginId);
+		return service.myInquiryList(cri, params);
 	}
 	
 	
@@ -38,8 +40,8 @@ public class MyInquiryController {
 	// by. 승진 2022-08-10
 	@RequestMapping(value = "/inquiryWrite.go", method = RequestMethod.GET)
 	public String inquiryWriteForm(HttpSession session, Model model) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		model.addAttribute("loginId", loginId);
 		return "mypage/myInquiryWriteForm";
 	}
@@ -63,8 +65,8 @@ public class MyInquiryController {
 	// by.승진 2022-08-10 
 	@RequestMapping(value = "/inquiryDetail.go", method = RequestMethod.GET)
 	public ModelAndView inquiryDetail(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.inquiryDetail(idx);
 	}
 	
@@ -73,8 +75,8 @@ public class MyInquiryController {
 	// by.승진 2022-08-10
 	@RequestMapping(value = "/myInquiryDelete.do", method = RequestMethod.GET)
 	public ModelAndView myInquiryDelete(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.myInquiryDelete(idx, loginId);
 	}
 	
@@ -83,8 +85,8 @@ public class MyInquiryController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/myInquiryUpdate.go", method = RequestMethod.GET)
 	public ModelAndView myInquiryUpdateForm(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.myInquiryUpdateForm(idx, loginId);
 	}
 	

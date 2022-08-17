@@ -3,12 +3,38 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyInquiryDAO">
 
-	<select id="myInquiryList" parameterType="String" resultType="mypgInquiry">
-		SELECT in_idx, in_title, in_datetime, in_status FROM cp_inquiry WHERE mb_id = #{param1} ORDER BY in_idx DESC
+	<!-- 페이징 처리 -->
+	<select id="total" parameterType="hashmap" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_status 
+		FROM cp_inquiry 
+		WHERE mb_id = #{loginId}
+		AND
+		<c:if test="keyword != null and !keyword.equals('')">
+			<choose>
+				<when test="type != null and type.equals('셀렉트 박스 밸류')" >
+					ccr.mb_id LIKE CONCET('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					(ccr.mb_id LIKE CONCET('%', #{keyword}, '%') or ccr.mb_id LIKE CONCET('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
+		</c:if>
+		ORDER BY in_idx DESC
+	</select>
+
+	<!-- 문의 목록 -->
+	<select id="myInquiryList" parameterType="hashmap" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_status 
+		FROM cp_inquiry 
+		WHERE mb_id = #{loginId} 
+		ORDER BY in_idx DESC
+		LIMIT #{amount}
+		OFFSET #{skip}
 	</select>
 
 	<insert id="inquiryWrite" parameterType="hashmap">
-		INSERT INTO cp_inquiry(in_title,in_content,mb_id, in_status) VALUES(#{subject}, #{content}, #{loginId}, '답변대기')
+		INSERT INTO cp_inquiry(in_title,in_content,mb_id, in_status) 
+		VALUES(#{subject}, #{content}, #{loginId}, '답변대기')
 	</insert>
 
 	<!-- 문의 상세보기 -->

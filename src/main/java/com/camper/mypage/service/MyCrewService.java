@@ -19,8 +19,8 @@ public class MyCrewService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ModelAndView myCrewList(String temporaryId) {
-		ArrayList<MyCrewDTO> list = dao.myCrewList(temporaryId);
+	public ModelAndView myCrewList(String loginId) {
+		ArrayList<MyCrewDTO> list = dao.myCrewList(loginId);
 		logger.info("list 갯수: "+list.size());
 		ModelAndView mav = new ModelAndView("mypage/myCrew");
 		mav.addObject("list", list);
