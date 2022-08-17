@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import com.camper.lib.utils.Criteria;
 import com.camper.profile.service.ProfileService;
 
 @Controller
@@ -27,6 +27,14 @@ public class ProfileController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
+	
+	
+	@RequestMapping (value = "/list", method = RequestMethod.GET)
+	public ModelAndView list(Criteria cri, HashMap<String, Object> params) {
+		
+			
+	    return service.criteria(cri, params);		
+	  }
 		
 	//회원 프로필 불러오기
 	@RequestMapping (value = "/profile", method = RequestMethod.GET)

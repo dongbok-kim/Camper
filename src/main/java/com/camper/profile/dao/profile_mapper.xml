@@ -3,7 +3,22 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.profile.dao.ProfileDAO">
 
-  
+ 
+ 
+ <!-- 갯수 페이징처리 -->
+ <select id="criteria" parameterType="Hashmap" resultType="com.camper.profile.dto.ProfileDTO">
+ SELECT count(ct_idx), ct_idx, ct_title, ct_wish_start , ct_wish_end, (select ca_name from cp_camping where ca_idx=cct.ca_idx) as name
+FROM cp_crew_together cct WHERE mb_id= #{mb_id} and 
+<choose>
+	<when test="type != null and type.equals('ct_title')">
+	 	cct.ct_title LIKE CONCAT('%', #{keyword}, '%')
+	</when>
+	<otherwise>
+	</otherwise>
+</choose>
+ </select>
+ 
+ 
 <!-- 차단하기 -mb_id가 차단당한 회원-->
 <insert id="MemberBlock" parameterType="String">
 INSERT INTO cp_member_block(mb_id, bl_mb) VALUES(#{param1},#{param2})

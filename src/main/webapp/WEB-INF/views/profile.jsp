@@ -20,7 +20,7 @@ button {
  	 padding: 0.5rem 1rem;
 
  	 
- 	 font-size: 1rem;
+ 	 font-size: 0.5rem;
  	 font-weight: 400;
 	  text-align: center;
 	  text-decoration: none;
@@ -36,6 +36,20 @@ button {
 	h3{
 	color:grey;
 	}
+	
+	
+	#bold{
+	font-weight:bold; 
+	font-size:15px;
+	}
+	
+	.tab_menu{position:relative;}
+  .tab_menu .list{overflow:hidden;}
+  .tab_menu .list li{float:left; margin-right:14px;}
+  .tab_menu .list .btn{font-size:17px;}
+  .tab_menu .list .cont{display:none; position:absolute; text-align:center; width:600px; height:500px; line-height:100px;}
+  .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
+  .tab_menu .list li.is_on .cont{display:block;}
 
 
 </style>
@@ -65,20 +79,61 @@ button {
 		<input type="button" onclick=blockDelete() value="차단해제"/>
 	</c:if>
 	
+		
+	
+<div class="wrap">
+  <div class="tab_menu">
+    <ul class="list">
+      <li class="is_on">
+        <a href="#tab1" class="btn">크루모집 리스트</a>
+        <div id="tab1" class="cont">
+       	 <c:forEach items="${profileTogether}" var="Together">
+			<table>				
+				<tr>
+					<td id="bold"><a href="crewTogetherView.do?ct_idx=${Together.ct_idx}" target="_blank">${Together.ct_title}</a></td>
+					<td>${Together.name}&nbsp;${Together.ct_wish_start}&nbsp;~&nbsp;${Together.ct_wish_end}</td>
+				</tr>
+			</table>
+		</c:forEach>
+		</div>
+      </li>
+      <li>
+        <a href="#tab2" class="btn">받은 후기</a>
+        <div id="tab2" class="cont">
+      	  <c:forEach items="${profileReview}" var="Review">
+			<table>
+				<tr>
+					<td id="bold">${Review.mr_assessment}</td>
+					<td>${Review.mr_content}</td>
+				</tr>
+			</table>
+		</c:forEach>
+	</div>
+      </li>
+      
+    </ul>
+  </div>
+</div>
 	
 	
-	<!-- 작성한 모집글 -->
-	<c:forEach items="${profileTogether}" var="Together">
+	
+	
+	<!-- 작성한 모집글 
+	<c:forEach items="${profileTogether}" var="Together" varStatus="i">
 		<table>
 			<tr>
-				<td><a href="crewTogetherView.do?ct_idx=${Together.ct_idx}" target="_blank">${Together.ct_title}</a></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><a href="crewTogetherView.do?ct_idx=${Together.ct_idx}
+				    &amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}" target="_blank">${Together.ct_title}</a></td>
 				<td>${Together.name}&nbsp;${Together.ct_wish_start}&nbsp;~&nbsp;${Together.ct_wish_end}</td>
 			</tr>
 		</table>
 	</c:forEach>
+	-->
 	
-	
-	<!-- 받은리뷰 -->
+	<!-- 받은리뷰
 	<c:forEach items="${profileReview}" var="Review">
 		<table>
 			<tr>
@@ -87,13 +142,24 @@ button {
 			</tr>
 		</table>
 	</c:forEach>
-	
+	 -->
 	
 	
 	
 	</body>			
 
-	<script>	
+	<script>
+	
+	const tabList = document.querySelectorAll('.tab_menu .list li');
+	for(var i = 0; i < tabList.length; i++){
+	  tabList[i].querySelector('.btn').addEventListener('click', function(e){
+	    e.preventDefault();
+	    for(var j = 0; j < tabList.length; j++){
+	      tabList[j].classList.remove('is_on');
+	    }
+	    this.parentNode.classList.add('is_on');
+	  });
+	}
 	
 	
 	function block() {

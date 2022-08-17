@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.lib.dto.PageMakerDTO;
+import com.camper.lib.utils.Criteria;
 import com.camper.profile.dao.ProfileDAO;
 import com.camper.profile.dto.ProfileDTO;
 
@@ -148,6 +150,53 @@ public class ProfileService {
 	                  
 
 	   }
+
+
+	public ModelAndView criteria(Criteria cri, HashMap<String, Object> params) {
+		ModelAndView mav = new ModelAndView("/profile");
+		
+		cri.setAmount(15);
+		if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
+			cri.setKeyword((String)params.get("keyword"));
+			cri.setType((String)params.get("type"));
+			
+			mav.addObject("keyword", params.get("keyword"));
+			mav.addObject("type", params.get("type"));
+		
+		}
+			
+		int total = (int)dao.total(params);
+		mav.addObject("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+		
+		int pageNum = cri.getPageNum();
+		
+		//현재페이지가 마지막 페이지를 초과하지 못하도록
+		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+			
+			
+		}
+		
+		// dao mapper offset
+		int skip = (pageNum -1 ) * cri.getAmount();
+		params.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		
+			
+		//dao mapper limit
+		params.put("amount", cri.getAmount());
+		
+		
+		ArrayList<ProfileDTO>list = dao.criteria(params);
+		mav.addObject("list", list);
+		mav.addObject("pageMaker", pageMaker);
+		
+		return mav;
+	}
 
 	
 

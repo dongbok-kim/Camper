@@ -29,4 +29,8 @@ public interface ProfileDAO {
 
 	ProfileDTO repoInfo(String mb_id);
 
+	ArrayList<ProfileDTO> criteria(HashMap<String, Object> params);
+
+	int total(HashMap<String, Object> params);
+
 }
