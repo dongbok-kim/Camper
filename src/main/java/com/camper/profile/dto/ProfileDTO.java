@@ -19,11 +19,45 @@ public class ProfileDTO {
 	private String mr_assessment;
 	private String mr_content;
 	
+	private String title;
+	
+	private int ct_idx;
+	
+	private String mb_status;
 	
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getMb_status() {
+		return mb_status;
+	}
+	public void setMb_status(String mb_status) {
+		this.mb_status = mb_status;
+	}
+	public int getCt_idx() {
+		return ct_idx;
+	}
+	public void setCt_idx(int ct_idx) {
+		this.ct_idx = ct_idx;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getMr_assessment() {
 		return mr_assessment;
 	}
