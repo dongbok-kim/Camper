@@ -28,8 +28,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/campingReviewForm.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewForm(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewForm(idx, loginId);
 	}
 	
@@ -38,8 +38,8 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/campingReviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView campingReviewWrite(HttpSession session, @RequestParam HashMap<String, String> params) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		params.put("loginId", loginId);
 		logger.info("params : "+ params);
 		return service.campingReviewWrite(params);
@@ -50,88 +50,99 @@ public class MyReviewController {
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/myCampingReview.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewList(loginId);
 	}
 	
 	
 	// 캠핑장 후기 삭제
 	// by.승진 2022-08-11
-		@RequestMapping(value = "/campingReviewDelete.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/campingReviewDelete.do", method = RequestMethod.GET)
 	public ModelAndView campingReviewDelete (HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		return service.campingReviewDelete(idx, loginId);
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	// 크루원 후기작성
+	// 크루원 후기작성 페이지
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/crewReviewForm.go", method = RequestMethod.GET)
 	public ModelAndView crewReviewForm(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		session.removeAttribute("idx");
 		session.setAttribute("idx", idx);
 		return service.crewReviewForm(idx, loginId);
 	}
 	
 	
+	//  크루원 후기 작성
+	// by.승진 2022-08-16
 	@RequestMapping(value = "/crewReview.do", method = RequestMethod.POST)
-	public ModelAndView crewReview(HttpSession session, @RequestParam HashMap<String, String> params) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
+	public String crewReview(HttpSession session, @RequestParam HashMap<String, String> params) {
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		String idx = (String) session.getAttribute("idx");
 		logger.info("크루 모집 번호는 = "+idx);
 		logger.info("params : "+params);
 		
-		ArrayList<String> list = new ArrayList<String>();
-
-		for (Entry<String, String> entry: params.entrySet()) {
-			logger.info("key : "+entry.getKey()+"value : "+entry.getValue());
+		String mb_id, assessment, content, score;
+		
+		for (int i = 0; i < Integer.parseInt(params.get("cnt")); i++) {
+			mb_id = params.get("mb_id"+i);
+			assessment = params.get("assessment"+i);
+			content = params.get("content"+i);
 			
-			if (entry.getKey().contains("assessment")) {
-				// 키 값 가져오기
-				String id = entry.getKey();
-				logger.info(id);
-				
-				// 키 값에서 아이디 추출
-				String getId = id.substring(11, id.length()-1);
-				logger.info(getId);
-				
-				list.add(idx);
-				list.add(getId);
-				// 평가 항목(싫어요, 보통, 좋아요)
-				list.add(entry.getValue());
-
-			} else if (entry.getKey().contains("content")){
-				String content = entry.getValue();
-				list.add(content);
+			if (assessment.equals("좋아요")) {
+				score="2500";
+			} else if (assessment.equals("보통")) {
+				score="1500";
+			} else {
+				score="500";
 			}
 			
-			logger.info("리스트는 : "+list);
-			
-			String[] result = list.toArray(new String[0]);
-			
-			for (int i = 0; i < result.length; i++) {
-				logger.info("result : "+result[i]);
-			}
-			
+			logger.info(mb_id+" / "+assessment+" / "+score+" / "+content);
+			service.crewReview(assessment, score, content, loginId,  mb_id, idx);
+			// 리뷰받은 회원 모닥불온도 업데이트
+			service.memberUpdate(mb_id);
 		}
 		
-
-		
-		
-		return null;
+		return "mypage/popupClose";
 	}
 	
+	
+	// 크루 후기 페이지 (받은 후기)
+	// by.승진 2022-08-15
+	@RequestMapping(value = "/myCrewReviewR.go", method = RequestMethod.GET)
+	public ModelAndView crewReviewR(HttpSession session) {
+		// String loginId = (String) session.getAttribute("loginId");
+		String loginId = "jin";
+		return service.crewReviewR(loginId);
+	}
+	
+	
+	// 크루 후기 페이지 (작성 후기)
+	// by.승진 2022-08-15
+	@RequestMapping(value = "/myCrewReviewW.go", method = RequestMethod.GET)
+	public ModelAndView crewReviewW(HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		return service.crewReviewW(loginId);
+	}
+	
+	
+	// 크루 후기 삭제
+	// by.승진 2022-08-16
+	@RequestMapping(value = "/crewReviewDelete.do", method = RequestMethod.GET)
+	public String crewReviewDelete (HttpSession session, @RequestParam String idx) {
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		String mb_id = service.getId(idx, loginId);
+		service.crewReviewDelete(idx, loginId);
+		// 리뷰받은 회원 모닥불온도 업데이트
+		service.memberUpdate(mb_id);
+		return "redirect:/myCrewReviewW.go";
+	}	
 }

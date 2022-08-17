@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("mypgBlock")
+// @Alias("mypgBlock")
 public class MyBlockDTO {
 
 	private int bl_idx;

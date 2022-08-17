@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("mypgCrew")
+// @Alias("mypgCrew")
 public class MyCrewDTO {
 	
 	private int ct_idx;
