@@ -26,19 +26,15 @@
 		<if test="keyword != null and !keyword.equals('')">
 			AND b.ca_name LIKE CONCAT('%', #{keyword}, '%')
 		</if>
-		
 		ORDER BY cl_idx DESC 
-			<!-- AND
-					<c:if test="keyword != null and !keyword.equals('')">
-			<choose>
-				<when test="type != null and type.equals('셀렉트 박스 밸류')" >
-					ccr.mb_id LIKE CONCET('%', #{keyword}, '%')
-				</when>
-				<otherwise>
-					(ccr.mb_id LIKE CONCET('%', #{keyword}, '%') or ccr.mb_id LIKE CONCET('%', #{keyword}, '%'))
-				</otherwise>
-			</choose>
-			</c:if> --> 
+	</select>
+	
+	<!-- 캠핑장 검색 -->
+	<select id="myCampingLikeSearch" parameterType="hashmap" resultType="mypgLike">
+		SELECT cl_idx, cc.ca_idx, ca_name, ccl.cl_datetime  
+		FROM cp_camping_like ccl JOIN cp_camping cc ON cc.ca_idx = ccl.ca_idx 
+		WHERE mb_id = #{loginId} and cc.ca_name like concat('%',#{keyword},'%') 
+		ORDER BY cl_idx DESC
 	</select>
 	
 </mapper>

@@ -37,7 +37,7 @@
 									<td>${listCnt - skip - i.index}</td>
 									<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${bbs.ca_name}</a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
-									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">삭제</a></td>
+									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">찜해제</a></td>
 								</tr>		
 							</c:forEach>
 						</tbody>
