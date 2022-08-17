@@ -27,7 +27,7 @@
 			ms_start_date = 
 			(
 				case 
-					when (SELECT COUNT(ms_idx) FROM cp_member_stop ALIAS_FOR_SUBQUERY WHERE mb_id = #{mb_id}) >= 1 then (select ms_end_date from cp_member_stop ALIAS_FOR_SUBQUERY where mb_id = #{mb_id} order by ms_end_date desc limit 1)
+					when (SELECT COUNT(ms_idx) FROM cp_member_stop ALIAS_FOR_SUBQUERY WHERE mb_id = #{mb_id}) >= 1 then DATE_ADD((select ms_end_date from cp_member_stop ALIAS_FOR_SUBQUERY where mb_id = #{mb_id} order by ms_end_date desc limit 1), INTERVAL 1 DAY)
 					else now()
 				end	
 			),

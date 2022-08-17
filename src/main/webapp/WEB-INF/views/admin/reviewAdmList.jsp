@@ -56,21 +56,35 @@ textarea {
 		<a href="reviewAdmList">캠핑장 후기</a>
 		<a href="reviewMemberAdmList">회원 후기</a>
 	</div>
-	<div>등록된 캠핑장 후기 수 : ${list.size()}건</div>
+	<div>등록된 캠핑장 후기 수 : ${listCnt}건</div>
 	<div>
 		<table>
-			<tr>
-				<th>번호</th>
-				<th>캠핑장명 및 후기내용</th>
-				<th>평가항목</th>
-				<th>작성자</th>
-				<th>작성일시</th>
-				<th>블라인드</th>
-			</tr>
-			<c:forEach items="${list }" var="review">
+			<thead>
 				<tr>
-					<td>${review.cr_idx}</td>
+					<th>번호</th>
+					<th>캠핑장명 및 후기내용</th>
+					<th>평가항목</th>
+					<th>작성자</th>
+					<th>작성일시</th>
+					<th>블라인드</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+			<c:when test="${listCnt eq 0}">
+				<tr align="center">
+					<td colspan="6">데이터가 없습니다</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
+			<c:forEach items="${list}" var="review" varStatus="i">
+				<tr>
+					<td>${listCnt - skip - i.index}</td>
 					<td>
+					<!-- 상세보기용 파라메터 값 필요한 사람 가져다 쓰세요 -->
+					<!-- 
+					<a href="?idx=${review.cr_idx}      &amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}"></a>
+					-->
 					${review.ca_name }<br/>
 					<a class="cr_content" onclick="openClose()">${review.cr_content }</a>
 					</td>
@@ -86,7 +100,26 @@ textarea {
 					</td>
 				</tr>
 			</c:forEach>
+			</c:otherwise>
+			</c:choose>
+			</tbody>
 		</table>
+		<ul>
+			<!-- 이전페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!-- 다음페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+			</c:if>
+		</ul>
 	</div>
 	<div>
 		<form action="reviewCampSearch.do" method="post">
@@ -96,12 +129,12 @@ textarea {
 				<option value="싫어요">싫어요</option>
 				<option value="보통이에요">보통이에요</option>
 			</select>
-			<select name="option">
+			<select name="type">
 				<option value="all">전체</option>
-				<option value="mb_id">작성자명</option>
-				<option value="ca_name">캠핑장명</option>
+				<option value="mb_id" <c:if test="${type eq 'mb_id'}">selected="selected"</c:if>>작성자명</option>
+				<option value="ca_name" <c:if test="${type eq 'ca_name'}">selected="selected"</c:if>>캠핑장명</option>
 			</select>
-			<input type="text" name="keyword" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>

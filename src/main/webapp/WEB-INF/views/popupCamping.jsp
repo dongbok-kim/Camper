@@ -223,20 +223,16 @@
 					
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script>
-		/* function campingSelect(e) {
-			var name = .data('idx');
-			console.log(name);
-			//opener.document.getElementById("campingSelect").value=document.getElementById("selectCamping").data('name');
-		} */
-		
+	<script>	
 		$('.selectCamping').on('click', function(){
 			 var name = $(this).data('name');
 			 var idx = $(this).data('idx');
-			 console.log(idx); 
 			 $(opener.document).find("#campingSelect").text(name);
 			 $(opener.document).find("#campingSelectIdx").val(idx);
 			 window.close();
 		});
+		
+		var selectIdx = $(opener.document).find("#campingSelectIdx").val();
+		$('.selectCamping[data-idx='+selectIdx+']').attr('disabled', 'disabled');
 	</script>
 </html>

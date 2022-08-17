@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.ReviewAdmService;
 import com.camper.lib.service.CommonService;
+import com.camper.lib.utils.Criteria;
 
 @Controller
 public class ReviewAdmController {
@@ -23,9 +24,8 @@ public class ReviewAdmController {
 	
 	// 캠핑장 후기 관리
 	@RequestMapping(value = "/reviewAdmList")
-	public ModelAndView reviewAdmList() {
-		
-		return service.reviewCampList();
+	public ModelAndView reviewAdmList(Criteria cri, @RequestParam HashMap<String, Object> params) {
+		return service.reviewCampList(cri, params);
 	}
 	
 	// 캠핑장 후기 블라인드
