@@ -31,7 +31,15 @@ public class CampingApiDTO {
 	private String ca_img;
 	private Timestamp ca_create_date;
 	private Timestamp ca_modified_date;
+	private String isStatus;
 	
+	
+	public String getIsStatus() {
+		return isStatus;
+	}
+	public void setIsStatus(String isStatus) {
+		this.isStatus = isStatus;
+	}
 	public int getCa_idx() {
 		return ca_idx;
 	}

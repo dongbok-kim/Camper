@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -48,6 +49,10 @@ public class CampingApiService {
 	          //logger.info("jsonObj : "+jsonObj);
 	          JSONArray jsonArr = jsonObj.getJSONArray("item");
 	          logger.info("length" + jsonArr.length());
+	          
+	          //데이터 넣기 전 api테이블 비우는 작업
+	          dao.apiDel(jsonArr);
+	          //데이터 꺼내기 위한 작업
 	          for (int i = 0; i < jsonArr.length(); i++) {
 	             //jsonArr.getJSONObject(i).get("contentId");
 	             // json contentId
@@ -83,6 +88,36 @@ public class CampingApiService {
 	        	 //시/도
 	        	 logger.info("doNm : " + jsonArr.getJSONObject(i).get("doNm").toString());
 	        	 String doNm = (String) jsonArr.getJSONObject(i).get("doNm");
+	        	 
+	        	 //시/도 커스텀
+	        	 if (doNm.equals("경상남도")) {
+						doNm = "경남";
+						logger.info("변경된 doNm : " + doNm);
+	        	 }
+	        	 else if (doNm.equals("경상북도")) {
+						doNm = "경북";
+						logger.info("변경된 doNm : " + doNm);
+	        	 }
+	        	 else if (doNm.equals("전라남도")) {
+						doNm = "전남";
+						logger.info("변경된 doNm : " + doNm);
+	        	 }
+	        	 else if (doNm.equals("전라북도")) {
+						doNm = "전북";
+						logger.info("변경된 doNm : " + doNm);
+	        	 }
+	        	 else if (doNm.equals("충청남도")) {
+						doNm = "충남";
+						logger.info("변경된 doNm : " + doNm);
+	        	 }
+	        	 else if (doNm.equals("충청북도")) {
+						doNm = "충북";
+						logger.info("변경된 doNm : " + doNm);
+	        	 } 
+	        	 else {
+	        		 doNm = doNm.substring(0, 2);
+	        		 logger.info("변경된 doNm : " + doNm);
+	        	 }
 	        	 dto.setCa_sido(doNm);
 	        	 
 	        	 //시/군/구
@@ -169,24 +204,20 @@ public class CampingApiService {
 	        	 logger.info("firstImageUrl : " + jsonArr.getJSONObject(i).get("firstImageUrl").toString());
 	        	 String firstImageUrl = (String) jsonArr.getJSONObject(i).get("firstImageUrl");
 	        	 dto.setCa_img(firstImageUrl);
-	        	 
-	        	 dao.setCampingApi(dto);
-	        	 
-	        	 
-	        	 /*
+     	 
 	        	 //등록일
-	        	 logger.info("createdtime : " + (String) jsonArr.getJSONObject(i).get("createdtime") + ".000");
-	             Timestamp createdtime = Timestamp.valueOf((String) jsonArr.getJSONObject(i).get("createdtime") + ".000");
+	        	 //logger.info("createdtime : " + (String) jsonArr.getJSONObject(i).get("createdtime") + ".00");
+	             Timestamp createdtime = Timestamp.valueOf((String) jsonArr.getJSONObject(i).get("createdtime"));
 	        	 dto.setCa_create_date(createdtime);
 	        	 logger.info("자 보자:"+createdtime);
-	        	 */
-	
-	        	 /*
+ 
 	        	 //수정일
 	        	 logger.info("modifiedtime : " + jsonArr.getJSONObject(i).get("modifiedtime").toString());
-	        	 Timestamp modifiedtime = (Timestamp) jsonArr.getJSONObject(i).get("modifiedtime");
+	        	 Timestamp modifiedtime = Timestamp.valueOf((String) jsonArr.getJSONObject(i).get("modifiedtime"));
 	        	 dto.setCa_modified_date(modifiedtime);
-	        	 */
+	        	
+	        	 dao.setCampingApi(dto);
+	        	 
 	        	 
 	        	 //dto.setCa_idx(contentId);
 	        	 
@@ -194,9 +225,29 @@ public class CampingApiService {
 	          }
 	          bfReader.close();
 	          conn.disconnect();
-	       //} catch (Exception e) {
-	    	   
-	       //}
+	          
+	          ArrayList<CampingApiDTO> chk = dao.unionSelect();//추가,삭제 -- 추가,삭제 여부와 idx 만 가져온다
+	          logger.info("chk? : " + chk);
+	          ArrayList<Integer> addList = new ArrayList<Integer>(); //추가 빈 arraylist
+	          ArrayList<Integer> delList = new ArrayList<Integer>(); //삭제 빈 arraylist
+
+	          for (CampingApiDTO item : chk) {
+	             if (item.getIsStatus().equals("추가")) {
+	                addList.add(item.getCa_idx());
+	             } else if (item.getIsStatus().equals("삭제")) {
+	                delList.add(item.getCa_idx());
+	             }
+	          }
+	          
+	          if(addList.size() > 0) {
+	        	dao.newCamping(addList);  
+	          }
+	          
+	          if(delList.size() > 0) {
+	        	dao.statusChange(delList);
+	          }
+	          
+	          
 		return null;
 		
 	}

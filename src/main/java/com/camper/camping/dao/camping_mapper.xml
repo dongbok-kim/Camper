@@ -6,29 +6,63 @@
 	<!-- <select id="campingList" resultType="cpCamping">
 		SELECT * FROM cp_camping ORDER BY ca_idx DESC
 	</select>
- -->
+ 	-->
+ 	<!-- 0815캠핑장 리스트 검색 추가 전 쿼리 
 	<select id="campingList" resultType="cpCamping">	
 		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
-			(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
 			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
-			from cp_camping a ORDER BY ca_idx DESC
+			from cp_camping a where a.ca_manage_status = '운영' ORDER BY ca_idx DESC
 	</select>
+	-->
+	
+	<select id="campingList" resultType="cpCamping">
+		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu, a.ca_theme, a.ca_pet,	
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
+			from cp_camping a where a.ca_manage_status != '확인중'
+			<if test="ca_sido != null">
+				and a.ca_sido IN
+				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_theme != null">
+				and a.ca_theme IN
+				<foreach collection="ca_theme" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_pet != null">and a.ca_pet != '불가능'</if>
+			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
+			ORDER BY ca_idx DESC
+	</select>
+
 	
 	<select id="campingRecom" resultType="cpCamping">
 		SELECT *, ((SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERE cr_assessment = '좋아요' AND ca_idx = a.ca_idx) 
 				- (SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERe cr_assessment = '싫어요' AND ca_idx = a.ca_idx)) 
 			AS ranking from cp_camping a ORDER BY ranking desc limit 4 offset 0
-	
 	</select>
+	
+	<select id="campingRecomUser" resultType="cpCamping">
+		SELECT *, ((SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERE cr_assessment = '좋아요' AND ca_idx = a.ca_idx) 
+				- (SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERe cr_assessment = '싫어요' AND ca_idx = a.ca_idx)) 
+			AS ranking from cp_camping a where ca_sido = (SELECT mb_sido FROM cp_member WHERE mb_id = #{mb_id}) 
+		ORDER BY ranking desc limit 4 offset 0;
+	</select>
+	
+
 	
 	<select id="campingCnt" resultType="int">
-		select count(ca_idx) from cp_camping
+		select count(ca_idx) from cp_camping where ca_manage_status != '확인중'
 	</select>
+	 
 	
 	<select id="campingView" parameterType="String" resultType="cpCamping">
 		SELECT *,
-			(select count(cl_idx) from cp_camping_like where ca_idx = #{ca_idx}) as cntLike
-		FROM cp_camping WHERE ca_idx = #{ca_idx}
+			(select count(cr_idx) from cp_camping_review where ca_idx = #{ca_idx} and cr_assessment = '좋아요') as cntLike
+		FROM cp_camping a WHERE ca_idx = #{ca_idx}
 	</select>
 	
 	<select id="campingView_review" parameterType="String" resultType="cpCamping">
@@ -37,6 +71,14 @@
 	
 	<select id="campingView_together" parameterType="String" resultType="cpCamping">
 		SELECT * FROM cp_crew_together WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<select id="campingNewApi" resultType="cpCamping">
+		select * from cp_camping_api where ca_idx = #{ca_idx}
+	</select>
+	
+	<select id="campingNew" resultType="cpCamping">
+		select * from cp_camping where ca_idx = #{ca_idx}
 	</select>
 
 </mapper>

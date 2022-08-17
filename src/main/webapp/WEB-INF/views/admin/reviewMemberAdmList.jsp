@@ -124,7 +124,7 @@ textarea {
 					</tr>
 					<tr>
 						<td colspan="2">
-							<input type="hidden" name="md_mr_idx" value="idx"/>
+							<input type="hidden" name="idx" value="idx"/>
 							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
@@ -166,7 +166,7 @@ $(function(){
 		console.log(idx);
 		// 후기내용 길면 생략해서 가져오기,,ㅠㅠ
 		$("#md_mr_writer").html(writer);
-		$("input[name='md_mr_idx']").val(idx);
+		$("input[name='idx']").val(idx);
 		if (content.length>20){
 			$("#md_mr_content").html(content.substr(0,20)+'...');		
 		}else{

@@ -5,9 +5,18 @@
 
 	<select id="togetherList" resultType="com.camper.admin.dto.TogetherAdmDTO">
 		SELECT ct_idx, ct_title, mb_id, ct_datetime,
-			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cct.ct_idx) as bb_count
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cct.ct_idx and cbb.bb_relation = "cp_crew_together") as bb_count
 		FROM cp_crew_together cct
 	</select>
 
+	<select id="togetherView" resultType="com.camper.admin.dto.TogetherAdmDTO">
+		SELECT ct_idx, ct_title, mb_id, ct_datetime, ct_content, ct_people_cnt, ct_gender, ct_age, ct_wish_start,
+			ct_wish_end, ct_tool, ct_camping_type, ct_pet,
+			(select ca_name from cp_camping cc where cc.ca_idx = cct.ca_idx) as ca_name,
+			(select mb_nickname from cp_member cm where cm.mb_id = cct.mb_id) as mb_nickname,
+			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cct.ct_idx and cbb.bb_relation = "cp_crew_together") as bb_count
+		FROM cp_crew_together cct
+		WHERE ct_idx = #{param1}
+	</select>
 
 </mapper>

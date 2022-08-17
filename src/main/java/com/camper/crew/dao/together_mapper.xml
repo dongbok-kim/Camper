@@ -14,4 +14,26 @@
 	<delete id="crewTogetherDelete" parameterType="String">
 		Delete FROM cp_crew_camping WHERE ct_idx=#{ct_idx}
 	</delete>
+	
+	
+	
+	
+	
+	
+	<!-- 모집글 작성 / 캠핑장 검색 팝업창 / 캠핑장 리스트 -->
+	<select id="campPopup" resultType="cpCamping">	
+		SELECT a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
+			(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
+		FROM cp_camping a ORDER BY ca_idx DESC
+	</select>
+	
+	
+	<insert id="crewRegForm" parameterType="hashmap">
+		INSERT INTO cp_crew_together
+			(ct_title, ct_content, ct_people_cnt, ct_gender, ct_age, ct_wish_start, ct_wish_end, ct_tool, ct_camping_type, ct_pet,  ct_datetime, mb_id, ca_idx)
+		VALUES(#{ct_title}, #{ct_content}, #{people_cnt}, #{gender}, #{age}, #{wish_start_date}, #{wish_end_date}, NULL, NULL, NULL,  current_timestamp(), #{loginId}, #{ca_idx})
+	</insert>
+	
+	
 </mapper>

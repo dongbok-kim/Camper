@@ -103,9 +103,9 @@
 </style>
 				<div id="full">
 					<h3>캠핑장 추천</h3>
+					
 					<ul id="campingVote">
 					<c:forEach items="${campingRecom}" var="campingRecom">
-					<%-- <a href="/campingNew.go?ca_idx=${campingRecom.ca_idx}">데이터비교</a> --%>
 						<li>
 							<a href="/campingView.go?ca_idx=${campingRecom.ca_idx}">
 								<c:choose>
@@ -124,7 +124,7 @@
 					</ul>
 					
 					<div id="searchBox">
-						<form action="campingList.go" method="post">
+						<form action="campingSearch" method="post">
 							<table>
 								<tbody>
 									<tr>
@@ -170,7 +170,7 @@
 									<tr>
 										<th>기타정보</th>
 										<td>
-											<label><input type="checkbox" name="ca_pet" value="가능" /> 반려동물 동반 가능</label>
+											<label><input type="checkbox" name="ca_pet" value="1" /> 반려동물 동반 가능</label>
 										</td>
 									</tr>
 									<tr>
@@ -184,10 +184,10 @@
 							</div>
 						</form>
 					</div>
-					<p id="totalCnt">총 <strong>${campingCnt}</strong>건</p>
+					<p id="totalCnt">총 <strong>${list.size()}</strong>건</p>
 					
 					<ul id="campingList">
-					<c:forEach items="${campingList}" var="campingList">
+					<c:forEach items="${list}" var="campingList">
 						<li>
 							<a href="/campingView.go?ca_idx=${campingList.ca_idx}">
 								<span class="imgBox">
@@ -216,11 +216,23 @@
 							<span class="cnt cntLike">좋아요 ${campingList.cntLike}</span>
 							<span class="cnt cntReview">후기 ${campingList.cntReview}</span>
 							<div style="clear:both;"></div>
+							<input type="button" class="selectCamping" value="캠핑장 선택" data-idx="${campingList.ca_idx}" data-name="${campingList.ca_name}"/>
 						</li>
 					</c:forEach>
 					</ul>
 					
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script></script>
+	<script>	
+		$('.selectCamping').on('click', function(){
+			 var name = $(this).data('name');
+			 var idx = $(this).data('idx');
+			 $(opener.document).find("#campingSelect").text(name);
+			 $(opener.document).find("#campingSelectIdx").val(idx);
+			 window.close();
+		});
+		
+		var selectIdx = $(opener.document).find("#campingSelectIdx").val();
+		$('.selectCamping[data-idx='+selectIdx+']').attr('disabled', 'disabled');
+	</script>
 </html>

@@ -27,7 +27,10 @@
 			ca_theme,
 			ca_tool,
 			ca_pet,
-			ca_img
+			ca_img,
+			ca_create_date,
+			ca_modified_date
+			
 		)VALUES(
 			#{ca_idx},
 			#{ca_name},
@@ -51,9 +54,36 @@
 			#{ca_theme},
 			#{ca_tool},
 			#{ca_pet},
-			#{ca_img}
+			#{ca_img},
+			#{ca_create_date},
+			#{ca_modified_date}
 		)
 	</insert>
 
+	<delete id="apiDel">
+		TRUNCATE TABLE cp_camping_api
+	</delete>
+	
+	<select id="unionSelect" resultType="cpCampingAPI">
+		SELECT '추가' AS isStatus, b.ca_idx FROM cp_camping a RIGHT OUTER JOIN cp_camping_api b ON a.ca_idx = b.ca_idx WHERE a.ca_idx IS NULL
+		UNION
+		SELECT '삭제' AS isStatus, a.ca_idx FROM cp_camping a LEFT OUTER JOIN cp_camping_api b ON a.ca_idx = b.ca_idx WHERE b.ca_idx IS NULL AND a.ca_manage_status != '확인중'
+	</select>
+	
+	<insert id="newCamping" parameterType="list">
+		INSERT INTO cp_camping SELECT * FROM cp_camping_api WHERE ca_idx 
+			IN 
+			<foreach collection="list" item="item" open="(" separator="," close=")">
+					#{item}
+			</foreach>
+	</insert>
+	
+	<update id="statusChange" parameterType="list">
+		UPDATE cp_camping SET ca_manage_status = '확인중' WHERE ca_idx 
+		IN 
+		<foreach collection="list" item="item" open="(" separator="," close=")">
+					#{item}
+		</foreach>
+	</update>
 
 </mapper>
