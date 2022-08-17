@@ -23,6 +23,7 @@ public class ProfileDTO {
 	
 	private int ct_idx;
 	
+	private String mb_status;
 	
 	
 	
@@ -35,6 +36,16 @@ public class ProfileDTO {
 	
 	
 	
+	
+	
+	
+	
+	public String getMb_status() {
+		return mb_status;
+	}
+	public void setMb_status(String mb_status) {
+		this.mb_status = mb_status;
+	}
 	public int getCt_idx() {
 		return ct_idx;
 	}

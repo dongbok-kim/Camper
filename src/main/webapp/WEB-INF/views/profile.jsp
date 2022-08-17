@@ -63,14 +63,17 @@ button {
 	</h3>
 	
 	
-				
 	<!-- 신고하기 -->
-	<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=550, height=500');">
+	<c:if test="${profileView.mb_id ne sessionScope.loginId}">	
+		<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=550, height=500');">
 				신고하기</button>
- 
+ 	</c:if>
+ 	
 	<!-- 차단회원이 아닌경우 -->
-	<c:if test="${blockCheck eq null}">	
-		<input type="button" onclick=block() value="차단하기"/>	
+	<c:if test="${profileView.mb_id ne sessionScope.loginId}">	
+		<c:if test="${blockCheck eq null}">	
+			<input type="button" onclick=block() value="차단하기"/>	
+		</c:if>
 	</c:if>
 	
 	
@@ -95,6 +98,9 @@ button {
 				</tr>
 			</table>
 		</c:forEach>
+		
+		
+		
 		</div>
       </li>
       <li>
@@ -174,6 +180,7 @@ button {
 			location.href='MemberBlockDelete.do?mb_id=${profileView.mb_id}';
 		}
 	}
+	
 	
 	
 	

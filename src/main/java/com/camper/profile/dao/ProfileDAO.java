@@ -33,4 +33,6 @@ public interface ProfileDAO {
 
 	int total(HashMap<String, Object> params);
 
+	String NormalMember(String mb_id);
+
 }

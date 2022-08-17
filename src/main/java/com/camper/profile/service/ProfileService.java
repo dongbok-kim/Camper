@@ -34,17 +34,31 @@ public class ProfileService {
 
 	//프로필 조회
 	public ModelAndView profileView(String loginId, String mb_id) {
-		String page = "profile";
-		ModelAndView mav = new ModelAndView();
-		ProfileDTO profileView = dao.profileView(mb_id);
-		ArrayList<ProfileDTO>profileTogether = dao.profileTogether(mb_id);
-		ArrayList<ProfileDTO>profileReview = dao.profileReview(mb_id);
-		String blockCheck = dao.blockCheck(mb_id, loginId);
 		
-		mav.addObject("profileView", profileView); //프로필보기
-		mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
-		mav.addObject("profileTogether", profileTogether); //프로필의 작성모집글
-		mav.addObject("profileReview", profileReview); //프로필의 받은리뷰
+		String NormalMember = dao.NormalMember(mb_id); //탈퇴회원 여부 확인
+		ModelAndView mav = new ModelAndView();
+		String page = "";
+		
+		if(NormalMember != "탈퇴") {
+		
+			logger.info("프로필 확인 가능");
+			page = "profile";
+			
+						
+			ProfileDTO profileView = dao.profileView(mb_id);
+			ArrayList<ProfileDTO>profileTogether = dao.profileTogether(mb_id);
+			ArrayList<ProfileDTO>profileReview = dao.profileReview(mb_id);
+			String blockCheck = dao.blockCheck(mb_id, loginId);
+			
+			mav.addObject("profileView", profileView); //프로필보기
+			mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
+			mav.addObject("profileTogether", profileTogether); //프로필의 작성모집글
+			mav.addObject("profileReview", profileReview); //프로필의 받은리뷰
+		
+		} else {
+			logger.info("탈퇴확인 플필 확인 불가");
+			page = "/mypage/popupClose";
+		}
 		
 		mav.setViewName(page);
 		return mav;
@@ -53,27 +67,38 @@ public class ProfileService {
 	
 	//신고창 조회
 	public ModelAndView report(String loginId, String mb_id) {
-		String page = "report";
 		ModelAndView mav = new ModelAndView();
+		
+		if(loginId == null ) {
+			String page = "/mypage/popupClose";
+			logger.info("비회원은 신고불가능");
+			mav.setViewName(page);
+		} else {
+		String page = "report";
+		
 		ProfileDTO repoInfo = dao.repoInfo(mb_id);
 		ProfileDTO myInfo = dao.myInfo(loginId);
 		
 		
 		mav.addObject("myInfo", myInfo);
 		mav.addObject("repoInfo", repoInfo);
-				
-		
 		mav.setViewName(page);
+		
+		}		
+		
+		
 		return mav;
 	}
 
 	//차단하기
-	public ModelAndView MemberBlock(String mb_id, String loginId) {
-		//String page = "profile";
-		//ModelAndView mav = new ModelAndView();
-		dao.MemberBlock(mb_id, loginId);
-		ModelAndView mav = new  ModelAndView("redirect:/profile?mb_id="+mb_id);		
-		
+	public ModelAndView MemberBlock(String mb_id, String loginId) {		
+		if(loginId == null) {
+			logger.info("비회원은 차단 불가능");
+		} else {
+		//String page = "profile";		
+		dao.MemberBlock(mb_id, loginId);				
+	}
+		ModelAndView mav = new ModelAndView("redirect:/profile?mb_id="+mb_id);
 		return mav;
 	}
 

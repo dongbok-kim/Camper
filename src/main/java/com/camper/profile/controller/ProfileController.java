@@ -52,7 +52,8 @@ public class ProfileController {
 	public ModelAndView report(HttpSession session, @RequestParam String mb_id) {
 		logger.info(mb_id + "신고 요청");
 		String loginId = (String) session.getAttribute("loginId");
-			
+		
+		
 	    return service.report(loginId, mb_id);		
 	  }
 	
@@ -64,6 +65,7 @@ public class ProfileController {
 	       
 	      logger.info("첨부파일" + photos);
 	      logger.info("param : {}",params);
+	      
 	      
 	      service.reportDo(photos, params);
 	      
