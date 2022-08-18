@@ -29,10 +29,20 @@ public interface ProfileDAO {
 
 	ProfileDTO repoInfo(String mb_id);
 
-	ArrayList<ProfileDTO> criteria(HashMap<String, Object> params);
+	String NormalMember(String mb_id);
+	
+	
+	
 
 	int total(HashMap<String, Object> params);
 
-	String NormalMember(String mb_id);
+	
+	
+
+	ArrayList<ProfileDTO> profileView2(HashMap<String, Object> params);
+
+	int allCount();
+
+	ArrayList<ProfileDTO> profileReview2(HashMap<String, Object> params);
 
 }

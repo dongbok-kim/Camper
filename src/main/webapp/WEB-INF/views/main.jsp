@@ -10,7 +10,7 @@
 	h1 {
 	position : relative;
 	display: block;
-	left : 200px;
+	left : 250px;
 	
 	}
 	
@@ -18,7 +18,7 @@
 	h2 {
 	position : relative;
 	display: block;
-	right:200px;
+	right:350px;
 	float:right;
 	bottom: 80px;
 	
@@ -169,7 +169,7 @@
 			</tr>			
 			<tr>								
 				<td><a href="profile?mb_id=${crew.mb_id}">프로필&nbsp;${crew.name}</a></td>					
-				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=800, height=700');">
+				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=800, height=900');">
 				팝업:${crew.name}</button></td>				
 				
 			

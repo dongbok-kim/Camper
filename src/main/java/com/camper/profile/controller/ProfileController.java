@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,21 +31,32 @@ public class ProfileController {
 	
 	
 	
-	@RequestMapping (value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(Criteria cri, HashMap<String, Object> params) {
 		
-			
-	    return service.criteria(cri, params);		
-	  }
-		
-	//회원 프로필 불러오기
+	//회원 프로필 불러오기+페이징
 	@RequestMapping (value = "/profile", method = RequestMethod.GET)
-    public ModelAndView profileView(HttpSession session, @RequestParam String mb_id) {
-		logger.info(mb_id + "프로필 요청");
+    public ModelAndView profileView(HttpSession session, HttpServletRequest request, @RequestParam String mb_id, @RequestParam HashMap<String, Object> params, Criteria cri) {
+		HttpSession session1 = request.getSession();		
+		session1.setAttribute("mb_id", mb_id);
+						
 		String loginId = (String) session.getAttribute("loginId");
-		//String loginId= "uihwan91";	
-    	return service.profileView(loginId, mb_id);	
+		
+		params.put("loginId", loginId);
+		params.put("mb_id", mb_id);
+		logger.info(params + "프로필 요청");
+		
+    	return service.profileView2(cri, params);	
     }
+	
+	
+ 
+	//회원 프로필 불러오기
+	//	@RequestMapping (value = "/profile", method = RequestMethod.GET)
+	//    public ModelAndView profileView(HttpSession session, @RequestParam String mb_id) {
+	//		logger.info(mb_id + "프로필 요청");
+	//		String loginId = (String) session.getAttribute("loginId");
+				
+	//    	return service.profileView(loginId, mb_id);	
+	//    }
 	
 	
 	
@@ -97,5 +110,7 @@ public class ProfileController {
 			return service.MemberBlockDelete(mb_id, loginId);
 			
 		}
+				
+	
 	
 }

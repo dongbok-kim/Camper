@@ -50,7 +50,7 @@
 			</tr>
 			<tr>
 				<th>첨부파일</th>
-				<td><input type="file" name="photos" multiple="multiple"/></td>
+				<td><input type="file" id="photos" name="photos" multiple="multiple" accept="image/*"/></td>
 			</tr>
 			
 			<tr>
@@ -64,27 +64,47 @@
 	</form>		
 	</body>			
 
-	<script>	
+	<script>
+	
 
-	function report() {
-		
+	
+	$("input[type=file]").bind( 'change', function (e)
+	        {
+	            if( !$(this).val() ) return;
+	             
+	            var f = this.files[0];
+	            var size = f.size || f.fileSize;
+	             
+	            var limit = 2000000;
+	                             
+	            
+	                         
+	            if( size > limit ){
+	                alert( '파일용량은 2mb 를 넘을수 없습니다.' );
+	                $(this).val('');
+	                return;
+	            }
+	                     
+	        $(this).parent().find('input[type=text]').val( $(this).val() );
+	})
+	
+	
+
+	function report() {		
 		var form = document.ReportForm;
-		
-		
-		
-		
+							
 		if (confirm("이 회원을 신고하시겠습니까?") == true){
-			
-			if(document.getElementById("rp_content").value == ''){				
+													
+			if (document.getElementById("rp_content").value == ''){				
 				alert('신고 사유를 적어주세요');
 			} else {
 				console.log(document.getElementById("rp_content").value);
 				form.submit();
-			}
-										
-		}
-		
-	}
+				} 
+			}														
+	     }
+	
+	
 	
 	
 	

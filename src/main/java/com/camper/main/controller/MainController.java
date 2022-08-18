@@ -20,7 +20,7 @@ public class MainController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = {"/" , "main"}, method = RequestMethod.GET)
 	public String main(Model model) {
 		
 		//캠핑장 랜덤 리스트

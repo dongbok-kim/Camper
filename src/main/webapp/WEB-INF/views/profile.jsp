@@ -43,12 +43,16 @@ button {
 	font-size:15px;
 	}
 	
+	ul{
+	list-style:none;
+	}
+	
 	.tab_menu{position:relative;}
-  .tab_menu .list{overflow:hidden;}
+  .tab_menu .list{overflow:hidden; list-style:none;}
   .tab_menu .list li{float:left; margin-right:14px;}
   .tab_menu .list .btn{font-size:17px;}
   .tab_menu .list .cont{display:none; position:absolute; text-align:center; width:600px; height:500px; line-height:100px;}
-  .tab_menu .list li.is_on .btn{font-weight:bold; color:green;}
+  .tab_menu .list li.is_on .btn{font-weight:bold; color:white; background-color:purple;}
   .tab_menu .list li.is_on .cont{display:block;}
 
 
@@ -57,15 +61,15 @@ button {
 	<body>
 	
 	
+	
 	<h2>${profileView.mb_nickname}(${profileView.title})</h2>
 	<h2><img src="resources/images/flame.png" width="20">${profileView.mb_fire}°C</h2>
-	<h3>${profileView.age}대&nbsp;/&nbsp;${profileView.mb_gender}성
-	</h3>
+	<h3>${profileView.age}대&nbsp;/&nbsp;${profileView.mb_gender}성</h3>
 	
 	
 	<!-- 신고하기 -->
 	<c:if test="${profileView.mb_id ne sessionScope.loginId}">	
-		<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=550, height=500');">
+		<button onclick="javascript:window.open('report?mb_id=${profileView.mb_id}', 'report', 'width=500, height=500');">
 				신고하기</button>
  	</c:if>
  	
@@ -90,23 +94,40 @@ button {
       <li class="is_on">
         <a href="#tab1" class="btn">크루모집 리스트</a>
         <div id="tab1" class="cont">
-       	 <c:forEach items="${profileTogether}" var="Together">
-			<table>				
+       	 <c:forEach items="${list}" var="Together" varStatus="i">
+			<table>			
 				<tr>
 					<td id="bold"><a href="crewTogetherView.do?ct_idx=${Together.ct_idx}" target="_blank">${Together.ct_title}</a></td>
 					<td>${Together.name}&nbsp;${Together.ct_wish_start}&nbsp;~&nbsp;${Together.ct_wish_end}</td>
-				</tr>
-			</table>
-		</c:forEach>
-		
-		
-		
+				</tr>				
+			</table>							
+		</c:forEach>		
+				<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+				</ul>	
+
 		</div>
+		
       </li>
+      
+      
+      
       <li>
         <a href="#tab2" class="btn">받은 후기</a>
         <div id="tab2" class="cont">
-      	  <c:forEach items="${profileReview}" var="Review">
+      	  <c:forEach items="${list2}" var="Review" varStatus="i">
 			<table>
 				<tr>
 					<td id="bold">${Review.mr_assessment}</td>
@@ -114,6 +135,22 @@ button {
 				</tr>
 			</table>
 		</c:forEach>
+		
+				<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?mb_id=${profileView.mb_id}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+				</ul>	
 	</div>
       </li>
       
@@ -123,9 +160,10 @@ button {
 	
 	
 	
+	<!-- 
 	
-	<!-- 작성한 모집글 
-	<c:forEach items="${profileTogether}" var="Together" varStatus="i">
+	<div>
+	<c:forEach items="${list}" var="Together" varStatus="i">
 		<table>
 			<tr>
 				<td></td>
@@ -137,7 +175,11 @@ button {
 			</tr>
 		</table>
 	</c:forEach>
-	-->
+	<ul> 
+	
+	
+					
+	
 	
 	<!-- 받은리뷰
 	<c:forEach items="${profileReview}" var="Review">

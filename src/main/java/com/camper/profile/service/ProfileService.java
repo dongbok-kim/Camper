@@ -23,6 +23,7 @@ import com.camper.lib.utils.Criteria;
 import com.camper.profile.dao.ProfileDAO;
 import com.camper.profile.dto.ProfileDTO;
 
+
 @Service
 public class ProfileService {
 
@@ -55,8 +56,8 @@ public class ProfileService {
 			mav.addObject("profileTogether", profileTogether); //프로필의 작성모집글
 			mav.addObject("profileReview", profileReview); //프로필의 받은리뷰
 		
-		} else {
-			logger.info("탈퇴확인 플필 확인 불가");
+		} else {			
+			logger.info("탈퇴확인은 프로필 확인 불가");
 			page = "/mypage/popupClose";
 		}
 		
@@ -177,53 +178,79 @@ public class ProfileService {
 	   }
 
 
-	public ModelAndView criteria(Criteria cri, HashMap<String, Object> params) {
-		ModelAndView mav = new ModelAndView("/profile");
+	//페이징을 위한 프로필
+	public ModelAndView profileView2(Criteria cri, HashMap<String, Object> params) {
+		ModelAndView mav = new ModelAndView();
 		
-		cri.setAmount(15);
-		if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
-			cri.setKeyword((String)params.get("keyword"));
-			cri.setType((String)params.get("type"));
+		String page = "";
+		String mb_id = (String)params.get("mb_id");
+		String loginId = (String)params.get("loginId");
+		
+		String NormalMember = dao.NormalMember(mb_id); //탈퇴회원 여부 확인
+		
+		if(NormalMember != "탈퇴") {
+			logger.info("프로필 확인 가능");
+			page = "profile";
+		
+			ProfileDTO profileView = dao.profileView(mb_id);
+			mav.addObject("profileView", profileView);
 			
-			mav.addObject("keyword", params.get("keyword"));
-			mav.addObject("type", params.get("type"));
-		
+			
+			String blockCheck = dao.blockCheck(mb_id, loginId);
+			mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
+			
+			cri.setAmount(15);
+			//if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
+			//	cri.setKeyword((String)params.get("keyword"));
+			//	cri.setType((String)params.get("type"));
+				
+			//	mav.addObject("keyword", params.get("keyword"));
+			//	mav.addObject("type", params.get("type"));
+			
+			//}
+				
+			int total = (int)dao.total(params);
+			mav.addObject("listCnt", total);
+			
+			PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+			
+			int pageNum = cri.getPageNum();
+			
+			//현재페이지가 마지막 페이지를 초과하지 못하도록
+			if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+				pageNum = pageMaker.getEndPage();
+				cri.setPageNum(pageNum);
+				
+				
+			}
+			
+			// dao mapper offset
+			int skip = (pageNum-1)*cri.getAmount();
+			params.put("skip", skip);
+			mav.addObject("skip", skip);
+			
+						
+			//dao mapper limit
+			params.put("amount", cri.getAmount());
+			
+			
+			ArrayList<ProfileDTO>list = dao.profileView2(params);
+			ArrayList<ProfileDTO>list2 = dao.profileReview2(params);
+			
+			mav.addObject("list", list);
+			mav.addObject("list2", list2);
+			mav.addObject("pageMaker", pageMaker);
+			
+		} else {
+			
+			logger.info("탈퇴회원임");
+			page = "/mypage/popupClose";
 		}
-			
-		int total = (int)dao.total(params);
-		mav.addObject("listCnt", total);
 		
-		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
-		
-		int pageNum = cri.getPageNum();
-		
-		//현재페이지가 마지막 페이지를 초과하지 못하도록
-		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
-			pageNum = pageMaker.getEndPage();
-			cri.setPageNum(pageNum);
-			
-			
-		}
-		
-		// dao mapper offset
-		int skip = (pageNum -1 ) * cri.getAmount();
-		params.put("skip", skip);
-		mav.addObject("skip", skip);
-		
-		
-			
-		//dao mapper limit
-		params.put("amount", cri.getAmount());
-		
-		
-		ArrayList<ProfileDTO>list = dao.criteria(params);
-		mav.addObject("list", list);
-		mav.addObject("pageMaker", pageMaker);
-		
+		mav.setViewName(page);
 		return mav;
 	}
 
-	
 
 
 }
