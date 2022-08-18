@@ -3,15 +3,171 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.crew.dao.TogetherDAO">
 
+	<select id="recomList" resultType="crTogether">
+		SELECT 
+			a.ct_idx,
+			a.ct_wish_start, 
+			a.ct_wish_end, 
+			a.ct_title, 
+			a.ct_age, 
+			a.ct_people_cnt, 
+			a.ct_end, 
+			b.mb_nickname, 
+			c.ca_img, 
+			c.ca_sido, 
+			c.ca_name 
+		FROM 
+			cp_crew_together a 
+		JOIN 
+			cp_member b 
+		ON 
+			a.mb_id = b.mb_id 
+		JOIN
+			cp_camping c
+		ON 
+			a.ca_idx = c.ca_idx
+		WHERE 1
+			and b.mb_fire >= 1500
+		LIMIT 4
+	</select>
+
+	<select id="recom" parameterType="String" resultType="crTogether">
+		SELECT 
+			a.ct_idx, 
+			a.ct_wish_start, 
+			a.ct_wish_end, 
+			a.ct_title, 
+			a.ct_age, 
+			a.ct_people_cnt, 
+			a.ct_end, 
+			b.mb_nickname, 
+			c.ca_img, 
+			c.ca_sido, 
+			c.ca_name 
+		FROM 
+			cp_crew_together a 
+		JOIN 
+			cp_member b 
+		ON 
+			a.mb_id = b.mb_id 
+		JOIN 
+			cp_camping c 
+		ON 
+			a.ca_idx = c.ca_idx 
+		JOIN 
+			cp_member_age d 
+		ON 
+			b.ma_idx = d.ma_idx 
+		JOIN 
+			cp_camping_like e 
+		ON 
+			c.ca_idx = e.ca_idx 
+		WHERE 1 
+			AND a.mb_id != e.mb_id 
+			AND b.mb_fire >= 1500 
+			AND e.mb_id = #{mb_id} 
+			AND 
+			(
+				(a.ct_gender = '혼성' OR a.ct_gender = (SELECT mb_gender FROM cp_member WHERE mb_id = #{mb_id}))
+				OR 
+				a.ct_age = (SELECT ma_age FROM cp_member_age WHERE ma_idx = (SELECT ma_idx FROM cp_member WHERE mb_id = #{mb_id})) 
+			)
+		LIMIT 4 
+	</select>
+
 	<select id="list" resultType="hashmap">
-		SELECT * FROM cp_crew_together
+		SELECT 
+			a.ct_idx,
+			a.ct_wish_start, 
+			a.ct_wish_end, 
+			a.ct_title, 
+			a.ct_age, 
+			a.ct_people_cnt, 
+			a.ct_end, 
+			a.mb_id,
+			b.ca_img, 
+			b.ca_sido, 
+			b.ca_name, 
+			c.mb_nickname 
+		FROM 
+			cp_crew_together a 
+		JOIN 
+			cp_camping b 
+		ON 
+			a.ca_idx = b.ca_idx
+		JOIN
+			cp_member c 
+		ON 
+			a.mb_id = c.mb_id
+		WHERE 
+			a.ct_end = 0
 	</select>
 	
-	<select id="view" parameterType="int" resultType="crTogether">
-		SELECT * FROM cp_crew_together WHERE ct_idx=#{ct_idx}
-	</select> 
+	<select id="crewCnt" resultType="int">
+		SELECT COUNT(ct_idx) FROM cp_crew_together
+	</select>
 	
-	<delete id="crewTogetherDelete" parameterType="String">
-		Delete FROM cp_crew_camping WHERE ct_idx=#{ct_idx}
+	<select id="view" parameterType="String" resultType="crTogether">
+		SELECT 
+			a.ct_idx, 
+			a.ct_title, 
+			a.ct_gender, 
+			a.ct_age, 
+			a.ct_people_cnt, 
+			a.ct_camping_type, 
+			a.ct_tool, 
+			a.ct_datetime, 
+			a.ct_pet, 
+			a.ct_wish_start, 
+			a.ct_wish_end, 
+			a.ct_content, 
+			a.mb_id, 
+			b.ca_name, 
+			c.mb_nickname, 
+			c.mb_gender, 
+			d.ma_age, 
+			(SELECT cg_idx FROM cp_chat_group WHERE ct_idx = a.ct_idx) AS cg_idx, 
+			(SELECT COUNT(ct_idx) FROM cp_camping_crew WHERE ct_idx = a.ct_idx AND cc_crew = '크루원') AS cnt
+		FROM 
+			cp_crew_together a 
+		JOIN 
+			cp_camping b 
+		ON 
+			a.ca_idx = b.ca_idx 
+		JOIN 
+			cp_member c 
+		ON 
+			a.mb_id = c.mb_id 
+		JOIN 
+			cp_member_age d 
+		ON 
+			c.ma_idx = d.ma_idx 
+		WHERE 
+			a.ct_idx = #{ct_idx}
+	</select> 
+	<!-- 크루모집 글 지울려면 채팅방 메시지, 참여자, 그룹 지워야해서  -->
+	<delete id="chatMessageDel" parameterType="int">
+		DELETE FROM cp_chat_message WHERE cg_idx = #{cg_idx}
 	</delete>
+	
+	<delete id="chatJoinDel" parameterType="int">
+		DELETE FROM cp_chat_join WHERE cg_idx = #{cg_idx}
+	</delete>
+	
+	<delete id="chatRoomDel" parameterType="int">
+		DELETE FROM cp_chat_group WHERE cg_idx = #{cg_idx}
+	</delete>
+	
+	
+	
+	<!-- 캠핑장 후기 총 갯수 가져오기(페이징처리) -->
+	<select id="recommTotal" parameterType="hashmap" resultType="crTogether">
+		SELECT * FROM cp_crew_together
+		
+		WHERE 1
+		<choose>
+			<when test="type !=null and type.equals()">
+			</when>
+		</choose>
+	</select>
 </mapper>

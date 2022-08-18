@@ -6,11 +6,23 @@ import com.camper.crew.dto.TogetherDTO;
 
 public interface TogetherDAO {
 
-	TogetherDTO view(int ct_idx);
+	TogetherDTO view(String ct_idx);
 
 	ArrayList<TogetherDTO> list();
 
-	void crewTogetherDelete(String ct_idx);
+	void chatMessageDel(int cg_idx);
+
+	void chatJoinDel(int cg_idx);
+
+	void chatRoomDel(int cg_idx);
+
+	ArrayList<TogetherDTO> crewRecom();
+
+	int crewCnt();
+
+	ArrayList<TogetherDTO> recom(String mb_id);
+
+	ArrayList<TogetherDTO> recomList();
 
 
 	
