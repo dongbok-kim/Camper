@@ -13,4 +13,6 @@ public interface StopAdmDAO {
 
 	void stopAdmReg(HashMap<String, String> params);
 
+	void stopMbStatus(String mb_id);
+
 }

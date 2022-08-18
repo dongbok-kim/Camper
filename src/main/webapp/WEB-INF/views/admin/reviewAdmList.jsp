@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../../resources/inc/header.jsp" %>
+
 <style>
 .modal{
 	position:fixed;
@@ -32,7 +32,19 @@ textarea {
 	border:1px solid black;
 	border-collapse:collapse;
 }
+
+#campingReview > tbody > tr > td.subject {
+		cursor: pointer;
+	}
+#campingReview > tbody > tr > td.subject:not(.active) {
+	max-width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 </style>
+<%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
@@ -58,7 +70,15 @@ textarea {
 	</div>
 	<div>등록된 캠핑장 후기 수 : ${listCnt}건</div>
 	<div>
-		<table>
+		<table id="campingReview">
+			<colgroup>
+				<col width="50"></col>
+				<col width="200"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -80,13 +100,13 @@ textarea {
 			<c:forEach items="${list}" var="review" varStatus="i">
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
-					<td>
+					<td class="subject">
 					<!-- 상세보기용 파라메터 값 필요한 사람 가져다 쓰세요 -->
 					<!-- 
 					<a href="?idx=${review.cr_idx}      &amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}"></a>
 					-->
 					${review.ca_name }<br/>
-					<a class="cr_content" onclick="openClose()">${review.cr_content }</a>
+					${review.cr_content }
 					</td>
 					<td>${review.cr_assessment}</td>
 					<td>${review.mb_id}</td>
@@ -123,7 +143,7 @@ textarea {
 	</div>
 	<div>
 		<form action="reviewCampSearch.do" method="post">
-			<select name="cr_assessment">
+			<select name="filter">
 				<option value="평가항목">평가항목</option>
 				<option value="좋아요">좋아요</option>
 				<option value="싫어요">싫어요</option>
@@ -169,17 +189,12 @@ textarea {
 		</div>
 	</div>
 	
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-// 후기내용 생략
-$('.cr_content').each(function(){
-	var length = 10;
-	$(this).each(function(){
-		if($(this).text().length >= length) {
-			$(this).text($(this).text().substr(0, length)+'...');
-		}
-	});
+$('#campingReview > tbody > tr > td.subject').on('click', function() {
+	$('#campingReview > tbody > tr > td.subject').removeClass('active');
+	$(this).addClass('active');
 });
 
 // 블라인드 모달창 

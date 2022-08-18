@@ -175,7 +175,81 @@
 	
 	
 	
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 	 =================== 소스트리 충돌 방지 ====================================
+	 지윤 : 크루 모집글 작성, 수정 -->	
 	<!-- 모집글 작성 / 캠핑장 검색 팝업창 / 캠핑장 리스트 -->
 	<select id="campPopup" resultType="cpCamping">	
 		SELECT a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
@@ -184,12 +258,108 @@
 		FROM cp_camping a ORDER BY ca_idx DESC
 	</select>
 	
-	
-	<insert id="crewRegForm" parameterType="hashmap">
-		INSERT INTO cp_crew_together
-			(ct_title, ct_content, ct_people_cnt, ct_gender, ct_age, ct_wish_start, ct_wish_end, ct_tool, ct_camping_type, ct_pet,  ct_datetime, mb_id, ca_idx)
-		VALUES(#{ct_title}, #{ct_content}, #{people_cnt}, #{gender}, #{age}, #{wish_start_date}, #{wish_end_date}, NULL, NULL, NULL,  current_timestamp(), #{loginId}, #{ca_idx})
+	<!-- 모집글 작성 / 등록 -->
+	<insert id="crewRegForm" 
+		useGeneratedKeys="true"
+		keyColumn="ct_idx"
+		keyProperty="ct_idx"
+		parameterType="crTogether">
+		INSERT INTO cp_crew_together 
+		SET
+			ct_title = #{ct_title},
+			ct_content = #{ct_content},
+			ct_people_cnt = #{ct_people_cnt},
+			ct_gender = #{ct_gender},
+			ct_age = #{ct_age},
+			ct_wish_start =#{ct_wish_start},
+			ct_wish_end = #{ct_wish_end},
+			ct_tool = #{ct_tool},
+			ct_camping_type = #{ct_camping_type},
+			ct_pet = #{ct_pet},
+			ct_datetime = current_timestamp(),
+			mb_id = #{mb_id},
+			ca_idx = #{ca_idx}
 	</insert>
+	<!-- 모집글 등록과 동시에 해당하는 채팅방 개설 -->
+	<insert id="crewChatReg"
+		useGeneratedKeys="true"
+		keyColumn="cg_idx"
+		keyProperty="cg_idx"
+		parameterType="crTogether">
+		INSERT INTO cp_chat_group
+		SET
+			cg_limit = #{cg_limit}, ct_idx = #{ct_idx}
+	</insert>
+	
+	<!-- 모집글 등록 + 채팅방 개설 -> 글 작성자는 크루에 크루장으로 자동 참여 -->
+	<insert id="campingCrew">
+		INSERT INTO cp_camping_crew
+		SET
+			mb_id = #{param1}, ct_idx = #{param2},
+			cc_crew = '크루장', cc_is_join = 0
+	</insert>
+	
+	<!-- 모집글 등록 + 채팅방 개설 -> 크루장(글 작성자)은 채팅방에도 자동 참여 -->
+	<insert id="crewChatJoin">
+		INSERT INTO cp_chat_join
+		SET
+			mb_id = #{param1}, cg_idx = #{param2},
+			cj_datetime = current_timestamp(), cj_ban = 0, cj_go = 1
+	</insert>
+	
+	
+	<!-- 모집글 수정 정보 불러오기 -->
+	<select id="crewUpdate" resultType="crTogether" parameterType="int">
+		SELECT 
+			cct.ct_idx, cct.ct_title, cct.ct_content, cct.ct_people_cnt, 
+			cct.ct_gender,ct_age, cct.ct_wish_start, cct.ct_wish_end, 
+			cct.ct_tool , cct.ct_camping_type, cct.ct_pet, cct.ca_idx,
+			(SELECT ca_name FROM cp_camping cc WHERE cct.ca_idx = cc.ca_idx) as ca_name
+		FROM 
+			cp_crew_together cct
+		WHERE
+			cct.ct_idx = #{ct_idx}
+	</select>
+	
+	<select id="chatCnt" parameterType="int" resultType="int">
+		SELECT COUNT(mb_id) FROM cp_chat_join ccj 
+		WHERE 
+			cg_idx = 
+			(SELECT cg_idx FROM cp_chat_group ccg WHERE ct_idx = #{ct_idx})
+	</select>
+	
+	
+	<!-- 모집글 수정 -->
+	<update id="crewUpdateForm" parameterType="crTogether">
+		UPDATE cp_crew_together 
+		SET
+			ct_title = #{ct_title},
+			ct_content = #{ct_content},
+			ct_people_cnt = #{ct_people_cnt},
+			ct_gender = #{ct_gender},
+			ct_age = #{ct_age},
+			ct_wish_start =#{ct_wish_start},
+			ct_wish_end = #{ct_wish_end},
+			ct_tool = #{ct_tool},
+			ct_camping_type = #{ct_camping_type},
+			ct_pet = #{ct_pet},
+			ct_datetime = current_timestamp(),
+			mb_id = #{mb_id},
+			ca_idx = #{ca_idx}
+		WHERE
+			ct_idx = #{ct_idx};
+	</update>
+	
+	<!-- 채팅방 수정 -->
+	<update id="crewChatUpdate">
+		UPDATE cp_chat_group
+		SET
+			cg_limit = #{param1}
+		WHERE
+			 ct_idx = #{param2}
+	</update>
+	
+	
 	
 	
 </mapper>

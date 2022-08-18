@@ -44,6 +44,13 @@
 			mb_id = #{mb_id}
 	</insert>
 	
+	<update id="stopMbStatus" parameterType="String">
+		UPDATE cp_member SET
+			mb_status = "정지"
+		WHERE 
+			mb_id = #{mb_id}
+	</update>
+	
 	
 
 </mapper>

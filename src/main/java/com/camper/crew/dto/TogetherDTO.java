@@ -35,10 +35,15 @@ public class TogetherDTO {
 	private String mb_gender;
 	private byte ma_age;
 	
-	//채팅방
-	private int cg_idx;
+
+	
+	// 채팅방 (모집글 생성 시 모집글 번호로 채팅방 생성하므로 필요함)
+	private int cg_idx; // 채팅 그룹 번호
+	private short cg_limit;
+	
 	
 	private int cnt;
+
 
 	public String getMb_nickname() {
 		return mb_nickname;
@@ -190,12 +195,22 @@ public class TogetherDTO {
 	public void setCg_idx(int cg_idx) {
 		this.cg_idx = cg_idx;
 	}
+
+	public short getCg_limit() {
+		return cg_limit;
+	}
+	public void setCg_limit(short cg_limit) {
+		this.cg_limit = cg_limit;
+	}
+	
+
 	public int getCnt() {
 		return cnt;
 	}
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+
 	
 	
 }

@@ -20,7 +20,7 @@ public class ReviewAdmService {
 	@Autowired ReviewAdmDAO dao;
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
-	// 캠핑장 후기 관리
+	// 관리자 페이지 / 캠핑장 후기 목록
 	public ModelAndView reviewCampList(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("admin/reviewAdmList");
 		
