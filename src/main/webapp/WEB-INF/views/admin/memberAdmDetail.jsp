@@ -70,8 +70,8 @@ table, th, td{
 		<tr>
 			<th>성별</th>
 			<td>${dto.mb_gender }</td>
-			<td style="text-align: center">연령대</td>
-			<td>${dto.ma_idx }</td><!-- 나중에 맞게 변경해야됨 -->
+			<td style="text-align: center; background-color: gray;">연령대</td>
+			<td>${age.ma_age } 대</td><!-- 나이불러오기 -->
 		</tr>
 		<tr>
 			<th>이메일</th>
@@ -80,7 +80,7 @@ table, th, td{
 		<tr>
 			<th>지역(시/도)</th>
 			<td>${dto.mb_sido }</td>
-			<td style="text-align: center"  >지역(시/군/구)</td>
+			<td style="text-align: center; background-color: gray;"  >지역(시/군/구)</td>
 			<td>${dto.mb_sigungu }</td>
 		</tr>
 		<tr>
@@ -93,8 +93,14 @@ table, th, td{
 		<tr>
 			<th>모닥불온도</th>
 			<td>${dto.mb_fire } ℃</td>
-			<td style="text-align: center">타이틀</td>
-			<td>왕초보</td><!-- 나중에 추가 -->
+			<td style="text-align: center; background-color: gray;">타이틀</td>
+			<td>
+			<c:if test="${title.mt_idx eq null }">
+				타이틀 없음
+			</c:if>
+			${title.mt_name }
+			</td>
+			
 		</tr>
 		<tr>
 			<th>회원권한</th>

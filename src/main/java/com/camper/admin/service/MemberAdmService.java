@@ -80,6 +80,16 @@ public class MemberAdmService {
 		
 	}
 
+	public MemberAdmDTO memberAdmAge(String mb_id) {
+		
+		return dao.memberAdmAge(mb_id);
+	}
+
+	public MemberAdmDTO memberTitle(String mb_id) {
+		
+		return dao.memberAdmTitle(mb_id);
+	}
+
 	
 	
 

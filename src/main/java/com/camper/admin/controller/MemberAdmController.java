@@ -43,6 +43,13 @@ public class MemberAdmController {
 		
 		MemberAdmDTO dto = service.memberAdmDetail(mb_id);
 		model.addAttribute("dto", dto);
+		
+		MemberAdmDTO age = service.memberAdmAge(mb_id);
+		model.addAttribute("age", age);
+		
+		MemberAdmDTO title = service.memberTitle(mb_id);
+		model.addAttribute("title", title);
+		
 		return "admin/memberAdmDetail";
 	}
 	

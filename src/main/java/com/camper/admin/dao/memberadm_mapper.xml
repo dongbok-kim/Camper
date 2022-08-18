@@ -54,4 +54,12 @@
 	UPDATE cp_member SET mb_grade= #{param2} WHERE mb_id = #{param1}
 </update>
 
+<select id="memberAdmAge" resultType="admMember">
+	SELECT ma_age FROM cp_member_age WHERE ma_idx = (SELECT ma_idx FROM cp_member WHERE mb_id = #{param1})
+</select>
+
+<select id="memberAdmTitle" resultType="admMember">
+	select mt_name from cp_member_title where mt_idx = (select mt_idx  from cp_member where mb_id = #{param1})
+</select>
+
 </mapper>
