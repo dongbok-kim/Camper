@@ -75,7 +75,7 @@ public class CampingService {
 		//String page = "login?";
 		String page = "campingList";
 		ModelAndView mav = new ModelAndView();
-		cri.setAmount(15);
+		cri.setAmount(3);
 		
 		//캠핑장 리스트, 총 캠핑장 수
 		//ArrayList<CampingDTO> campingList = dao.campingList(map);	
