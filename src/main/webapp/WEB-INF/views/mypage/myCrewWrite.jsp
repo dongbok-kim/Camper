@@ -58,7 +58,7 @@
 						
 						<!--  다음 페이지 버튼 -->
 						<c:if test="${pageMaker.next}">
-							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+							<li class="pageInfo_btn next"><a href="?pageNum=${pageMaker.startPage+1}">다음</a></li>
 						</c:if>
 					</ul>
 				</div>

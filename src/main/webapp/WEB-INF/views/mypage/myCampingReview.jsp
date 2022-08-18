@@ -61,7 +61,7 @@
 									<td>${rv.cr_assessment}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
 									<c:if test="${rv.delAvail > rv.today}">
-										<td><a href="campingReviewDelete.do?idx=${rv.cr_idx}">삭제</a></td>
+										<td><input type="button" value="삭제" onclick="del(${rv.cr_idx})"/></td>
 									</c:if>
 								</tr>
 							</c:forEach>
@@ -70,6 +70,16 @@
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
+	
+	function del(idx){
+		
+		var cf = confirm("삭제하시겠습니까?");
+		if (cf == true) {
+			location.href="campingReviewDelete.do?idx="+idx;
+		} else{
+			
+		}
+	}
 	
 		$('#campingReview > tbody > tr > td.subject').on('click', function() {
 			$('#campingReview > tbody > tr > td.subject').removeClass('active');

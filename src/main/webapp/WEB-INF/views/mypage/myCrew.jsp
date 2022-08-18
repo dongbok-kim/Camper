@@ -78,6 +78,21 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+					</ul>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>

@@ -52,6 +52,7 @@ public class MyCrewService {
 		
 		ArrayList<MyCrewDTO> list = dao.myCrewList(params);
 		mav.addObject("list", list);
+		mav.addObject("pageMaker", pageMaker);
 		return mav;
 	}
 	

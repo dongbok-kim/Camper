@@ -55,7 +55,9 @@
 		if ($('input[type=radio][id="assessment"]:checked').val()) {
 			console.log($('input[type=radio][id="assessment"]:checked').val())
 			form.submit();
-		} 
+		} else {
+			alert('평가 항목을 선택해주세요.');
+		}
 		
 	}
 	
