@@ -23,4 +23,6 @@ public interface MyInquiryDAO {
 
 	MyInquiryDTO inquiryAnswer(String idx);
 
+	MyInquiryDTO writeSuccess(String loginId);
+
 }

@@ -126,20 +126,44 @@ public class MyInquiryService {
 
 	// 문의글 수정 페이지
 	// by.승진 2022-08-11
-	public ModelAndView myInquiryUpdateForm(String idx, String loginId) {
+	public ModelAndView myInquiryUpdateForm(HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("mypage/myInquiryUpdate");
+		String idx = (String) params.get("idx");
+		String loginId = (String) params.get("loginId");
+		
+		// 페이징 정보 
+		String type = (String) params.get("type");
+		String keyword = (String) params.get("keyword");
+		String pageNum = (String) params.get("pageNum");
+		if(type != null) {
+			mav.addObject("type", type);
+		}
+		if(keyword != null) {
+			mav.addObject("keyword", keyword);
+		}
+		if(pageNum != null) {
+			mav.addObject("pageNum", pageNum);
+		}
+		mav.addObject("pageNum", pageNum);
+		
 		MyInquiryDTO dto = dao.myInquiryUpdateForm(idx);
+		
 		if (!dto.getMb_id().equals(loginId)) {
 			logger.info(dto.getMb_id()+" / "+loginId);
 			mav.setViewName("redirect:/myInquiryList.go");
 		} else {
 			mav.addObject("dto", dto);			
 		}
+		
 		return mav;
 	}
 
 	public void myInquiryUpdate(HashMap<String, String> params) {
 		dao.myInquiryUpdate(params);
+	}
+
+	public MyInquiryDTO writeSuccess(String loginId) {
+		return dao.writeSuccess(loginId);
 	}
 
 	

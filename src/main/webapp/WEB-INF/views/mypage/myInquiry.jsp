@@ -60,7 +60,7 @@
 						</c:if>
 					</ul>
 					<form action="inquirySearch.do" method="post">
-						<select name="cr_assessment">
+						<select name="filter">
 							<option value="답변상태">답변상태</option>
 							<option value="답변대기">답변대기</option>
 							<option value="처리중">처리중</option>

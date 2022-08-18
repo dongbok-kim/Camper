@@ -61,11 +61,14 @@
 	<script>
 		
 		var status = "${dto.in_status}";
+		var type = "${type}";
+		var keyword = "${keyword}";
+		var pageNum = "${pageNum}";
 		
 		function update(idx){
 			
 			if(status == "답변대기"){
-				location.href="/myInquiryUpdate.go?idx="+idx;
+				location.href="/myInquiryUpdate.go?idx="+idx+"&type="+type+"&keyword="+keyword+"&pageNum="+pageNum;
 			} else {
 				alert("해당 글은 수정할 수 없습니다.");
 			}

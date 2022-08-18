@@ -22,8 +22,14 @@
 						<table>
 							<tr>
 								<th>작성자</th>
-								<td><input type="hidden" name="idx" value="${dto.in_idx}"/>
-								<input type="hidden" name="loginId" value="${dto.mb_id}"/>${dto.mb_id}</td>
+								<td>
+									${dto.mb_id}
+									<input type="hidden" name="idx" value="${dto.in_idx}"/>
+									<input type="hidden" name="loginId" value="${dto.mb_id}"/>
+									<input type="hidden" name="type" value="${type}"/>
+									<input type="hidden" name="keyword" value="${keyword}"/>
+									<input type="hidden" name="pageNum" value="${pageNum}"/>
+								</td>
 							</tr>
 							<tr>
 								<th>제목</th>
@@ -36,7 +42,7 @@
 							<tr>
 								<th colspan="2">
 									<input type="button" value="수정"  onclick="yn()"/>
-									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
+									<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
 								</th>
 							</tr>
 						</table>

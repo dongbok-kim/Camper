@@ -77,5 +77,14 @@
 	<select id="inquiryAnswer" resultType="mypgInquiry">
 		SELECT ia_content, mb_id, ia_datetime FROM cp_inquiry_answer WHERE in_idx = #{param1}
 	</select>
+	
+	<!-- 방금 쓴 글 보기 -->
+	<select id="writeSuccess" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_content, in_status, mb_id  
+		FROM cp_inquiry 
+		WHERE mb_id = #{param1} 
+		ORDER BY in_idx DESC 
+		LIMIT 1
+	</select>
 
 </mapper>
