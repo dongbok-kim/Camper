@@ -1,5 +1,7 @@
 package com.camper.mypage.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.lib.service.CommonService;
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyBlockService;
 
 @Controller
@@ -25,10 +28,11 @@ public class MyBlockController {
 	// 차단 회원 목록
 	// by.승진 2022-08-12
 	@RequestMapping(value = "/myBlockList.go", method = RequestMethod.GET)
-	public ModelAndView blockList(HttpSession session) {
+	public ModelAndView blockList(HttpSession session, @RequestParam HashMap<String, Object>params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
 		// String loginId = "jin";
-		return service.blockList(loginId);
+		params.put("loginId", loginId);
+		return service.blockList(cri, params);
 	}
 	
 	

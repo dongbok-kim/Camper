@@ -28,11 +28,12 @@ public class MyInquiryController {
 	
 	// 1:1 문의 목록
 	// by. 승진 2022-08-10
-	@RequestMapping(value = "/myInquiryList.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/myInquiryList.go")
 	public ModelAndView myInquiryList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
 		// String loginId = "jin";
 		params.put("loginId", loginId);
+		logger.info("목록 파람 = "+params);
 		return service.myInquiryList(cri, params);
 	}
 	
@@ -124,11 +125,6 @@ public class MyInquiryController {
 		
 		return "redirect:/inquiryDetail.go?idx="+params.get("idx")+"&type="+params.get("type")+"&keyword="+params.get("keyword")+"&pageNum="+params.get("pageNum");
 	}
-	
-	
-	// 문의글 검색
-	// by.승진 2022-08-18
-	
 	
 	
 }

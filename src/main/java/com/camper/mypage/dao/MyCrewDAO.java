@@ -7,7 +7,7 @@ import com.camper.mypage.dto.MyCrewDTO;
 
 public interface MyCrewDAO {
 
-	ArrayList<MyCrewDTO> myCrewList(String temporaryId);
+	ArrayList<MyCrewDTO> myCrewList(HashMap<String, Object> params);
 
 	HashMap<String, String> myCrewTogetherInfo(String idx);
 
@@ -16,5 +16,7 @@ public interface MyCrewDAO {
 	void crewUpdate(String string, String idx);
 
 	void crewTogetherUpdate(String idx);
+
+	int total(HashMap<String, Object> params);
 
 }

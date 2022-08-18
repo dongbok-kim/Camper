@@ -26,7 +26,7 @@ public class MyInquiryService {
 	// by.승진 2022-08-10
 	public ModelAndView myInquiryList(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("mypage/myInquiry");
-		
+		logger.info("서비스로 넘어온 파람 = "+params);
 		// 검색 연동 페이징
 		cri.setAmount(15);
 		if (params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
@@ -37,6 +37,7 @@ public class MyInquiryService {
 			mav.addObject("keyword", (String) params.get("keyword"));
 			mav.addObject("type", (String) params.get("type"));
 		}
+		mav.addObject("filter", (String) params.get("filter"));
 		
 		int total = dao.total(params);
 		mav.addObject("listCnt", total);
@@ -44,6 +45,10 @@ public class MyInquiryService {
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
 
 		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
 		
 		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
 		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
@@ -80,9 +85,13 @@ public class MyInquiryService {
 		MyInquiryDTO dto = dao.inquiryDetail(idx);
 		
 		// 페이징 정보 
+		String filter = (String) params.get("filter");
 		String type = (String) params.get("type");
 		String keyword = (String) params.get("keyword");
 		String pageNum = (String) params.get("pageNum");
+		if (filter != null) {
+			mav.addObject("filter", filter);
+		}
 		if(type != null) {
 			mav.addObject("type", type);
 		}
@@ -132,9 +141,13 @@ public class MyInquiryService {
 		String loginId = (String) params.get("loginId");
 		
 		// 페이징 정보 
+		String filter = (String) params.get("filter");
 		String type = (String) params.get("type");
 		String keyword = (String) params.get("keyword");
 		String pageNum = (String) params.get("pageNum");
+		if (filter != null) {
+			mav.addObject("filter", filter);
+		}
 		if(type != null) {
 			mav.addObject("type", type);
 		}
@@ -164,6 +177,55 @@ public class MyInquiryService {
 
 	public MyInquiryDTO writeSuccess(String loginId) {
 		return dao.writeSuccess(loginId);
+	}
+
+	// 문의글 검색
+	// by.승진 2022-08-18
+	public ModelAndView inquirySearch(Criteria cri, HashMap<String, Object> params) {
+		ModelAndView mav = new ModelAndView("mypage/myInquiry");
+		
+		// 검색 연동 페이징
+		cri.setAmount(15);
+		if (params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
+			cri.setKeyword((String) params.get("keyword"));
+			cri.setType((String) params.get("type"));
+			
+			// View에서 내가 선택한 옵션과 검색어를 유지시키기 위해서 다시 ModelAndView로 보낸다
+			mav.addObject("filter", (String) params.get("filter"));
+			mav.addObject("keyword", (String) params.get("keyword"));
+			mav.addObject("type", (String) params.get("type"));
+		}
+		
+		int total = dao.total(params);
+		mav.addObject("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+
+		int pageNum = cri.getPageNum();
+		
+		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		// DAO MAPPER OFFSET
+		int skip = (pageNum-1)*cri.getAmount();
+		params.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		// DAO MAPPER LIMIT
+		params.put("amount", cri.getAmount());
+		
+		
+		ArrayList<MyInquiryDTO> list = dao.myInquiryList(params);
+		
+		mav.addObject("list", list);
+		
+		mav.addObject("pageMaker", pageMaker);
+		
+		return mav;
+		
 	}
 
 	

@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -36,7 +36,7 @@
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
 									<td>
-										<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
+										<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
 									</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
 									<td>${ask.in_status}</td>
@@ -59,12 +59,12 @@
 							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
 						</c:if>
 					</ul>
-					<form action="inquirySearch.do" method="post">
+					<form action="myInquiryList.go" method="post" id="inquiryForm">
 						<select name="filter">
-							<option value="답변상태">답변상태</option>
-							<option value="답변대기">답변대기</option>
-							<option value="처리중">처리중</option>
-							<option value="답변완료">답변완료</option>
+							<option value="">답변상태</option>
+							<option value="답변대기" <c:if test="${filter eq '답변대기'}">selected="selected"</c:if>>답변대기</option>
+							<option value="처리중" <c:if test="${filter eq '처리중'}">selected="selected"</c:if>>처리중</option>
+							<option value="답변완료" <c:if test="${filter eq '답변완료'}">selected="selected"</c:if>>답변완료</option>
 						</select>
 						<select name="type">
 							<option value="all">전체</option>
@@ -81,5 +81,9 @@
 		if(msg != ""){
 			alert(msg);
 		}
+		
+		$('#inquiryForm select[name="filter"]').on('change', function() {
+			$('#inquiryForm').submit();
+		});
 	</script>
 </html>

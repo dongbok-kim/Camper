@@ -3,6 +3,8 @@ package com.camper.mypage.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.web.servlet.ModelAndView;
+
 import com.camper.mypage.dto.MyInquiryDTO;
 
 public interface MyInquiryDAO {
@@ -24,5 +26,7 @@ public interface MyInquiryDAO {
 	MyInquiryDTO inquiryAnswer(String idx);
 
 	MyInquiryDTO writeSuccess(String loginId);
+
+	ModelAndView inquirySearch(HashMap<String, String> params);
 
 }

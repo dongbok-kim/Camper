@@ -8,10 +8,13 @@
 		SELECT COUNT(in_idx)
 		FROM cp_inquiry 
 		WHERE mb_id = #{loginId}
+		<if test="filter != null and !filter.equals('')">
+		AND in_status = #{filter}
+		</if>
 		<if test="keyword != null and !keyword.equals('')">
 		AND
 			<choose>
-				<when test="type != null and type.equals('in_title)" >
+				<when test="type != null and type.equals('in_title')" >
 					in_title LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="type != null and type.equals('in_content')" >
@@ -30,10 +33,13 @@
 		SELECT in_idx, in_title, in_datetime, in_status 
 		FROM cp_inquiry 
 		WHERE mb_id = #{loginId}
+		<if test="filter != null and !filter.equals('')">
+		AND in_status = #{filter}
+		</if>
 		<if test="keyword != null and !keyword.equals('')">
 		AND
 			<choose>
-				<when test="type != null and type.equals('in_title)" >
+				<when test="type != null and type.equals('in_title')" >
 					in_title LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="type != null and type.equals('in_content')" >
@@ -43,10 +49,10 @@
 					(in_title LIKE CONCAT('%', #{keyword}, '%') or in_content LIKE CONCAT('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
-		</if> 
+		</if>
 		ORDER BY in_idx DESC
 		LIMIT #{amount}
-		OFFSET #{skip}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 
 	<insert id="inquiryWrite" parameterType="hashmap">

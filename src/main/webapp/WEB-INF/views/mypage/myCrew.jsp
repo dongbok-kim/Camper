@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -18,7 +18,7 @@
 				</aside>
 				<div>
 					<h3>참여한 크루 목록</h3>
-					<h4>참여한 크루 목록 수 : ${list.size()} 건</h4>
+					<h4>참여한 크루 목록 수 : ${listCnt} 건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -34,9 +34,9 @@
 							<c:if test="${list.size() == 0}">
 								<tr><td colspan="6">참여한 크루 목록이 없습니다.</td></tr>
 							</c:if>
-							<c:forEach items="${list}" var="my">
+							<c:forEach items="${list}" var="my" varStatus="i">
 								<tr>
-									<td>${my.ct_idx}</td>
+									<td>${listCnt - skip - i.index}</td>
 									<td><a href="">${my.ca_name}</a></td>
 									<td>${my.ct_wish_start} ~ ${my.ct_wish_end}</td>
 									<c:choose>

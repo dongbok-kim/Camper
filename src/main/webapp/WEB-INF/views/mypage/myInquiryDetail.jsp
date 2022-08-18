@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -50,7 +50,7 @@
 						</c:if>
 						<tr>
 							<th colspan="6">
-								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
+								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
 								<input type="button" value="수정" onclick="update(${dto.in_idx})"/>
 								<input type="button" value="삭제" onclick="del(${dto.in_idx})"/>
 							</th>
