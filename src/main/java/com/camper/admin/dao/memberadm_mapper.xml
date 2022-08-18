@@ -50,4 +50,8 @@
 	SELECT * FROM cp_member WHERE mb_id = #{param1}
 </select>
 
+<update id="memberAdmUpdate" parameterType="String">
+	UPDATE cp_member SET mb_grade= #{param2} WHERE mb_id = #{param1}
+</update>
+
 </mapper>

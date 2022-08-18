@@ -75,6 +75,12 @@ public class MemberAdmService {
 		return mav;
 	}
 
+	public void memberAdmUpdate(String mb_id, String mb_grade) {
+		dao.memberAdmUpdate(mb_id, mb_grade);
+		
+	}
+
+	
 	
 
 }

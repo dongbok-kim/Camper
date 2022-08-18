@@ -97,7 +97,7 @@ public class LoginController {
 				model.addAttribute("msg", "탈퇴된 회원 입니다.");
 				page = "login/login";
 			} else {
-				page = "main";
+				page = "redirect:/";
 			}
 		} else {	//아이디 비밀번호가 일치 하지 않을시		
 			model.addAttribute("msg", msg);

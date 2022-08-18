@@ -46,7 +46,19 @@ public class MemberAdmController {
 		return "admin/memberAdmDetail";
 	}
 	
-	
+	//회원 정보 수정 (일반 > 관리자)
+	@RequestMapping(value = "/memberAdmUpdate.do")
+	public String memberAdmUpdate(Model model, HttpServletRequest request) {
+		
+		String mb_id = request.getParameter("mb_id");
+		logger.info("mb_id : "+mb_id);
+		String mb_grade = request.getParameter("mb_graderadio");
+		logger.info("mb_grade :" +mb_grade);
+		
+		service.memberAdmUpdate(mb_id, mb_grade);
+		
+		return "redirect:/memberAdmList.go";
+	}
 	
 	
 }

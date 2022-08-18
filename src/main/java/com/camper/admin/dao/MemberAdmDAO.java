@@ -14,5 +14,7 @@ public interface MemberAdmDAO {
 
 	MemberAdmDTO memberAdmDetail(String mb_id);
 
+	void memberAdmUpdate(String mb_id, String mb_grade);
+
 
 }
