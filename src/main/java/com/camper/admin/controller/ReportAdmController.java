@@ -24,7 +24,7 @@ public class ReportAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	// 회원 신고 목록
-	@RequestMapping(value = "/reportAdmList")
+	@RequestMapping(value = "/reportAdmList.go")
 	public String reportAdmList(Model model) {
 		
 		service.reportList(model);

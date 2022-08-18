@@ -23,7 +23,7 @@ public class TogetherAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//모집글 목록
-	@RequestMapping(value = "/togetherAdmList")
+	@RequestMapping(value = "/togetherAdmList.go")
 	public ModelAndView togetherAdmList() {
 			
 		return service.togetherList();

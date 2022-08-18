@@ -23,20 +23,22 @@ public class CampingAdmService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	// 관리자 페이지 / 캠핑장 목록
-	public ModelAndView campingAdmList(Criteria cri,
-			HashMap<String, Object> params) {
+	public ModelAndView campingAdmList(Criteria cri, HashMap<String, Object> params) {
 		
 		ModelAndView mav = new ModelAndView("admin/campingAdmList");
-		
+		logger.info("캠핑장 목록 params : "+params);
+		// 검색 연동 페이징
 		cri.setAmount(15);
 		if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
 			cri.setKeyword((String) params.get("keyword"));
-			cri.setType((String) params.get("type"));
+			//cri.setType((String) params.get("type"));
 			
 			//View에서 내가 선택한 옵션과 검색어를 유지시키기 위해서 다시 ModelAndView로 보낸다
 			mav.addObject("keyword", params.get("keyword"));
-			mav.addObject("type", params.get("type"));
+			//mav.addObject("type", params.get("type"));
 		}
+		mav.addObject("filterStatus", params.get("filterStatus"));
+		mav.addObject("filterSido", params.get("filterSido"));
 		
 		int total = dao.campingTotal(params);
 		mav.addObject("listCnt", total);
@@ -44,6 +46,11 @@ public class CampingAdmService {
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
 		
 		int pageNum = cri.getPageNum();
+		
+		// 없는 단어를 검색했을 경우를 위함
+		if(pageMaker.getStartPage()<0) {
+			pageMaker.setStartPage(1);
+		}
 		
 		//현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
 		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {

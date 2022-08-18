@@ -5,29 +5,39 @@
 
 	<!-- 캠핑장 목록 총 갯수 가져오기 (페이징 처리) -->
 	<select id="campingTotal" parameterType="hashmap" resultType="int">
-		SELECT COUNT(ca_idx) FROM cp_camping
+		SELECT COUNT(ca_idx) 
+		FROM cp_camping
 		WHERE 1
-			<if test="keyword != null and !keyword.equals('')">
-				<choose>
-					<when test="filter!= null and type.equals('mb_id')">
-						
-					</when>
-				</choose>
+			<if test="filterSido != null and !filterSido.equals('')">
+			AND ca_sido = #{filterSido}
 			</if>
-		
-		ORDER BY
-			ca_idx DESC
+			<if test="filterStatus != null and !filterStatus.equals('')">
+			AND ca_manage_status = #{filterStatus}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+			AND ca_name LIKE CONCAT('%', #{keyword},'%')
+			</if>		
+		ORDER BY ca_idx DESC
 	</select>
 
 	<!-- 캠핑장 목록 전체 -->
-	<select id="campingAdmList" resultType="admCamping">
+	<select id="campingAdmList" parameterType="hashmap" resultType="admCamping">
 		SELECT 
 			ca_idx, ca_name, ca_sido, ca_sigungu, ca_tel, ca_create_date,
 			ca_modified_date, ca_manage_status
-		FROM 
-			cp_camping
-		ORDER BY
-			ca_idx DESC
+		FROM cp_camping
+		WHERE 1
+			<if test="filterSido != null and !filterSido.equals('')">
+			AND ca_sido = #{filterSido}
+			</if>
+			<if test="filterStatus != null and !filterStatus.equals('')">
+			AND ca_manage_status = #{filterStatus}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+			AND ca_name LIKE CONCAT('%', #{keyword},'%')
+			</if>		
+		ORDER BY ca_idx DESC
+		LIMIT #{amount}
 	</select>
 
 </mapper>
