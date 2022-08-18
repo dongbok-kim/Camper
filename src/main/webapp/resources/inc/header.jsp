@@ -20,6 +20,8 @@
 				<a href="campingList.go">캠핑장</a>
 				<a href="">크루모집</a>
 				<div>
+					<!--  <a href=""><i class="xi-forum xi-2x"></i></a> -->
+					<!--  <a href=""><i class="xi-heart xi-2x"></i></a> -->
 					<c:if test="${loginId == null}">
 					<a href="/login.go">로그인</a> <span class="verticalBar">|</span> <a href="/join.go">회원가입</a>
 					</c:if>
