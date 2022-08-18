@@ -24,7 +24,8 @@ public class ReviewAdmController {
 	
 	// 캠핑장 후기 관리
 	@RequestMapping(value = "/reviewAdmList")
-	public ModelAndView reviewAdmList(Criteria cri, @RequestParam HashMap<String, Object> params) {
+	public ModelAndView reviewAdmList(Criteria cri, 
+			@RequestParam HashMap<String, Object> params) {
 		return service.reviewCampList(cri, params);
 	}
 	

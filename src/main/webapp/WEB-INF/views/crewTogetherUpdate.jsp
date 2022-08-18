@@ -17,8 +17,8 @@
 				</td>
 				<th>성별</th>
 				<td>
-					<input type="radio" name="ct_gender" value="여성" ${crew.ct_gender == "여성" ? 'checked' : '' }/>여성
-					<input type="radio" name="ct_gender" value="남성" ${crew.ct_gender == "남성" ? 'checked' : '' }/>남성
+					<input type="radio" name="ct_gender" value="여" ${crew.ct_gender == "여" ? 'checked' : '' }/>여성
+					<input type="radio" name="ct_gender" value="남" ${crew.ct_gender == "남" ? 'checked' : '' }/>남성
 					<input type="radio" name="ct_gender" value="혼성" ${crew.ct_gender == "혼성" ? 'checked' : '' }/>혼성
 				</td>
 			</tr>

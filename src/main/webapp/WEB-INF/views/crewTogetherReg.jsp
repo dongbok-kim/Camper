@@ -16,8 +16,8 @@
 				</td>
 				<th>성별</th>
 				<td>
-					<input type="radio" name="ct_gender" value="여성"/>여성
-					<input type="radio" name="ct_gender" value="남성"/>남성
+					<input type="radio" name="ct_gender" value="여"/>여성
+					<input type="radio" name="ct_gender" value="남"/>남성
 					<input type="radio" name="ct_gender" value="혼성"/>혼성
 				</td>
 			</tr>

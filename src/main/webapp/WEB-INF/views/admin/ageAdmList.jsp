@@ -20,7 +20,7 @@
 					<h3>연령대 관리</h3>
 				</div>
 <body>
-	<div><button onclick="location.href='ageReg' ">연령대 추가</button></div>
+	<div><button onclick="location.href='ageAdmReg' ">연령대 추가</button></div>
 	<div>
 		<table>
 			<tr>

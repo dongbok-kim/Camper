@@ -32,6 +32,16 @@ textarea {
 	border:1px solid black;
 	border-collapse:collapse;
 }
+
+#memberReview > tbody > tr > td.mr_content {
+		cursor: pointer;
+	}
+#memberReview > tbody > tr > td.mr_content:not(.active) {
+	max-width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
 </style>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -56,9 +66,18 @@ textarea {
 		<a href="reviewAdmList">캠핑장 후기</a>
 		<a href="reviewMemberAdmList">회원 후기</a>
 	</div>
-	<div>등록된 캠핑장 후기 수 : ${list.size()}건</div>
+	<div>등록된 회원 후기 수 : ${list.size()}건</div>
 	<div>
-		<table>
+		<table id="memberReview">
+			<colgroup>
+				<col width="50"></col>
+				<col width="200"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+				<col width="50"></col>
+			</colgroup>
 			<tr>
 				<th>번호</th>
 				<th>후기내용</th>
@@ -143,13 +162,9 @@ textarea {
 </body>
 <script>
 //후기내용 생략
-$('.mr_content').each(function(){
-	var length = 10;
-	$(this).each(function(){
-		if($(this).text().length >= length) {
-			$(this).text($(this).text().substr(0, length)+'...');
-		}
-	});
+$('#memberReview > tbody > tr > td.mr_content').on('click', function() {
+	$('#memberReview > tbody > tr > td.mr_content').removeClass('active');
+	$(this).addClass('active');
 });
 
 //블라인드 모달창 

@@ -36,7 +36,7 @@
 					<th>운영상태</th>
 				</tr>
 			</thead>
-			<%-- <tbody>
+			<tbody>
 				<c:forEach items="${list }" var="camp">
 					<tr>
 						<td>${camp.ca_idx}</td>
@@ -49,8 +49,42 @@
 						<td>${camp.ca_manage_status}</td>
 					</tr>
 				</c:forEach>
-			</tbody> --%>
+			</tbody>
 		</table>
+			<ul>
+			<!-- 이전페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!-- 다음페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+			</c:if>
+		</ul>
+	</div>
+	<div>
+		<form action="CampingAdmSearch.do" method="post">
+			<select name="filterSido">
+				<option value="시/도">시/도</option>
+				<option value="서울">운영</option>
+				<option value="휴장">휴장</option>
+				<option value="확인중">확인중</option>
+			</select>
+			<select name="filterStatus">
+				<option value="운영상태">운영상태</option>
+				<option value="운영">운영</option>
+				<option value="휴장">휴장</option>
+				<option value="확인중">확인중</option>
+			</select>
+			<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
+			<input type="submit" value="search"/>
+		</form>
 	</div>
 	<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
