@@ -41,4 +41,12 @@
 	WHERE mb_id=#{param1}
 </update>
 
+<select id="myInfoTitle" resultType="mypgMyInfo">
+	SELECT mt_name FROM cp_member_title WHERE mt_idx = (SELECT mt_idx  FROM cp_member WHERE mb_id = #{param1})
+</select>
+
+<select id="myInfoStop" resultType="int">
+	SELECT COUNT(mb_id) FROM cp_member_stop WHERE mb_id = #{param1}
+</select>
+
 </mapper>

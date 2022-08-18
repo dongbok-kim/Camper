@@ -96,6 +96,12 @@ public class LoginController {
 				session.removeAttribute("mb_status");
 				model.addAttribute("msg", "탈퇴된 회원 입니다.");
 				page = "login/login";
+			} else if(mb_status.equals("정지")) {
+				session.removeAttribute("loginId");
+				session.removeAttribute("mb_grade");
+				session.removeAttribute("mb_status");
+				model.addAttribute("msg", "정지중인 회원 입니다.");
+				page = "login/login";
 			} else {
 				page = "redirect:/";
 			}

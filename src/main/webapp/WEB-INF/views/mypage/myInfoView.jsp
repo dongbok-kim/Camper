@@ -56,7 +56,7 @@
                 <th>아이디</th>
                 <td>${myInfo.mb_id}</td>
                 <td style="background-color: red ">정지</td>
-                <td>0회</td><!-- 정지 나중에 해나야됨 -->
+                <td>${stop} 회</td>
             </tr>
             <tr>
                 <th>현재 비밀번호</th>
@@ -142,7 +142,12 @@
             	<th>모닥불 온도</th>
             	<td>${myInfo.mb_fire} ℃</td>
             	<td style="background-color: gray ">타이틀</td>
-            	<td>왕초보</td><!-- 나중에 타이틀 해나야됨 -->
+            	<td>
+            	<c:if test="${title.mt_idx eq null }">
+				타이틀 없음
+				</c:if>
+				${title.mt_name }
+            	</td>
             </tr>
 	</table>
 	<br/>

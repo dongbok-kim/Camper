@@ -108,5 +108,17 @@ public class MyInfoService {
 		
 	}
 
+	public MyInfoDTO myInfoTitle(String mb_id) {
+		
+		return dao.myInfoTitle(mb_id);
+	}
+
+	public int myInfoStop(String mb_id) {
+		
+		return dao.myInfoStop(mb_id);
+	}
+
+	
+
 
 }

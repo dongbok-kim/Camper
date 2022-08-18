@@ -43,6 +43,14 @@ public class MyInfoController {
 			
 			model.addAttribute("myInfo", myInfo);
 			
+			MyInfoDTO title = service.myInfoTitle(mb_id);
+			model.addAttribute("title", title);
+			
+			int stop = service.myInfoStop(mb_id);
+			model.addAttribute("stop", stop);
+			
+			logger.info("정지 횟수 : "+stop);
+			
 			return "mypage/myInfoView";
 		}
 		
