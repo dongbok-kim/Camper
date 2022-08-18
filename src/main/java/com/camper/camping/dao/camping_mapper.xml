@@ -3,19 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.camping.dao.CampingDAO">
 
-	<!-- <select id="campingList" resultType="cpCamping">
-		SELECT * FROM cp_camping ORDER BY ca_idx DESC
-	</select>
- 	-->
- 	<!-- 0815캠핑장 리스트 검색 추가 전 쿼리 
-	<select id="campingList" resultType="cpCamping">	
-		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
-			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
-			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
-			from cp_camping a where a.ca_manage_status = '운영' ORDER BY ca_idx DESC
-	</select>
-	-->
-	
+	<!-- 0818페이징 전 	
 	<select id="campingList" resultType="cpCamping">
 		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu, a.ca_theme, a.ca_pet,	
 			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
@@ -37,6 +25,55 @@
 			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
 			ORDER BY ca_idx DESC
 	</select>
+	 -->
+	<!-- 
+	<select id="campingCnt" resultType="int">
+		select count(ca_idx) from cp_camping where ca_manage_status != '확인중'
+	</select>
+	 -->
+	
+	<select id="campingCnt" resultType="int">
+		select count(a.ca_idx)
+			from cp_camping a where a.ca_manage_status != '확인중'
+			<if test="ca_sido != null">
+				and a.ca_sido IN
+				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_theme != null">
+				and a.ca_theme IN
+				<foreach collection="ca_theme" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_pet != null">and a.ca_pet != '불가능'</if>
+			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
+	</select>
+	 
+	 <select id="campingList" resultType="cpCamping">
+		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu, a.ca_theme, a.ca_pet,	
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
+			from cp_camping a where a.ca_manage_status != '확인중'
+			<if test="ca_sido != null">
+				and a.ca_sido IN
+				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_theme != null">
+				and a.ca_theme IN
+				<foreach collection="ca_theme" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_pet != null">and a.ca_pet != '불가능'</if>
+			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
+			ORDER BY ca_idx DESC
+			LIMIT #{amount}
+			<if test="campingCnt > 0">OFFSET #{skip}</if>
+	</select>
 
 	
 	<select id="campingRecom" resultType="cpCamping">
@@ -51,12 +88,7 @@
 			AS ranking from cp_camping a where ca_sido = (SELECT mb_sido FROM cp_member WHERE mb_id = #{mb_id}) 
 		ORDER BY ranking desc limit 4 offset 0;
 	</select>
-	
 
-	
-	<select id="campingCnt" resultType="int">
-		select count(ca_idx) from cp_camping where ca_manage_status != '확인중'
-	</select>
 	 
 	
 	<select id="campingView" parameterType="String" resultType="cpCamping">
@@ -70,15 +102,35 @@
 	</select>
 	
 	<select id="campingView_together" parameterType="String" resultType="cpCamping">
-		SELECT * FROM cp_crew_together WHERE ca_idx = #{ca_idx}
+		SELECT 
+         a.ct_idx,
+         a.ct_wish_start, 
+         a.ct_wish_end, 
+         a.ct_title, 
+         a.ct_age, 
+         a.ct_people_cnt, 
+         a.ct_end,
+         a.ct_gender, 
+         a.mb_id,
+         b.ca_img, 
+         b.ca_sido, 
+         b.ca_name, 
+         c.mb_nickname 
+      FROM 
+         cp_crew_together a 
+      JOIN 
+         cp_camping b 
+      ON 
+         a.ca_idx = b.ca_idx
+      JOIN
+         cp_member c 
+      ON 
+         a.mb_id = c.mb_id
+      WHERE 
+      	 a.ca_idx = #{ca_idx} AND
+         a.ct_end = 0
 	</select>
 	
-	<select id="campingNewApi" resultType="cpCamping">
-		select * from cp_camping_api where ca_idx = #{ca_idx}
-	</select>
 	
-	<select id="campingNew" resultType="cpCamping">
-		select * from cp_camping where ca_idx = #{ca_idx}
-	</select>
 
 </mapper>

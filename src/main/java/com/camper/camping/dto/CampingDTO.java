@@ -73,7 +73,14 @@ public class CampingDTO {
 	private Timestamp ct_end_datetime;
 	private Timestamp ct_datetime;
 	private String mb_id;
+	private String mb_nickname;
 	
+	public String getMb_nickname() {
+		return mb_nickname;
+	}
+	public void setMb_nickname(String mb_nickname) {
+		this.mb_nickname = mb_nickname;
+	}
 	//리뷰리스트
 	private int cr_idx;
 	private String cr_content;

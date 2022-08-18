@@ -105,7 +105,6 @@
 					<h3>캠핑장 추천</h3>
 					<ul id="campingVote">
 					<c:forEach items="${campingRecom}" var="campingRecom">
-					<%-- <a href="/campingNew.go?ca_idx=${campingRecom.ca_idx}">데이터비교</a> --%>
 						<li>
 							<a href="/campingView.go?ca_idx=${campingRecom.ca_idx}">
 								<c:choose>
@@ -130,52 +129,51 @@
 									<tr>
 										<th>지역별</th>
 										<td>
-											<label><input type="checkbox" name="ca_sido" value="서울" /> 서울</label>
-											<label><input type="checkbox" name="ca_sido" value="부산" /> 부산</label>
-											<label><input type="checkbox" name="ca_sido" value="대구" /> 대구</label>
-											<label><input type="checkbox" name="ca_sido" value="인천" /> 인천</label>
-											<label><input type="checkbox" name="ca_sido" value="광주" /> 광주</label>
-											<label><input type="checkbox" name="ca_sido" value="대전" /> 대전</label>
-											<label><input type="checkbox" name="ca_sido" value="울산" /> 울산</label>
-											<label><input type="checkbox" name="ca_sido" value="경기" /> 경기</label>
-											<label><input type="checkbox" name="ca_sido" value="강원" /> 강원</label>
-											<label><input type="checkbox" name="ca_sido" value="충북" /> 충북</label>
-											<label><input type="checkbox" name="ca_sido" value="충남" /> 충남</label>
-											<label><input type="checkbox" name="ca_sido" value="전북" /> 전북</label>
-											<label><input type="checkbox" name="ca_sido" value="전남" /> 전남</label>
-											<label><input type="checkbox" name="ca_sido" value="경북" /> 경북</label>
-											<label><input type="checkbox" name="ca_sido" value="경남" /> 경남</label>
-											<label><input type="checkbox" name="ca_sido" value="제주" /> 제주</label>
-											<label><input type="checkbox" name="ca_sido" value="세종" /> 세종</label>
+											<label><input type="checkbox" name="ca_sido" value="서울" <c:if test="${fn:contains(ca_sido, '서울')}">checked="checked"</c:if>/> 서울</label>
+											<label><input type="checkbox" name="ca_sido" value="부산" <c:if test="${fn:contains(ca_sido, '부산')}">checked="checked"</c:if>/> 부산</label>
+											<label><input type="checkbox" name="ca_sido" value="대구" <c:if test="${fn:contains(ca_sido, '대구')}">checked="checked"</c:if>/> 대구</label>
+											<label><input type="checkbox" name="ca_sido" value="인천" <c:if test="${fn:contains(ca_sido, '인천')}">checked="checked"</c:if>/> 인천</label>
+											<label><input type="checkbox" name="ca_sido" value="광주" <c:if test="${fn:contains(ca_sido, '광주')}">checked="checked"</c:if>/> 광주</label>
+											<label><input type="checkbox" name="ca_sido" value="대전" <c:if test="${fn:contains(ca_sido, '대전')}">checked="checked"</c:if>/> 대전</label>
+											<label><input type="checkbox" name="ca_sido" value="울산" <c:if test="${fn:contains(ca_sido, '울산')}">checked="checked"</c:if>/> 울산</label>
+											<label><input type="checkbox" name="ca_sido" value="경기" <c:if test="${fn:contains(ca_sido, '경기')}">checked="checked"</c:if>/> 경기</label>
+											<label><input type="checkbox" name="ca_sido" value="강원" <c:if test="${fn:contains(ca_sido, '강원')}">checked="checked"</c:if>/> 강원</label>
+											<label><input type="checkbox" name="ca_sido" value="충북" <c:if test="${fn:contains(ca_sido, '충북')}">checked="checked"</c:if>/> 충북</label>
+											<label><input type="checkbox" name="ca_sido" value="충남" <c:if test="${fn:contains(ca_sido, '충남')}">checked="checked"</c:if>/> 충남</label>
+											<label><input type="checkbox" name="ca_sido" value="전북" <c:if test="${fn:contains(ca_sido, '전북')}">checked="checked"</c:if>/> 전북</label>
+											<label><input type="checkbox" name="ca_sido" value="전남" <c:if test="${fn:contains(ca_sido, '전남')}">checked="checked"</c:if>/> 전남</label>
+											<label><input type="checkbox" name="ca_sido" value="경북" <c:if test="${fn:contains(ca_sido, '경북')}">checked="checked"</c:if>/> 경북</label>
+											<label><input type="checkbox" name="ca_sido" value="경남" <c:if test="${fn:contains(ca_sido, '경남')}">checked="checked"</c:if>/> 경남</label>
+											<label><input type="checkbox" name="ca_sido" value="제주" <c:if test="${fn:contains(ca_sido, '제주')}">checked="checked"</c:if>/> 제주</label>
+											<label><input type="checkbox" name="ca_sido" value="세종" <c:if test="${fn:contains(ca_sido, '세종')}">checked="checked"</c:if>/> 세종</label>
 										</td>
 									</tr>
 									<tr>
 										<th>테마별</th>
 										<td>
-											<label><input type="checkbox" name="ca_theme" value="항공레저" /> 항공레저</label>
-											<label><input type="checkbox" name="ca_theme" value="수상레저" /> 수상레저</label>
-											<label><input type="checkbox" name="ca_theme" value="액티비티" /> 액티비티</label>
-											<label><input type="checkbox" name="ca_theme" value="겨울눈꽃명소" /> 겨울눈꽃명소</label>
-											<label><input type="checkbox" name="ca_theme" value="가을단풍명소" /> 가을단풍명소</label>
-											<label><input type="checkbox" name="ca_theme" value="수상레저" /> 수상레저</label>
-											<label><input type="checkbox" name="ca_theme" value="봄꽃여행" /> 봄꽃여행</label>
-											<label><input type="checkbox" name="ca_theme" value="일출명소" /> 일출명소</label>
-											<label><input type="checkbox" name="ca_theme" value="일몰명소" /> 일몰명소</label>
-											<label><input type="checkbox" name="ca_theme" value="걷기길" /> 걷기길</label>
-											<label><input type="checkbox" name="ca_theme" value="낚시" /> 낚시</label>
-											<label><input type="checkbox" name="ca_theme" value="스키" /> 스키</label>
-											<label><input type="checkbox" name="ca_theme" value="여름물놀이" /> 여름물놀이</label>
+											<label><input type="checkbox" name="ca_theme" value="항공레저" <c:if test="${fn:contains(ca_theme, '항공레저')}">checked="checked"</c:if>/> 항공레저</label>
+											<label><input type="checkbox" name="ca_theme" value="수상레저" <c:if test="${fn:contains(ca_theme, '수상레저')}">checked="checked"</c:if>/> 수상레저</label>
+											<label><input type="checkbox" name="ca_theme" value="액티비티" <c:if test="${fn:contains(ca_theme, '액티비티')}">checked="checked"</c:if>/> 액티비티</label>
+											<label><input type="checkbox" name="ca_theme" value="겨울눈꽃명소" <c:if test="${fn:contains(ca_theme, '겨울눈꽃명소')}">checked="checked"</c:if>/> 겨울눈꽃명소</label>
+											<label><input type="checkbox" name="ca_theme" value="가을단풍명소" <c:if test="${fn:contains(ca_theme, '가을단풍명소')}">checked="checked"</c:if>/> 가을단풍명소</label>
+											<label><input type="checkbox" name="ca_theme" value="봄꽃여행" <c:if test="${fn:contains(ca_theme, '봄꽃여행')}">checked="checked"</c:if>/> 봄꽃여행</label>
+											<label><input type="checkbox" name="ca_theme" value="일출명소" <c:if test="${fn:contains(ca_theme, '일출명소')}">checked="checked"</c:if>/> 일출명소</label>
+											<label><input type="checkbox" name="ca_theme" value="일몰명소" <c:if test="${fn:contains(ca_theme, '일몰명소')}">checked="checked"</c:if>/> 일몰명소</label>
+											<label><input type="checkbox" name="ca_theme" value="걷기길" <c:if test="${fn:contains(ca_theme, '걷기길')}">checked="checked"</c:if>/> 걷기길</label>
+											<label><input type="checkbox" name="ca_theme" value="낚시" <c:if test="${fn:contains(ca_theme, '낚시')}">checked="checked"</c:if>/> 낚시</label>
+											<label><input type="checkbox" name="ca_theme" value="스키" <c:if test="${fn:contains(ca_theme, '스키')}">checked="checked"</c:if>/> 스키</label>
+											<label><input type="checkbox" name="ca_theme" value="여름물놀이" <c:if test="${fn:contains(ca_theme, '여름물놀이')}">checked="checked"</c:if>/> 여름물놀이</label>
 										</td>
 									</tr>
 									<tr>
 										<th>기타정보</th>
 										<td>
-											<label><input type="checkbox" name="ca_pet" value="가능" /> 반려동물 동반 가능</label>
+											<label><input type="checkbox" name="ca_pet" <c:if test="${ca_pet eq '가능'}">checked="checked"</c:if> value="가능" /> 반려동물 동반 가능</label>
 										</td>
 									</tr>
 									<tr>
 										<th>캠핑장명</th>
-										<td><input type="text" name="ca_name" /></td>
+										<td><input type="text" name="ca_name" value="${ca_name}"/></td>
 									</tr>
 								</tbody>
 							</table>
@@ -185,7 +183,7 @@
 						</form>
 					</div>
 					<p id="totalCnt">총 <strong>${campingCnt}</strong>건</p>
-					
+					<c:if test="${campingCnt eq 0}">검색결과가 없습니다.</c:if>
 					<ul id="campingList">
 					<c:forEach items="${campingList}" var="campingList">
 						<li>
@@ -219,7 +217,23 @@
 						</li>
 					</c:forEach>
 					</ul>
-					
+					<ul>	
+						<!-- 이전페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<!--  <li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>  -->
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="/campingList.go?ca_sido=${aaa.ca_sido}&amp;ca_theme=${aaa.ca_theme}&amp;ca_name=${aaa.ca_name}&amp;ca_pet=${aaa.ca_pet}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!-- 다음페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>	
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script></script>

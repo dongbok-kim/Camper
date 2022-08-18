@@ -20,8 +20,6 @@ public class CampingApiController {
 	//매주 월요일 마다 갱신
     public String setCampingApi() throws Exception {
     	return service.setCampingApi();	
-    }
-	
-	
+    }	
 	
 }

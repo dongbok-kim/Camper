@@ -16,15 +16,13 @@ public interface CampingDAO {
 
 	ArrayList<CampingDTO> campingView_together(String ca_idx);
 
-	int campingCnt();
+	int campingCnt(HashMap<String, Object> map);
 
 	ArrayList<CampingDTO> campingRecom();
 
 	ArrayList<CampingDTO> campingRecomUser(Object mb_id);
 
-	CampingDTO campingNewApi(String ca_idx);
-
-	CampingDTO campingNew(String ca_idx);
+	
 
 
 }

@@ -158,6 +158,93 @@
 		width: 100%;
 		height: 400px;
 	}
+	
+	
+	
+	
+	 .crewList {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      text-align: center;
+   }
+   
+   .crewList > li {
+      margin: 10px;
+      float: left;
+      max-width: 280px;
+      width: 100%;
+      text-align: left;
+      box-sizing: border-box;
+   }
+   
+   .crewList > li > a {
+      
+   }
+   
+   .crewList > li > a > div.imgBox {
+      position: relative;
+   }
+   
+   .crewList > li > a > div.imgBox > span {
+      padding: 0 5px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: inline-block;
+      max-width: 180px;
+      width: 100%;
+      color: #fff;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.5);
+   }
+   
+   .crewList > li > a > div.imgBox > span > i {
+      border-radius: 10px;
+      color: #000;
+      background-color: #fff;
+   }
+   
+   .crewList > li > a > div.imgBox > img {
+      max-width: 100%;
+   }
+   
+   .crewList > li > a > div.infoBox {
+      background-color: #f0f0f0;
+   }
+   
+   .crewList > li > a > div.infoBox > strong > span {
+      margin-right: 5px;
+      color: rgb(85, 207, 85);
+   }
+   
+   .crewList > li > a > div.infoBox > p {
+      line-height: 0;
+   }
+   
+   .crewList > li > a > div.infoBox > span {
+      font-size: 13px;
+   }
+   
+   .crewList > li > a > div.infoBox > span:first-child {
+      float: left;
+   }
+   
+   .crewList > li > a > div.infoBox > span:last-child {
+      float: right;
+   }
+	
+	.listbtn{
+		text-align: center;
+	}
+	.listbtn > #btnlist {
+		margin-right: 190px;
+		text-align: center;
+		color: #fff;
+		border: 1px solid #787878;
+		background-color: #32405d;
+	}
+	
 </style>
 
 				<h3>${campingView.ca_name}</h3>
@@ -327,10 +414,40 @@
 						
 						<!-- 크루모집 -->
 						<li>
-							
+							<ul id="crewVote" class="crewList">
+								<c:if test="${campingTogether.size() == 0}">없어 돌아가</c:if>
+								<c:forEach items="${campingTogether}" var="campingTogether">
+			                        <li>
+			                            <a href="">
+			                                <div class="imgBox"> 
+			                                    <span><i class="xi-maker"></i> ${campingTogether.ca_sido}  ${fn:substring(campingTogether.ct_wish_start,5,7)}/${fn:substring(campingTogether.ct_wish_start,8,10)} ~ ${fn:substring(campingTogether.ct_wish_end,5,7)}/${fn:substring(campingTogether.ct_wish_end,8,10)}</span>
+			                                    <c:choose>
+				                                    <c:when test="${campingTogether.ca_img ne ''}">
+				                                  	  	<img src="${campingTogether.ca_img}" alt="크루추천 이미지" />
+				                                    </c:when>
+				                                    <c:otherwise>
+			                                   			 <img src="../../resources/images/no_picture.png"/>
+			                                   		</c:otherwise>
+			                                    </c:choose>
+			                                </div>
+			                                <div class="infoBox">
+			                                    <strong><span>모집중</span>${campingTogether.ct_title}</strong>
+			                                    <p>${campingTogether.ca_name}</p>
+			                                    <span>${campingTogether.mb_nickname}</span>
+			                                    <span>${campingTogether.ct_age}대 ${campingTogether.ct_gender} 모집인원 ${campingTogether.ct_people_cnt}명</span>
+			                                </div>
+			                            </a>
+			                        </li>
+			                    </c:forEach> 		              
+		                    </ul>
 						</li>
 					</ul>
 				</div>
+				<div class="listbtn">
+					<a href="campingList.go" id="btnlist">목록</a>
+					
+				</div>
+				
 <%@ include file="../../resources/inc/footer.jsp" %>
 <script>
 	$('#full > #tab > li').on('click', function() {
@@ -387,6 +504,10 @@
 		map.relayout();
 		map.setCenter(mapPosition);
 	});
+	
+	
+	
+	
 	
 
 </script>
