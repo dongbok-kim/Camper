@@ -16,7 +16,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>

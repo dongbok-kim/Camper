@@ -27,7 +27,7 @@
 						</c:choose>
 		            </td>	            
 		            <th>작성일시</th>
-		            <td>${fn:substring(cct.ct_datetime,0,19)}</td>
+		            <td>${fn:substring(cct.ct_datetime,0,16)}</td>
 		          </tr>
 		          <tr>
 		            <th>애견동반</th>
@@ -42,7 +42,7 @@
 		          </tr>
 		          <tr>
 		            <th>캠핑장명</th>
-		            <td colspan="5">${cct.ca_idx}</td>
+		            <td colspan="5">${cct.ca_name}</td>
 		          </tr>        
 		          <tr>
 		            <td colspan="6">${cct.ct_content}</td>
@@ -54,17 +54,19 @@
 	      </form>
 	</div>
 
+	<div>
 	
 		<tr>
-            <td>${cct.mb_id}/</td>
             <td>${cct.mb_nickname}/</td>
             <td>${cct.ma_age}대/</td>
-            <td>${cct.ct_gender}</td>   
-            <td><a href="/chat.do">크루신청</a></td>
+            <td>${cct.mb_gender}</td>   
+            <td>크루모집현황 : ${cct.cnt}명</td>           
+            <td><a href="javascript:;" onclick="javascript:window.open('chat.do?cg_idx=${cct.cg_idx}', 'chat', 'width=1200, height=600')">크루신청</a></td>
           </tr>   
+	</div>
                   	
 
-		</form>
+	
 
 </body>
 
@@ -73,9 +75,9 @@
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		function del(ct_idx){
-			var chk = confirm("삭제 시 크루 및 채팅방도 같이 삭제 됩니다. 정말 삭제하시겠습니까?")
+			var chk = confirm("삭제 시 채팅 방도 같이 삭제 됩니다. 정말 삭제하시겠습니까?")
 			if(chk){
-				location.href='crewTogetherList?ct_idx='+ct_idx;
+				location.href='crewTogetherDelete.do?ct_idx='+ct_idx;
 			}
 		}
 	</script>

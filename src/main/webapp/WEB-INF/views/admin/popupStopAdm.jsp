@@ -24,7 +24,7 @@
 				</td>
 			</tr>
 			</table>
-		<input type="submit" value="저장"/>
+		<input type="submit" onclick=stop() value="저장"/>
 	</form>
 		<h3><strong>${mb_id }</strong> 님에 대한 정지 기록</h3>
 		<table>
@@ -52,6 +52,12 @@
 		<input type="button" value="닫기" onclick="popupClose()"/>
 </body>
 <script>
+
+function stop(){
+	//window.close();
+	window.opener.location.reload();
+}
+
 function popupClose(){
 	window.opener.location.reload(); // 팝업창 닫을 때 부모창 새로고침
     window.close();

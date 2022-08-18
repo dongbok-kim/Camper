@@ -26,6 +26,7 @@ public class MyInfoDTO {
 	
 	private int mt_idx;
 	private int ma_idx;
+	private String mt_name;
 	
 	private int ma_age;
 
@@ -171,6 +172,14 @@ public class MyInfoDTO {
 
 	public void setMa_age(int ma_age) {
 		this.ma_age = ma_age;
+	}
+
+	public String getMt_name() {
+		return mt_name;
+	}
+
+	public void setMt_name(String mt_name) {
+		this.mt_name = mt_name;
 	}
 	
 	

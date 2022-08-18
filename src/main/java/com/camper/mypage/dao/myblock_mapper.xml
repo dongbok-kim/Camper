@@ -3,11 +3,19 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyBlockDAO">
 
+
+	<select id="total" parameterType="hashmap" resultType="int">
+		SELECT count(bl_idx)
+		FROM cp_member_block 
+		WHERE bl_mb = #{loginId}
+		ORDER BY bl_idx DESC
+	</select>
+
 	<!-- 차단한 회원 목록 -->
-	<select id="blockList" resultType="mypgBlock">
+	<select id="blockList" parameterType="hashmap" resultType="mypgBlock">
 		SELECT bl_idx, mb_id, bl_datetime 
 		FROM cp_member_block 
-		WHERE bl_mb = #{param1}
+		WHERE bl_mb = #{loginId}
 		ORDER BY bl_idx DESC
 	</select>
 

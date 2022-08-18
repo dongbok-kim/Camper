@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.camper.lib.utils.Criteria;
+import com.camper.mypage.dto.MyInquiryDTO;
 import com.camper.mypage.service.MyInquiryService;
 
 @Controller
@@ -27,11 +28,12 @@ public class MyInquiryController {
 	
 	// 1:1 문의 목록
 	// by. 승진 2022-08-10
-	@RequestMapping(value = "/myInquiryList.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/myInquiryList.go")
 	public ModelAndView myInquiryList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
 		// String loginId = "jin";
 		params.put("loginId", loginId);
+		logger.info("목록 파람 = "+params);
 		return service.myInquiryList(cri, params);
 	}
 	
@@ -50,16 +52,26 @@ public class MyInquiryController {
 	// 문의글 작성
 	// by. 승진 2022-08-10
 	@RequestMapping(value = "/inquiryWrite.do", method = RequestMethod.POST)
-	public String inquiryWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
+	public String inquiryWrite(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr, Model model) {
 		logger.info("params:"+params);
+		String page = null;
+		
 		if (params.get("subject").trim().equals("")) {
 			rAttr.addFlashAttribute("msg", "제목을 입력하세요");
+			page = "redirect:/inquiryWrite.go";
 		} else if (params.get("content").trim().equals("")) {
 			rAttr.addFlashAttribute("msg", "내용을 입력하세요.");
+			page = "redirect:/inquiryWrite.go";
 		}	else {
 			service.inquiryWrite(params);
+			// 방금 등록한 글 보기
+			String loginId = params.get("loginId");
+			MyInquiryDTO dto = service.writeSuccess(loginId);
+			model.addAttribute("dto", dto);
+			page = "redirect:/inquiryDetail.go?idx="+dto.getIn_idx()+"&type=&keyword=&pageNum=1";
 		}
-		return "redirect:/myInquiryList.go";
+		
+		return page;
 	}
 	
 	
@@ -85,13 +97,15 @@ public class MyInquiryController {
 	}
 	
 	
-	// 문의글 수정
+	// 문의글 수정 페이지
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/myInquiryUpdate.go", method = RequestMethod.GET)
-	public ModelAndView myInquiryUpdateForm(HttpSession session, @RequestParam String idx) {
+	public ModelAndView myInquiryUpdateForm(HttpSession session, @RequestParam String idx, @RequestParam HashMap<String, Object> params) {
 		String loginId = (String) session.getAttribute("loginId");
+		logger.info("문의글 수정 params = "+params);
+		params.put("loginId", loginId);
 		// String loginId = "jin";
-		return service.myInquiryUpdateForm(idx, loginId);
+		return service.myInquiryUpdateForm(params);
 	}
 	
 	
@@ -100,6 +114,7 @@ public class MyInquiryController {
 	@RequestMapping(value = "/myInquiryUpdate.do", method = RequestMethod.POST)
 	public String myInquiryUpdate(@RequestParam HashMap<String, String> params, RedirectAttributes rAttr) {
 		logger.info("params:"+params);
+		
 		if (params.get("subject").trim().equals("")) {
 			rAttr.addFlashAttribute("msg", "제목을 입력하세요.");
 		} else if (params.get("content").trim().equals("")) {
@@ -107,7 +122,8 @@ public class MyInquiryController {
 		} else {
 			service.myInquiryUpdate(params);
 		}
-		return "redirect:/inquiryDetail.go?idx="+params.get("idx");
+		
+		return "redirect:/inquiryDetail.go?idx="+params.get("idx")+"&type="+params.get("type")+"&keyword="+params.get("keyword")+"&pageNum="+params.get("pageNum");
 	}
 	
 	

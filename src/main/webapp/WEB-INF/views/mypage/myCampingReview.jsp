@@ -19,7 +19,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li class="active"><a href="">캠핑장 후기</a></li>
@@ -61,7 +61,7 @@
 									<td>${rv.cr_assessment}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
 									<c:if test="${rv.delAvail > rv.today}">
-										<td><a href="campingReviewDelete.do?idx=${rv.cr_idx}">삭제</a></td>
+										<td><input type="button" value="삭제" onclick="del(${rv.cr_idx})"/></td>
 									</c:if>
 								</tr>
 							</c:forEach>
@@ -70,6 +70,16 @@
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
+	
+	function del(idx){
+		
+		var cf = confirm("삭제하시겠습니까?");
+		if (cf == true) {
+			location.href="campingReviewDelete.do?idx="+idx;
+		} else{
+			
+		}
+	}
 	
 		$('#campingReview > tbody > tr > td.subject').on('click', function() {
 			$('#campingReview > tbody > tr > td.subject').removeClass('active');

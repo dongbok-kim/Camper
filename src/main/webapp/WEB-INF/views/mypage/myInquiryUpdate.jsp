@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -22,8 +22,14 @@
 						<table>
 							<tr>
 								<th>작성자</th>
-								<td><input type="hidden" name="idx" value="${dto.in_idx}"/>
-								<input type="hidden" name="loginId" value="${dto.mb_id}"/>${dto.mb_id}</td>
+								<td>
+									${dto.mb_id}
+									<input type="hidden" name="idx" value="${dto.in_idx}"/>
+									<input type="hidden" name="loginId" value="${dto.mb_id}"/>
+									<input type="hidden" name="type" value="${type}"/>
+									<input type="hidden" name="keyword" value="${keyword}"/>
+									<input type="hidden" name="pageNum" value="${pageNum}"/>
+								</td>
 							</tr>
 							<tr>
 								<th>제목</th>
@@ -36,7 +42,7 @@
 							<tr>
 								<th colspan="2">
 									<input type="button" value="수정"  onclick="yn()"/>
-									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
+									<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
 								</th>
 							</tr>
 						</table>

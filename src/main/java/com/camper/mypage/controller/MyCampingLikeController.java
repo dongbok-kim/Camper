@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +43,18 @@ public class MyCampingLikeController {
 		// String loginId = "jin";
 		c_service.campingLikeDelete(idx, loginId);
 		return "redirect:/myCampingLikeList.go";
+	}
+	
+	
+	// 캠핑장 검색
+	// by.승진 2022-08-17
+	@RequestMapping(value = "/myCampingLikeSearch.do", method = RequestMethod.POST)
+	public ModelAndView myCampingLikeSearch(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
+	String loginId = (String) session.getAttribute("loginId");
+	// String loginId = "jin";
+	params.put("loginId", loginId);
+	logger.info("params = "+params);
+	return service.myCampingLikeSearch(cri, params);
 	}
 	
 }

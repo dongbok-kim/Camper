@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li class="active"><a href="">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -37,7 +37,7 @@
 									<td>${listCnt - skip - i.index}</td>
 									<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${bbs.ca_name}</a></td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
-									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">삭제</a></td>
+									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">찜해제</a></td>
 								</tr>		
 							</c:forEach>
 						</tbody>

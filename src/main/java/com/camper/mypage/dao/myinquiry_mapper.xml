@@ -8,10 +8,13 @@
 		SELECT COUNT(in_idx)
 		FROM cp_inquiry 
 		WHERE mb_id = #{loginId}
+		<if test="filter != null and !filter.equals('')">
+		AND in_status = #{filter}
+		</if>
 		<if test="keyword != null and !keyword.equals('')">
 		AND
 			<choose>
-				<when test="type != null and type.equals('in_title)" >
+				<when test="type != null and type.equals('in_title')" >
 					in_title LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="type != null and type.equals('in_content')" >
@@ -30,10 +33,13 @@
 		SELECT in_idx, in_title, in_datetime, in_status 
 		FROM cp_inquiry 
 		WHERE mb_id = #{loginId}
+		<if test="filter != null and !filter.equals('')">
+		AND in_status = #{filter}
+		</if>
 		<if test="keyword != null and !keyword.equals('')">
 		AND
 			<choose>
-				<when test="type != null and type.equals('in_title)" >
+				<when test="type != null and type.equals('in_title')" >
 					in_title LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<when test="type != null and type.equals('in_content')" >
@@ -43,10 +49,10 @@
 					(in_title LIKE CONCAT('%', #{keyword}, '%') or in_content LIKE CONCAT('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
-		</if> 
+		</if>
 		ORDER BY in_idx DESC
 		LIMIT #{amount}
-		OFFSET #{skip}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 
 	<insert id="inquiryWrite" parameterType="hashmap">
@@ -72,5 +78,19 @@
 	<update id="myInquiryUpdate" parameterType="hashmap">
 		UPDATE cp_inquiry SET in_title = #{subject}, in_content = #{content} WHERE in_idx = #{idx} AND mb_id = #{loginId}
 	</update>
+	
+	<!-- 답변 보기 -->
+	<select id="inquiryAnswer" resultType="mypgInquiry">
+		SELECT ia_content, mb_id, ia_datetime FROM cp_inquiry_answer WHERE in_idx = #{param1}
+	</select>
+	
+	<!-- 방금 쓴 글 보기 -->
+	<select id="writeSuccess" resultType="mypgInquiry">
+		SELECT in_idx, in_title, in_datetime, in_content, in_status, mb_id  
+		FROM cp_inquiry 
+		WHERE mb_id = #{param1} 
+		ORDER BY in_idx DESC 
+		LIMIT 1
+	</select>
 
 </mapper>

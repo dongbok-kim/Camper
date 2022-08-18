@@ -3,8 +3,50 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyInfoDAO">
 
-<select id="myInfo" resultType="com.camper.mypage.dto.MyInfoDTO">
+<select id="myInfo" resultType="mypgMyInfo">
 	SELECT * FROM cp_member where mb_id = #{param1}
+</select>
+
+<select id="login" resultType="String">
+	SELECT mb_pw FROM cp_member 
+			WHERE mb_id = #{param1}
+</select>
+
+<update id="secession">
+	UPDATE cp_member SET mb_status='탈퇴' WHERE mb_id=#{param1}
+</update>
+
+<select id="doubleCheckEmail" parameterType="String" resultType="String">
+	SELECT mb_email FROM cp_member WHERE mb_email = #{chkEmail}
+</select>
+
+<select id="doubleCheckNickname" parameterType="String" resultType="String">
+	SELECT mb_nickname FROM cp_member WHERE mb_nickname = #{chkNickname}
+</select>
+
+<update id="myInfoUpdate" parameterType="String">
+	UPDATE cp_member SET
+		mb_nickname = #{param2}, mb_email = #{param3},
+		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
+		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9},
+		mb_pw = #{param10}
+	WHERE mb_id=#{param1}
+</update>
+
+<update id="myInfoUpdateTwo" parameterType="String">
+	UPDATE cp_member SET
+		mb_nickname = #{param2}, mb_email = #{param3},
+		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
+		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9}
+	WHERE mb_id=#{param1}
+</update>
+
+<select id="myInfoTitle" resultType="mypgMyInfo">
+	SELECT mt_name FROM cp_member_title WHERE mt_idx = (SELECT mt_idx  FROM cp_member WHERE mb_id = #{param1})
+</select>
+
+<select id="myInfoStop" resultType="int">
+	SELECT COUNT(mb_id) FROM cp_member_stop WHERE mb_id = #{param1}
 </select>
 
 </mapper>

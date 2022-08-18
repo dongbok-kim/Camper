@@ -11,4 +11,6 @@ public interface MyCampingLikeDAO {
 
 	int total(HashMap<String, Object> params);
 
+	ArrayList<MyCampingLikeDTO> myCampingLikeSearch(HashMap<String, Object> params);
+
 }

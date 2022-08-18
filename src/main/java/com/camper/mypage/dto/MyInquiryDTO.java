@@ -13,7 +13,28 @@ public class MyInquiryDTO {
 	private String in_content;
 	private String in_status;
 	private String mb_id;
+	private int ia_idx;
+	private String ia_content;
+	private Timestamp ia_datetime;
 	
+	public int getIa_idx() {
+		return ia_idx;
+	}
+	public void setIa_idx(int ia_idx) {
+		this.ia_idx = ia_idx;
+	}
+	public String getIa_content() {
+		return ia_content;
+	}
+	public void setIa_content(String ia_content) {
+		this.ia_content = ia_content;
+	}
+	public Timestamp getIa_datetime() {
+		return ia_datetime;
+	}
+	public void setIa_datetime(Timestamp ia_datetime) {
+		this.ia_datetime = ia_datetime;
+	}
 	public int getIn_idx() {
 		return in_idx;
 	}

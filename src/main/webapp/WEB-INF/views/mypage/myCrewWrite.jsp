@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li class="active"><a href="">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -34,9 +34,9 @@
 							<c:if test="${list.size() == 0}">
 								<tr><td colspan="6">등록된 크루모집글이 없습니다.</td></tr>
 							</c:if>
-							<c:forEach items="${list}" var="my">
+							<c:forEach items="${list}" var="my" varStatus="i">
 								<tr>
-									<td>${my.ct_idx}</td>
+									<td>${listCnt - skip - i.index}</td>
 									<td><a href="">${my.ct_title}</a></td>
 									<td>${my.ct_people_cnt} 명</td>
 									<td>${my.nowCnt} 명</td>
@@ -46,6 +46,21 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+					</ul>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>

@@ -82,5 +82,5 @@ public class Criteria {
 		return "Criteria [pageNum=" + pageNum + ", amount=" + amount + ", skip=" + skip + ", keyword=" + keyword+ ", type =" + type
 				+", typeArr="+ Arrays.toString(typeArr)+"]";
 	}
-    
+
 }

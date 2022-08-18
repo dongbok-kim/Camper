@@ -5,7 +5,7 @@
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
-						<li><a href="">내 정보 수정</a></li>
+						<li><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
@@ -32,10 +32,25 @@
 						</tr>
 						<tr>
 							<td colspan='6'>${dto.in_content}</td>
-						</tr>	
+						</tr>
+						<c:if test="${dto.in_status eq '답변완료'}">
+							<tr>
+								<table>
+									<tr>
+										<th>관리자</th>
+										<td>${answer.mb_id}</td>
+										<th>답변일시</th>
+										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${answer.ia_datetime}"/></td>
+									</tr>
+									<tr>
+										<td colspan='4'>${answer.ia_content}</td>
+									</tr>
+								</table>
+							</tr>
+						</c:if>
 						<tr>
 							<th colspan="6">
-								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
+								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
 								<input type="button" value="수정" onclick="update(${dto.in_idx})"/>
 								<input type="button" value="삭제" onclick="del(${dto.in_idx})"/>
 							</th>
@@ -46,11 +61,14 @@
 	<script>
 		
 		var status = "${dto.in_status}";
+		var type = "${type}";
+		var keyword = "${keyword}";
+		var pageNum = "${pageNum}";
 		
 		function update(idx){
 			
 			if(status == "답변대기"){
-				location.href="/myInquiryUpdate.go?idx="+idx;
+				location.href="/myInquiryUpdate.go?idx="+idx+"&type="+type+"&keyword="+keyword+"&pageNum="+pageNum;
 			} else {
 				alert("해당 글은 수정할 수 없습니다.");
 			}
