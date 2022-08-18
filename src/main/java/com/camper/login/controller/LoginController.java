@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,27 +70,43 @@ public class LoginController {
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
+		String loginPw = service.login(id);	//아이디를 이용해서 암호화된 비밀번호 찾기
+		String mb_grade = service.mbgrade(id); //해당 아이디의 회원 권한 찾기
+		String mb_status = service.mbstatus(id); // 해당 아이디의 회원 상태 찾기
 		
-		
-		String loginPw = service.login(id);
-		String mb_grade = service.mbgrade(id);
-		boolean match = encoder.matches(pw, loginPw);
+		boolean match = encoder.matches(pw, loginPw); // 비밀번호 일치 여부
 		
 		String msg = "아이디 혹은 비번이 틀렸습니다";
 		String page = "login/login";
 		
-		if(match == true ) {
+		if(match == true ) { //일치여부 true 이면
 			HttpSession session = request.getSession();
-			session.setAttribute("loginId", id);
 			logger.info("로그인 성공");
+			session.setAttribute("loginId", id);	//아이디 세션에 저장
 			
-			logger.info("mb_grade : "+mb_grade);
+			logger.info("회원 권한 : "+mb_grade);	//회원 권한 세션에 저장 (회원, 관리자)
 			session.setAttribute("mb_grade", mb_grade);
 			
+			logger.info("회원 상태 : "+mb_status);	//회원 상태 세션에 저장 (정상, 정지 , 탈퇴)
+			session.setAttribute("mb_status", mb_status);
 			
-			msg = id + "님 환영합니다";			
-			page = "main";			
-		} else {			
+			//같은 방식으로 정지도 추가 해야됨 (+정지일수 표시?)
+			if(mb_status.equals("탈퇴")) { //회원 상태가 탈퇴일때 세션 지우고 로그인 불가
+				session.removeAttribute("loginId");
+				session.removeAttribute("mb_grade");
+				session.removeAttribute("mb_status");
+				model.addAttribute("msg", "탈퇴된 회원 입니다.");
+				page = "login/login";
+			} else if(mb_status.equals("정지")) {
+				session.removeAttribute("loginId");
+				session.removeAttribute("mb_grade");
+				session.removeAttribute("mb_status");
+				model.addAttribute("msg", "정지중인 회원 입니다.");
+				page = "login/login";
+			} else {
+				page = "redirect:/";
+			}
+		} else {	//아이디 비밀번호가 일치 하지 않을시		
 			model.addAttribute("msg", msg);
 			logger.info("로그인 실패");
 		}
@@ -99,10 +116,12 @@ public class LoginController {
 	
 	//로그아웃
 	@RequestMapping(value = "/logout.do")
-	public String Logout(Model model, HttpSession session) {
-		session.removeAttribute("loginId");
+	public String Logout(Model model, HttpSession session) {	//세션들 지우기
+		session.removeAttribute("loginId");		
+		session.removeAttribute("mb_grade");
+		session.removeAttribute("mb_status");
 		model.addAttribute("msg", "로그아웃 되었습니다.");
-		return "login/login";
+		return "main";
 	}
 	
 	//회원가입
@@ -193,6 +212,6 @@ public class LoginController {
 			
 			return service.pwRework(dto);
 		}
-	
+		
 	
 }

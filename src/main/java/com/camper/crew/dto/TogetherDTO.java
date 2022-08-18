@@ -28,10 +28,17 @@ public class TogetherDTO {
 	//캠핑장
 	private String ca_name;
 	private String ca_img;
+	private String ca_sido;
 	
+	//크루모집
 	private String mb_nickname;
 	private String mb_gender;
 	private byte ma_age;
+	
+	//채팅방
+	private int cg_idx;
+	
+	private int cnt;
 
 	public String getMb_nickname() {
 		return mb_nickname;
@@ -56,6 +63,12 @@ public class TogetherDTO {
 	}
 	public void setCa_img(String ca_img) {
 		this.ca_img = ca_img;
+	}
+	public String getCa_sido() {
+		return ca_sido;
+	}
+	public void setCa_sido(String ca_sido) {
+		this.ca_sido = ca_sido;
 	}
 	public String getCa_name() {
 		return ca_name;
@@ -170,6 +183,18 @@ public class TogetherDTO {
 	}
 	public void setCa_idx(int ca_idx) {
 		this.ca_idx = ca_idx;
+	}
+	public int getCg_idx() {
+		return cg_idx;
+	}
+	public void setCg_idx(int cg_idx) {
+		this.cg_idx = cg_idx;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 	
