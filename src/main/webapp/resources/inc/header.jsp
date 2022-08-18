@@ -26,16 +26,20 @@
 				<a href="campingList.go">캠핑장</a>
 				<a href="">크루모집</a>
 				<div>
-					<a href=""><i class="xi-forum xi-2x"></i></a>
-					<a href=""><i class="xi-heart xi-2x"></i></a>
+					<!--  <a href=""><i class="xi-forum xi-2x"></i></a> -->
+					<!--  <a href=""><i class="xi-heart xi-2x"></i></a> -->
 					<c:if test="${loginId == null}">
 					<a href="/login.go">로그인</a> <span class="verticalBar">|</span> <a href="/join.go">회원가입</a>
 					</c:if>
 					<c:if test="${loginId != null && mb_grade == '회원'}">
+					<a href=""><i class="xi-forum xi-2x"></i></a>
+					<a href=""><i class="xi-heart xi-2x"></i></a>
 					<strong class="contextMenu contextMenuMember" data-id="${sessionScope.loginId}">${sessionScope.loginId}</strong> 님 <a href="/mypageInfo.go">마이페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 					<c:if test="${loginId != null && mb_grade == '관리자'}">
-					<strong class="contextMenu contextMenuMember" data-id="admin">${sessionScope.loginId}</strong> 님 <a href="">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
+					<a href=""><i class="xi-forum xi-2x"></i></a>
+					<a href=""><i class="xi-heart xi-2x"></i></a>
+					<strong class="contextMenu contextMenuMember" data-id="admin">${sessionScope.loginId}</strong> 님 <a href="/memberAdmList.go">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 				</div>
 			</header>

@@ -16,9 +16,11 @@
 	
 	
 	h2 {
+	position : relative;
 	display: block;
-	position : absolute;
 	right:200px;
+	float:right;
+	bottom: 80px;
 	
 	
 	
@@ -100,7 +102,7 @@
 	</style>
 	<body>
 	<h1>이 캠핑장 어때요? </h1>
-	<h2><a href="#">+&nbsp;더보기</a></h2>
+	<h2><a href="/campingList.go">+&nbsp;더보기</a></h2>
 	
 	<c:forEach items="${list}" var="camp">
 	<table id="camplist">
@@ -130,6 +132,7 @@
 		</table>
 	</c:forEach>
 	<h1>같이 가실래요?</h1>
+	<h2><a href="/crewTogetherList.do">+&nbsp;더보기</a></h2>
 	
 	<c:forEach items="${crew}" var="crew">
 	<table id ="crewlist">
@@ -166,7 +169,7 @@
 			</tr>			
 			<tr>								
 				<td><a href="profile?mb_id=${crew.mb_id}">프로필&nbsp;${crew.name}</a></td>					
-				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=900, height=800');">
+				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=800, height=700');">
 				팝업:${crew.name}</button></td>				
 				
 			
@@ -178,7 +181,10 @@
 	</body>
 	
 	<script>	
-		
+		var msg = "${msg}"
+	    if (msg != "") {
+	        alert(msg);
+	    }
 	
 	</script>
 </html>

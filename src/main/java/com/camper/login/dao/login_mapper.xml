@@ -43,4 +43,19 @@
 	SELECT mb_grade FROM cp_member WHERE mb_id = #{param1}
 </select>
 
+<select id="mbstatus" resultType="String">
+	SELECT mb_status FROM cp_member WHERE mb_id = #{param1}
+</select>
+
+<!-- 
+<select id="stopCnt" resultType="int">
+	select COUNT(mb_id) from cp_member_stop where now() >= ms_end_date
+</select>
+ -->
+
+<update id="updateMbStatus">
+	update cp_member set mb_status = '정상' where mb_id in 
+(select b.mb_id from cp_member a join cp_member_stop b on a.mb_id = b.mb_id where now() > b.ms_end_date and a.mb_status = '정지')
+</update>
+
 </mapper>
