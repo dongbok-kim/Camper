@@ -58,4 +58,8 @@
 (select b.mb_id from cp_member a join cp_member_stop b on a.mb_id = b.mb_id where now() > b.ms_end_date and a.mb_status = '정지')
 </update>
 
+<select id="idFindStatus" resultType="String">
+	SELECT mb_status FROM cp_member WHERE mb_name = #{param1} AND mb_email = #{param2}
+</select>
+
 </mapper>

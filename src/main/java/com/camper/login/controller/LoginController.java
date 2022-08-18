@@ -52,9 +52,16 @@ public class LoginController {
 		
 	//아이디 찾기 페이지 이동
 	@RequestMapping(value = "/idFind.go")
-	public String IdFindPage(Model model) {
-			
-		return "login/idfind";
+	public String IdFindPage(Model model, HttpSession session, RedirectAttributes rttr) {
+		
+		String page = "login/idfind";
+		
+		if(session.getAttribute("loginId") != null ) {
+			rttr.addFlashAttribute("msg", "로그인한 상태로 접근 불가 ");
+			page = "redirect:/";
+		}
+		
+		return page;
 	}
 		
 	//비밀번호 찾기 페이지 이동
@@ -176,18 +183,25 @@ public class LoginController {
 	
 	//아이디 찾기
 	@RequestMapping(value = "/idFind.do")
-	public String IdFind(Model model, @RequestParam String name, @RequestParam String email) {
+	public String IdFind(Model model, @RequestParam String name, @RequestParam String email, RedirectAttributes rttr) {
 			
 		String page = "login/idfind";
 		
 		String idFind = service.idFind(name , email);
+		String mb_status = service.idFindstatus(name, email);
 		
-		if (idFind == null ) {
-			model.addAttribute("msg", "이름 또는 이메일이 일치하지 않습니다.");
+		if(mb_status.equals("탈퇴")) {
+			model.addAttribute("msg", "탈퇴된 회원 입니다");
 		} else {
-			model.addAttribute("msg", "당신의 아이디 :  "+idFind);
-		}
+			
+			if (idFind == null ) {
+				model.addAttribute("msg", "이름 또는 이메일이 일치하지 않습니다.");
+			} else {
+				rttr.addFlashAttribute("msg", "당신의 아이디 :  "+idFind);
+				page = "redirect:/login.go";
+			}
 		
+		}
 		return page;
 	}
 	

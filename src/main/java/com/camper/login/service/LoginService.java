@@ -169,6 +169,11 @@ public class LoginService {
 		dao.updateMbStatus();
 	}
 
+	public String idFindstatus(String name, String email) {
+		
+		return dao.idFindStatus(name, email);
+	}
+
 	
 
 

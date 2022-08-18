@@ -43,13 +43,18 @@ public class MemberAdmService {
 			mav.addObject("keyword", params.get("keyword"));
 			mav.addObject("type", params.get("type"));
 		}
-		 // int i= (int) params.get("mb_id");
+		mav.addObject("filter", params.get("filter"));
+		
 		int total = dao.memberTotal(params);
 		mav.addObject("listCnt", total);
 		
 		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
 		
 		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
 		
 		//현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
 		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
