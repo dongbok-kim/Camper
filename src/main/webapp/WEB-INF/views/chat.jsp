@@ -146,14 +146,17 @@
 		}
 		
 		$('#msg').on('keypress', function(event) {
-			if(event.keyCode == 13) {
-				msgSend = {
-					'cmd': 'MSG_SEND',
-					'roomIdx': roomIdx,
-					'msg': $('#msg').val()
-				};
+			if (event.keyCode == 13) {
+				if ($.trim($('#msg').val()) != '') {
+					msgSend = {
+						'cmd': 'MSG_SEND',
+						'roomIdx': roomIdx,
+						'msg': $('#msg').val()
+					};
+					
+					sendMessage(msgSend);
+				}
 				
-				sendMessage(msgSend);
 				$('#msg').val('').focus();
 			}
 		});
