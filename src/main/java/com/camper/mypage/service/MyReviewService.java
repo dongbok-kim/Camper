@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.lib.dto.PageMakerDTO;
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.dao.MyReviewDAO;
 import com.camper.mypage.dto.MyReviewDTO;
 
@@ -23,10 +25,24 @@ public class MyReviewService {
 	// by.승진 2022-08-11
 	public ModelAndView campingReviewForm(String idx, String loginId) {
 		ModelAndView mav = new ModelAndView("mypage/popupCampingReview");
-		MyReviewDTO dto = dao.reviewForm(idx);
-		String nickname = dao.nickname(loginId);
-		mav.addObject("dto", dto);
-		mav.addObject("nickname", nickname);
+		
+		// 유효성 확인
+		String chk = dao.chk(idx,loginId);
+		
+		if (chk.equals("1")) {
+			
+			MyReviewDTO dto = dao.reviewForm(idx);
+			String nickname = dao.nickname(loginId);
+			mav.addObject("dto", dto);
+			mav.addObject("nickname", nickname);
+		
+		} else {
+			
+			mav.setViewName("redirect:/myCrewList.go");
+			
+		}
+		
+		
 		return mav;
 	}
 
@@ -42,10 +58,40 @@ public class MyReviewService {
 	
 	// 캠핑장 후기 목록
 	// by.승진 2022-08-11
-	public ModelAndView campingReviewList(String loginId) {
+	public ModelAndView campingReviewList(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("mypage/myCampingReview");
-		ArrayList<MyReviewDTO> list = dao.campingReviewList(loginId);
+		
+		// 검색 연동 페이징
+		cri.setAmount(15);
+		
+		int total = (int) dao.total(params);
+		mav.addObject("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+
+		int pageNum = cri.getPageNum();
+		
+		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		// DAO MAPPER OFFSET
+		int skip = (pageNum-1)*cri.getAmount();
+		params.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		// DAO MAPPER LIMIT
+		params.put("amount", cri.getAmount());
+		
+		
+		
+		
+		
+		ArrayList<MyReviewDTO> list = dao.campingReviewList(params);
 		mav.addObject("list", list);
+		mav.addObject("pageMaker", pageMaker);
 		return mav;
 	}
 	
@@ -63,12 +109,23 @@ public class MyReviewService {
 	// by.승진 2022-08-11
 	public ModelAndView crewReviewForm(String idx, String loginId) {
 		ModelAndView mav = new ModelAndView("mypage/popupCrewReview");
-		// 모임 관련 정보
-		MyReviewDTO dto = dao.reviewForm(idx);
-		mav.addObject("dto", dto);
-		// 크루 목록
-		ArrayList<MyReviewDTO> list = dao.crewList(idx, loginId);
-		mav.addObject("list", list);
+		
+		String chk = dao.chk(idx,loginId);
+		if (chk.equals("1")) {
+			
+			// 모임 관련 정보
+			MyReviewDTO dto = dao.reviewForm(idx);
+			mav.addObject("dto", dto);
+			// 크루 목록
+			ArrayList<MyReviewDTO> list = dao.crewList(idx, loginId);
+			mav.addObject("list", list);
+			
+		} else {
+			
+			mav.setViewName("redirect:/myCrewList.go");
+			
+		}
+		
 		return mav;
 	}
 

@@ -27,16 +27,20 @@
 		WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id and not ccc.mb_id in (#{param2});
 	</select>
 	
-	<!-- 캠핑장 후기 목록 -->
-	<select id="campingReviewList" parameterType="String" resultType="mypgReview">
-	<!-- 	SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cr_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
+	
+	<select id="total" parameterType="hashmap" resultType="int">
+		SELECT COUNT(ccr.cr_idx)
 		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
-		WHERE mb_id = #{param1} ORDER BY cr_idx DESC -->
-		
+		JOIN cp_crew_together cct on ccr.ct_idx = cct.ct_idx 
+		WHERE ccr.mb_id = #{loginId} ORDER BY cr_idx DESC
+	</select>
+
+	<!-- 캠핑장 후기 목록 -->
+	<select id="campingReviewList" parameterType="hashmap" resultType="mypgReview">
 		SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cct.ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
 		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
 		JOIN cp_crew_together cct on ccr.ct_idx = cct.ct_idx 
-		WHERE ccr.mb_id = #{param1} ORDER BY cr_idx DESC
+		WHERE ccr.mb_id = #{loginId} ORDER BY cr_idx DESC
 	</select>
 	
 	<delete id="campingReviewDelete">
@@ -79,6 +83,13 @@
 	<!-- 삭제 리뷰 대상 아이디 찾기 -->
 	<select id="getId" resultType="String">
 		SELECT mb_id FROM cp_member_review WHERE mr_idx = #{param1} and mr_id = #{param2}
+	</select>
+	
+	<!-- 유효성 체크 -->
+	<select id="chk" resultType="String">
+		SELECT cc_is_join  
+		FROM cp_camping_crew 
+		WHERE ct_idx = #{param1} and mb_id = #{param2}
 	</select>
 	
 </mapper>

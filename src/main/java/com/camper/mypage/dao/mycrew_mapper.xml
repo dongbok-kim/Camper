@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.mypage.dao.MyCrewDAO">
 
-	<select id="total" resultType="int" parameterType="String">
+	<select id="total" resultType="int" parameterType="hashmap">
 		SELECT COUNT(cct.ct_idx)
 		FROM cp_crew_together cct
 		JOIN cp_camping_crew ccc on ccc.ct_idx = cct.ct_idx
@@ -13,7 +13,7 @@
 	</select>
 
 
-	<select id="myCrewList" resultType="mypgCrew" parameterType="String">
+	<select id="myCrewList" resultType="mypgCrew" parameterType="hashmap">
 		SELECT cct.ct_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end,
 			(select count(cr_idx) from cp_camping_review ccr where mb_id = #{loginId} and ct_idx = cct.ct_idx) as cntCR,
 			(select count(mr_idx) from cp_member_review cmr where mr_id = #{loginId} and ct_idx = cct.ct_idx) as cntMR
@@ -22,6 +22,8 @@
 		JOIN cp_camping cc ON cc.ca_idx = cct.ca_idx
 		WHERE ccc.mb_id = #{loginId} AND cct.ct_idx not in (SELECT bb_relation_idx from cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 		ORDER BY cct.ct_idx DESC;
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<select id="myCrewTogetherInfo" parameterType="String" resultType="hashmap">

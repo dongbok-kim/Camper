@@ -37,7 +37,7 @@
 							<c:forEach items="${list}" var="my" varStatus="i">
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
-									<td><a href="">${my.ct_title}</a></td>
+									<td><a href="/crewTogetherView.do?ct_idx=${my.ct_idx}">${my.ct_title}</a></td>
 									<td>${my.ct_people_cnt} 명</td>
 									<td>${my.nowCnt} 명</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>
