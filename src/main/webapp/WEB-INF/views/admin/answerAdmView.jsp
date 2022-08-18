@@ -49,11 +49,16 @@
 				</td>
 				<th>답변상태</th>
 				<td>
-					<select name="in_status" id="in_status">
-						<option value="답변대기" ${answer.in_status == '답변대기' ? 'selected="selected"':'' }>답변대기</option>
-						<option value="처리중" ${answer.in_status == '처리중' ? 'selected="selected" ':'' }>처리중</option>
-						<option value="답변완료" ${answer.in_status == '답변완료' ? 'selected="sekected" ':''}>답변완료</option>
-					</select>
+					<c:choose>
+						<c:when test="${answer.in_status == '답변완료'}">답변완료</c:when>
+						<c:otherwise>
+							<select name="in_status" id="in_status">
+									<option value="답변대기" ${answer.in_status == '답변대기' ? 'selected="selected"':'' }>답변대기</option>
+									<option value="처리중" ${answer.in_status == '처리중' ? 'selected="selected" ':'' }>처리중</option>
+									<option value="답변완료" >답변완료</option>						
+							</select>
+						</c:otherwise>
+					</c:choose>
 				</td>
 			</tr>
 			<tr>

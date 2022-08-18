@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../../resources/inc/header.jsp" %>
+
 <style>
 .modal{
 	position:fixed;
@@ -32,7 +32,19 @@ textarea {
 	border:1px solid black;
 	border-collapse:collapse;
 }
+
+#campingReview > tbody > tr > td.subject {
+		cursor: pointer;
+	}
+#campingReview > tbody > tr > td.subject:not(.active) {
+	max-width: 200px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
 </style>
+<%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
@@ -58,7 +70,14 @@ textarea {
 	</div>
 	<div>등록된 캠핑장 후기 수 : ${listCnt}건</div>
 	<div>
-		<table>
+		<table id="campingReview">
+			<colgroup>
+				<col width="60"></col>
+				<col width="*"></col>
+				<col width="80"></col>
+				<col width="120"></col>
+				<col width="60"></col>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>번호</th>
@@ -169,10 +188,10 @@ textarea {
 		</div>
 	</div>
 	
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-// 후기내용 생략
+/* // 후기내용 생략
 $('.cr_content').each(function(){
 	var length = 10;
 	$(this).each(function(){
@@ -180,6 +199,11 @@ $('.cr_content').each(function(){
 			$(this).text($(this).text().substr(0, length)+'...');
 		}
 	});
+}); */
+
+$('#campingReview > tbody > tr > td.subject').on('click', function() {
+	$('#campingReview > tbody > tr > td.subject').removeClass('active');
+	$(this).addClass('active');
 });
 
 // 블라인드 모달창 

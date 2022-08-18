@@ -8,38 +8,38 @@
 			<tr>
 				<th>연령대</th>
 				<td>
-					<input type="radio" name="age" value="20"/>20대
-					<input type="radio" name="age" value="30"/>30대
-					<input type="radio" name="age" value="40"/>40대
-					<input type="radio" name="age" value="50"/>50대
-					<input type="radio" name="age" value="60"/>60대 이상
+					<input type="radio" name="ct_age" value="20"/>20대
+					<input type="radio" name="ct_age" value="30"/>30대
+					<input type="radio" name="ct_age" value="40"/>40대
+					<input type="radio" name="ct_age" value="50"/>50대
+					<input type="radio" name="ct_age" value="60"/>60대 이상
 				</td>
 				<th>성별</th>
 				<td>
-					<input type="radio" name="gender" value="여성"/>여성
-					<input type="radio" name="gender" value="남성"/>남성
-					<input type="radio" name="gender" value="혼성"/>혼성
+					<input type="radio" name="ct_gender" value="여성"/>여성
+					<input type="radio" name="ct_gender" value="남성"/>남성
+					<input type="radio" name="ct_gender" value="혼성"/>혼성
 				</td>
 			</tr>
 			<tr>
 				<th>캠핑종류</th>
 				<td>
-					<input type="checkbox" name="campingType" value="백패킹"/>백패킹
-					<input type="checkbox" name="campingType" value="오토패킹"/>오토패킹
-					<input type="checkbox" name="campingType" value="글램핑"/>글램핑
-					<input type="checkbox" name="campingType" value="부쉬크래프트"/>부쉬크래프트
-					<input type="checkbox" name="campingType" value="비박"/>비박
+					<input type="checkbox" name="ct_camping_type" value="백패킹"/>백패킹
+					<input type="checkbox" name="ct_camping_type" value="오토패킹"/>오토패킹
+					<input type="checkbox" name="ct_camping_type" value="글램핑"/>글램핑
+					<input type="checkbox" name="ct_camping_type" value="부쉬크래프트"/>부쉬크래프트
+					<input type="checkbox" name="ct_camping_type" value="비박"/>비박
 				</td>
 				<th>모집인원</th>
 				<td>
-					<input type="number" class="people_cnt" name="people_cnt" max='20' placeholder="인원수 입력"/>명
+					<input type="number" class="people_cnt" name="ct_people_cnt" max='20' placeholder="인원수 입력"/>명
 				</td>
 			</tr>
 			<tr>
 				<th>기타정보</th>
 				<td colspan="3">
-					<input type="checkbox" name="애견동반"/>애견동반
-					<input type="checkbox" name="장비제공"/>장비제공
+					<input type="checkbox" name="ct_pet" value="1"/>애견동반
+					<input type="checkbox" name="ct_tool" value="1"/>장비제공
 				</td>
 			</tr>
 			<tr>
@@ -53,8 +53,8 @@
 			<tr>
 				<th>캠핑날짜</th>
 				<td colspan="3">
-					<input type="text" id="startDate"> ~
-			       <input type="text" id= "endDate">
+					<input type="text" id="startDate" name="ct_wish_start"> ~
+			       <input type="text" id= "endDate" name="ct_wish_end">
 				</td>
 			</tr>
 			<tr>
@@ -79,8 +79,10 @@
 		}
 		
 		$('#crewSubmit').on('click', function(){
+			
+			// 유효성 검사
 			var cnt = $('.people_cnt').val();
-			if (cnt >= 20) {
+			if (cnt > 20) {
 				alert("크루 모집 인원 수는 20명 까지 모집 가능합니다.");
 				return false;
 			} else if (cnt == ''){
@@ -88,17 +90,17 @@
 				return false;
 			};
 			
-			if (typeof $('input[name="gender"]:checked').val() == "undefined"){
+			if (typeof $('input[name="ct_gender"]:checked').val() == "undefined"){
 				alert("모집 성별을 선택하세요.");
 				return false;
 			};
 			
-			if (typeof $('input[name="age"]:checked').val() == "undefined"){
+			if (typeof $('input[name="ct_age"]:checked').val() == "undefined"){
 				alert("모집 연령을 선택하세요.");
 				return false;
 			};
 			
-			if (typeof $('input[name="campingType"]:checked').val() == "undefined"){
+			if (typeof $('input[name="ct_camping_type"]:checked').val() == "undefined"){
 				alert("캠핑 종류를 선택하세요.");
 				return false;
 			};
@@ -123,6 +125,8 @@
 				return false;
 			};
 			
+			document.crewReg.submit();
+			
 
 		});
 	
@@ -130,6 +134,7 @@
 		$(function () {
 			$( '#startDate' ).datepicker({
 				minDate : 0,
+				dateFormat : "yy-mm-dd",
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());
@@ -139,6 +144,7 @@
 			
 			
 			$( '#endDate' ).datepicker({
+				dateFormat : "yy-mm-dd",
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());

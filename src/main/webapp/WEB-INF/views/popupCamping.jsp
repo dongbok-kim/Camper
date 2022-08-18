@@ -102,27 +102,7 @@
 	}
 </style>
 				<div id="full">
-					<h3>캠핑장 추천</h3>
-					
-					<ul id="campingVote">
-					<c:forEach items="${campingRecom}" var="campingRecom">
-						<li>
-							<a href="/campingView.go?ca_idx=${campingRecom.ca_idx}">
-								<c:choose>
-									<c:when test="${campingRecom.ca_img ne ''}">
-										<img src="${campingRecom.ca_img}" onerror="javascript:this.src='../../resources/images/no_picture.png';" alt="캠핑장 이미지" />
-									</c:when>
-									<c:otherwise>
-										<img src="../../resources/images/no_picture.png"/>
-									</c:otherwise>
-								</c:choose>
-								<strong>${campingRecom.ca_name}</strong>
-								<span>${campingRecom.ca_sido} ${campingRecom.ca_sigungu}</span>
-							</a>
-						</li>
-					</c:forEach>
-					</ul>
-					
+					<h3>캠핑장 검색</h3>
 					<div id="searchBox">
 						<form action="campingSearch" method="post">
 							<table>

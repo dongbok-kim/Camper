@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.dao.StopAdmDAO;
@@ -38,10 +40,12 @@ public class StopAdmService {
 		return mav;
 	}
 
+	@Transactional(isolation = Isolation.DEFAULT)
 	public ModelAndView stopAdmReg(HashMap<String, String> params) {
 		String mb_id = params.get("mb_id");
 		ModelAndView mav = new ModelAndView("redirect:/stopPopup.go?mb_id="+mb_id);
 		dao.stopAdmReg(params);
+		dao.stopMbStatus(mb_id); // 회원상태를 "정지"로 변경
 		return mav;
 	}
 

@@ -44,6 +44,7 @@ public class StopAdmController {
 		//String ms_admin = (String) session.getAttribute("loginId");
 		String ms_admin = "jyr";
 		params.put("ms_admin", ms_admin);
+		logger.info("팝업창/회원정지실행 컨트롤러 : "+params);
 		return service.stopAdmReg(params);
 	}
 	
