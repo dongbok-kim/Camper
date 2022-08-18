@@ -123,7 +123,8 @@
 					</ul>
 					
 					<div id="searchBox">
-						<form action="campingList.go" method="post">
+						<form id="campingSearchForm" action="campingList.go" method="post">
+							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
 							<table>
 								<tbody>
 									<tr>
@@ -220,21 +221,25 @@
 					<ul>	
 						<!-- 이전페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
-						<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>
 						</c:if>
 						
 						<!-- 각 번호 페이지 버튼 -->
 						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-						<!--  <li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>  -->
-						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="/campingList.go?ca_sido=${aaa.ca_sido}&amp;ca_theme=${aaa.ca_theme}&amp;ca_name=${aaa.ca_name}&amp;ca_pet=${aaa.ca_pet}&amp;pageNum=${num}">${num}</a></li>
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="javascript:;" data="${num}">${num}</a></li>
 						</c:forEach>
 						
 						<!-- 다음페이지 버튼 -->
 						<c:if test="${pageMaker.next}">
-						<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+						<li class="pageInfo_btn next"><a href="javascript:;" data="${pageMaker.endPage+1}">다음</a></li>
 						</c:if>
 					</ul>	
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+		$('ul > li.pageInfo_btn > a').on('click', function() {
+			$('input:hidden[name="pageNum"]').val($(this).attr('data'));
+			$('#campingSearchForm').submit();
+		})
+	</script>
 </html>
