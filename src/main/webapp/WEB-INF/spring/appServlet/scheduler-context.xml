@@ -6,8 +6,13 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
 
 	<bean id="schedulJob" class="com.camper.camping.controller.CampingApiController"/>
+	<bean id="schedulJob_two" class="com.camper.login.controller.StopSchedulerController"/>
+	
 	<task:scheduled-tasks>
 		<task:scheduled ref="schedulJob" method="setCampingApi" cron="0 0 0 ? * MON"/>
+		<task:scheduled ref="schedulJob_two" method="stopLogin" cron="0 5 0 1/1 * ? *"/>
 	</task:scheduled-tasks>
+	
+	
 
 </beans>

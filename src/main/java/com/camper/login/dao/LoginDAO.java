@@ -24,6 +24,8 @@ public interface LoginDAO {
 
 	String mbstatus(String id);
 
+	void updateMbStatus();
+
 	
 
 }
