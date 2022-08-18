@@ -15,7 +15,7 @@ public interface MyReviewDAO {
 
 	ArrayList<MyReviewDTO> crewList(String idx, String loginId);
 
-	ArrayList<MyReviewDTO> campingReviewList(String loginId);
+	ArrayList<MyReviewDTO> campingReviewList(HashMap<String, Object> params);
 
 	void campingReviewDelete(String idx, String loginId);
 
@@ -30,5 +30,9 @@ public interface MyReviewDAO {
 	void memberUpdate(String mb_id);
 
 	String getId(String idx, String loginId);
+
+	String chk(String idx, String loginId);
+
+	int total(HashMap<String, Object> params);
 
 }

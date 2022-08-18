@@ -44,6 +44,10 @@ public class MyCampingLikeService {
 
 		int pageNum = cri.getPageNum();
 		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
+		
 		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
 		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
 			pageNum = pageMaker.getEndPage();

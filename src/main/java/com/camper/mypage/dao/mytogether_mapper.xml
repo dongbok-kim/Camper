@@ -8,6 +8,7 @@
 		SELECT COUNT(cct.ct_idx)
 		FROM cp_crew_together cct 
 		WHERE cct.mb_id =#{loginId} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+		ORDER BY cct.ct_idx DESC
 	</select>
 
 
@@ -17,7 +18,7 @@
 		WHERE cct.mb_id =#{loginId} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 		ORDER BY cct.ct_idx DESC
 		LIMIT #{amount}
-		OFFSET #{skip}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 
 	<insert id="myCrewWriteDelete" parameterType="String">

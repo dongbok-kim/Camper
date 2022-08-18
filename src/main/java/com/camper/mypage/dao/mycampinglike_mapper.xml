@@ -14,7 +14,7 @@
 		</if>
 		ORDER BY cl_idx DESC 
 		LIMIT #{amount}
-		OFFSET #{skip}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	
