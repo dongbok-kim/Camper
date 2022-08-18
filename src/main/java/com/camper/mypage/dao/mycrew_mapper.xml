@@ -21,7 +21,7 @@
 		JOIN cp_camping_crew ccc on ccc.ct_idx = cct.ct_idx
 		JOIN cp_camping cc ON cc.ca_idx = cct.ca_idx
 		WHERE ccc.mb_id = #{loginId} AND cct.ct_idx not in (SELECT bb_relation_idx from cp_board_blind WHERE bb_relation = 'cp_crew_together') 
-		ORDER BY cct.ct_idx DESC;
+		ORDER BY cct.ct_idx DESC
 		LIMIT #{amount}
 		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
