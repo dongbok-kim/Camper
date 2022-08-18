@@ -10,6 +10,7 @@
 </head>
 <body>
 	<form action="crewReview.do" method="post" name="crewForm">
+		<input type="hidden" name="cnt" value="${list.size()}"/>
 		<table>
 			<tr>
 				<th>캠핑장명</th>
@@ -19,22 +20,25 @@
 				<th>캠핑 기간</th>
 				<td>${dto.ct_wish_start} ~ ${dto.ct_wish_end}</td>
 			</tr>
-			<c:forEach items="${list}" var="crew">
+			<c:forEach items="${list}" var="crew" varStatus="i">
 				<tr>
-					<th>크루원 닉네임</th>	
-					<td>${crew.mb_nickname}</td>
+					<th>닉네임</th>	
+					<td>
+						<input type="hidden" name="mb_id${i.index}" value="${crew.mb_id}">
+						${crew.mb_nickname}
+					</td>
 				</tr>
 				<tr>
-					<th>크루원 평가</th>
+					<th>평가</th>
 					<td>
-						<input type="radio" name="assessment[${crew.mb_id}]" id="assessment" value="싫어요"/>싫어요
-						<input type="radio" name="assessment[${crew.mb_id}]" id="assessment" value="보통"/>보통
-						<input type="radio" name="assessment[${crew.mb_id}]" id="assessment" value="좋아요"/>좋아요
+						<input type="radio" name="assessment${i.index}" id="assessment" value="싫어요"/>싫어요
+						<input type="radio" name="assessment${i.index}" id="assessment" value="보통"/>보통
+						<input type="radio" name="assessment${i.index}" id="assessment" value="좋아요"/>좋아요
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="content[${crew.mb_id}]" id="content"></textarea></td>
+					<td><textarea name="content${i.index}" id="content"></textarea></td>
 				</tr>
 			</c:forEach>
 		</table>

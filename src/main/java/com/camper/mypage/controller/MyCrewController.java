@@ -24,9 +24,9 @@ public class MyCrewController {
 	// by. 승진 2022-08-09
 	@RequestMapping(value = "/myCrewList.go", method = RequestMethod.GET)
 	public ModelAndView myCrewWriteList(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
-		return service.myCrewList(temporaryId);
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
+		return service.myCrewList(loginId);
 	}
 	
 	
@@ -34,8 +34,8 @@ public class MyCrewController {
 	// by. 승진 2022-08-09
 	@RequestMapping(value = "/crewUpdate.go", method = RequestMethod.GET)
 	public ModelAndView crewUpdateList(HttpSession session, @RequestParam String idx) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String temporaryId = "jin";
+		String loginId = (String) session.getAttribute("loginId");
+		// String loginId = "jin";
 		session.removeAttribute("idx");
 		session.setAttribute("idx", idx);
 		return service.crewUpdateList(idx);
@@ -48,7 +48,7 @@ public class MyCrewController {
 	public ModelAndView crewUpdate(HttpSession session, @RequestParam String[] crew_chk) {
 		String idx = (String) session.getAttribute("idx");
 		session.removeAttribute("idx");
-		// 크루모집글의 캠핑 종료 여부를 1로 변경
+		// 크루모집글의 캠핑 종료 여부를 1로 변경, 캠핑완료 날짜에 현재 날짜 찍기
 		service.crewTogetherUpdate(idx);
 		// 캠핑 참여한 회원 확정
 		return service.crewUpdate(crew_chk,idx);

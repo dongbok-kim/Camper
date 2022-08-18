@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.camping.dto.CampingDTO;
 import com.camper.crew.dao.TogetherDAO;
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.lib.dao.CommonDAO;
@@ -64,6 +65,33 @@ public class TogetherService {
 
 	public ArrayList<TogetherDTO> recom() {
 		return dao.recomList();
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	// 모집글 - 캠핑장 검색 팝업 - 캠핑장 리스트 불러오기
+	public ModelAndView campPopup() {
+		// 캠핑장 리스트
+		ArrayList<CampingDTO> list = dao.campPopup();
+		ModelAndView mav = new ModelAndView("popupCamping");
+		
+		mav.addObject("list", list);
+		return mav;
+	}
+
+	public ModelAndView crewRegFrom(HashMap<String, String> params) {
+		
+		dao.crewRegForm(params);
+		//int ct_idx = dao.crewRegView();
+		ModelAndView mav = new ModelAndView("crewTogetherList.do");
+		//ModelAndView mav = new ModelAndView("crewTogetherView.do?ct_idx=");
+		return mav;
 	}
 
 

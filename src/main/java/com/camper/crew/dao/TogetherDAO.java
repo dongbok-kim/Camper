@@ -1,7 +1,9 @@
 package com.camper.crew.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.camper.camping.dto.CampingDTO;
 import com.camper.crew.dto.TogetherDTO;
 
 public interface TogetherDAO {
@@ -23,6 +25,10 @@ public interface TogetherDAO {
 	ArrayList<TogetherDTO> recom(String mb_id);
 
 	ArrayList<TogetherDTO> recomList();
+
+	ArrayList<CampingDTO> campPopup();
+
+	void crewRegForm(HashMap<String, String> params);
 
 
 	

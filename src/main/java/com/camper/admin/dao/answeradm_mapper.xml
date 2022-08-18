@@ -3,4 +3,30 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.AnswerAdmDAO">
 
+	<select id="answerList" resultType="com.camper.admin.dto.AnswerAdmDTO">
+		SELECT in_idx, in_title, in_datetime, in_status, mb_id
+		FROM cp_inquiry ci
+	</select>
+	
+	<select id="answerView" resultType="com.camper.admin.dto.AnswerAdmDTO">
+		SELECT ci.in_idx, ci.in_title, ci.in_datetime, ci.in_status, ci.mb_id, ci.in_content,
+			(select mb_id from cp_inquiry_answer cia where cia.in_idx = ci.in_idx) as ia_admin,
+			(select ia_content from cp_inquiry_answer cia where cia.in_idx = ci.in_idx) as ia_content,
+			(select ia_datetime  from cp_inquiry_answer cia where cia.in_idx = ci.in_idx) as ia_datetime
+		FROM cp_inquiry ci
+		WHERE in_idx = #{param1}
+	</select>
+	
+	<update id="updateStatus" parameterType="hashmap">
+		UPDATE cp_inquiry SET
+			in_status = #{in_status}
+		WHERE in_idx = #{in_idx}
+	</update>
+	
+	<insert id="answerReg" parameterType="hashmap">
+		INSERT cp_inquiry_answer(in_idx, ia_content, ia_datetime, mb_id)
+		VALUES (#{in_idx}, #{ia_content}, now(), #{ia_admin})
+			
+	</insert>
+
 </mapper>

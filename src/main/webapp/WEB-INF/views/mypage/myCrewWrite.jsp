@@ -9,7 +9,7 @@
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li class="active"><a href="">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
-						<li><a href="">크루 후기</a></li>
+						<li><a href="/myCrewReviewR.go">크루 후기</a></li>
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li><a href="/myBlockList.go">차단 회원</a></li>
@@ -41,12 +41,24 @@
 									<td>${my.ct_people_cnt} 명</td>
 									<td>${my.nowCnt} 명</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>
-									<td><a href="myCrewWriteDelete.do?idx=${my.ct_idx}">삭제</a></td>
+									<td><input type="button" value="삭제" onclick="yn(${my.ct_idx})"/></td>
 								</tr>		
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+	
+		function yn(idx){
+			
+			var cf = confirm("크루 모집글과 채팅방이 삭제됩니다. 삭제하시겠습니까?");
+			if (cf == true) {
+				location.href="myCrewWriteDelete.do?idx="+idx;
+			} else{
+				
+			}
+		}
+		
+	</script>
 </html>

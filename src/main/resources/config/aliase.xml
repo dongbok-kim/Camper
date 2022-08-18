@@ -29,7 +29,7 @@
 		<typeAlias type="com.camper.admin.dto.AnswerAdmDTO" alias="admAnswer"/>
 		<typeAlias type="com.camper.admin.dto.BlindAdmDTO" alias="admBlind"/>
 		<typeAlias type="com.camper.admin.dto.CampingAdmDTO" alias="admCamping"/>
-		<typeAlias type="com.camper.admin.dto.MemberAdmDTO" alias="admMember"/>
+		<typeAlias type="com.camper.admin.dto.MemberAdmDTO" alias="admMember"/><!-- 대환 -->
 		<typeAlias type="com.camper.admin.dto.ReviewAdmDTO" alias="admReview"/>
 		<typeAlias type="com.camper.admin.dto.StopAdmDTO" alias="admStop"/>
 		<typeAlias type="com.camper.admin.dto.TogetherAdmDTO" alias="admTogether"/>
@@ -44,7 +44,7 @@
 		<typeAlias type="com.camper.mypage.dto.MyCrewDTO" alias="mypgCrew"/>
 		<typeAlias type="com.camper.mypage.dto.MyInquiryDTO" alias="mypgInquiry"/>
 		<typeAlias type="com.camper.mypage.dto.MyCampingLikeDTO" alias="mypgLike"/>
-		<typeAlias type="com.camper.mypage.dto.MyInfoDTO" alias="mypgMyInfo"/>
+		<typeAlias type="com.camper.mypage.dto.MyInfoDTO" alias="mypgMyInfo"/>	<!-- 대환 -->
 		<typeAlias type="com.camper.mypage.dto.MyTogetherDTO" alias="mypgMyTogether"/>
 		<typeAlias type="com.camper.mypage.dto.MyReviewDTO" alias="mypgReview"/>
 		

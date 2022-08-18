@@ -25,7 +25,9 @@
 		<table>
 			<tr>
 				<th>신고대상아이디</th>
-				<td>${report.mb_id }</td>
+				<td class="contextMenu contextMenuMember" data-id="${report.mb_id }">
+				${report.mb_id }
+				</td>
 				<th>신고누적횟수</th>
 				<td>${report.rp_count }회</td>
 			</tr>

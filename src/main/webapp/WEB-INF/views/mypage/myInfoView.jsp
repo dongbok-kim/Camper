@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>마이페이지 - 내정보 수정</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	aside {
     width: 30%;
@@ -49,18 +50,18 @@
 	<section>
 	<article>
 	<h3>내 정보 수정</h3>
-	<form action="" method="POST" onsubmit="return submitCheck()">
+	<form action="myInfoUpdate.do" method="POST" onsubmit="return submitCheck()">
 	<table>
 		<tr>
                 <th>아이디</th>
                 <td>${myInfo.mb_id}</td>
                 <td style="background-color: red ">정지</td>
-                <td>0회</td>
+                <td>${stop} 회</td>
             </tr>
             <tr>
                 <th>현재 비밀번호</th>
                 <td colspan="4">
-                    <input type="password" name = "mb_pw" id="password" />
+                    <input type="password" name = "orimb_pw" id="password" />
                     <input type="hidden" name = "mb_pw" id="hidden_password" value="${myInfo.mb_pw}"/>
                 </td>
             </tr>
@@ -86,7 +87,7 @@
                 <th>닉네임</th>
                 <td>
                 <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}"/>
-                <input type="hidden"  name = "mb_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
+                <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
                 </td>
                 <td colspan="2">
                 <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
@@ -101,18 +102,18 @@
                 <td>연령대</td>
                 <td>
                 	<input type="hidden" name="ma_idx" value="${myInfo.ma_idx}" />
-                   <input type="radio" name="ma_idx" value="1" /> 20대 
-                   <input type="radio" name="ma_idx" value="2" /> 30대 
-                   <input type="radio" name="ma_idx" value="3" /> 40대 
-                   <input type="radio" name="ma_idx" value="4" /> 50대 
-                   <input type="radio" name="ma_idx" value="5" /> 60대 
+                   <input type="radio" name="ma_idxradio" value="1" /> 20대 
+                   <input type="radio" name="ma_idxradio" value="2" /> 30대 
+                   <input type="radio" name="ma_idxradio" value="3" /> 40대 
+                   <input type="radio" name="ma_idxradio" value="4" /> 50대 
+                   <input type="radio" name="ma_idxradio" value="5" /> 60대 
                 </td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td>
                     <input type="email"  name = "mb_email" id="email" value="${myInfo.mb_email}"/>
-                    <input type="hidden"  name = "mb_email" id="hidden_email" value="${myInfo.mb_email}"/>
+                    <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
                 </td>
                 <td colspan="2">
                     <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
@@ -122,15 +123,18 @@
             <tr>
             	<th>주소</th>
                 <td colspan="4">
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}">
+                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}"><br>
+				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
 				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}">
 				
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
 				
-				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->
+				<input type="hidden" id="hidden_mb_sido" name="hidden_mb_sido" value="${myInfo.mb_sido }" >	<!-- 시/도 --> <!-- 원래 주소 -->
+				<input type="hidden" id="hidden_mb_sigungu" name="hidden_mb_sigungu" value="${myInfo.mb_sigungu }"> <!-- 시/군/구 -->
+				
+				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->	<!-- 주소찾기 했을때 입력되는값  -->
 				<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
 				</td>
             </tr>
@@ -138,7 +142,12 @@
             	<th>모닥불 온도</th>
             	<td>${myInfo.mb_fire} ℃</td>
             	<td style="background-color: gray ">타이틀</td>
-            	<td>왕초보</td><!-- 나중에 타이틀 해나야됨 -->
+            	<td>
+            	<c:if test="${title.mt_idx eq null }">
+				타이틀 없음
+				</c:if>
+				${title.mt_name }
+            	</td>
             </tr>
 	</table>
 	<br/>
@@ -146,7 +155,7 @@
 	<br/>
 	</form>
 	<h3>회원탈퇴</h3>
-	<form action="" onsubmit="return submitCheck()">
+	<form action="secession.do" onsubmit="return submitCheck_two()">
 	<h5>탈퇴 안내</h5>
 	탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.<br/>
 	탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.
@@ -159,7 +168,7 @@
 		<tr>
 			<th>비밀번호</th>
 			<td>
-				<input type="password" name = "mb_pw" id="secession_password" />
+				<input type="password" name = "secession_pw" id="secession_password" />
 			</td>
 		</tr>
 	</table> <br/>
@@ -218,10 +227,10 @@ function sample6_execDaumPostcode() {
             
           
            // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
-            document.getElementById('sample6_sido').value = data.sido; //우편번호 찾으면 시/도에 값입력
+            document.getElementById('sample6_sido').value = data.sido;
             
            // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
-            document.getElementById('sample6_sigungu').value = data.sigungu; //우편번호 찾으면 시/군/구에 값입력
+            document.getElementById('sample6_sigungu').value = data.sigungu;
             
             
         }
@@ -232,24 +241,195 @@ function sample6_execDaumPostcode() {
 	// console.log($("input[name='ma_idx']").val());
 
 if($("input[name='ma_idx']").val() == 1 ) {
-	$("input:radio[name='ma_idx']:radio[value='1']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='1']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 2 ) {
-	$("input:radio[name='ma_idx']:radio[value='2']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='2']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 3 ) {
-	$("input:radio[name='ma_idx']:radio[value='3']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='3']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 4 ) {
-	$("input:radio[name='ma_idx']:radio[value='4']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='4']").attr("checked" , true);
 }
 
 if($("input[name='ma_idx']").val() == 5 ) {
-	$("input:radio[name='ma_idx']:radio[value='5']").attr("checked" , true);
+	$("input:radio[name='ma_idxradio']:radio[value='5']").attr("checked" , true);
 }
 
+
+
+var checkEmail = false; // 이메일 중복체크 여부
+function doubleCheckEmail() {
+	
+	var email = $("#email").val();
+	// console.log($("#email").val());
+	
+	 if(email == "" || email == null){
+         alert("이메일를 입력해주세요");
+         return false;
+      }
+	 console.log('이메일 중복 체크 : '+email);		
+		$.ajax({
+			type:'get',
+			url:'myinfodoubleCheckEmail.ajax',
+			data:{chkEmail:email},
+			dataType:'JSON',
+			success:function(data){
+				// console.log(data);
+			 if(data.doubleEmail){
+					alert("이미 사용중인 이메일 입니다.");
+				}else{
+					alert("사용 가능한 이메일 입니다.");
+					checkEmail = true;
+				}
+				 
+			},
+			error:function(e){
+				console.log(e);
+			}			
+		});
+	
+}
+
+
+
+var checkNickname = false; // 닉네임 중복체크 여부
+function doubleCheckNickname() {
+	
+	var nickname = $("#nickname").val();
+	// console.log($("#nickname").val());
+	
+	 if(nickname == "" || nickname == null){
+         alert("닉네임을 입력해주세요");
+         return false;
+      }
+	 console.log('닉네임 중복 체크 : '+nickname);		
+		$.ajax({
+			type:'get',
+			url:'myinfodoubleCheckNickname.ajax',
+			data:{chkNickname:nickname},
+			dataType:'JSON',
+			success:function(data){
+				// console.log(data);
+			 if(data.doubleNickname){
+					alert("이미 사용중인 닉네임 입니다.");
+				}else{
+					alert("사용 가능한 닉네임 입니다.");
+					checkNickname = true;
+				}
+				 
+			},
+			error:function(e){
+				console.log(e);
+			}			
+		});
+	
+}
+
+
+
+
+    
+function submitCheck() {
+	
+	var pattern1 = /[0-9]/;				// 숫자
+	var pattern2 = /[a-zA-Z]/;			// 문자
+	var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
+	
+	var newpassword = $('#newpassword').val();
+	var newpasswordcheck = $('#newpasswordcheck').val();
+	
+	if ($('#sample6_sido').val() == "") {
+		document.getElementById('sample6_sido').value = $('#hidden_mb_sido').val();
+	}
+	
+	if ($('#sample6_sigungu').val() == "") {
+		document.getElementById('sample6_sigungu').value = $('#hidden_mb_sigungu').val();
+	}
+	
+	
+	if($('#email').val() == $('#hidden_email').val()) {
+		checkEmail = true;
+	}
+	
+	if($('#nickname').val() == $('#hidden_nickname').val()) {
+		checkNickname = true;
+	}
+	
+	
+	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
+		alert('현재 비밀번호를 입력해 주세요');
+		return false;
+	} else if (newpassword != newpasswordcheck){
+		alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
+		return false;
+	} else if (newpassword !="" && (!pattern1.test(newpassword) || !pattern2.test(newpassword) || !pattern3.test(newpassword) || newpassword.length < 4)) {
+		//비밀번호 변경 원할때
+		alert("비밀번호는 영문 , 숫자 , 특수문자를 포함 4자리 이상 입니다.");
+		return false;
+	} else if (checkEmail == false) {
+		 alert("이메일 중복확인을 진행해 주세요.");
+		 return  false;
+	} else if (checkNickname == false) {
+		 alert("닉네임 중복확인을 진행해 주세요.");
+		 return false;
+	 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	else {
+		
+		// 확인창 출력
+			if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
+				return true;	
+			} else {	// 확인창 취소 눌럿을때
+				return false;
+			}
+	}
+	
+	
+}
+
+
+
+
+
+
+function submitCheck_two() {
+	
+	console.log($('#secession_password').val());
+	
+	if($('#secession_password').val() == null || $('#secession_password').val() == "") {
+		alert("비밀번호를 입력해 주세요.");
+		return false;
+	} else {
+		if(confirm("정말 탈퇴하시겠습니까?") == true) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
+	
+}
+
+
+	var msg = "${msg}"
+    if (msg != "") {
+        alert(msg);
+    }
 </script>
 </html>

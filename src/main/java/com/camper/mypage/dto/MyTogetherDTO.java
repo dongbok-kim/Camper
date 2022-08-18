@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("mypgMyTogether")
+// @Alias("mypgMyTogether")
 public class MyTogetherDTO {
 	
 	private int ct_idx;

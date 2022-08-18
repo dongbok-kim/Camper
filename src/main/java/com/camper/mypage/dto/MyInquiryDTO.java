@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("mypgInquiry")
+// @Alias("mypgInquiry")
 public class MyInquiryDTO {
 	
 	private int in_idx;

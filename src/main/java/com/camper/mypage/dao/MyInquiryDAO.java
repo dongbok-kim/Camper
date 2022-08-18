@@ -7,16 +7,18 @@ import com.camper.mypage.dto.MyInquiryDTO;
 
 public interface MyInquiryDAO {
 
-	ArrayList<MyInquiryDTO> myInquiryList(String temporaryId);
-
 	void inquiryWrite(HashMap<String, String> params);
 
 	MyInquiryDTO inquiryDetail(String idx);
 
 	void myInquiryDelete(String idx, String loginId);
 
-	MyInquiryDTO myInquiryUpdateForm(String idx, String loginId);
+	MyInquiryDTO myInquiryUpdateForm(String idx);
 
 	void myInquiryUpdate(HashMap<String, String> params);
+
+	ArrayList<MyInquiryDTO> myInquiryList(HashMap<String, Object> params);
+
+	int total(HashMap<String, Object> params);
 
 }

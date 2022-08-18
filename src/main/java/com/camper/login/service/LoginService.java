@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -154,6 +155,21 @@ public class LoginService {
 		
 		return dao.mbgrade(id);
 	}
+
+	public String mbstatus(String id) {
+		
+		return dao.mbstatus(id);
+	}
+
+	public void stopCnt() {
+		
+		// int Cnt = dao.stopCnt();
+		// logger.info("Cnt : "+Cnt);
+		logger.info("dddddddddd");
+		dao.updateMbStatus();
+	}
+
+	
 
 
 	
