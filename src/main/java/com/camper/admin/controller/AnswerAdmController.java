@@ -23,7 +23,7 @@ public class AnswerAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//문의글 목록
-	@RequestMapping(value = "/answerAdmList")
+	@RequestMapping(value = "/answerAdmList.go")
 	public ModelAndView answerAdmList() {
 			
 		return service.answerList();

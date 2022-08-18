@@ -23,7 +23,7 @@ public class StopAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//정지 회원 목록
-	@RequestMapping(value = "/stopAdmList", method = RequestMethod.GET)
+	@RequestMapping(value = "/stopAdmList.go", method = RequestMethod.GET)
 	public ModelAndView stopAdmList() {
 		
 		return service.stopAdmList();

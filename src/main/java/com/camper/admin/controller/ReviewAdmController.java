@@ -23,7 +23,7 @@ public class ReviewAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	// 캠핑장 후기 관리
-	@RequestMapping(value = "/reviewAdmList")
+	@RequestMapping(value = "/reviewAdmList.go")
 	public ModelAndView reviewAdmList(Criteria cri, 
 			@RequestParam HashMap<String, Object> params) {
 		return service.reviewCampList(cri, params);
@@ -45,7 +45,7 @@ public class ReviewAdmController {
 	
 	
 	// 회원 후기 관리
-	@RequestMapping(value = "/reviewMemberAdmList")
+	@RequestMapping(value = "/reviewMemberAdmList.go")
 	public ModelAndView reviewMemberAdmList() {
 		
 		return service.reviewMemberList();

@@ -20,7 +20,7 @@ public class BlindAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/blindAdmList")
+	@RequestMapping(value = "/blindAdmList.go")
 	public ModelAndView blindAdmList() {
 		
 		return service.blindList();

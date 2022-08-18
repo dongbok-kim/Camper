@@ -22,7 +22,7 @@ public class CampingAdmController {
 	
 	//캠핑장 목록
 	// 관리자 페이지 / 캠핑장 목록
-	@RequestMapping(value = "/campingAdmList")
+	@RequestMapping(value = "/campingAdmList.go")
 	public ModelAndView campingAdmList(Criteria cri,
 			@RequestParam HashMap<String, Object> params) {
 			

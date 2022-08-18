@@ -20,7 +20,7 @@ public class AgeAdmController {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
-	@RequestMapping(value = "/ageAdmList", method = RequestMethod.GET)
+	@RequestMapping(value = "/ageAdmList.go", method = RequestMethod.GET)
 	public String ageList(Model model) {
 		
 		String page ="admin/ageAdmList";
