@@ -47,12 +47,17 @@ function submitCheck() {
 	   // alert('공백이 입력되었습니다.');
 	// }
 	
+	var pattern2 = /[a-zA-Z]/;	 //영문 포함
+	
 	
 	if( id == "" || id == null ) {
 		alert('아이디를 입력해 주세요');
 		return false;
 	} else if (blank_pattern.test(id)) {		//공백이있는지 체크하는 문
 		alert('아이디에 공백이 있습니다.');
+		return false;
+	} else if (!pattern2.test(id)){
+		alert('아이디는 영문을 포함해야 합니다');
 		return false;
 	} else if( email == "" || email == null ) {
 		alert('이메일을 입력해 주세요');
