@@ -137,12 +137,12 @@ public class LoginController {
 	
 	//로그아웃
 	@RequestMapping(value = "/logout.do")
-	public String Logout(Model model, HttpSession session) {	//세션들 지우기
+	public String Logout(Model model, HttpSession session, RedirectAttributes rttr) {	//세션들 지우기
 		session.removeAttribute("loginId");		
 		session.removeAttribute("mb_grade");
 		session.removeAttribute("mb_status");
-		model.addAttribute("msg", "로그아웃 되었습니다.");
-		return "main";
+		rttr.addFlashAttribute("msg", "로그아웃 되었습니다.");
+		return "redirect:/";
 	}
 	
 	//회원가입
