@@ -106,19 +106,7 @@ public class LoginService {
 		return dao.idFind(name, email);
 	}
 
-	public HashMap<String, Object> pwFind(String mb_id, String mb_email) {
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		int IdEmailCheck = dao.pwFind(mb_id, mb_email);
-		
-		logger.info("idEmailCheck : "+IdEmailCheck);
-		map.put("mb_id", mb_id);
-		map.put("mb_email", mb_email);
-		map.put("Cnt", IdEmailCheck);
-		
-		return map;
-	}
+	
 
 	public ModelAndView pwRework(LoginDTO dto) {
 
@@ -172,6 +160,16 @@ public class LoginService {
 	public String idFindstatus(String name, String email) {
 		
 		return dao.idFindStatus(name, email);
+	}
+
+	public int pwFind(String mb_id, String mb_email) {
+		
+		return dao.pwFind(mb_id, mb_email);
+	}
+
+	public String pwFindstatus(String mb_id, String mb_email) {
+		
+		return dao.pwFindstatus(mb_id, mb_email);
 	}
 
 	

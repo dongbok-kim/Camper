@@ -143,10 +143,10 @@
                 document.getElementById("sample6_detailAddress").focus();
                 
               
-               // console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
+               console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
                 document.getElementById('sample6_sido').value = data.sido;
                 
-               // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
+               console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
                 document.getElementById('sample6_sigungu').value = data.sigungu;
                 
                 
@@ -158,7 +158,7 @@
 	function doubleCheckId() {
 		
 		var id = $("#id").val();
-		console.log($("#id").val());
+		// console.log($("#id").val());
 		
 		if(id == "" || id == null){
 	       alert("아이디를 입력해주세요");
@@ -271,28 +271,28 @@
 			
 			
 			var id = $('#id').val();	// 아이디
-			// console.log($('#id').val());	
+			console.log($('#id').val());	
 			
 			var password = $('#password').val(); //비밀번호
-			// console.log($('#password').val());	
+			console.log($('#password').val());	
 			
 			var passwordcheck = $('#passwordcheck').val(); //비밀번호 확인
-			// console.log($('#passwordcheck').val());	
+			console.log($('#passwordcheck').val());	
 			
 			var email = $('#email').val(); //이메일
-			// console.log($('#email').val());	
+			console.log($('#email').val());	
 			
 			var nickname = $("#nickname").val(); //닉네임
-			// console.log($('#nickname').val());	
+			console.log($('#nickname').val());	
 			
 			var name = $('#name').val(); //이름
-			// console.log($('#name').val());	
+			console.log($('#name').val());	
 			
 			var gender = $('input[name=mb_gender]:checked').val(); //성별
-			// console.log($('input[name=mb_gender]:checked').val());
+			console.log($('input[name=mb_gender]:checked').val());
 			
 			var age = $('input[name=ma_idx]:checked').val(); //나이대
-			// console.log($('input[name=ma_idx]:checked').val());	
+			console.log($('input[name=ma_idx]:checked').val());	
 			
 			var postcode = $('input[name=mb_postcode]').val(); //우편번호
 			console.log($('input[name=mb_postcode]').val());
@@ -304,10 +304,15 @@
 			console.log($('input[name=mb_addr_detail]').val());
 			
 			var sido = $("#sample6_sido").val(); // 시/도 (서울, 경기, 경북 등으로 표시)
-			// console.log($('#sample6_sido').val());
+			console.log($('#sample6_sido').val());
+			
+			if(sido == "세종특별자치시") {
+				document.getElementById('sample6_sigungu').value = "세종시";
+			}
 			
 			var sigungu = $("#sample6_sigungu").val(); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
-			// console.log($('#sample6_sigungu').val());
+			console.log($('#sample6_sigungu').val());
+			
 			
 		if (	//값을 입력하지 않았을때 if문
 				age == null || gender == null || id == "" || 

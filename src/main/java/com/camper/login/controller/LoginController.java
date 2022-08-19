@@ -45,9 +45,16 @@ public class LoginController {
 	
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join.go")
-	public String JoinPage(Model model) {
-			
-		return "login/join";
+	public String JoinPage(Model model, HttpSession session, RedirectAttributes rttr) {
+		
+		String page = "login/join";
+		
+		if(session.getAttribute("loginId") != null ) {
+			rttr.addFlashAttribute("msg", "로그인한 상태로 접근 불가 ");
+			page = "redirect:/";
+		}
+		
+		return page;
 	}
 		
 	//아이디 찾기 페이지 이동
@@ -66,9 +73,16 @@ public class LoginController {
 		
 	//비밀번호 찾기 페이지 이동
 	@RequestMapping(value = "/pwFind.go")
-	public String PwFindPage(Model model) {
-			
-		return "login/pwfind";
+	public String PwFindPage(Model model, HttpSession session, RedirectAttributes rttr) {
+		
+		String page = "login/pwfind";
+		
+		if(session.getAttribute("loginId") != null ) {
+			rttr.addFlashAttribute("msg", "로그인한 상태로 접근 불가 ");
+			page = "redirect:/";
+		}
+		
+		return page;
 	}
 	
 	//로그인
@@ -188,31 +202,62 @@ public class LoginController {
 		String page = "login/idfind";
 		
 		String idFind = service.idFind(name , email);
-		String mb_status = service.idFindstatus(name, email);
 		
-		if(mb_status.equals("탈퇴")) {
-			model.addAttribute("msg", "탈퇴된 회원 입니다");
-		} else {
 			
 			if (idFind == null ) {
 				model.addAttribute("msg", "이름 또는 이메일이 일치하지 않습니다.");
 			} else {
-				rttr.addFlashAttribute("msg", "당신의 아이디 :  "+idFind);
-				page = "redirect:/login.go";
+				
+				String mb_status = service.idFindstatus(name, email);
+				logger.info("mb_status : "+mb_status);
+				
+				if(mb_status.equals("탈퇴")) {
+					rttr.addFlashAttribute("msg" , "탈퇴된 회원입니다.");
+					page = "redirect:/idFind.go";
+				} else {
+					rttr.addFlashAttribute("msg", "당신의 아이디 :  "+idFind);
+					page = "redirect:/login.go";
+				}
+				
 			}
 		
-		}
 		return page;
 	}
 	
 	
 	//아이디, 비밀번호 확인
-	@RequestMapping(value = "/pwFind.ajax")
-	@ResponseBody
-	public HashMap<String, Object> PwCheck(@RequestParam String mb_id , @RequestParam String mb_email) {
+	@RequestMapping(value = "/pwFind.do")
+	public String PwCheck(Model model, @RequestParam String mb_id , @RequestParam String mb_email, HttpSession session, RedirectAttributes rttr) {
 		
-		logger.info("아이디 , 비밀번호 확인");
-		return service.pwFind(mb_id, mb_email);
+		String page = "login/pwfind";
+		
+		logger.info("아이디 : "+mb_id);
+		logger.info("이메일 : "+mb_email);
+		
+		int PwFind = service.pwFind(mb_id, mb_email);
+		
+		logger.info("PwFind : "+PwFind);
+			
+			if(PwFind > 0) {
+				
+				String mb_status = service.pwFindstatus(mb_id, mb_email);
+				logger.info("mb_status : "+mb_status);
+				
+				if(mb_status.equals("탈퇴")) {
+					rttr.addFlashAttribute("msg", "탈퇴된 회원 입니다");
+					page = "redirect:/pwFind.go";
+				} else {
+					model.addAttribute("msg", "비밀번호 변경 가능");
+					session.setAttribute("mb_id", mb_id);
+					page = "login/pwRework";
+				}
+					
+			} else {
+				model.addAttribute("msg", "아이디 또는 이메일이 일치하지 않습니다.");
+				page = "login/pwfind";
+			}
+
+		return page; 
 	}
 	
 	
