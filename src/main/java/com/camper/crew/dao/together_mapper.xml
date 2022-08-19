@@ -251,11 +251,47 @@
 <!-- 	 =================== 소스트리 충돌 방지 ====================================
 	 지윤 : 크루 모집글 작성, 수정 -->	
 	<!-- 모집글 작성 / 캠핑장 검색 팝업창 / 캠핑장 리스트 -->
-	<select id="campPopup" resultType="cpCamping">	
-		SELECT a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu,
-			(select count(cl_idx) from cp_camping_like where ca_idx = a.ca_idx) as cntLike, 
+	<select id="campingTotal" resultType="int">
+		select count(a.ca_idx)
+			from cp_camping a where a.ca_manage_status != '확인중'
+			<if test="ca_sido != null">
+				and a.ca_sido IN
+				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_theme != null">
+				and a.ca_theme IN
+				<foreach collection="ca_theme" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_pet != null">and a.ca_pet != '불가능'</if>
+			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
+	</select>
+	 
+	 <select id="campPopupList" resultType="cpCamping">
+		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu, a.ca_theme, a.ca_pet,	
+			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
 			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
-		FROM cp_camping a ORDER BY ca_idx DESC
+			from cp_camping a where a.ca_manage_status != '확인중'
+			<if test="ca_sido != null">
+				and a.ca_sido IN
+				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_theme != null">
+				and a.ca_theme IN
+				<foreach collection="ca_theme" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if> 
+			<if test="ca_pet != null">and a.ca_pet != '불가능'</if>
+			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
+			ORDER BY ca_idx DESC
+			LIMIT #{amount}
+			<if test="campingCnt > 0">OFFSET #{skip}</if>
 	</select>
 	
 	<!-- 모집글 작성 / 등록 -->
@@ -280,6 +316,7 @@
 			mb_id = #{mb_id},
 			ca_idx = #{ca_idx}
 	</insert>
+	
 	<!-- 모집글 등록과 동시에 해당하는 채팅방 개설 -->
 	<insert id="crewChatReg"
 		useGeneratedKeys="true"
@@ -350,7 +387,7 @@
 			ct_idx = #{ct_idx};
 	</update>
 	
-	<!-- 채팅방 수정 -->
+	<!-- 채팅방 정원 수정 -->
 	<update id="crewChatUpdate">
 		UPDATE cp_chat_group
 		SET

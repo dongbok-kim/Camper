@@ -38,7 +38,7 @@
 			</thead>
 			<tbody>
 				<c:if test="${list.size() == 0}">
-					<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
+					<tr><td colspan="4">캠핑장 목록이 없습니다.</td></tr>
 				</c:if>
 				<c:forEach items="${list }" var="camp" varStatus="i">
 					<tr>

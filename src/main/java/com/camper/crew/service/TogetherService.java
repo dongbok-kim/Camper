@@ -18,6 +18,8 @@ import com.camper.chat.dto.ChatDTO;
 import com.camper.crew.dao.TogetherDAO;
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.lib.dao.CommonDAO;
+import com.camper.lib.dto.PageMakerDTO;
+import com.camper.lib.utils.Criteria;
 
 @Service
 public class TogetherService {
@@ -130,12 +132,67 @@ public class TogetherService {
 	// 지윤 : 크루 모집글 작성, 수정
 	
 	// 모집글 - 캠핑장 검색 팝업 - 캠핑장 리스트 불러오기
-	public ModelAndView campPopup() {
+	public ModelAndView campPopup(Criteria cri, HttpSession session, HashMap<String, Object> map) {
 		// 캠핑장 리스트
-		ArrayList<CampingDTO> list = dao.campPopup();
 		ModelAndView mav = new ModelAndView("popupCamping");
+		cri.setAmount(10);
 		
+		// 총 캠핑장 수
+		int total = dao.campingTotal(map);
+		mav.addObject("listCnt", total);
+		map.put("listCnt", total);
+		
+		// 검색 결과 나올 때 선택한 값 유지
+		ArrayList<String> ca_sido = (ArrayList<String>) map.get("ca_sido");
+		logger.info("ca_sido : " + ca_sido);
+		mav.addObject("ca_sido",ca_sido);
+		
+		ArrayList<String> ca_theme = (ArrayList<String>) map.get("ca_theme");
+		logger.info("ca_theme : " + ca_theme);
+		mav.addObject("ca_theme",ca_theme);
+		
+		String ca_pet = (String) map.get("ca_pet");
+		String ca_name = (String) map.get("ca_name");
+		
+		if (ca_pet != null && !ca_pet.trim().equals("")){
+			logger.info("ca_pet : " + ca_pet);
+			mav.addObject("ca_pet",ca_pet);
+		}
+		
+		if (ca_name != null && !ca_name.trim().equals("")){
+			logger.info("ca_name : " + ca_name);
+			mav.addObject("ca_name",ca_name);
+		}
+		
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+		
+		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() < 0) {
+			logger.info("startPage : "+pageMaker.getStartPage());
+			pageMaker.setStartPage(1);
+		}
+		
+		//현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		//DAO MAPPER OFFSET
+		int skip = (pageNum - 1) * cri.getAmount();
+		map.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		//DAO MAPPER LIMIT
+		map.put("amount", cri.getAmount());
+		
+		ArrayList<CampingDTO> list = dao.campPopupList(map);
 		mav.addObject("list", list);
+		
+		mav.addObject("pageMaker", pageMaker);
+		
 		return mav;
 	}
 

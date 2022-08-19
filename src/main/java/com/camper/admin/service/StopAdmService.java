@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.dao.StopAdmDAO;
 import com.camper.admin.dto.StopAdmDTO;
+import com.camper.lib.utils.Criteria;
 
 @Service
 public class StopAdmService {
@@ -21,7 +22,7 @@ public class StopAdmService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public ModelAndView stopAdmList() {
+	public ModelAndView stopAdmList(Criteria cri, HashMap<String, Object> params) {
 		ArrayList<StopAdmDTO> list = dao.stopList();
 		ModelAndView mav = new ModelAndView("admin/stopAdmList");
 		
@@ -32,8 +33,9 @@ public class StopAdmService {
 	public ModelAndView stopPopup(String mb_id) {
 		logger.info("회원 정지 팝업 서비스 도착");
 		// 정지기록 리스트
-		ArrayList<StopAdmDTO> list = dao.stopPopup(mb_id);		
+		ArrayList<StopAdmDTO> list = dao.stopPopup(mb_id);
 		ModelAndView mav = new ModelAndView("admin/popupStopAdm");
+		logger.info("count / end_date ");
 		
 		mav.addObject("list", list);
 		mav.addObject("mb_id", mb_id);

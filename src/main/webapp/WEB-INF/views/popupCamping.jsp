@@ -104,7 +104,7 @@
 				<div id="full">
 					<h3>캠핑장 검색</h3>
 					<div id="searchBox">
-						<form action="campingList.go" method="post">
+						<form action="campPopup.go" method="post" id="campingSearchfm">
 							<table>
 								<tbody>
 									<tr>
@@ -149,7 +149,7 @@
 									<tr>
 										<th>기타정보</th>
 										<td>
-											<label><input type="checkbox" name="ca_pet" value="1" /> 반려동물 동반 가능</label>
+											<label><input type="checkbox" name="ca_pet" value="가능" <c:if test="${ca_pet eq '가능'}">checked="checked"</c:if>/> 반려동물 동반 가능</label>
 										</td>
 									</tr>
 									<tr>
@@ -163,8 +163,9 @@
 							</div>
 						</form>
 					</div>
-					<p id="totalCnt">총 <strong>${list.size()}</strong>건</p>
+					<p id="totalCnt">총 <strong>${listCnt}</strong>건</p>
 					
+					<c:if test="${campingCnt eq 0}">검색결과가 없습니다.</c:if>
 					<ul id="campingList">
 					<c:forEach items="${list}" var="campingList">
 						<li>
@@ -199,6 +200,22 @@
 						</li>
 					</c:forEach>
 					</ul>
+					<ul>	
+						<!-- 이전페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="javascript:;" data="${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!-- 다음페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="javascript:;" data="${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>	
 					
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>
@@ -213,5 +230,10 @@
 		
 		var selectIdx = $(opener.document).find("#campingSelectIdx").val();
 		$('.selectCamping[data-idx='+selectIdx+']').attr('disabled', 'disabled');
+		
+		$('ul > li.pageInfo_btn > a').on('click', function() {
+			$('input:hidden[name="pageNum"]').val($(this).attr('data'));
+			$('#campingSearchfm').submit();
+		})
 	</script>
 </html>

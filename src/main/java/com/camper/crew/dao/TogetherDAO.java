@@ -132,6 +132,10 @@ public interface TogetherDAO {
 
 	int chatCnt(int ct_idx);
 
+	int campingTotal(HashMap<String, Object> map);
+
+	ArrayList<CampingDTO> campPopupList(HashMap<String, Object> map);
+
 
 	
 
