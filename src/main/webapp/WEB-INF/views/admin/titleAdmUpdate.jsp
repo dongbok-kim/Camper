@@ -18,26 +18,47 @@
 				</aside>
 				<div>
 					<h3>타이틀 수정</h3>
-					<form action="/titleUpdate.do" method="post">
+					<form action="/titleUpdate.do" method="post" name="addForm">
 						<table>
 							<tr>
 								<th>타이틀 이름</th>
 								<td><input type="hidden" name="mt_idx" value="${dto.mt_idx}">
-								<input type="text" name="mt_name" value="${dto.mt_name }"></td>
+								<input type="text" name="mt_name"  id="mt_name" value="${dto.mt_name }"></td>
 							</tr>
 							<tr>
 								<th>기준 크루장 횟수</th>
-								<td><input type="text" name="mt_count" value="${dto.mt_count }">회</td>
+								<td><input type="text" name="mt_count"  id="mt_count" value="${dto.mt_count }">회</td>
 							</tr>
 							<tr>
 								<th>기준 모닥불 온도</th>
-								<td><input type="text" name="mt_degree" value="${dto.mt_degree }">℃</td>
+								<td><input type="text" name="mt_degree"  id="mt_degree" value="${dto.mt_degree }">℃</td>
 							</tr>
 						</table>
-						<input type="submit" value="수정">
+						<input type="button" value="수정" onclick="add()">
 						<input type="button" value="목록" onclick="location.href='/titleList.go'"/>
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+	
+		function add(){
+			var form = document.addForm;
+			
+			var name = $('#mt_name').val();
+			var count = $('#mt_count').val();
+			var degree = $('#mt_degree').val();
+			
+			if (name == "") {
+				alert("타이틀 이름을 입력해주세요");
+			} else if (count == "") {
+				alert("기준 크루장 횟수를 입력해주세요");
+			} else if (degree == "") {
+				alert("기준 모닥불 온도를 입력해주세요");
+			} else {
+				form.submit();
+			}
+			
+		}
+		
+	</script>
 </html>
