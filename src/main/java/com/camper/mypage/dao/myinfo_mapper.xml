@@ -49,4 +49,8 @@
 	SELECT COUNT(mb_id) FROM cp_member_stop WHERE mb_id = #{param1}
 </select>
 
+<delete id="chatJoinDelete" parameterType="String">
+	DELETE FROM cp_chat_join WHERE mb_id = #{param1}
+</delete>
+
 </mapper>

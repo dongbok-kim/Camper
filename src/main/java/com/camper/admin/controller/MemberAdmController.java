@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +32,18 @@ public class MemberAdmController {
 	
 	//회원 리스트
 	@RequestMapping(value = "/memberAdmList.go")
-	public ModelAndView memberList(Model model, HttpServletRequest request, Criteria cri, @RequestParam HashMap<String, Object> params) {
+	public ModelAndView memberList(Model model, HttpServletRequest request, Criteria cri, @RequestParam HashMap<String, Object> params, HttpSession session) {
 		
-		return service.memberAdmList(cri, params);
+		
+		
+		logger.info("목록 파람 : "+params);
+		
+		if(session.getAttribute("mb_grade").equals("관리자") != true) {
+			return null;
+		} else {
+			return service.memberAdmList(cri, params);
+		}
+		
 	}
 	
 	

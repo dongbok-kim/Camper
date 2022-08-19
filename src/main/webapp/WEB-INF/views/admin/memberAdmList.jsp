@@ -108,11 +108,12 @@ table, th, td{
 	<!-- 검색 -->
 	<br/><br/>
 	<fieldset>
-		<form action="" method="post">
-			<select name="mb_status">
-			<option value="정상">정상</option>
-			<option value="정지">정지</option>
-			<option value="탈퇴">탈퇴</option>
+		<form action="memberAdmList.go" method="post">
+			<select name="filter">
+			<option value="">전체</option>
+			<option value="정상" <c:if test="${filter eq '정상'}">selected="selected"</c:if>>정상</option>
+			<option value="정지" <c:if test="${filter eq '정지'}">selected="selected"</c:if>>정지</option>
+			<option value="탈퇴" <c:if test="${filter eq '탈퇴'}">selected="selected"</c:if>>탈퇴</option>
 			</select>
 			<select name="type">
 			<option value="all">전체</option>
@@ -125,6 +126,7 @@ table, th, td{
 		</form>
 	</fieldset>
 	</section>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 </script>
