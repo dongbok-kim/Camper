@@ -142,7 +142,7 @@ textarea {
 		</ul>
 	</div>
 	<div>
-		<form action="reviewCampSearch.do" method="post">
+		<form action="reviewAdmList.go" method="post">
 			<select name="filter">
 				<option value="평가항목">평가항목</option>
 				<option value="좋아요">좋아요</option>

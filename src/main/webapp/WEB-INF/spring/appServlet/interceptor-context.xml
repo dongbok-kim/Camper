@@ -35,9 +35,43 @@
 			<bean class="com.camper.lib.utils.MypgValidationInter"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
-			<mvc:mapping path="/관리자요청명모두나열1"/>
-			<mvc:mapping path="/관리자요청명모두나열2"/>
-			<mvc:mapping path="/관리자요청명모두나열3"/>
+			<mvc:mapping path="/stopAdmList.go"/>
+			<mvc:mapping path="/stopPopup.go"/>
+			<mvc:mapping path="/stopAdmReg.do"/>
+			<mvc:mapping path="/ageAdmList.go"/>
+			<mvc:mapping path="/ageAdmReg"/>
+			<mvc:mapping path="/ageReg.do"/>
+			<mvc:mapping path="/ageUpdate.go"/>
+			<mvc:mapping path="/ageUpdate.do"/>
+			<mvc:mapping path="/answerAdmList.go"/>
+			<mvc:mapping path="/answerAdmView"/>
+			<mvc:mapping path="/answerReg.do"/>
+			<mvc:mapping path="/blindAdmList.go"/>
+			<mvc:mapping path="/campingAdmList.go"/>
+			<mvc:mapping path="/campingAdmView.go"/>
+			<mvc:mapping path="/campingAdmUpdate.do"/>
+			<mvc:mapping path="/campingAPI.do"/>
+			<mvc:mapping path="/memberAdmList.go"/>
+			<mvc:mapping path="/memberAdmDetail"/>
+			<mvc:mapping path="/memberAdmUpdate.do"/>
+			<mvc:mapping path="/reportAdmList.go"/>
+			<mvc:mapping path="/reportAdmView"/>
+			<mvc:mapping path="/reportUpdate.do"/>
+			<mvc:mapping path="/reviewAdmList.go"/>
+			<mvc:mapping path="/blindCamping.do"/>
+			<mvc:mapping path="/reviewMemberAdmList.go"/>
+			<mvc:mapping path="/blindMember.do"/>
+			<mvc:mapping path="/stopAdmList.go"/>
+			<mvc:mapping path="/stopPopup.go"/>
+			<mvc:mapping path="/stopAdmReg.do"/>
+			<mvc:mapping path="/titleList.go"/>
+			<mvc:mapping path="/titleAdd.go"/>
+			<mvc:mapping path="/titleAdd.do"/>
+			<mvc:mapping path="/titleUpdate.go"/>
+			<mvc:mapping path="titleUpdate.do"/>
+			<mvc:mapping path="/togetherAdmList.go"/>
+			<mvc:mapping path="/blindTogether.do"/>
+			<mvc:mapping path="/togetherAdmView"/>
 			<bean class="com.camper.lib.utils.AdminValidationInter"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

@@ -29,4 +29,30 @@ public class CampingAdmController {
 		return service.campingAdmList(cri, params);
 	}
 	
+	// 관리자 페이지 / 캠핑장 api 업데이트 수정 목록 보여주기 
+	@RequestMapping(value = "/campingAPI.do")
+	public ModelAndView campingAPI(Criteria cri,
+			@RequestParam HashMap<String, Object> params) {
+			
+		return null;
+		//return service.campingAdmList(cri, params);
+	}
+	
+	// 관리자 페이지 / 캠핑장 상세보기
+	@RequestMapping(value = "/campingAdmView.go")
+	public ModelAndView campingAdmView(Criteria cri, 
+			@RequestParam HashMap<String, Object> params) {
+		logger.info("캠핑장 상세보기 idx : "+params);	
+		return service.campingAdmView(cri, params);
+	}
+	
+	//관리자 페이지 / 캠핑장 수정하기
+	@RequestMapping(value = "/campingAdmUpdate.do")
+	public ModelAndView campingAdmUpdate(Criteria cri,
+			@RequestParam HashMap<String, Object> params) {
+			
+		return null;
+		//return service.campingAdmList(cri, params);
+	}
+	
 }
