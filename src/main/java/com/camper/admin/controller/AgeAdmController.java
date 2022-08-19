@@ -28,7 +28,7 @@ public class AgeAdmController {
 		return page;
 	}
 // 연령대 등록 페이지로
-	@RequestMapping(value = "/ageAdmReg")
+	@RequestMapping(value = "/ageAdmReg.go")
 	public String ageAdmReg(Model model) {
 		
 		return "admin/ageAdmReg";

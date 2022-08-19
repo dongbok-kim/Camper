@@ -271,10 +271,16 @@
 	</select>
 	 
 	 <select id="campPopupList" resultType="cpCamping">
-		select a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, a.ca_addr_default, a.ca_sido, a.ca_sigungu, a.ca_theme, a.ca_pet,	
-			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx and cr_assessment = '좋아요') as cntLike, 
-			(select count(cr_idx) from cp_camping_review where ca_idx = a.ca_idx) as cntReview
-			from cp_camping a where a.ca_manage_status != '확인중'
+		SELECT 
+			a.ca_idx, a.ca_name, a.ca_img, a.ca_intro, 
+			a.ca_addr_default, a.ca_sido, a.ca_sigungu, 
+			a.ca_theme, a.ca_pet,	
+			(SELECT count(cl_idx) FROM cp_camping_like WHERE ca_idx = a.ca_idx) AS cntLike, 
+			(SELECT count(cr_idx) FROM cp_camping_review WHERE ca_idx = a.ca_idx) AS cntReview
+		FROM 
+			cp_camping a 
+		WHERE 
+			a.ca_manage_status != '확인중'
 			<if test="ca_sido != null">
 				and a.ca_sido IN
 				<foreach collection="ca_sido" item="item" open="(" separator="," close=")">
@@ -348,7 +354,7 @@
 	<!-- 모집글 수정 정보 불러오기 -->
 	<select id="crewUpdate" resultType="crTogether" parameterType="int">
 		SELECT 
-			cct.ct_idx, cct.ct_title, cct.ct_content, cct.ct_people_cnt, 
+			cct.ct_idx, cct.mb_id, cct.ct_title, cct.ct_content, cct.ct_people_cnt, 
 			cct.ct_gender,ct_age, cct.ct_wish_start, cct.ct_wish_end, 
 			cct.ct_tool , cct.ct_camping_type, cct.ct_pet, cct.ca_idx,
 			(SELECT ca_name FROM cp_camping cc WHERE cct.ca_idx = cc.ca_idx) as ca_name

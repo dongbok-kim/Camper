@@ -169,7 +169,7 @@
 					<ul id="campingList">
 					<c:forEach items="${list}" var="campingList">
 						<li>
-							<a href="/campingView.go?ca_idx=${campingList.ca_idx}">
+							<a href="/campingView.go?ca_idx=${campingList.ca_idx}" target="_blank">
 								<span class="imgBox">
 									<c:choose>
 										<c:when test="${campingList.ca_img ne ''}">
@@ -193,7 +193,7 @@
 									<span class="address">${campingList.ca_addr_default}</span>
 								</span>
 							</a>
-							<span class="cnt cntLike">좋아요 ${campingList.cntLike}</span>
+							<span class="cnt cntLike">찜 ${campingList.cntLike}</span>
 							<span class="cnt cntReview">후기 ${campingList.cntReview}</span>
 							<div style="clear:both;"></div>
 							<input type="button" class="selectCamping" value="캠핑장 선택" data-idx="${campingList.ca_idx}" data-name="${campingList.ca_name}"/>

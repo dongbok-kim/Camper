@@ -21,7 +21,7 @@
 				</div>
 <body>
 	<div>총 캠핑장 수 : ${listCnt}건</div>	
-	<div><input type="checkbox" name="api" value="api"/>API 정보 관리</div>
+	<div><input type="checkbox" id="campingAPI.do" value="api"/>API 정보 관리</div>
 	<div>
 		<table>
 			<thead>
@@ -44,7 +44,7 @@
 					<tr>
 						<td>${listCnt - skip - i.index}</td>
 						<td>
-							<a href="campingAdmUpdate.go?ca_idx=${camp.ca_idx}&amp;filterSido=${filterSido}&amp;filterStatus=${filterStatus}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${camp.ca_name}</a>
+							<a href="campingAdmView.go?ca_idx=${camp.ca_idx}">${camp.ca_name}</a>
 						</td>
 						<td>${camp.ca_sido}</td>
 						<td>${camp.ca_sigungu}</td>
@@ -64,7 +64,7 @@
 			
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
 			</c:forEach>
 			
 			<!-- 다음페이지 버튼 -->
@@ -108,12 +108,6 @@
 	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-	$('#campingList select[name="filterStatus"]').on('change', function() {
-		$('#campingList').submit();
-	});
 	
-	$('#campingList select[name="filterSido"]').on('change', function() {
-		$('#campingList').submit();
-	});
 </script>
 </html>

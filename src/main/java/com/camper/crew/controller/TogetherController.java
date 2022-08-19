@@ -177,34 +177,42 @@ public class TogetherController {
 
 	// 크루 모집글 수정 데이터 불러오기
 	@RequestMapping(value = "/crewTogetherUpdate.go")
-	public ModelAndView crewUpdate(@RequestParam int ct_idx) {
+	public ModelAndView crewUpdate(@RequestParam int ct_idx,
+			HttpSession session) {
+		
 		logger.info("모집글 수정 컨트롤러");
-		return service.crewUpdate(ct_idx);
+		return service.crewUpdate(ct_idx,session);
 	}
 
 	// 크루 모집글 수정 하기
 	@RequestMapping(value = "/crewTogetherUpdate.do")
 	public ModelAndView crewUpdateForm(HttpSession session, @ModelAttribute TogetherDTO dto,
 			@RequestParam(value = "ct_camping_type") String[] campingArr) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jyr";
-		dto.setMb_id(loginId);
-
-		// campingType 배열에서 꺼내서 params에 콤마로 구분해서 담기
-		String campingType = "";
-		if (campingArr.length == 1) {
-			dto.setCt_camping_type(campingArr[0]);
+		String loginId = (String) session.getAttribute("loginId");
+		String mb_id = dto.getMb_id();
+		
+		if (!loginId.equals(mb_id)) { //로그인한 아이디와 작성자가 다른 사람일 경우
+			ModelAndView mav = new ModelAndView("redirect:/");
+			mav.addObject("msg","본인 글만 수정할 수 있습니다.");
+			return mav;
 		} else {
-			campingType = campingArr[0];
-			for (int i = 1; i < campingArr.length; i++) {
-				campingType += ',' + campingArr[i];
+			// campingType 배열에서 꺼내서 params에 콤마로 구분해서 담기
+			String campingType = "";
+			if (campingArr.length == 1) {
+				dto.setCt_camping_type(campingArr[0]);
+			} else {
+				campingType = campingArr[0];
+				for (int i = 1; i < campingArr.length; i++) {
+					campingType += ',' + campingArr[i];
+				}
+				dto.setCt_camping_type(campingType);
 			}
-			dto.setCt_camping_type(campingType);
+			
+			logger.info("크루 모집글 작성 제목 : " + dto.getCt_title());
+			// return null;
+			return service.crewUpdateFrom(dto);
+		
 		}
-
-		logger.info("크루 모집글 작성 제목 : " + dto.getCt_title());
-		// return null;
-		return service.crewUpdateFrom(dto);
 	}
 
 }

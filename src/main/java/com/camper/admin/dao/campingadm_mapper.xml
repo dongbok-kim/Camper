@@ -39,5 +39,41 @@
 		ORDER BY ca_idx DESC
 		LIMIT #{amount}
 	</select>
+	
+	
+	<!-- 캠핑장 상세보기 -->
+	<select id="campingAdmView" parameterType="hashmap" resultType="admCamping">
+		SELECT 
+			ca_idx, ca_name, ca_intro, 
+			ca_manage_status, ca_induty, 
+			ca_sido, ca_sigungu, ca_postcode, ca_addr_default, ca_addr_detail, 
+			ca_mapX, ca_mapY, 
+			ca_tel, ca_oper_period, ca_oper_date, 
+			ca_fire_cnt, ca_theme,
+			ca_sub_facility, ca_possibilty, ca_environment, 
+			ca_tool, ca_pet, 
+			ca_create_date, ca_modified_date
+		FROM cp_camping
+		WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<!-- 캠핑장 API 업데이트 데이터 상세보기 -->
+	<select id="campingAdmAPI" parameterType="hashmap" resultType="admCamping">
+		SELECT 
+			ca_idx, ca_name, ca_intro, 
+			ca_manage_status, ca_induty, 
+			ca_sido, ca_sigungu, ca_postcode, ca_addr_default, ca_addr_detail, 
+			ca_mapX, ca_mapY, 
+			ca_tel, ca_oper_period, ca_oper_date, 
+			ca_fire_cnt, ca_theme,
+			ca_sub_facility, ca_possibilty, ca_environment, 
+			ca_tool, ca_pet, 
+			ca_create_date, ca_modified_date
+		FROM cp_camping_api
+		WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	
+	
 
 </mapper>

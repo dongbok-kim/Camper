@@ -5,6 +5,7 @@
 	<h3>크루 모집 수정하기</h3>
 	<form action="crewTogetherUpdate.do" name="crewUpdate" method="post">
 		<input type="hidden" name="ct_idx" value="${crew.ct_idx }"/>
+		<input type="hidden" name="mb_id" value="${crew.mb_id }">
 		<table>
 			<tr>
 				<th>연령대</th>

@@ -135,7 +135,7 @@ public class TogetherService {
 	public ModelAndView campPopup(Criteria cri, HttpSession session, HashMap<String, Object> map) {
 		// 캠핑장 리스트
 		ModelAndView mav = new ModelAndView("popupCamping");
-		cri.setAmount(10);
+		cri.setAmount(15);
 		
 		// 총 캠핑장 수
 		int total = dao.campingTotal(map);
@@ -220,22 +220,29 @@ public class TogetherService {
 
 	
 	// 크루 모집글 수정 데이터 불러오기
-	public ModelAndView crewUpdate(int ct_idx) {
+	public ModelAndView crewUpdate(int ct_idx, HttpSession session ) {
 		
 		logger.info("모집글 수정 서비스 : "+ct_idx);
 		TogetherDTO dto = dao.crewUpdate(ct_idx);
 		int chatCnt = dao.chatCnt(ct_idx); // 현재 채팅방 인원 수
-		ModelAndView mav = new ModelAndView("crewTogetherUpdate");
-		mav.addObject("crew", dto);
-		mav.addObject("chatCnt", chatCnt);
 		
-		// campingType 배열로 보내기 - 더 나은 방법 생각나면 수정하기
-		/*
-		 * String[] type = dto.getCt_camping_type().split(","); mav.addObject("type",
-		 * type);
-		 */
+		String loginId = (String) session.getAttribute("loginId");
+		String mb_id = dto.getMb_id();
+		String page = "main";
 		
-		logger.info("dto : "+ dto.getCa_name() +'/'+ dto.getCt_camping_type());
+		ModelAndView mav = new ModelAndView();
+		
+		if(!loginId.equals(mb_id)) {
+			mav.setViewName(page);
+			mav.addObject("msg","본인 글만 수정할 수 있습니다.");
+		} else {
+			logger.info("모집글 수정 작성자 확인 : {}/{}",loginId, mb_id);
+			mav.addObject("crew", dto);
+			mav.addObject("chatCnt", chatCnt);
+					
+			logger.info("dto : "+ dto.getCa_name() +'/'+ dto.getCt_camping_type());
+			
+		}	
 		return mav;
 	}
 	
