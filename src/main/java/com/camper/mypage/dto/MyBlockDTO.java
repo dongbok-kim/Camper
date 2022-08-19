@@ -11,7 +11,14 @@ public class MyBlockDTO {
 	private String mb_id;
 	private String bl_mb;
 	private Timestamp bl_datetime;
-	
+	private String mb_nickname;
+
+	public String getMb_nickname() {
+		return mb_nickname;
+	}
+	public void setMb_nickname(String mb_nickname) {
+		this.mb_nickname = mb_nickname;
+	}
 	public int getBl_idx() {
 		return bl_idx;
 	}

@@ -37,10 +37,20 @@
 
 	<!-- 캠핑장 후기 목록 -->
 	<select id="campingReviewList" parameterType="hashmap" resultType="mypgReview">
-		SELECT ccr.cr_idx, cc.ca_name, ccr.cr_content, ccr.cr_assessment, cr_datetime, date_format(date_add(cct.ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today
-		FROM cp_camping_review ccr join cp_camping cc on cc.ca_idx = ccr.ca_idx
+		SELECT 
+			ccr.cr_idx,
+			cc.ca_name, 
+			ccr.cr_content, 
+			ccr.cr_assessment, 
+			cr_datetime, 
+			date_format(date_add(cct.ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAble, 
+			date_format(now(),'%Y-%m-%d') as today
+		FROM cp_camping_review ccr 
+		JOIN cp_camping cc ON cc.ca_idx = ccr.ca_idx
 		JOIN cp_crew_together cct on ccr.ct_idx = cct.ct_idx 
 		WHERE ccr.mb_id = #{loginId} ORDER BY cr_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<delete id="campingReviewDelete">
@@ -48,20 +58,57 @@
 		WHERE cr_idx = #{param1} and mb_id = #{param2}
 	</delete>
 	
-	<!-- 받은 후기 -->
-	<select id="crewReviewR" resultType="mypgReview">
-		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, mr_id 
+	<!-- 받은 후기 페이징 -->
+	<select id="totalR" parameterType="hashmap" resultType="int">
+		SELECT COUNT(mr_idx)
 		FROM cp_member_review 
-		WHERE mb_id = #{param1}
+		WHERE mb_id = #{loginId}
+		ORDER BY mr_idx DESC
+	</select>
+
+	<!-- 받은 후기 -->
+	<select id="crewReviewR" parameterType="hashmap" resultType="mypgReview">
+		SELECT 
+			mr_idx, 
+			mr_assessment, 
+			mr_score, 
+			mr_content, 
+			mr_datetime, 
+			mr_id,
+			(select mb_nickname from cp_member cm where mr_id = cm.mb_id) as mb_nickname
+		FROM cp_member_review 
+		WHERE mb_id = #{loginId}
+		ORDER BY mr_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
+	</select>
+	
+	<!-- 작성 후기 페이징 -->
+	<select id="totalW" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(mr_idx) 
+		FROM cp_member_review cmr JOIN cp_crew_together cct ON cct.ct_idx = cmr.ct_idx 
+		WHERE mr_id = #{loginId}
 		ORDER BY mr_idx DESC
 	</select>
 	
 	<!-- 작성 후기 -->
-	<select id="crewReviewW" resultType="mypgReview">
-		SELECT mr_idx, mr_assessment, mr_score, mr_content, mr_datetime, cmr.mb_id, date_format(date_add(ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAvail, date_format(now(),'%Y-%m-%d') as today 
+	<select id="crewReviewW" parameterType="hashmap" resultType="mypgReview">
+		SELECT 
+			mr_idx, 
+			mr_assessment, 
+			mr_score, 
+			mr_content, 
+			mr_datetime, 
+			cmr.mb_id, 
+			(select mb_nickname from cp_member cm where cmr.mb_id = cm.mb_id) as mb_nickname, 
+			date_format(date_add(ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAble, 
+			date_format(now(),'%Y-%m-%d') as today 
 		FROM cp_member_review cmr JOIN cp_crew_together cct ON cct.ct_idx = cmr.ct_idx 
-		WHERE mr_id = #{param1}
+		WHERE mr_id = #{loginId}
 		ORDER BY mr_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<!-- 크루 후기 작성 -->
@@ -77,7 +124,10 @@
 	
 	<!-- 회원 모닥불온도 업데이트 -->
 	<update id="memberUpdate">
-		UPDATE cp_member SET mb_fire = (SELECT ROUND(SUM(mr_score)/COUNT(mr_idx)) FROM cp_member_review cmr WHERE mb_id = #{param1}) WHERE mb_id = #{param1}
+		UPDATE cp_member 
+		SET mb_fire = (SELECT ROUND(SUM(mr_score)/COUNT(mr_idx)) 
+		FROM cp_member_review cmr 
+		WHERE mb_id = #{param1})
 	</update>
 	
 	<!-- 삭제 리뷰 대상 아이디 찾기 -->
@@ -90,6 +140,14 @@
 		SELECT cc_is_join  
 		FROM cp_camping_crew 
 		WHERE ct_idx = #{param1} and mb_id = #{param2}
+	</select>
+	
+	<select id="delAble" resultType="mypgReview">
+		SELECT ccr.cr_idx, date_format(date_add(ct_end_datetime, interval 30 day),'%Y-%m-%d') as delAble, date_format(now(),'%Y-%m-%d') as today
+		FROM cp_camping_review ccr 
+		join cp_camping cc on cc.ca_idx = ccr.ca_idx
+		join cp_crew_together cct ON cct.ct_idx = ccr.ct_idx 
+		WHERE ccr.cr_idx = #{param1} AND ccr.mb_id = #{param2}
 	</select>
 	
 </mapper>

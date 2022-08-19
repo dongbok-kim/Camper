@@ -9,7 +9,7 @@
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
 						<li><a href="/myCrewWriteList.go">내가 쓴 모집글</a></li>
 						<li><a href="/myCampingReview.go">캠핑장 후기</a></li>
-						<li><a href="">크루 후기</a></li>
+						<li><a href="/myCrewReviewR.go">크루 후기</a></li>
 						<li><a href="/myCrewList.go">참여한 크루 목록</a></li>
 						<li><a href="/myChatList.do">참여 중인 채팅방</a></li>
 						<li class="active"><a href="/myBlockList.go">차단 회원</a></li>
@@ -35,7 +35,7 @@
 							<c:forEach items="${list}" var="bck" varStatus="i">
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
-									<td>${bck.mb_id}</td>
+									<td>${bck.mb_nickname}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bck.bl_datetime}"/></td>
 									<td><input type="button" value="차단해제" onclick="del(${bck.bl_idx})"/></td>
 								</tr>		

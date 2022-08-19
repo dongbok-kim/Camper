@@ -1,8 +1,6 @@
 package com.camper.mypage.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import javax.servlet.http.HttpSession;
 
@@ -30,7 +28,6 @@ public class MyReviewController {
 	@RequestMapping(value = "/campingReviewForm.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewForm(HttpSession session, @RequestParam String idx) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		return service.campingReviewForm(idx, loginId);
 	}
 	
@@ -40,7 +37,6 @@ public class MyReviewController {
 	@RequestMapping(value = "/campingReviewWrite.do", method = RequestMethod.POST)
 	public ModelAndView campingReviewWrite(HttpSession session, @RequestParam HashMap<String, String> params) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		params.put("loginId", loginId);
 		logger.info("params : "+ params);
 		return service.campingReviewWrite(params);
@@ -52,7 +48,6 @@ public class MyReviewController {
 	@RequestMapping(value = "/myCampingReview.go", method = RequestMethod.GET)
 	public ModelAndView campingReviewList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		params.put("loginId", loginId);
 		return service.campingReviewList(cri,params);
 	}
@@ -63,7 +58,6 @@ public class MyReviewController {
 	@RequestMapping(value = "/campingReviewDelete.do", method = RequestMethod.GET)
 	public ModelAndView campingReviewDelete (HttpSession session, @RequestParam String idx) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		return service.campingReviewDelete(idx, loginId);
 	}
 	
@@ -118,20 +112,20 @@ public class MyReviewController {
 	// 크루 후기 페이지 (받은 후기)
 	// by.승진 2022-08-15
 	@RequestMapping(value = "/myCrewReviewR.go", method = RequestMethod.GET)
-	public ModelAndView crewReviewR(HttpSession session) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jin";
-		return service.crewReviewR(loginId);
+	public ModelAndView crewReviewR(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
+		String loginId = (String) session.getAttribute("loginId");
+		params.put("loginId", loginId);
+		return service.crewReviewR(cri, params);
 	}
 	
 	
 	// 크루 후기 페이지 (작성 후기)
 	// by.승진 2022-08-15
 	@RequestMapping(value = "/myCrewReviewW.go", method = RequestMethod.GET)
-	public ModelAndView crewReviewW(HttpSession session) {
+	public ModelAndView crewReviewW(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
-		return service.crewReviewW(loginId);
+		params.put("loginId", loginId);
+		return service.crewReviewW(cri, params);
 	}
 	
 	
@@ -140,7 +134,6 @@ public class MyReviewController {
 	@RequestMapping(value = "/crewReviewDelete.do", method = RequestMethod.GET)
 	public String crewReviewDelete (HttpSession session, @RequestParam String idx) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		String mb_id = service.getId(idx, loginId);
 		service.crewReviewDelete(idx, loginId);
 		// 리뷰받은 회원 모닥불온도 업데이트

@@ -21,7 +21,7 @@ public class MyReviewDTO {
 	private Timestamp cr_datetime;
 	private String mb_id;
 	private int ct_idx;
-	private Date delAvail;
+	private Date delAble;
 	private Date today;
 	private int mr_idx;
 	private String mr_assessment;
@@ -73,11 +73,11 @@ public class MyReviewDTO {
 	public void setToday(Date today) {
 		this.today = today;
 	}
-	public Date getDelAvail() {
-		return delAvail;
+	public Date getDelAble() {
+		return delAble;
 	}
-	public void setDelAvail(Date delAvail) {
-		this.delAvail = delAvail;
+	public void setDelAble(Date delAble) {
+		this.delAble = delAble;
 	}
 	public int getCt_idx() {
 		return ct_idx;
