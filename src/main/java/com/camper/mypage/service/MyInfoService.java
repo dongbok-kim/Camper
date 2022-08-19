@@ -44,6 +44,7 @@ public class MyInfoService {
 		if(match == true) {
 			
 			dao.secession(mb_id);
+			dao.chatJoinDelete(mb_id);
 			session.removeAttribute("loginId");
 			session.removeAttribute("mb_grade");
 			session.removeAttribute("mb_status");

@@ -126,6 +126,7 @@ table, th, td{
 		</form>
 	</fieldset>
 	</section>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 </script>
