@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/resources/inc/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 </head>
 <body>
 	<h3>비밀번호 재설정</h3>
+	<form action="" method="POST" onsubmit="return submitCheck()">
 	<table>
             <tr>
                 <th>비밀번호 재설정</th>
@@ -25,6 +27,7 @@
             </tr>
         </table>
             <input type="submit" value="비밀번호 재설정" >
+        </form>
 </body>
 <script>
 </script>
