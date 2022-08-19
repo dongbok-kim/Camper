@@ -47,28 +47,35 @@ SELECT mb_id, mb_nickname FROM cp_member WHERE mb_id = #{loginId}
 </select>
 
 
-<!-- 프로필- 작성 모집글 -->
+<!-- 프로필- 작성 모집글 구 -->
 <select id="profileTogether" resultType="com.camper.profile.dto.ProfileDTO">
 SELECT ct_idx, ct_title, ct_wish_start , ct_wish_end, (select ca_name from cp_camping where ca_idx=cct.ca_idx) as name
 FROM cp_crew_together cct WHERE mb_id= #{mb_id}
 </select>
 
 
-<!-- 작성글 갯수 -->
+<!-- 프로필 작성모집글 갯수 -->
 <select id="total" parameterType="hashmap" resultType="int">
-	SELECT COUNT(ct_idx) FROM cp_crew_together WHERE mb_id= #{mb_id} ORDER BY ct_idx DESC 
+	SELECT COUNT(ct_idx) FROM cp_crew_together cct WHERE mb_id= #{mb_id} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') ORDER BY ct_idx DESC 
+</select>
+
+<!-- 프로필 후기 갯수 -->
+<select id="total2" parameterType="hashmap" resultType="int">
+	SELECT COUNT(mr_idx) FROM cp_member_review WHERE mb_id= #{mb_id} ORDER BY mr_idx DESC 
 </select>
 
 
  <!-- 프로필 작성글 페이징처리 -->
  <select id="profileView2" parameterType="Hashmap" resultType="com.camper.profile.dto.ProfileDTO">
  SELECT ct_idx, ct_title, ct_wish_start , ct_wish_end, (select ca_name from cp_camping where ca_idx=cct.ca_idx) as name
-FROM cp_crew_together cct WHERE mb_id= #{mb_id} LIMIT 5 OFFSET #{skip}
+FROM cp_crew_together cct WHERE mb_id= #{mb_id} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') LIMIT 5
+<if test="skip gt 0">OFFSET #{skip}</if>
  </select>
 
 <!-- 프로필- 받은 리뷰  페이징처리-->
 <select id="profileReview2" resultType="com.camper.profile.dto.ProfileDTO" parameterType="Hashmap" >
-SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id} LIMIT 5 OFFSET #{skip}
+SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id} LIMIT 5 
+<if test="skip2 gt 0">OFFSET #{skip2}</if>
 </select>
 
 
