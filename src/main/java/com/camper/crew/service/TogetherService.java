@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.camping.dto.CampingDTO;
-import com.camper.chat.dto.ChatDTO;
 import com.camper.crew.dao.TogetherDAO;
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.lib.dao.CommonDAO;
@@ -30,8 +29,8 @@ public class TogetherService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	//크루모집 리스트
-	public ArrayList<TogetherDTO> list() {
-		return dao.list();
+	public ArrayList<TogetherDTO> list(HashMap<String, Object> params) {
+		return dao.list(params);
 	}
 
 	//모집글 상세보기
@@ -58,9 +57,9 @@ public class TogetherService {
 		
 	}
 
-	public int crewCnt() {
+	public int crewCnt(HashMap<String, Object> params) {
 		logger.info("크루목록가져오기");
-		return dao.crewCnt();
+		return dao.crewCnt(params);
 	}
 
 	public ArrayList<TogetherDTO> recom(String mb_id) {

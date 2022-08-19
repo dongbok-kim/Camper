@@ -124,55 +124,56 @@
                     </ul>
                     <div style="clear: both;"></div>
                     <div id="searchBox">
-                        <form action="/crewTogetherList.do" method="post">
+                        <form id="crewTogetherSearchForm" action="crewTogetherList.do" method="post">
+                        	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
                             <table>
                                 <tbody>
                                     <tr>
                                         <th>성별</th>
                                         <td>
-                                            <label><input type="radio" name="gender" value="남자" /> 남자</label>
-                                            <label><input type="radio" name="gender" value="여자" /> 여자</label>
-                                            <label><input type="radio" name="gender" value="혼성" /> 혼성</label>
+                                            <label><input type="radio" name="ct_gender" value="남" <c:if test="${ct_gender eq '남'}">checked="checked"</c:if> /> 남성</label>
+                                            <label><input type="radio" name="ct_gender" value="여" <c:if test="${ct_gender eq '여'}">checked="checked"</c:if> /> 여성</label>
+                                            <label><input type="radio" name="ct_gender" value="혼성" <c:if test="${ct_gender eq '혼성'}">checked="checked"</c:if> /> 혼성</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>캠핑종류</th>
                                         <td>
-                                            <label><input type="checkbox" name="camping" value="백팩킹" /> 백팩킹</label>
-                                            <label><input type="checkbox" name="camping" value="오토캠핑" /> 오토캠핑</label>
-                                            <label><input type="checkbox" name="camping" value="글램핑" /> 글램핑</label>
-                                            <label><input type="checkbox" name="camping" value="부쉬크래프트" /> 부쉬크래프트</label>
-                                            <label><input type="checkbox" name="camping" value="비박" /> 비박</label>
+                                            <label><input type="checkbox" name="ct_camping_type" value="백패킹" <c:if test="${fn:contains(ct_camping_type, '백패킹')}">checked="checked"</c:if> /> 백패킹</label>
+                                            <label><input type="checkbox" name="ct_camping_type" value="오토패킹" <c:if test="${fn:contains(ct_camping_type, '오토패킹')}">checked="checked"</c:if> /> 오토패킹</label>
+                                            <label><input type="checkbox" name="ct_camping_type" value="글램핑" <c:if test="${fn:contains(ct_camping_type, '글램핑')}">checked="checked"</c:if> /> 글램핑</label>
+                                            <label><input type="checkbox" name="ct_camping_type" value="부쉬크래프트" <c:if test="${fn:contains(ct_camping_type, '부쉬크래프트')}">checked="checked"</c:if> /> 부쉬크래프트</label>
+                                            <label><input type="checkbox" name="ct_camping_type" value="비박" <c:if test="${fn:contains(ct_camping_type, '비박')}">checked="checked"</c:if> /> 비박</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>연령대</th>
                                         <td>
-                                           <label><input type="checkbox" name="age" value="2" /> 20대</label>
-                                           <label><input type="checkbox" name="age" value="3" /> 30대</label>
-                                           <label><input type="checkbox" name="age" value="4" /> 40대</label>
-                                           <label><input type="checkbox" name="age" value="5" /> 50대</label>
-                                           <label><input type="checkbox" name="age" value="6" /> 60대 이상</label>
+                                           <label><input type="checkbox" name="ct_age" value="20" <c:if test="${fn:contains(ct_age, 20)}">checked="checked"</c:if> /> 20대</label>
+                                           <label><input type="checkbox" name="ct_age" value="30" <c:if test="${fn:contains(ct_age, 30)}">checked="checked"</c:if> /> 30대</label>
+                                           <label><input type="checkbox" name="ct_age" value="40" <c:if test="${fn:contains(ct_age, 40)}">checked="checked"</c:if> /> 40대</label>
+                                           <label><input type="checkbox" name="ct_age" value="50" <c:if test="${fn:contains(ct_age, 50)}">checked="checked"</c:if> /> 50대</label>
+                                           <label><input type="checkbox" name="ct_age" value="60" <c:if test="${fn:contains(ct_age, 60)}">checked="checked"</c:if> /> 60대 이상</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>기타정보</th>
                                         <td>
-                                            <label><input type="checkbox" name="isPet" value="1" /> 애견동반가능</label>
-                                            <label><input type="checkbox" name="isTool" value="1" /> 장비제공가능</label>
+                                            <label><input type="checkbox" name="ct_pet" value="1" <c:if test="${ct_pet eq 1}">checked="checked"</c:if> /> 애견동반가능</label>
+                                            <label><input type="checkbox" name="ct_tool" value="1" <c:if test="${ct_tool eq 1}">checked="checked"</c:if> /> 장비제공가능</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>날짜선택</th>
                                         <td>
-                                            <input type="date" name="startDate" />
-                                            <input type="date" name="endDate" />
+                                            <input type="text" name="ct_wish_start" id="startDate" readonly value="${ct_wish_start}" />
+                                            <input type="text" name="ct_wish_end" id="endDate" readonly value="${ct_wish_end}" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>캠핑장명</th>
                                         <td>
-                                           <input type="text" name="keyword" />
+                                           <input type="text" name="cp_name" value="${cp_name}" />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -182,11 +183,11 @@
 							</div>
                         </form>
                     </div>
-                    <p id="totalCnt">총 <strong>${crewCnt}</strong>건<a href="">크루 모집하기</a></p>
+                    <p id="totalCnt">총 <strong>${crewCnt}</strong>건<a href="crewTogetherReg.go">크루 모집하기</a></p>
                     <ul id="crewVote" class="crewList">
                     <c:forEach items="${list}" var="list">
                         <li>
-                            <a href="/crewTogetherView.do?ct_idx=${list.ct_idx}">
+                            <a href="crewTogetherView.do?ct_idx=${list.ct_idx}">
                                 <div class="imgBox">
                                     <span><i class="xi-maker"></i> ${list.ca_sido} ${fn:substring(list.ct_wish_start,5,7)}/${fn:substring(list.ct_wish_start,8,10)} ~ ${fn:substring(list.ct_wish_end,5,7)}/${fn:substring(list.ct_wish_end,8,10)}</span>
                                     <img src="${list.ca_img}" onerror="javascript:this.src='../../resources/images/no_picture.png';" alt="캠핑장 이미지" />
@@ -202,7 +203,52 @@
                     </c:forEach>
                     </ul>
                     <div style="clear: both;"></div>
+					<ul>	
+						<!-- 이전페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="javascript:;" data="${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!-- 다음페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="javascript:;" data="${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>
                 </div>
 <%@ include file="../../resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+		$('ul > li.pageInfo_btn > a').on('click', function() {
+			$('input:hidden[name="pageNum"]').val($(this).attr('data'));
+			if($.trim($('#startDate').val()) == '' || $.trim($('#endDate').val()) == '') {
+				window.alert("시작일 또는 종료일을 선택해 주세요.");
+				return false;
+			}
+			$('#crewTogetherSearchForm').submit();
+		});
+		
+		$('#startDate').datepicker({
+			minDate: 0,
+			dateFormat: 'yy-mm-dd',
+			onSelect: function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate());
+				$('#endDate').datepicker('option', 'minDate', dt);
+			}
+		});
+		
+		$('#endDate').datepicker({
+			minDate: $.trim($('#startDate').val()) == '' ? 0 : $('#startDate').val(),
+			dateFormat: 'yy-mm-dd',
+			onSelect: function(selected) {
+				var dt = new Date(selected);
+				dt.setDate(dt.getDate());
+				$('#startDate').datepicker('option', 'maxDate', dt);
+			}
+		});
+	</script>
 </html>
