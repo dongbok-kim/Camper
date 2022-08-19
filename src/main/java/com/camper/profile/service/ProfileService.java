@@ -43,7 +43,7 @@ public class ProfileService {
 		if(NormalMember != "탈퇴") {
 		
 			logger.info("프로필 확인 가능");
-			page = "profile";
+			page = "profileNP";
 			
 						
 			ProfileDTO profileView = dao.profileView(mb_id);
@@ -193,28 +193,45 @@ public class ProfileService {
 			page = "profile";
 		
 			ProfileDTO profileView = dao.profileView(mb_id);
-			mav.addObject("profileView", profileView);
+			mav.addObject("profileView", profileView); //프로필 확인
 			
 			
 			String blockCheck = dao.blockCheck(mb_id, loginId);
 			mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
 			
-			cri.setAmount(15);
-			//if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
-			//	cri.setKeyword((String)params.get("keyword"));
-			//	cri.setType((String)params.get("type"));
-				
-			//	mav.addObject("keyword", params.get("keyword"));
-			//	mav.addObject("type", params.get("type"));
+			//페이징처리 시작
+			cri.setAmount(5);
 			
-			//}
 				
 			int total = (int)dao.total(params);
-			mav.addObject("listCnt", total);
+			int total2 = (int)dao.total2(params);
+			mav.addObject("listCnt", total); //총 글수
+			mav.addObject("listCnt2", total2); //총 글수2
+			
+			logger.info("토탈:"+total);
+			logger.info("토탈2:"+total2);
 			
 			PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+			PageMakerDTO pageMaker2 = new PageMakerDTO(cri, total2);
 			
 			int pageNum = cri.getPageNum();
+			int pageNum2 = cri.getPageNum();
+		
+			
+			logger.info("페이지넘버:" + pageNum);
+			logger.info("페이지넘버2:" + pageNum2);
+			
+			if (pageMaker.getStartPage() <0 ) {
+				pageMaker.setStartPage(1);
+			}
+			
+			
+			if (pageMaker2.getStartPage() <0 ) {
+				pageMaker2.setStartPage(1);
+			}
+			
+			
+			
 			
 			//현재페이지가 마지막 페이지를 초과하지 못하도록
 			if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
@@ -224,12 +241,30 @@ public class ProfileService {
 				
 			}
 			
+			if(pageMaker2.getEndPage() > 0 && pageNum2 > pageMaker2.getEndPage()) {
+				pageNum2 = pageMaker2.getEndPage();
+				cri.setPageNum(pageNum2);
+								
+			}
+			
+			logger.info("끝페이지:" + pageMaker.getEndPage() );
+			logger.info("끝페이지2:" + pageMaker2.getEndPage() );
+			
+			
+			
 			// dao mapper offset
 			int skip = (pageNum-1)*cri.getAmount();
 			params.put("skip", skip);
 			mav.addObject("skip", skip);
 			
-						
+			
+			
+			int skip2 = (pageNum2-1)*cri.getAmount();
+			params.put("skip2", skip2);
+			mav.addObject("skip2", skip2);
+					
+			
+			
 			//dao mapper limit
 			params.put("amount", cri.getAmount());
 			
@@ -240,6 +275,11 @@ public class ProfileService {
 			mav.addObject("list", list);
 			mav.addObject("list2", list2);
 			mav.addObject("pageMaker", pageMaker);
+			
+			mav.addObject("pageMaker2", pageMaker2);
+			
+			logger.info("페이지메이커" + pageMaker);
+			logger.info("페이지메이커" + pageMaker2);
 			
 		} else {
 			
