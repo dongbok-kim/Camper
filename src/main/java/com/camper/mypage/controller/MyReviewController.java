@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyReviewService;
 
 @Controller
@@ -49,10 +50,11 @@ public class MyReviewController {
 	// 캠핑장 후기 목록
 	// by.승진 2022-08-11
 	@RequestMapping(value = "/myCampingReview.go", method = RequestMethod.GET)
-	public ModelAndView campingReviewList(HttpSession session) {
+	public ModelAndView campingReviewList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
 		// String loginId = "jin";
-		return service.campingReviewList(loginId);
+		params.put("loginId", loginId);
+		return service.campingReviewList(cri,params);
 	}
 	
 	

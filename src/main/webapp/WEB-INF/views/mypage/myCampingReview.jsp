@@ -32,7 +32,7 @@
 				</aside>
 				<div>
 					<h3>캠핑장 후기</h3>
-					<h4>캠핑장 후기 수 : ${list.size()} 건</h4>
+					<h4>캠핑장 후기 수 : ${listCnt} 건</h4>
 					<table id="campingReview">
 						<colgroup>
 							<col width="60"></col>
@@ -56,7 +56,7 @@
 							</c:if>
 							<c:forEach items="${list}" var="rv">
 								<tr>
-									<td>${rv.cr_idx}</td>
+									<td>${listCnt - skip - i.index}</td>
 									<td  class="subject" >${rv.ca_name}<br/>${rv.cr_content}</td>
 									<td>${rv.cr_assessment}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
@@ -67,6 +67,21 @@
 							</c:forEach>
 						</tbody>
 					</table>
+					<ul>
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+					</ul>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
