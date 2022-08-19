@@ -38,9 +38,18 @@ public class LoginController {
 	
 	//로그인 페이지 이동
 	@RequestMapping(value = "/login.go")
-	public String loginPage(Model model) {
+	public String loginPage(Model model, HttpSession session, RedirectAttributes rttr) {
 		
-		return "login/login";
+		String page = "login/login";
+		
+		session.removeAttribute("mb_id");
+		
+		if(session.getAttribute("loginId") != null ) {
+			rttr.addFlashAttribute("msg", "로그인한 상태로 접근 불가 ");
+			page = "redirect:/";
+		}
+		
+		return page;
 	}
 	
 	//회원가입 페이지 이동
@@ -84,6 +93,28 @@ public class LoginController {
 		
 		return page;
 	}
+	
+	
+	//비밀번호 재설정 패이지 이동
+	@RequestMapping(value = "/pwRework.go")
+	public String PwReworkPage(Model model, HttpSession session, RedirectAttributes rttr) {
+		
+		String page = "login/pwRework";
+		
+		if(session.getAttribute("loginId") != null ) {
+			rttr.addFlashAttribute("msg", "로그인한 상태로 접근 불가 ");
+			page = "redirect:/";
+		}
+		
+		if(session.getAttribute("mb_id") == null ) {
+			rttr.addFlashAttribute("msg", "강제 페이지 진입 불가");
+			page = "redirect:/login.go";
+		}
+		
+		return page;
+	}
+	
+	
 	
 	//로그인
 	@RequestMapping(value = "/login.do")
@@ -247,9 +278,9 @@ public class LoginController {
 					rttr.addFlashAttribute("msg", "탈퇴된 회원 입니다");
 					page = "redirect:/pwFind.go";
 				} else {
-					model.addAttribute("msg", "비밀번호 변경 가능");
 					session.setAttribute("mb_id", mb_id);
-					page = "login/pwRework";
+					page = "redirect:/pwRework.go";
+					rttr.addFlashAttribute("msg", "비밀번호 변경 가능");
 				}
 					
 			} else {
@@ -263,13 +294,23 @@ public class LoginController {
 	
 		//비밀번호 재설정
 		@RequestMapping(value = "/pwRework.do")
-		public ModelAndView PwRework(Model model, @ModelAttribute LoginDTO dto) {
+		public String PwRework(Model model, HttpSession session, RedirectAttributes rttr, @RequestParam String mb_pw) {
 			
-			logger.info("수정할 아이디 : "+dto.getMb_id());
-			logger.info("수정할 pw : "+dto.getMb_pw());
-			logger.info("수정할 이메일 : "+dto.getMb_email());
+			String page = "login/pwRework";
 			
-			return service.pwRework(dto);
+			String mb_id = (String) session.getAttribute("mb_id");
+			
+			logger.info("비밀번호 재설정할 아이디 : "+mb_id);
+			logger.info("mb_pw : "+mb_pw); 
+			
+			service.pwRework(mb_id, mb_pw);
+			
+			session.removeAttribute("mb_id");
+			rttr.addFlashAttribute("msg", "비밀번호가 수정되었습니다.");
+			
+			page = "redirect:/login.go";
+			
+			return page;
 		}
 		
 	

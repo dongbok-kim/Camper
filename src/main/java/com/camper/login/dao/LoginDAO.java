@@ -18,8 +18,6 @@ public interface LoginDAO {
 
 	int pwFind(String mb_id, String mb_email);
 
-	int pwRework(LoginDTO dto);
-
 	String mbgrade(String id);
 
 	String mbstatus(String id);
@@ -29,6 +27,8 @@ public interface LoginDAO {
 	String idFindStatus(String name, String email);
 
 	String pwFindstatus(String mb_id, String mb_email);
+
+	void pwRework(String mb_id, String encode);
 
 	
 
