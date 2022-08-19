@@ -6,7 +6,10 @@
 <select id="memberTotal" resultType="int" parameterType="hashmap">
 	SELECT COUNT(mb_id) FROM
 	 cp_member WHERE mb_grade = '회원'
-	 
+	 <if test="filter != null and !filter.equals('')">
+	 	AND mb_status = #{filter}
+	 </if>
+	 <if test="keyword != null and !keyword.equals('')">
 	 <choose>
 	 	<when test="type != null and type.equals('mb_id')">
 	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -17,8 +20,11 @@
 	 	<when test="type != null and type.equals('mb_nickname')">
 	 		AND mb_nickname LIKE CONCAT('%', #{keyword}, '%')
 	 	</when>
-	 	<otherwise></otherwise>
+	 	<otherwise>
+	 		AND (mb_id LIKE CONCAT('%', #{keyword}, '%') or mb_name LIKE CONCAT('%', #{keyword}, '%') or mb_nickname LIKE CONCAT('%', #{keyword}, '%'))
+	 	</otherwise>
 	 </choose>
+	 </if>
 	 
 </select>
 
@@ -28,7 +34,10 @@
 <select id="memberAdmList" resultType="admMember" parameterType="hashmap">
 	SELECT mb_id, mb_name, mb_nickname, mb_email, mb_status FROM
 	 cp_member WHERE mb_grade = '회원'
-	 
+	 <if test="filter != null and !filter.equals('')">
+	 	AND mb_status = #{filter}
+	 </if>
+	 <if test="keyword != null and !keyword.equals('')">
 	 <choose>
 	 	<when test="type != null and type.equals('mb_id')">
 	 		AND mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -39,11 +48,13 @@
 	 	<when test="type != null and type.equals('mb_nickname')">
 	 		AND mb_nickname LIKE CONCAT('%', #{keyword}, '%')
 	 	</when>
-	 	<otherwise></otherwise>
+	 	<otherwise>
+	 		AND (mb_id LIKE CONCAT('%', #{keyword}, '%') or mb_name LIKE CONCAT('%', #{keyword}, '%') or mb_nickname LIKE CONCAT('%', #{keyword}, '%'))
+	 	</otherwise>
 	 </choose>
+	 </if>
 	 LIMIT #{amount}
-	OFFSET #{skip}
-	 
+	<if test="skip gt 0">OFFSET #{skip}</if>
 </select>
 
 <select id="memberAdmDetail" resultType="admMember">

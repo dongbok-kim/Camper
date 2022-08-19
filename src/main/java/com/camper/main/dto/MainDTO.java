@@ -32,6 +32,7 @@ public class MainDTO {
 	
 	private String mb_id;
 	
+	private int ct_idx;
 	
 	
 	
@@ -42,6 +43,16 @@ public class MainDTO {
 	
 	
 	
+	
+	
+	
+	
+	public int getCt_idx() {
+		return ct_idx;
+	}
+	public void setCt_idx(int ct_idx) {
+		this.ct_idx = ct_idx;
+	}
 	public String getMb_id() {
 		return mb_id;
 	}

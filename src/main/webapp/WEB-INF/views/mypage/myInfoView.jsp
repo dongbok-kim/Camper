@@ -54,7 +54,7 @@
 	<table>
 		<tr>
                 <th>아이디</th>
-                <td>${myInfo.mb_id}</td>
+                <td class="contextMenu contextMenuMember" data-id="${myInfo.mb_id}">${myInfo.mb_id}</td>
                 <td style="background-color: red ">정지</td>
                 <td>${stop} 회</td>
             </tr>
@@ -176,6 +176,7 @@
 	</form>
 	</article>
 	</section>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 function sample6_execDaumPostcode() {

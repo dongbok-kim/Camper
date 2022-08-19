@@ -24,5 +24,7 @@ public interface MyInfoDAO {
 
 	int myInfoStop(String mb_id);
 
+	void chatJoinDelete(String mb_id);
+
 
 }

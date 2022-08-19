@@ -115,7 +115,7 @@
 						<img src="resources/images/no_picture.png" width="300">
 					</c:if>
 				</td>
-				<td id="name">[${camp.ca_sido}&nbsp;${camp.ca_sigungu}]${camp.ca_name}</td>
+				<td id="name"><a href="/campingView.go?ca_idx=${camp.ca_idx}">[${camp.ca_sido}&nbsp;${camp.ca_sigungu}]${camp.ca_name}</a></td>
 			</tr>
 			<tr>									
 				<td>${camp.ca_intro}</td>
@@ -156,7 +156,7 @@
 			</tr>
 			
 			<tr>
-				<td id="title2">${crew.ct_title}</td>
+				<td id="title2"><a href="/crewTogetherView.do?ct_idx=${crew.ct_idx}">${crew.ct_title}</a></td>
 			</tr>
 			<tr>
 				<td>${crew.camp_name}</td>
@@ -168,7 +168,7 @@
 				<td id="text">${crew.ct_age}대&nbsp;${crew.ct_gender}&nbsp;모집인원&nbsp;${crew.ct_people_cnt}명</td>											
 			</tr>			
 			<tr>								
-				<td><a href="profile?mb_id=${crew.mb_id}">프로필&nbsp;${crew.name}</a></td>					
+								
 				<td><button onclick="javascript:window.open('profile?mb_id=${crew.mb_id}', 'profile', 'width=800, height=900');">
 				팝업:${crew.name}</button></td>				
 				
