@@ -40,6 +40,11 @@
 <%@ include file="/resources/inc/footer.jsp" %>
 	<script>
 	
+		var msg = "${msg}";
+		if(msg != ""){
+			alert(msg);
+		}
+	
 		function add(){
 			var form = document.addForm;
 			

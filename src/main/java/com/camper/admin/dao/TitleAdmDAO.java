@@ -19,4 +19,10 @@ public interface TitleAdmDAO {
 
 	void memberUpdate(int mt_idx);
 
+	int chkDuple(HashMap<String, String> params);
+
+	int chkUpdateDuple(HashMap<String, String> params);
+
+	int total(HashMap<String, Object> params);
+
 }
