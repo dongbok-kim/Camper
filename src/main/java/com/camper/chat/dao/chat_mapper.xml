@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="getJoin" parameterType="chat" resultType="chat">
-		SELECT cj_go, cj_datetime, mb_id, IFNULL((SELECT cc_crew FROM cp_camping_crew WHERE mb_id = a.mb_id), '크루원') AS cc_crew FROM cp_chat_join a WHERE cg_idx = #{cg_idx} AND cj_ban = 0
+		SELECT cj_go, cj_datetime, mb_id, IFNULL((SELECT cc_crew FROM cp_camping_crew WHERE mb_id = a.mb_id AND ct_idx = (SELECT ct_idx FROM cp_chat_group WHERE cg_idx = a.cg_idx)), '크루원') AS cc_crew FROM cp_chat_join a WHERE cg_idx = #{cg_idx} AND cj_ban = 0
 	</select>
 	
 	<select id="getBan" resultType="chat">
