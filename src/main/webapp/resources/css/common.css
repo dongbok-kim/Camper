@@ -171,3 +171,21 @@ header > div > a:hover > i {
 	max-width: 1200px;
 	clear: both;
 }
+
+ul > li.pageInfo_btn {
+	list-style: none;
+	display: inline-block;
+}
+
+ul > li.pageInfo_btn > a {
+	margin: 5px;
+	padding: 5px 10px;
+	border-radius: 50%;
+	color: #787878;
+	background-color: #f0f0f0;
+}
+
+ul > li.pageInfo_btn.active > a {
+	color: #fff;
+	background-color: #32405d;
+}
