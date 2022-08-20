@@ -400,7 +400,7 @@
 		}	else if (checkEmail == false) {
 			 alert("이메일 중복확인을 진행해 주세요.");
 			 return  false;
-		 }else 	if(doublenickemail != email) {
+		 } else if(doublenickemail != email) {
 			 alert("닉네임 중복확인을 진행해 주세요.");
 			 checkEmail = false;
 			 // console.log(checkNickname);

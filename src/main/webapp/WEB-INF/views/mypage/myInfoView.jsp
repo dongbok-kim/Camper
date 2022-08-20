@@ -88,6 +88,7 @@
                 <td>
                 <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}"/>
                 <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
+                <input type="hidden" id="doublecheckname" value="${myInfo.mb_nickname}"/>
                 </td>
                 <td colspan="2">
                 <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
@@ -112,8 +113,9 @@
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="email"  name = "mb_email" id="email" value="${myInfo.mb_email}"/>
+                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}"/>
                     <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
+                    <input type="hidden" id="doublecheckemail" value="${myInfo.mb_email}" />
                 </td>
                 <td colspan="2">
                     <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
@@ -266,6 +268,12 @@ if($("input[name='ma_idx']").val() == 5 ) {
 var checkEmail = false; // 이메일 중복체크 여부
 function doubleCheckEmail() {
 	
+	//문자열에 공백이 있는 경우
+	var blank_pattern = /[\s]/g;
+	// if( blank_pattern.test(str) == true){
+	   // alert('공백이 입력되었습니다.');
+	// }
+	
 	var email = $("#email").val();
 	// console.log($("#email").val());
 	
@@ -273,6 +281,17 @@ function doubleCheckEmail() {
          alert("이메일를 입력해주세요");
          return false;
       }
+	 
+	 if (blank_pattern.test(email)) {		// 공백 체크
+			alert('이메일에 공백이 있습니다.');
+			return false;
+		} 
+	 
+	  if (email.indexOf('@') == -1) {
+			alert('이메일에는 @ 를 포함해야합니다. ');
+			return false;
+		}
+	 
 	 console.log('이메일 중복 체크 : '+email);		
 		$.ajax({
 			type:'get',
@@ -286,6 +305,7 @@ function doubleCheckEmail() {
 				}else{
 					alert("사용 가능한 이메일 입니다.");
 					checkEmail = true;
+					document.getElementById('doublecheckemail').value = email;
 				}
 				 
 			},
@@ -301,6 +321,12 @@ function doubleCheckEmail() {
 var checkNickname = false; // 닉네임 중복체크 여부
 function doubleCheckNickname() {
 	
+	//문자열에 공백이 있는 경우
+	var blank_pattern = /[\s]/g;
+	// if( blank_pattern.test(str) == true){
+	   // alert('공백이 입력되었습니다.');
+	// }
+	
 	var nickname = $("#nickname").val();
 	// console.log($("#nickname").val());
 	
@@ -308,6 +334,12 @@ function doubleCheckNickname() {
          alert("닉네임을 입력해주세요");
          return false;
       }
+	 
+	 if (blank_pattern.test(nickname)) {		//공백이있는지 체크하는 문
+			alert('닉네임에 공백이 있습니다.');
+			return false;
+		} 
+	 
 	 console.log('닉네임 중복 체크 : '+nickname);		
 		$.ajax({
 			type:'get',
@@ -321,6 +353,7 @@ function doubleCheckNickname() {
 				}else{
 					alert("사용 가능한 닉네임 입니다.");
 					checkNickname = true;
+					document.getElementById('doublecheckname').value = nickname;
 				}
 				 
 			},
@@ -348,6 +381,10 @@ function submitCheck() {
 		document.getElementById('sample6_sido').value = $('#hidden_mb_sido').val();
 	}
 	
+	if($('#sample6_sido').val() == "세종특별자치시") {
+		document.getElementById('sample6_sigungu').value = "세종시";
+	}
+	
 	if ($('#sample6_sigungu').val() == "") {
 		document.getElementById('sample6_sigungu').value = $('#hidden_mb_sigungu').val();
 	}
@@ -361,6 +398,13 @@ function submitCheck() {
 		checkNickname = true;
 	}
 	
+	var email = $('#email').val();
+	
+	var doublenickemail = $("#doublecheckemail").val();
+	
+	var nickname = $('#nickname').val();
+	
+	var doublenickname = $("#doublecheckname").val();
 	
 	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
 		alert('현재 비밀번호를 입력해 주세요');
@@ -375,10 +419,20 @@ function submitCheck() {
 	} else if (checkEmail == false) {
 		 alert("이메일 중복확인을 진행해 주세요.");
 		 return  false;
+	} else if(doublenickemail != email) {
+		 alert("닉네임 중복확인을 진행해 주세요.");
+		 checkEmail = false;
+		 // console.log(checkNickname);
+		return false;
 	} else if (checkNickname == false) {
 		 alert("닉네임 중복확인을 진행해 주세요.");
 		 return false;
-	 }
+	 } else 	if(doublenickname != nickname) {
+		 alert("닉네임 중복확인을 진행해 주세요.");
+		 checkNickname = false;
+		 // console.log(checkNickname);
+		return false;
+	}	 
 	
 	
 	
