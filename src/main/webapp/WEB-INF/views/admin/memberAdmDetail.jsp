@@ -130,5 +130,9 @@ table, th, td{
 		$("input:radio[name='mb_graderadio']:radio[value='관리자']").attr("checked" , true);
 	}
 
+	var msg = "${msg}";
+	if(msg != "") {
+	alert(msg);
+	}
 </script>
 </html>
