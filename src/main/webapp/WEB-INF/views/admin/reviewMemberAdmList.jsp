@@ -97,8 +97,8 @@ textarea {
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
 					<td class="mr_content">${review.mr_content }</td>
-					<td>${review.mr_id}</td>
-					<td>${review.mb_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${review.mr_id}">${review.mr_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${review.mb_id}">${review.mb_id}</td>
 					<td>
 					${review.mr_assessment} <br/>
 					(${review.mr_score})
