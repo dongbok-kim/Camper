@@ -7,7 +7,7 @@ import com.camper.admin.dto.ReportAdmDTO;
 
 public interface ReportAdmDAO {
 
-	ArrayList<ReportAdmDTO> reportList();
+	ArrayList<ReportAdmDTO> reportList(HashMap<String, Object> params);
 
 	ReportAdmDTO reportView(int rp_idx);
 
@@ -18,5 +18,7 @@ public interface ReportAdmDAO {
 	ArrayList<ReportAdmDTO> photoList(int rp_idx);
 
 	ArrayList<ReportAdmDTO> reportSearch(HashMap<String, String> params);
+
+	int reportCnt(HashMap<String, Object> params);
 
 }

@@ -11,6 +11,8 @@ public interface ReviewAdmDAO {
 
 	ArrayList<ReviewAdmDTO> reviewCampList(HashMap<String, Object> params);
 
-	ArrayList<ReviewAdmDTO> reviewMemberList();
+	ArrayList<ReviewAdmDTO> reviewMemberList(HashMap<String, Object> params);
+
+	int reviewMemberCnt(HashMap<String, Object> params);
 
 }

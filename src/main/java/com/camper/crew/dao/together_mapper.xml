@@ -367,7 +367,7 @@
 			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
 			ORDER BY ca_idx DESC
 			LIMIT #{amount}
-			<if test="campingCnt > 0">OFFSET #{skip}</if>
+			<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<!-- 모집글 작성 / 등록 -->

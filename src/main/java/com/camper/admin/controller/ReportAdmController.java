@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.ReportAdmService;
+import com.camper.lib.utils.Criteria;
 
 @Controller
 public class ReportAdmController {
@@ -25,20 +26,22 @@ public class ReportAdmController {
 	
 	// 회원 신고 목록
 	@RequestMapping(value = "/reportAdmList.go")
-	public String reportAdmList(Model model) {
+	public ModelAndView reportAdmList(Criteria cri,
+			@RequestParam HashMap<String, Object>params) {
 		
-		service.reportList(model);
-		return "admin/reportAdmList";
+		return service.reportList(cri, params);
 	}
 	
+	
+	// 신고 상세보기
 	@RequestMapping(value = "/reportAdmView")
-	public String reportAdmView(Model model,
-			@RequestParam int rp_idx) {
+	public ModelAndView reportAdmView(@RequestParam int rp_idx, Criteria cri,
+			@RequestParam HashMap<String, Object>params) {
 		
-		service.reportView(model, rp_idx);
-		return "admin/reportAdmView";
+		return service.reportView(rp_idx, cri, params);
 	}
 	
+	// 신고 처리하기
 	@RequestMapping(value = "/reportUpdate.do")
 	public String reportUpdate(HttpSession session,
 			@RequestParam HashMap<String, String> params
@@ -53,13 +56,7 @@ public class ReportAdmController {
 		return page;
 	}
 	
-	@RequestMapping(value = "/reportSearch.do")
-	public ModelAndView reportSearch(
-			@RequestParam HashMap<String, String> params) {
-		logger.info("파람 : {}",params);
-		
-		return service.reportSearch(params);
-	}
+
 	
 
 }

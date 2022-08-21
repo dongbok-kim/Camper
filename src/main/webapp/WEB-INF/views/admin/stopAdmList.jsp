@@ -37,16 +37,16 @@
 			</thead>
 			<tbody>
 			<c:choose>
-				<c:when test="${listCnt eq 0}">
+				<c:when test="${list.size() eq 0}">
 					<tr align="center">
-						<td colspan="6">데이터가 없습니다</td>
+						<td colspan="8">데이터가 없습니다</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
-					<c:forEach items="${list }" var="stop" varStatus="i">>
+					<c:forEach items="${list }" var="stop" varStatus="i">
 						<tr>
 							<td>${listCnt - skip - i.index}</td>
-							<td class="contextMenu contextMenuMember" data-id="${stop.mb_id}">${stop.mb_id}</a></td>
+							<td class="contextMenu contextMenuMember" data-id="${stop.mb_id}">${stop.mb_id}</td>
 							<td>${stop.mb_name}</td>
 							<td>${stop.mb_nickname}</td>
 							<td>${stop.ms_reason}</td>
@@ -89,11 +89,11 @@
 				<option value="회원아이디" <c:if test="${type eq '회원아이디'}">selected="selected"</c:if> >회원아이디</option>
 				<option value="닉네임" <c:if test="${type eq '닉네임'}">selected="selected"</c:if> >닉네임</option>
 			</select>
-			<input type="text" name="keyword" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 $('#stopList select[name="filter"]').on('change', function() {

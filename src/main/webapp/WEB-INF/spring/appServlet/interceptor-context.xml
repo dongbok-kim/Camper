@@ -39,7 +39,7 @@
 			<mvc:mapping path="/stopPopup.go"/>
 			<mvc:mapping path="/stopAdmReg.do"/>
 			<mvc:mapping path="/ageAdmList.go"/>
-			<mvc:mapping path="/ageAdmReg"/>
+			<mvc:mapping path="/ageAdmReg.go"/>
 			<mvc:mapping path="/ageReg.do"/>
 			<mvc:mapping path="/ageUpdate.go"/>
 			<mvc:mapping path="/ageUpdate.do"/>

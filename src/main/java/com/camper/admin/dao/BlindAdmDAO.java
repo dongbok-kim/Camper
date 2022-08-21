@@ -11,4 +11,6 @@ public interface BlindAdmDAO {
 
 	ArrayList<BlindAdmDTO> blindSearch(HashMap<String, String> params);
 
+	int blindCnt(HashMap<String, Object> params);
+
 }

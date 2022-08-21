@@ -40,19 +40,18 @@ public class CampingAdmController {
 	
 	// 관리자 페이지 / 캠핑장 상세보기
 	@RequestMapping(value = "/campingAdmView.go")
-	public ModelAndView campingAdmView(Criteria cri, 
+	public ModelAndView campingAdmView(
 			@RequestParam HashMap<String, Object> params) {
 		logger.info("캠핑장 상세보기 idx : "+params);	
-		return service.campingAdmView(cri, params);
+		return service.campingAdmView(params);
 	}
 	
 	//관리자 페이지 / 캠핑장 수정하기
 	@RequestMapping(value = "/campingAdmUpdate.do")
-	public ModelAndView campingAdmUpdate(Criteria cri,
+	public ModelAndView campingAdmUpdate(
 			@RequestParam HashMap<String, Object> params) {
-			
-		return null;
-		//return service.campingAdmList(cri, params);
+		logger.info("관리자 캠핑장 정보 수정 idx : "+params);	
+		return service.campingAdmUpdate(params);
 	}
 	
 }

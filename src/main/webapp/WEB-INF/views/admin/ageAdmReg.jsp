@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../../resources/inc/header.jsp" %>
+<%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
@@ -29,10 +29,10 @@
 				</tr>
 			</table>
 			<input type="button" onclick=add() value="추가"/>
-			<input type="button" onclick="location.href='ageAdmList' " value="목록"/>
+			<input type="button" onclick="location.href='ageAdmList.go' " value="목록"/>
 		</form>
 	</div>
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 function add() {

@@ -104,7 +104,7 @@ textarea {
 				블라인드
 			</button>
 		</c:if>
-		<input type="button" onclick="location.href='/togetherAdmList' " value="목록">
+		<input type="button" onclick="location.href='/togetherAdmList.go?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}' " value="목록">
 	</div>
 	<div>
 		<form action="reviewCampSearch.do" method="post">
@@ -123,7 +123,7 @@ textarea {
 	<div class="modal" id="insertBlind">
 		<div class="modal_content" title="모집글 블라인드">
 			<h2>모집글 블라인드</h2>
-			<form action="blindTogether.do" method="post">
+			<form action="blindTogether.do" method="post" id="blindfm">
 				<table class="md_table">
 					<tr>
 						<th id="md_ct_title" colspan="2">모집글 제목</th>
@@ -135,15 +135,15 @@ textarea {
 					<tr>
 						<td colspan="2">
 							<input type="hidden" name="idx" value="idx"/>
-							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
+							<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
 					<tr>
 						<th>처리자 아이디</th>
-						<th>관리자아이디</th>
+						<th>${sessionScope.loginId }</th>
 					</tr>
 				</table>
-				<input type="submit" value="완료"/>
+				<input type="button" id="blindDo" value="완료"/>
 				<input type="button" id="md_close_btn" value="닫기"/>
 			</form>
 		</div>
@@ -174,11 +174,28 @@ $(function(){
 		}	
 	});
 	
+	// 사유 입력 유효성 검사
+	$("#blindDo").click(function(){
+		if($("#reason").val() == ""){
+			alert("정지 사유를 입력하세요.");
+		} else {
+			$("#blindfm").submit();
+			$(".modal").fadeOut();
+		}
+	});
+	
 	// 닫기 버튼 클릭시 모달창 닫기
 	$("#md_close_btn").click(function(){
 		$(".modal").fadeOut();
 	});
 
+	// 바탕 클릭 시 모달창 닫기
+	$(document).click(function(e){
+		if($(".modal").is(e.target)){
+			$(".modal").fadeOut();
+		}
+	});
+	
 });
 </script>
 </html>

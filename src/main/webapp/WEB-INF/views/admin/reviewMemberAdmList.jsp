@@ -66,7 +66,7 @@ textarea {
 		<a href="/reviewAdmList.go">캠핑장 후기</a>
 		<a href="/reviewMemberAdmList.go">회원 후기</a>
 	</div>
-	<div>등록된 회원 후기 수 : ${list.size()}건</div>
+	<div>등록된 회원 후기 수 : ${listCnt}건</div>
 	<div>
 		<table id="memberReview">
 			<colgroup>
@@ -78,6 +78,7 @@ textarea {
 				<col width="50"></col>
 				<col width="50"></col>
 			</colgroup>
+			<thead>
 			<tr>
 				<th>번호</th>
 				<th>후기내용</th>
@@ -87,9 +88,14 @@ textarea {
 				<th>작성일시</th>
 				<th>블라인드</th>
 			</tr>
-			<c:forEach items="${list }" var="review">
+			</thead>
+			<tbody>
+			<c:if test="${list.size() eq 0}">
+				<tr><td colspan="7">데이터가 없습니다.</td></tr>
+			</c:if>
+			<c:forEach items="${list }" var="review" varStatus="i">
 				<tr>
-					<td>${review.mr_idx}</td>
+					<td>${listCnt - skip - i.index}</td>
 					<td class="mr_content">${review.mr_content }</td>
 					<td>${review.mr_id}</td>
 					<td>${review.mb_id}</td>
@@ -107,23 +113,40 @@ textarea {
 					</td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
+		<ul>
+			<!-- 이전페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!-- 다음페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+			</c:if>
+		</ul>
 	</div>
 	<div>
-		<form action="reviewMemberSearch.do" method="post">
-			<select name="cr_assessment">
-				<option value="평가항목">평가항목</option>
-				<option value="좋아요">좋아요</option>
-				<option value="싫어요">싫어요</option>
-				<option value="보통이에요">보통이에요</option>
+		<form action="reviewMemberAdmList.go" method="post" id="reviewList">
+			<select name="filter">
+				<option value="">평가항목</option>
+				<option value="좋아요" <c:if test="${filter eq '좋아요'}">selected="selected"</c:if> >좋아요</option>
+				<option value="싫어요" <c:if test="${filter eq '싫어요'}">selected="selected"</c:if> >싫어요</option>
+				<option value="보통" <c:if test="${filter eq '보통'}">selected="selected"</c:if> >보통</option>
 			</select>
-			<select name="option">
+			<select name="type">
 				<option value="all">전체</option>
-				<option value="mr_id">평가한 회원</option>
-				<option value="mb_id">평가받은 회원</option>
-				<option value="mr_content">후기 내용</option>
+				<option value="mr_id" <c:if test="${type eq 'mr_id'}">selected="selected"</c:if> >평가한 회원</option>
+				<option value="mb_id" <c:if test="${type eq 'mb_id'}">selected="selected"</c:if> >평가받은 회원</option>
+				<option value="mr_content" <c:if test="${type eq 'mr_content'}">selected="selected"</c:if> >후기 내용</option>
 			</select>
-			<input type="text" name="keyword" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>
@@ -132,7 +155,7 @@ textarea {
 	<div class="modal" id="insertBlind">
 		<div class="modal_content" title="후기 블라인드">
 			<h2>후기 블라인드</h2>
-			<form action="blindMember.do" method="post">
+			<form action="blindMember.do" method="post" id="blindfm">
 				<table class="md_table">
 					<tr>
 						<th id="md_mr_content" colspan="2">후기 내용</th>
@@ -144,15 +167,15 @@ textarea {
 					<tr>
 						<td colspan="2">
 							<input type="hidden" name="idx" value="idx"/>
-							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
+							<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
 					<tr>
 						<th>처리자 아이디</th>
-						<th>관리자아이디</th>
+						<th>${sessionScope.loginId }</th>
 					</tr>
 				</table>
-				<input type="submit" value="완료"/>
+				<input type="button" id="blindDo" value="완료"/>
 				<input type="button" id="md_close_btn" value="닫기"/>
 			</form>
 		</div>
@@ -165,6 +188,11 @@ textarea {
 $('#memberReview > tbody > tr > td.mr_content').on('click', function() {
 	$('#memberReview > tbody > tr > td.mr_content').removeClass('active');
 	$(this).addClass('active');
+});
+
+// 검색 필터
+$('#reviewList select[name="filter"]').on('change', function() {
+	$('#reviewList').submit();
 });
 
 //블라인드 모달창 
@@ -189,10 +217,29 @@ $(function(){
 		}	
 	});
 	
+	// 사유 입력 유효성 검사
+	$("#blindDo").click(function(){
+		if($("#reason").val() == ""){
+			alert("정지 사유를 입력하세요.");
+		} else {
+			$("#blindfm").submit();
+			$(".modal").fadeOut();
+		}
+	});
+	
+	
 	// 닫기 버튼 클릭시 모달창 닫기
 	$("#md_close_btn").click(function(){
 		$(".modal").fadeOut();
 	});
+	
+	// 바탕 클릭 시 모달창 닫기
+	$(document).click(function(e){
+		if($(".modal").is(e.target)){
+			$(".modal").fadeOut();
+		}
+	});
+	
 
 });
 

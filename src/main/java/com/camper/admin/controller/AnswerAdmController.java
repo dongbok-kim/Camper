@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.AnswerAdmService;
+import com.camper.lib.utils.Criteria;
 
 @Controller
 public class AnswerAdmController {
@@ -24,16 +25,18 @@ public class AnswerAdmController {
 	
 	//문의글 목록
 	@RequestMapping(value = "/answerAdmList.go")
-	public ModelAndView answerAdmList() {
+	public ModelAndView answerAdmList(Criteria cri, 
+			@RequestParam HashMap<String, Object> params) {
 			
-		return service.answerList();
+		return service.answerList(cri, params);
 	}
 	
 	// 문의글 상세보기
 	@RequestMapping(value = "/answerAdmView")
-	public ModelAndView answerAdmView(@RequestParam int in_idx) {
+	public ModelAndView answerAdmView(@RequestParam int in_idx, Criteria cri, 
+			@RequestParam HashMap<String, Object> params) {
 			
-		return service.answerView(in_idx);
+		return service.answerView(in_idx, cri, params);
 	}
 	
 	// 문의글 답변 등록하기

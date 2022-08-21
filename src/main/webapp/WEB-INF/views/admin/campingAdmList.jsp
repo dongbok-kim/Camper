@@ -21,7 +21,7 @@
 				</div>
 <body>
 	<div>총 캠핑장 수 : ${listCnt}건</div>	
-	<div><input type="checkbox" id="campingAPI.do" value="api"/>API 정보 관리</div>
+		<input type="checkbox" id="campingAPI" <c:if test="${apiList eq 'true' }">checked="checked"</c:if> />API 정보 관리
 	<div>
 		<table>
 			<thead>
@@ -37,7 +37,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${list.size() == 0}">
+				<c:if test="${listCnt eq 0}">
 					<tr><td colspan="4">캠핑장 목록이 없습니다.</td></tr>
 				</c:if>
 				<c:forEach items="${list }" var="camp" varStatus="i">
@@ -75,6 +75,7 @@
 	</div>
 	<div>
 		<form action="campingAdmList.go" method="post" id="campingList">
+			<input type="hidden" name="apiList" value="${apiList }"/>
 			<select name="filterSido">
 				<option value="">시/도</option>
 				<option value="서울" <c:if test="${filterSido eq '서울'}">selected="selected"</c:if> >서울</option>
@@ -101,13 +102,21 @@
 				<option value="휴장" <c:if test="${filterStatus eq '휴장'}">selected="selected"</c:if> >휴장</option>
 				<option value="확인중" <c:if test="${filterStatus eq '확인중'}">selected="selected"</c:if> >확인중</option>
 			</select>
-			<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword}" placeholder="캠핑장 이름 검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>
 	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
+	$('#campingAPI').on('click',function(){
+		$('input:hidden[name="apiList"]').val($(this).is(':checked'));
+		$('#campingList').submit();
+	});
+	
+	$('#campingList select[name^="filter"]').on('change', function() {
+		$('#campingList').submit();
+	});
 	
 </script>
 </html>
