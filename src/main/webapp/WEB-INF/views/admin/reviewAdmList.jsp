@@ -91,7 +91,7 @@ textarea {
 			</thead>
 			<tbody>
 			<c:choose>
-			<c:when test="${listCnt eq 0}">
+			<c:when test="${list.size() eq 0}">
 				<tr align="center">
 					<td colspan="6">데이터가 없습니다</td>
 				</tr>
@@ -142,12 +142,12 @@ textarea {
 		</ul>
 	</div>
 	<div>
-		<form action="reviewCampSearch.do" method="post">
+		<form action="reviewAdmList.go" method="post" id="reviewAdmList">
 			<select name="filter">
-				<option value="평가항목">평가항목</option>
-				<option value="좋아요">좋아요</option>
-				<option value="싫어요">싫어요</option>
-				<option value="보통이에요">보통이에요</option>
+				<option value=""  >평가항목</option>
+				<option value="좋아요" <c:if test="${filter eq '좋아요'}">selected="selected"</c:if> >좋아요</option>
+				<option value="싫어요" <c:if test="${filter eq '싫어요'}">selected="selected"</c:if> >싫어요</option>
+				<option value="보통" <c:if test="${filter eq '보통'}">selected="selected"</c:if> >보통</option>
 			</select>
 			<select name="type">
 				<option value="all">전체</option>
@@ -163,7 +163,7 @@ textarea {
 	<div class="modal" id="insertBlind">
 		<div class="modal_content" title="후기 블라인드">
 			<h2>후기 블라인드</h2>
-			<form action="blindCamping.do" method="post">
+			<form action="blindCamping.do" method="post" id="blindfm">
 				<table class="md_table">
 					<tr>
 						<th id="md_cr_content" colspan="2">후기 내용</th>
@@ -175,15 +175,15 @@ textarea {
 					<tr>
 						<td colspan="2">
 							<input type="hidden" name="idx" value="idx"/>
-							<textarea name="reason" placeholder="사유를 입력하세요."></textarea>
+							<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
 						</td>
 					</tr>
 					<tr>
 						<th>처리자 아이디</th>
-						<th>관리자아이디</th>
+						<th>${sessionScope.loginId }</th>
 					</tr>
 				</table>
-				<input type="submit" value="완료"/>
+				<input type="button" id="blindDo" value="완료"/>
 				<input type="button" id="md_close_btn" value="닫기"/>
 			</form>
 		</div>
@@ -196,6 +196,11 @@ $('#campingReview > tbody > tr > td.subject').on('click', function() {
 	$('#campingReview > tbody > tr > td.subject').removeClass('active');
 	$(this).addClass('active');
 });
+
+$('#reviewAdmList select[name="filter"]').on('change', function() {
+	$('#reviewAdmList').submit();
+});
+
 
 // 블라인드 모달창 
 $(function(){
@@ -219,9 +224,27 @@ $(function(){
 		}	
 	});
 	
+	// 사유 입력 유효성 검사
+	$("#blindDo").click(function(){
+		if($("#reason").val() == ""){
+			alert("정지 사유를 입력하세요.");
+		} else {
+			$("#blindfm").submit();
+			$(".modal").fadeOut();
+		}
+	});
+	
+	
 	// 닫기 버튼 클릭시 모달창 닫기
 	$("#md_close_btn").click(function(){
 		$(".modal").fadeOut();
+	});
+	
+	// 바탕 클릭 시 모달창 닫기
+	$(document).click(function(e){
+		if($(".modal").is(e.target)){
+			$(".modal").fadeOut();
+		}
 	});
 
 });

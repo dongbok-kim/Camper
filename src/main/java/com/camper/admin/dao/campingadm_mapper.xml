@@ -16,6 +16,10 @@
 			</if>
 			<if test="keyword != null and !keyword.equals('')">
 			AND ca_name LIKE CONCAT('%', #{keyword},'%')
+			</if>	
+			<if test="apiList == 'true' and !apiList.equals('')">
+			AND (ca_manage_status ="확인중" OR 
+			ca_modified_date <![CDATA[<]]> (select ca_modified_date from cp_camping_api cca where ca_idx = cc.ca_idx)) 
 			</if>		
 		ORDER BY ca_idx DESC
 	</select>
@@ -25,7 +29,7 @@
 		SELECT 
 			ca_idx, ca_name, ca_sido, ca_sigungu, ca_tel, ca_create_date,
 			ca_modified_date, ca_manage_status
-		FROM cp_camping
+		FROM cp_camping cc
 		WHERE 1
 			<if test="filterSido != null and !filterSido.equals('')">
 			AND ca_sido = #{filterSido}
@@ -35,9 +39,80 @@
 			</if>
 			<if test="keyword != null and !keyword.equals('')">
 			AND ca_name LIKE CONCAT('%', #{keyword},'%')
-			</if>		
+			</if>
+			<if test="apiList == 'true' and !apiList.equals('')">
+			AND (ca_manage_status ="확인중" OR 
+			ca_modified_date <![CDATA[<]]> (select ca_modified_date from cp_camping_api cca where ca_idx = cc.ca_idx)) 
+			</if>	
 		ORDER BY ca_idx DESC
 		LIMIT #{amount}
+		OFFSET #{skip}
 	</select>
+	
+	
+	<!-- 캠핑장 상세보기 -->
+	<select id="campingAdmView" parameterType="hashmap" resultType="admCamping">
+		SELECT 
+			ca_idx, ca_name, ca_intro, 
+			ca_manage_status, ca_induty, 
+			ca_sido, ca_sigungu, ca_postcode, ca_addr_default, ca_addr_detail, 
+			ca_mapX, ca_mapY, 
+			ca_tel, ca_oper_period, ca_oper_date, 
+			ca_fire_cnt, ca_theme,
+			ca_sub_facility, ca_possibilty, ca_environment, 
+			ca_tool, ca_pet, 
+			ca_create_date, ca_modified_date
+		FROM cp_camping
+		WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<!-- 캠핑장 API 업데이트 데이터 상세보기 -->
+	<select id="campingAdmAPI" parameterType="hashmap" resultType="admCamping">
+		SELECT 
+			ca_idx, ca_name, ca_intro, 
+			ca_manage_status, ca_induty, 
+			ca_sido, ca_sigungu, ca_postcode, ca_addr_default, ca_addr_detail, 
+			ca_mapX, ca_mapY, 
+			ca_tel, ca_oper_period, ca_oper_date, 
+			ca_fire_cnt, ca_theme,
+			ca_sub_facility, ca_possibilty, ca_environment, 
+			ca_tool, ca_pet, 
+			ca_create_date, ca_modified_date
+		FROM cp_camping_api
+		WHERE ca_idx = #{ca_idx}
+	</select>
+	
+	<!-- 캠핑장 상세보기 수정 -->
+	<update id="campingAdmUpdate" parameterType="hashmap">
+		UPDATE cp_camping 
+		SET
+			ca_name = #{ca_name}, 
+			ca_intro = #{ca_intro}, 
+			ca_manage_status = #{ca_manage_status}, 
+			ca_induty = #{ca_induty}, 
+			ca_sido = #{ca_sido}, 
+			ca_sigungu = #{ca_sigungu}, 
+			ca_postcode = #{ca_postcode}, 
+			ca_addr_default = #{ca_addr_default}, 
+			ca_addr_detail = #{ca_addr_detail}, 
+			ca_mapX = #{ca_mapX}, 
+			ca_mapY = #{ca_mapY}, 
+			ca_tel = #{ca_tel}, 
+			ca_oper_period = #{ca_oper_period}, 
+			ca_oper_date = #{ca_oper_date}, 
+			ca_fire_cnt = #{ca_fire_cnt}, 
+			ca_theme = #{ca_theme},
+			ca_sub_facility = #{ca_sub_facility}, 
+			ca_possibilty = #{ca_possibilty}, 
+			ca_environment = #{ca_environment}, 
+			ca_tool = #{ca_tool}, 
+			ca_pet = #{ca_pet}, 
+			ca_create_date = #{ca_create_date}, 
+			ca_modified_date = now()
+		WHERE
+			ca_idx = #{ca_idx}
+	</update>
+	
+	
 
 </mapper>

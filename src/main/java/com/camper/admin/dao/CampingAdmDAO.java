@@ -11,4 +11,10 @@ public interface CampingAdmDAO {
 
 	int campingTotal(HashMap<String, Object> params);
 
+	CampingAdmDTO campingAdmView(HashMap<String, Object> params);
+
+	CampingAdmDTO campingAdmAPI(HashMap<String, Object> params);
+
+	void campingAdmUpdate(HashMap<String, Object> params);
+
 }

@@ -1,6 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="../../resources/inc/header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLine", "\n"); %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="resources/js/common.js" defer="defer"></script>
+<link rel="stylesheet" href="resources/css/common.css" type="text/css"/>
+<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css" />
+<!--  jQuery UI CSS파일  -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+<!--  jQuery 기본 js파일 -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<!--  jQuery UI 라이브러리 js파일 -->
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <style>
 	#campingVote {
 		margin: 0;
@@ -101,10 +117,13 @@
 		background-color: #585858;
 	}
 </style>
+</head>
+<body>
 				<div id="full">
 					<h3>캠핑장 검색</h3>
 					<div id="searchBox">
-						<form action="campingList.go" method="post">
+						<form action="campPopup.go" method="post" id="campingSearchfm">
+							<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
 							<table>
 								<tbody>
 									<tr>
@@ -149,7 +168,7 @@
 									<tr>
 										<th>기타정보</th>
 										<td>
-											<label><input type="checkbox" name="ca_pet" value="1" /> 반려동물 동반 가능</label>
+											<label><input type="checkbox" name="ca_pet" value="가능" <c:if test="${ca_pet eq '가능'}">checked="checked"</c:if>/> 반려동물 동반 가능</label>
 										</td>
 									</tr>
 									<tr>
@@ -163,12 +182,13 @@
 							</div>
 						</form>
 					</div>
-					<p id="totalCnt">총 <strong>${list.size()}</strong>건</p>
+					<p id="totalCnt">총 <strong>${listCnt}</strong>건</p>
 					
+					<c:if test="${campingCnt eq 0}">검색결과가 없습니다.</c:if>
 					<ul id="campingList">
 					<c:forEach items="${list}" var="campingList">
 						<li>
-							<a href="/campingView.go?ca_idx=${campingList.ca_idx}">
+							<a href="/campingView.go?ca_idx=${campingList.ca_idx}" target="_blank">
 								<span class="imgBox">
 									<c:choose>
 										<c:when test="${campingList.ca_img ne ''}">
@@ -192,16 +212,33 @@
 									<span class="address">${campingList.ca_addr_default}</span>
 								</span>
 							</a>
-							<span class="cnt cntLike">좋아요 ${campingList.cntLike}</span>
+							<span class="cnt cntLike">찜 ${campingList.cntLike}</span>
 							<span class="cnt cntReview">후기 ${campingList.cntReview}</span>
 							<div style="clear:both;"></div>
 							<input type="button" class="selectCamping" value="캠핑장 선택" data-idx="${campingList.ca_idx}" data-name="${campingList.ca_name}"/>
 						</li>
 					</c:forEach>
 					</ul>
+					<ul>	
+						<!-- 이전페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="javascript:;" data="${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!-- 다음페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="javascript:;" data="${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>	
 					
 				</div>
-<%@ include file="../../resources/inc/footer.jsp" %>
+				<%@ include file="../../../resources/inc/footer.jsp" %>
+</body>
 	<script>	
 		$('.selectCamping').on('click', function(){
 			 var name = $(this).data('name');
@@ -213,5 +250,10 @@
 		
 		var selectIdx = $(opener.document).find("#campingSelectIdx").val();
 		$('.selectCamping[data-idx='+selectIdx+']').attr('disabled', 'disabled');
+		
+		$('ul > li.pageInfo_btn > a').on('click', function() {
+			$('input:hidden[name="pageNum"]').val($(this).attr('data'));
+			$('#campingSearchfm').submit();
+		});
 	</script>
 </html>

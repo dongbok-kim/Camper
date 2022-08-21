@@ -2,14 +2,63 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.TogetherAdmDAO">
-
-	<select id="togetherList" resultType="com.camper.admin.dto.TogetherAdmDTO">
+	
+	<select id="togetherCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(ct_idx)
+		FROM cp_crew_together cct
+		<where>
+			<if test="keyword != null and !keyword.equals('')">
+				<choose>
+					<when test="type != null and type.equals('제목')">
+						ct_title LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('내용')" >
+						ct_content LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('작성자')" >
+						mb_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<otherwise>
+						(ct_title LIKE CONCAT('%', #{keyword}, '%') 
+							OR ct_content LIKE CONCAT('%', #{keyword}, '%')
+							OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</select>
+	
+	<select id="togetherList" parameterType="hashmap" resultType="admTogether">
 		SELECT ct_idx, ct_title, mb_id, ct_datetime,
 			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cct.ct_idx and cbb.bb_relation = "cp_crew_together") as bb_count
-		FROM cp_crew_together cct
+		FROM 
+			cp_crew_together cct
+		<where>
+			<if test="keyword != null and !keyword.equals('')">
+				<choose>
+					<when test="type != null and type.equals('제목')">
+						ct_title LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('내용')" >
+						ct_content LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('작성자')" >
+						mb_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<otherwise>
+						(ct_title LIKE CONCAT('%', #{keyword}, '%') 
+							OR ct_content LIKE CONCAT('%', #{keyword}, '%')
+							OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+		ORDER BY ct_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 
-	<select id="togetherView" resultType="com.camper.admin.dto.TogetherAdmDTO">
+	<select id="togetherView" resultType="admTogether">
 		SELECT ct_idx, ct_title, mb_id, ct_datetime, ct_content, ct_people_cnt, ct_gender, ct_age, ct_wish_start,
 			ct_wish_end, ct_tool, ct_camping_type, ct_pet,
 			(select ca_name from cp_camping cc where cc.ca_idx = cct.ca_idx) as ca_name,

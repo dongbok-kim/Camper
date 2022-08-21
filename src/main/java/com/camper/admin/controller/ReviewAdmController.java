@@ -2,6 +2,8 @@ package com.camper.admin.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,37 +33,38 @@ public class ReviewAdmController {
 	
 	// 캠핑장 후기 블라인드
 	@RequestMapping(value = "/blindCamping.do")
-	public String blindCamping(@RequestParam HashMap<String, String> params) {
-		// String loginId = (String)session.getAttribute("loginId");
-		String loginId = "ryu"; // 임시 관리자
+	public String blindCamping(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		String loginId = (String)session.getAttribute("loginId");
 		params.put("mb_id", loginId);
 		params.put("relation", "cp_camping_review");
 		
 		logger.info("params"+params);
 		comService.blind(params);
-		return "redirect:/reviewAdmList";
+		return "redirect:/reviewAdmList.go";
 	}
 	
 	
 	
-	// 회원 후기 관리
+	// 회원 후기 관리 목록
 	@RequestMapping(value = "/reviewMemberAdmList.go")
-	public ModelAndView reviewMemberAdmList() {
+	public ModelAndView reviewMemberAdmList(Criteria cri,
+			@RequestParam HashMap<String, Object> params) {
 		
-		return service.reviewMemberList();
+		return service.reviewMemberList(cri, params);
 	}
 	
 	// 회원 후기 블라인드
 	@RequestMapping(value = "/blindMember.do")
-	public String blindMember(@RequestParam HashMap<String, String> params) {
-		// String loginId = (String)session.getAttribute("loginId");
-		String loginId = "ryu"; // 임시 관리자
+	public String blindMember(HttpSession session,
+			@RequestParam HashMap<String, String> params) {
+		String loginId = (String)session.getAttribute("loginId");
 		params.put("mb_id", loginId);
 		params.put("relation", "cp_member_review");
 		
 		logger.info("params"+params);
 		comService.blind(params);
-		return "redirect:/reviewMemberList";
+		return "redirect:/reviewMemberList.go";
 	}
 	
 }

@@ -29,10 +29,10 @@
 				</tr>
 			</table>
 			<input type="button" onclick=up() value="수정"/>
-			<input type="button" onclick="location.href='ageAdmList' " value="목록"/>
+			<input type="button" onclick="location.href='ageAdmList.go' " value="목록"/>
 		</form>
 	</div>
-<%@ include file="../../../resources/inc/footer.jsp" %>
+<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 function up() {

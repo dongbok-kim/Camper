@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.StopAdmService;
+import com.camper.lib.utils.Criteria;
 
 @Controller
 public class StopAdmController {
@@ -23,10 +24,11 @@ public class StopAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//정지 회원 목록
-	@RequestMapping(value = "/stopAdmList.go", method = RequestMethod.GET)
-	public ModelAndView stopAdmList() {
+	@RequestMapping(value = "/stopAdmList.go")
+	public ModelAndView stopAdmList(Criteria cri,
+			@RequestParam HashMap<String, Object> params) {
 		
-		return service.stopAdmList();
+		return service.stopAdmList(cri, params);
 	}
 	
 	
@@ -41,10 +43,10 @@ public class StopAdmController {
 	@RequestMapping(value = "/stopAdmReg.do", method = RequestMethod.POST)
 	public ModelAndView stopAdmReg(HttpSession session,
 			@RequestParam HashMap<String, String> params) {
-		//String ms_admin = (String) session.getAttribute("loginId");
-		String ms_admin = "jyr";
+		String ms_admin = (String) session.getAttribute("loginId");
 		params.put("ms_admin", ms_admin);
 		logger.info("팝업창/회원정지실행 컨트롤러 : "+params);
+
 		return service.stopAdmReg(params);
 	}
 	

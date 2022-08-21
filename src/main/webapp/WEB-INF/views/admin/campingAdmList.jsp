@@ -21,7 +21,7 @@
 				</div>
 <body>
 	<div>총 캠핑장 수 : ${listCnt}건</div>	
-	<div><input type="checkbox" name="api" value="api"/>API 정보 관리</div>
+		<input type="checkbox" id="campingAPI" <c:if test="${apiList eq 'true' }">checked="checked"</c:if> />API 정보 관리
 	<div>
 		<table>
 			<thead>
@@ -37,14 +37,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:if test="${list.size() == 0}">
-					<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
+				<c:if test="${listCnt eq 0}">
+					<tr><td colspan="4">캠핑장 목록이 없습니다.</td></tr>
 				</c:if>
 				<c:forEach items="${list }" var="camp" varStatus="i">
 					<tr>
 						<td>${listCnt - skip - i.index}</td>
 						<td>
-							<a href="campingAdmUpdate.go?ca_idx=${camp.ca_idx}&amp;filterSido=${filterSido}&amp;filterStatus=${filterStatus}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${camp.ca_name}</a>
+							<a href="campingAdmView.go?ca_idx=${camp.ca_idx}">${camp.ca_name}</a>
 						</td>
 						<td>${camp.ca_sido}</td>
 						<td>${camp.ca_sigungu}</td>
@@ -64,7 +64,7 @@
 			
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
 			</c:forEach>
 			
 			<!-- 다음페이지 버튼 -->
@@ -75,6 +75,7 @@
 	</div>
 	<div>
 		<form action="campingAdmList.go" method="post" id="campingList">
+			<input type="hidden" name="apiList" value="${apiList }"/>
 			<select name="filterSido">
 				<option value="">시/도</option>
 				<option value="서울" <c:if test="${filterSido eq '서울'}">selected="selected"</c:if> >서울</option>
@@ -101,19 +102,21 @@
 				<option value="휴장" <c:if test="${filterStatus eq '휴장'}">selected="selected"</c:if> >휴장</option>
 				<option value="확인중" <c:if test="${filterStatus eq '확인중'}">selected="selected"</c:if> >확인중</option>
 			</select>
-			<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword}" placeholder="캠핑장 이름 검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>
 	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-	$('#campingList select[name="filterStatus"]').on('change', function() {
+	$('#campingAPI').on('click',function(){
+		$('input:hidden[name="apiList"]').val($(this).is(':checked'));
 		$('#campingList').submit();
 	});
 	
-	$('#campingList select[name="filterSido"]').on('change', function() {
+	$('#campingList select[name^="filter"]').on('change', function() {
 		$('#campingList').submit();
 	});
+	
 </script>
 </html>

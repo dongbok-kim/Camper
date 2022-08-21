@@ -30,6 +30,7 @@
 		<typeAlias type="com.camper.admin.dto.BlindAdmDTO" alias="admBlind"/>
 		<typeAlias type="com.camper.admin.dto.CampingAdmDTO" alias="admCamping"/>
 		<typeAlias type="com.camper.admin.dto.MemberAdmDTO" alias="admMember"/><!-- 대환 -->
+		<typeAlias type="com.camper.admin.dto.ReportAdmDTO" alias="admReport"/>
 		<typeAlias type="com.camper.admin.dto.ReviewAdmDTO" alias="admReview"/>
 		<typeAlias type="com.camper.admin.dto.StopAdmDTO" alias="admStop"/>
 		<typeAlias type="com.camper.admin.dto.TogetherAdmDTO" alias="admTogether"/>

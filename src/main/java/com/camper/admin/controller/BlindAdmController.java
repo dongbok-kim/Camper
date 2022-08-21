@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.admin.service.BlindAdmService;
+import com.camper.lib.utils.Criteria;
 
 @Controller
 public class BlindAdmController {
@@ -21,15 +22,16 @@ public class BlindAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@RequestMapping(value = "/blindAdmList.go")
-	public ModelAndView blindAdmList() {
+	public ModelAndView blindAdmList(Criteria cri, 
+			@RequestParam HashMap<String, Object> params) {
 		
-		return service.blindList();
+		return service.blindList(cri, params);
 	}
 	
-	@RequestMapping(value = "/blindAdmSearch.do")
-	public ModelAndView blindAdmSearch(@RequestParam HashMap<String, String> params) {
-		logger.info("search : "+params);
-		return service.blindSearch(params);
-	}
+	/*
+	 * @RequestMapping(value = "/blindAdmSearch.do") public ModelAndView
+	 * blindAdmSearch(@RequestParam HashMap<String, String> params) {
+	 * logger.info("search : "+params); return service.blindSearch(params); }
+	 */
 	
 }

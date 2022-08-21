@@ -2,13 +2,72 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.AnswerAdmDAO">
-
-	<select id="answerList" resultType="com.camper.admin.dto.AnswerAdmDTO">
-		SELECT in_idx, in_title, in_datetime, in_status, mb_id
-		FROM cp_inquiry ci
+	
+	<!-- 페이징 처리 총 게시물 수 -->
+	<select id="answerCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(in_idx)
+		FROM cp_inquiry
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				in_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+					<choose>
+						<when test="type != null and type.equals('제목')" >
+							in_title LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('내용')" >
+							in_content LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('아이디')" >
+							mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(in_title LIKE CONCAT('%', #{keyword}, '%') 
+								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
+		ORDER BY in_idx DESC
 	</select>
 	
-	<select id="answerView" resultType="com.camper.admin.dto.AnswerAdmDTO">
+	
+	<select id="answerList" parameterType="hashmap" resultType="admAnswer">
+		SELECT in_idx, in_title, in_datetime, in_status, mb_id
+		FROM cp_inquiry
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				in_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+					<choose>
+						<when test="type != null and type.equals('제목')" >
+							in_title LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('내용')" >
+							in_content LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('아이디')" >
+							mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(in_title LIKE CONCAT('%', #{keyword}, '%') 
+								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
+		ORDER BY in_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
+	</select>
+	
+	<select id="answerView" resultType="admAnswer">
 		SELECT ci.in_idx, ci.in_title, ci.in_datetime, ci.in_status, ci.mb_id, ci.in_content,
 			(select mb_id from cp_inquiry_answer cia where cia.in_idx = ci.in_idx) as ia_admin,
 			(select ia_content from cp_inquiry_answer cia where cia.in_idx = ci.in_idx) as ia_content,

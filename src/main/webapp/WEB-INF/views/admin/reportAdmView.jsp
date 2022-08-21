@@ -48,7 +48,6 @@
 				<c:forEach items="${list }" var="report">
 					<p><img src="/report/${report.ri_new_name }" height="200"/></p>
 				</c:forEach>
-				<input type="file" name="rp_img">
 				</td>
 			</tr>
 			<tr>
@@ -66,19 +65,23 @@
 			<tr>
 				<th>처리여부</th>
 				<td colspan="3">
+					<c:if test="${report.rp_status != '처리완료' }">
 					<select name="rp_status" id="selectBox">
 						<option value="미처리" ${report.rp_status == '미처리' ? 'selected="selected" ':''}>미처리</option>
 						<option value="처리중" ${report.rp_status == '처리중' ? 'selected="selected" ':''} >처리중</option>
-						<option value="처리완료" ${report.rp_status == '처리완료' ? 'selected="selected" ':''} >처리완료</option>
+						<option value="처리완료" >처리완료</option>
 					</select>
+					</c:if>
+					<c:if test="${report.rp_status == '처리완료' }">처리완료</c:if>
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="변경">
-		<input type="button" onclick="location.href='/reportAdmList' " value="목록">
+		<c:if test="${report.rp_status == '처리완료' }"></c:if>
+		<c:if test="${report.rp_status != '처리완료' }"><input type="submit" value="변경" /></c:if>
+		<input type="button" onclick="location.href='/reportAdmList.go'" value="목록"/>
 	</form>
 	</div>
-<%@ include file="../../../resources/inc/footer.jsp" %>
+<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
 </script>

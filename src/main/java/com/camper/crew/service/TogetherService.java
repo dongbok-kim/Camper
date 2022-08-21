@@ -14,10 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.camping.dto.CampingDTO;
-import com.camper.chat.dto.ChatDTO;
 import com.camper.crew.dao.TogetherDAO;
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.lib.dao.CommonDAO;
+import com.camper.lib.dto.PageMakerDTO;
+import com.camper.lib.utils.Criteria;
 
 @Service
 public class TogetherService {
@@ -28,8 +29,8 @@ public class TogetherService {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	//크루모집 리스트
-	public ArrayList<TogetherDTO> list() {
-		return dao.list();
+	public ArrayList<TogetherDTO> list(HashMap<String, Object> params) {
+		return dao.list(params);
 	}
 
 	//모집글 상세보기
@@ -56,9 +57,9 @@ public class TogetherService {
 		
 	}
 
-	public int crewCnt() {
+	public int crewCnt(HashMap<String, Object> params) {
 		logger.info("크루목록가져오기");
-		return dao.crewCnt();
+		return dao.crewCnt(params);
 	}
 
 	public ArrayList<TogetherDTO> recom(String mb_id) {
@@ -130,12 +131,67 @@ public class TogetherService {
 	// 지윤 : 크루 모집글 작성, 수정
 	
 	// 모집글 - 캠핑장 검색 팝업 - 캠핑장 리스트 불러오기
-	public ModelAndView campPopup() {
+	public ModelAndView campPopup(Criteria cri, HttpSession session, HashMap<String, Object> map) {
 		// 캠핑장 리스트
-		ArrayList<CampingDTO> list = dao.campPopup();
 		ModelAndView mav = new ModelAndView("popupCamping");
+		cri.setAmount(15);
 		
+		// 총 캠핑장 수
+		int total = dao.campingTotal(map);
+		mav.addObject("listCnt", total);
+		map.put("listCnt", total);
+		
+		// 검색 결과 나올 때 선택한 값 유지
+		ArrayList<String> ca_sido = (ArrayList<String>) map.get("ca_sido");
+		logger.info("ca_sido : " + ca_sido);
+		mav.addObject("ca_sido",ca_sido);
+		
+		ArrayList<String> ca_theme = (ArrayList<String>) map.get("ca_theme");
+		logger.info("ca_theme : " + ca_theme);
+		mav.addObject("ca_theme",ca_theme);
+		
+		String ca_pet = (String) map.get("ca_pet");
+		String ca_name = (String) map.get("ca_name");
+		
+		if (ca_pet != null && !ca_pet.trim().equals("")){
+			logger.info("ca_pet : " + ca_pet);
+			mav.addObject("ca_pet",ca_pet);
+		}
+		
+		if (ca_name != null && !ca_name.trim().equals("")){
+			logger.info("ca_name : " + ca_name);
+			mav.addObject("ca_name",ca_name);
+		}
+		
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+		
+		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() < 0) {
+			logger.info("startPage : "+pageMaker.getStartPage());
+			pageMaker.setStartPage(1);
+		}
+		
+		//현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		//DAO MAPPER OFFSET
+		int skip = (pageNum - 1) * cri.getAmount();
+		map.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		//DAO MAPPER LIMIT
+		map.put("amount", cri.getAmount());
+		
+		ArrayList<CampingDTO> list = dao.campPopupList(map);
 		mav.addObject("list", list);
+		
+		mav.addObject("pageMaker", pageMaker);
+		
 		return mav;
 	}
 
@@ -163,22 +219,29 @@ public class TogetherService {
 
 	
 	// 크루 모집글 수정 데이터 불러오기
-	public ModelAndView crewUpdate(int ct_idx) {
+	public ModelAndView crewUpdate(int ct_idx, HttpSession session ) {
 		
 		logger.info("모집글 수정 서비스 : "+ct_idx);
 		TogetherDTO dto = dao.crewUpdate(ct_idx);
 		int chatCnt = dao.chatCnt(ct_idx); // 현재 채팅방 인원 수
-		ModelAndView mav = new ModelAndView("crewTogetherUpdate");
-		mav.addObject("crew", dto);
-		mav.addObject("chatCnt", chatCnt);
 		
-		// campingType 배열로 보내기 - 더 나은 방법 생각나면 수정하기
-		/*
-		 * String[] type = dto.getCt_camping_type().split(","); mav.addObject("type",
-		 * type);
-		 */
+		String loginId = (String) session.getAttribute("loginId");
+		String mb_id = dto.getMb_id();
+		String page = "main";
 		
-		logger.info("dto : "+ dto.getCa_name() +'/'+ dto.getCt_camping_type());
+		ModelAndView mav = new ModelAndView();
+		
+		if(!loginId.equals(mb_id)) {
+			mav.setViewName(page);
+			mav.addObject("msg","본인 글만 수정할 수 있습니다.");
+		} else {
+			logger.info("모집글 수정 작성자 확인 : {}/{}",loginId, mb_id);
+			mav.addObject("crew", dto);
+			mav.addObject("chatCnt", chatCnt);
+					
+			logger.info("dto : "+ dto.getCa_name() +'/'+ dto.getCt_camping_type());
+			
+		}	
 		return mav;
 	}
 	

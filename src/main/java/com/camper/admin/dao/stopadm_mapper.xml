@@ -3,13 +3,68 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.StopAdmDAO">
 
-	<select id="stopList" resultType="com.camper.admin.dto.StopAdmDTO">
+	<select id="stopCnt" resultType="int">
+		SELECT COUNT(cms.ms_idx)				
+		FROM 
+			cp_member_stop cms 
+		JOIN 
+			cp_member cm 
+		ON 
+			cm.mb_id = cms.mb_id
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				(select count(ms_idx) +1 from cp_member_stop where mb_id = cms.mb_id and ms_idx <![CDATA[<]]>cms.ms_idx) = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+					<choose>
+						<when test="type != null and type.equals('회원아이디')" >
+							cms.mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('닉네임')" >
+							cm.mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(cm.mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+								OR cms.mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
+	</select>
+
+	<select id="stopList" resultType="admStop">
 		SELECT cms.ms_idx, cms.ms_start_date, cms.ms_end_date, cms.ms_admin_id, cms.ms_reason, cms.mb_id,
 					cm.mb_nickname , cm.mb_name,
 					(select count(ms_idx) +1 from cp_member_stop where mb_id = cms.mb_id and ms_idx <![CDATA[<]]>cms.ms_idx) as ms_count
-		FROM cp_member_stop cms 
-		JOIN cp_member cm ON cm.mb_id = cms.mb_id
+		FROM 
+			cp_member_stop cms 
+		JOIN 
+			cp_member cm 
+		ON cm.mb_id = cms.mb_id
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				(select count(ms_idx) +1 from cp_member_stop where mb_id = cms.mb_id and ms_idx <![CDATA[<]]>cms.ms_idx) = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+				<choose>
+					<when test="type != null and type.equals('회원아이디')" >
+							cms.mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('닉네임')" >
+							cm.mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(cm.mb_nickname LIKE CONCAT('%', #{keyword}, '%')
+								OR cms.mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
 		ORDER BY cms.ms_end_date DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<select id="stopPopup" resultType="com.camper.admin.dto.StopAdmDTO">
