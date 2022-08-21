@@ -70,45 +70,4 @@ public class MyCampingLikeService {
 		return mav;
 	}
 
-	public ModelAndView myCampingLikeSearch(Criteria cri, HashMap<String, Object> params) {
-		ModelAndView mav = new  ModelAndView("mypage/myCampingLike");
-		logger.info("서비스 파람 = "+params);
-		// 검색 연동 페이징
-		cri.setAmount(15);
-		if (params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
-			cri.setKeyword((String) params.get("keyword"));
-			
-			// View에서 내가 선택한 옵션과 검색어를 유지시키기 위해서 다시 ModelAndView로 보낸다
-			mav.addObject("keyword", (String) params.get("keyword"));
-		}
-		
-		int total = (int) dao.total(params);
-		mav.addObject("listCnt", total);
-		
-		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
-
-		int pageNum = cri.getPageNum();
-		
-		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
-		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
-			pageNum = pageMaker.getEndPage();
-			cri.setPageNum(pageNum);
-		}
-		
-		// DAO MAPPER OFFSET
-		int skip = (pageNum-1)*cri.getAmount();
-		params.put("skip", skip);
-		mav.addObject("skip", skip);
-		
-		// DAO MAPPER LIMIT
-		params.put("amount", cri.getAmount());
-		
-		ArrayList<MyCampingLikeDTO> list =  dao.myCampingLikeSearch(params);
-		mav.addObject("list", list);
-		
-		mav.addObject("pageMaker", pageMaker);
-		
-		return mav;
-	}
-
 }
