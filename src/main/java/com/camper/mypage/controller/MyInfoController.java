@@ -137,7 +137,8 @@ public class MyInfoController {
 				rttr.addFlashAttribute("msg", "수정 되었습니다.");
 				page = "redirect:/mypageInfo.go";
 			} else {
-				model.addAttribute("msg", "비밀번호가 일치하지 않습니다");
+				rttr.addFlashAttribute("msg", "비밀번호가 일치하지 않습니다");
+				page = "redirect:/mypageInfo.go";
 			}
 			
 			return page;

@@ -46,20 +46,20 @@
             <tr>
                 <th>현재 비밀번호</th>
                 <td colspan="4">
-                    <input type="password" name = "orimb_pw" id="password" />
+                    <input type="password" name = "orimb_pw" id="password" maxlength="20"/>
                     <input type="hidden" name = "mb_pw" id="hidden_password" value="${myInfo.mb_pw}"/>
                 </td>
             </tr>
             <tr>
                 <th>새 비밀번호</th>
                 <td colspan="4">
-                    <input type="password"  name = "newpassword" id = "newpassword"/>
+                    <input type="password"  name = "newpassword" id = "newpassword" maxlength="20"/>
                 </td>
             </tr>
               <tr>
                 <th>새 비밀번호 확인</th>
                 <td colspan="4">
-                    <input type="password"  name = "newpasswordcheck" id = "newpasswordcheck"/>
+                    <input type="password"  name = "newpasswordcheck" id = "newpasswordcheck" maxlength="20"/>
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
             <tr>
                 <th>닉네임</th>
                 <td>
-                <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}"/>
+                <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}" maxlength="20" />
                 <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
                 <input type="hidden" id="doublecheckname" value="${myInfo.mb_nickname}"/>
                 </td>
@@ -89,14 +89,14 @@
                 <td>
                 <c:forEach items="${list }" var="age">
                 <input type="hidden" name="ma_idxradio" value="${myInfo.ma_idx}" >
-            	<input type="radio" name="ma_idx" value="${age.ma_idx}" <c:if test="${myInfo.ma_idx eq age.ma_idx}">checked="checked"</c:if> />${age.ma_age } 대
+            	<label><input type="radio" name="ma_idx" value="${age.ma_idx}" <c:if test="${myInfo.ma_idx eq age.ma_idx}">checked="checked"</c:if> />${age.ma_age }대</label>
             </c:forEach>
             	</td>
             </tr>
             <tr>
                 <th>이메일</th>
                 <td>
-                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}"/>
+                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}" maxlength="30"/>
                     <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
                     <input type="hidden" id="doublecheckemail" value="${myInfo.mb_email}" />
                 </td>
@@ -111,7 +111,7 @@
                 <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
-				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}">
+				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}" >
 				
 				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
@@ -157,7 +157,7 @@
 		<tr>
 			<th>비밀번호</th>
 			<td>
-				<input type="password" name = "secession_pw" id="secession_password" />
+				<input type="password" name = "secession_pw" id="secession_password" maxlength="20"/>
 			</td>
 		</tr>
 	</table> <br/>
@@ -221,6 +221,9 @@ function sample6_execDaumPostcode() {
            // console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
             document.getElementById('sample6_sigungu').value = data.sigungu;
             
+            if(data.sido == "세종특별자치시") {
+        		document.getElementById('sample6_sigungu').value = "세종시";
+        	}
             
         }
     }).open();
@@ -229,44 +232,46 @@ function sample6_execDaumPostcode() {
 var checkEmail = false; // 이메일 중복체크 여부
 function doubleCheckEmail() {
 	
-	//문자열에 공백이 있는 경우
-	var blank_pattern = /[\s]/g;
-	// if( blank_pattern.test(str) == true){
-	   // alert('공백이 입력되었습니다.');
-	// }
+	 checkEmail = false;
+	 
+	 var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;	//이메일 정규식
+	 
+	var $email = $("#email");
 	
-	var email = $("#email").val();
-	// console.log($("#email").val());
+	var $hiddenemail = $("#hidden_email");
 	
-	 if(email == "" || email == null){
-         alert("이메일를 입력해주세요");
-         return false;
-      }
+	if($email.val() == $hiddenemail.val()) {
+		window.alert("회원님의 원래 이메일이랑 같습니다. ");
+		return false;
+	}
+	
+	if($.trim($email.val()) == '') {
+		window.alert("이메일을 입력해 주세요.");
+		$email.val('').focus();
+		return false;
+	}
 	 
-	 if (blank_pattern.test(email)) {		// 공백 체크
-			alert('이메일에 공백이 있습니다.');
-			return false;
-		} 
+	if(!regExpEmail.test($email.val())) {
+		window.alert("이메일 형식에 맞게 입력해 주세요. ");
+		$email.val('').focus();
+		return false;
+	}
 	 
-	  if (email.indexOf('@') == -1) {
-			alert('이메일에는 @ 를 포함해야합니다. ');
-			return false;
-		}
-	 
-	 console.log('이메일 중복 체크 : '+email);		
+	 console.log('이메일 중복 체크 : '+$email.val());		
 		$.ajax({
 			type:'get',
 			url:'myinfodoubleCheckEmail.ajax',
-			data:{chkEmail:email},
+			data:{chkEmail:$email.val()},
 			dataType:'JSON',
 			success:function(data){
 				// console.log(data);
 			 if(data.doubleEmail){
 					alert("이미 사용중인 이메일 입니다.");
+					$email.val('').focus();
 				}else{
 					alert("사용 가능한 이메일 입니다.");
 					checkEmail = true;
-					document.getElementById('doublecheckemail').value = email;
+					document.getElementById('doublecheckemail').value = $email.val();
 				}
 				 
 			},
@@ -281,40 +286,39 @@ function doubleCheckEmail() {
 
 var checkNickname = false; // 닉네임 중복체크 여부
 function doubleCheckNickname() {
+	checkNickname = false;
 	
-	//문자열에 공백이 있는 경우
-	var blank_pattern = /[\s]/g;
-	// if( blank_pattern.test(str) == true){
-	   // alert('공백이 입력되었습니다.');
-	// }
+	var $nickname = $("#nickname");
 	
-	var nickname = $("#nickname").val();
-	// console.log($("#nickname").val());
+	var $hiddennickname = $("#hidden_nickname");
 	
-	 if(nickname == "" || nickname == null){
-         alert("닉네임을 입력해주세요");
-         return false;
-      }
+	if($nickname.val() == $hiddennickname.val()) {
+		window.alert("회원님의 원래 닉네임이랑 같습니다.");
+		return false;
+	}
+	
+	if($.trim($nickname.val()) == '') {
+		window.alert("닉네임을 입력해 주세요.");
+		$nickname.val('').focus();
+		return false;
+	}
 	 
-	 if (blank_pattern.test(nickname)) {		//공백이있는지 체크하는 문
-			alert('닉네임에 공백이 있습니다.');
-			return false;
-		} 
 	 
-	 console.log('닉네임 중복 체크 : '+nickname);		
+	 console.log('닉네임 중복 체크 : '+$nickname.val());		
 		$.ajax({
 			type:'get',
 			url:'myinfodoubleCheckNickname.ajax',
-			data:{chkNickname:nickname},
+			data:{chkNickname:$nickname.val()},
 			dataType:'JSON',
 			success:function(data){
 				// console.log(data);
 			 if(data.doubleNickname){
 					alert("이미 사용중인 닉네임 입니다.");
+					$nickname.val('').focus();
 				}else{
 					alert("사용 가능한 닉네임 입니다.");
 					checkNickname = true;
-					document.getElementById('doublecheckname').value = nickname;
+					document.getElementById('doublecheckname').value = $nickname.val();
 				}
 				 
 			},
@@ -331,25 +335,22 @@ function doubleCheckNickname() {
     
 function submitCheck() {
 	
-	var pattern1 = /[0-9]/;				// 숫자
-	var pattern2 = /[a-zA-Z]/;			// 문자
-	var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
+	var regExpPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,20}$/;	//비밀번호 정규식
 	
-	var newpassword = $('#newpassword').val();
-	var newpasswordcheck = $('#newpasswordcheck').val();
+	var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;	//이메일 정규식
 	
+
 	if ($('#sample6_sido').val() == "") {
 		document.getElementById('sample6_sido').value = $('#hidden_mb_sido').val();
-	}
-	
-	if($('#sample6_sido').val() == "세종특별자치시") {
-		document.getElementById('sample6_sigungu').value = "세종시";
 	}
 	
 	if ($('#sample6_sigungu').val() == "") {
 		document.getElementById('sample6_sigungu').value = $('#hidden_mb_sigungu').val();
 	}
 	
+	if($('#sample6_sido').val() == "세종특별자치시") {
+		document.getElementById('sample6_sigungu').value = "세종시";
+	}
 	
 	if($('#email').val() == $('#hidden_email').val()) {
 		checkEmail = true;
@@ -359,80 +360,124 @@ function submitCheck() {
 		checkNickname = true;
 	}
 	
-	var email = $('#email').val();
+	var $newpw = $('#newpassword');
 	
-	var doublenickemail = $("#doublecheckemail").val();
+	var $newpwchk = $('#newpasswordcheck');
 	
-	var nickname = $('#nickname').val();
+	var $email = $('#email');
 	
-	var doublenickname = $("#doublecheckname").val();
+	var $doublechkemail = $("#doublecheckemail");
 	
-	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
-		alert('현재 비밀번호를 입력해 주세요');
+	var $nickname = $('#nickname');
+	
+	var $doublechknickname = $("#doublecheckname");
+		
+	if($.trim($('#password').val()) == '') {
+		window.alert("현재 비밀번호를 입력해 주세요.");
+		$('#password').val('').focus();
 		return false;
 	}
 	
 	//현재 비밀번호 패턴 검사
+	if(!regExpPw.test($('#password').val())) {
+		window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+		$('#password').val('').focus();
+		return false;
+	}
 	
-	if (newpassword || newpasswordcheck) {
+	// 비밀번호를 변경 하려고 할때
+	if ($newpw.val() != '' || $newpwchk.val() != '') {
 		
 		//새 비밀번호 입력 여부 검사
+		if($.trim($newpw.val()) == '') {
+			window.alert("새 비밀번호 를 입력해 주세요.");
+			$newpw.val('').focus();
+			return false;
+		}
 		
 		//새 비밀번호 패턴 검사
+		if(!regExpPw.test($newpw.val())) {
+			window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+			$newpw.val('').focus();
+			return false;
+		}
 		
 		//새 비밀번호 확인 입력 여부 검사
+		if($.trim($newpwchk.val()) == '') {
+			window.alert("새 비밀번호 확인을 입력해 주세요.");
+			$newpwchk.val('').focus();
+			return false;
+		}
 		
 		//새 비밀번호 패턴 검사
+		if(!regExpPw.test($newpwchk.val())) {
+			window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+			$newpwchk.val('').focus();
+			return false;
+		}
 		
 		//새 비밀번호 와 새 비밀번호 확인 일치 여부 검사
-		
-	}
-	
-	
-	
-	if (newpassword != newpasswordcheck){
-		alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
-		return false;
-	} else if (newpassword !="" && (!pattern1.test(newpassword) || !pattern2.test(newpassword) || !pattern3.test(newpassword) || newpassword.length < 4)) {
-		//비밀번호 변경 원할때
-		alert("비밀번호는 영문 , 숫자 , 특수문자를 포함 4자리 이상 입니다.");
-		return false;
-	} else if (checkEmail == false) {
-		 alert("이메일 중복확인을 진행해 주세요.");
-		 return  false;
-	} else if(doublenickemail != email) {
-		 alert("닉네임 중복확인을 진행해 주세요.");
-		 checkEmail = false;
-		 // console.log(checkNickname);
-		return false;
-	} else if (checkNickname == false) {
-		 alert("닉네임 중복확인을 진행해 주세요.");
-		 return false;
-	 } else 	if(doublenickname != nickname) {
-		 alert("닉네임 중복확인을 진행해 주세요.");
-		 checkNickname = false;
-		 // console.log(checkNickname);
-		return false;
-	}	 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	else {
-		
-		// 확인창 출력
-			if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
-				return true;	
-			} else {	// 확인창 취소 눌럿을때
-				return false;
+		if($newpw.val() != $newpwchk.val()) {
+			window.alert("새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다. ");
+			$newpwchk.val('').focus();
+			return false;
 			}
+		
 	}
+	
+	//닉네임을 변경하려 할때
+	if($.trim($nickname.val()) == '') {
+		window.alert("닉네임을 입력해 주세요.");
+		$nickname.val('').focus();
+		return false;
+	}
+	
+	if(checkNickname == false) {
+		window.alert("닉네임 중복확인을 진행해 주세요.");
+		return false;
+	 }
+	
+	if($doublechknickname.val() != $nickname.val()) {
+		window.alert("닉네임 중복확인을 진행해 주세요.");
+		checkNickname = false;
+		return false;
+	}
+	
+	
+	//이메일을 변경하려 할때
+	if($.trim($email.val()) == '') {
+		window.alert("이메일을 입력해 주세요.");
+		$email.val('').focus();
+		return false;
+	}
+			
+	if(!regExpEmail.test($email.val())) {
+		window.alert("이메일 형식에 맞게 입력해 주세요. ");
+		$email.val('').focus();
+		return false;
+	}
+			
+	if(checkEmail == false) {
+		window.alert("이메일 중복확인을 진행해 주세요.");
+		return  false;
+	}
+			
+	if($doublechkemail.val() != $email.val()) {
+		window.alert("이메일 중복확인을 진행해 주세요.");
+		checkEmail = false;
+		return false;
+	}
+	
+	
+	
+			
+		// 확인창 출력
+		if(confirm("수정하시겠습니까?") == true) {	//확인창 예를 눌렀을때
+			return true;	
+		} else {	// 확인창 취소 눌럿을때
+			return false;
+		}
+
 	
 	
 }
@@ -444,21 +489,29 @@ function submitCheck() {
 
 function submitCheck_two() {
 	
+	var regExpPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,20}$/;	//비밀번호 정규식
+	
 	console.log($('#secession_password').val());
 	
-	if($('#secession_password').val() == null || $('#secession_password').val() == "") {
-		alert("비밀번호를 입력해 주세요.");
+	if($.trim($('#secession_password').val()) == '') {
+		window.alert("비밀번호를 입력해 주세요.");
+		$('#secession_password').val('').focus();
 		return false;
-	} else {
+	}
+
+	if(!regExpPw.test($('#secession_password').val())) {
+		window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+		$('#secession_password').val('').focus();
+		return false;
+	}
+	
+	
 		if(confirm("정말 탈퇴하시겠습니까?") == true) {
 			return true;
 		} else {
 			return false;
 		}
 		
-	}
-	
-	
 	
 }
 
