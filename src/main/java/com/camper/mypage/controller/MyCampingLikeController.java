@@ -27,10 +27,9 @@ public class MyCampingLikeController {
 	
 	// 캠핑장 찜 목록
 	// by. 승진 2022-08-08
-	@RequestMapping(value = "/myCampingLikeList.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/myCampingLikeList.go")
 	public ModelAndView myCampingLikeList(HttpSession session, @RequestParam HashMap<String, Object> params, Criteria cri) {
 		String loginId = (String) session.getAttribute("loginId");
-		// String loginId = "jin";
 		params.put("loginId", loginId);
 		return service.myCampingLikeList(cri, params);
 	}

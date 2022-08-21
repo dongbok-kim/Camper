@@ -30,11 +30,11 @@ public class MyCampingLikeService {
 		cri.setAmount(15);
 		if (params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
 			cri.setKeyword((String) params.get("keyword"));
-			cri.setType((String) params.get("type"));
+            //	cri.setType((String) params.get("type"));
 			
 			// View에서 내가 선택한 옵션과 검색어를 유지시키기 위해서 다시 ModelAndView로 보낸다
 			mav.addObject("keyword", (String) params.get("keyword"));
-			mav.addObject("type", (String) params.get("type"));
+		   //	mav.addObject("type", (String) params.get("type"));
 		}
 		
 		int total = (int) dao.total(params);

@@ -57,7 +57,7 @@
 							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
 						</c:if>
 					</ul>
-					<form action="myCampingLikeSearch.do" method="post">
+					<form action="myCampingLikeList.go" method="post">
 						<input type="text" name="keyword" value="${keyword}" placeholder="캠핑장 검색"/>
 						<input type="submit" value="search"/>
 					</form>
