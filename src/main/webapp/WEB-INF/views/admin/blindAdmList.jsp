@@ -20,7 +20,7 @@
 					<h3>블라인드 관리</h3>
 				</div>
 <body>
-	<div>총 블라인드 수 : ${listCnt()}건</div>
+	<div>총 블라인드 수 : ${listCnt}건</div>
 	<div>
 		<table>
 		<thead>

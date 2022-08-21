@@ -62,7 +62,7 @@ public class BlindAdmService {
 		// DAO MAPPER LIMIT
 		params.put("amount", cri.getAmount());
 		
-		ArrayList<BlindAdmDTO> list = dao.blindList();
+		ArrayList<BlindAdmDTO> list = dao.blindList(params);
 		mav.addObject("list",list);
 		mav.addObject("pageMaker", pageMaker);
 		

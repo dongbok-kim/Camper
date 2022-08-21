@@ -28,7 +28,7 @@
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td colspan="2">${answer.mb_id}</td>
+				<td colspan="2" class="contextMenu contextMenuMember" data-id="${answer.mb_id}">${answer.mb_id}</td>
 				<th>등록일시</th>
 				<td colspan="2">${answer.in_datetime}</td>
 			</tr>

@@ -6,7 +6,7 @@
 	<!-- 캠핑장 목록 총 갯수 가져오기 (페이징 처리) -->
 	<select id="campingTotal" parameterType="hashmap" resultType="int">
 		SELECT COUNT(ca_idx) 
-		FROM cp_camping
+		FROM cp_camping cc
 		WHERE 1
 			<if test="filterSido != null and !filterSido.equals('')">
 			AND ca_sido = #{filterSido}
@@ -19,7 +19,7 @@
 			</if>	
 			<if test="apiList == 'true' and !apiList.equals('')">
 			AND (ca_manage_status ="확인중" OR 
-			ca_modified_date <![CDATA[<]]> (select ca_modified_date from cp_camping_api cca where ca_idx = cc.ca_idx)) 
+			ca_modified_date <![CDATA[<]]> (select ca_modified_date from cp_camping_api cca where cca.ca_idx = cc.ca_idx)) 
 			</if>		
 		ORDER BY ca_idx DESC
 	</select>

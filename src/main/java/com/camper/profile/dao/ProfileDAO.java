@@ -36,7 +36,7 @@ public interface ProfileDAO {
 
 	int total(HashMap<String, Object> params);
 
-	
+	int total2(HashMap<String, Object> params);
 	
 
 	ArrayList<ProfileDTO> profileView2(HashMap<String, Object> params);
@@ -45,6 +45,6 @@ public interface ProfileDAO {
 
 	ArrayList<ProfileDTO> profileReview2(HashMap<String, Object> params);
 
-	int total2(HashMap<String, Object> params);
+	
 
 }
