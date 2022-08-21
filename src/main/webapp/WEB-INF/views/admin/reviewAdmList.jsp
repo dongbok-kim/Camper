@@ -109,7 +109,7 @@ textarea {
 					${review.cr_content }
 					</td>
 					<td>${review.cr_assessment}</td>
-					<td>${review.mb_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${review.mb_id}">${review.mb_id}</td>
 					<td>${review.cr_datetime}</td>
 					<td>
 						<c:if test="${review.bb_count eq 0}">

@@ -25,7 +25,7 @@
 		<table>
 			<tr>
 				<th>신고대상아이디</th>
-				<td class="contextMenu contextMenuMember" data-id="${report.mb_id }">
+				<td class="contextMenu contextMenuMember" data-id="${report.mb_id}">
 				${report.mb_id }
 				</td>
 				<th>신고누적횟수</th>
@@ -33,7 +33,7 @@
 			</tr>
 			<tr>
 				<th>신고자</th>
-				<td colspan="3">${report.rp_id }</td>
+				<td colspan="3" class="contextMenu contextMenuMember" data-id="${stop.rp_id}">${report.rp_id }</td>
 			</tr>
 			<tr>
 				<th>신고 내용</th>

@@ -40,8 +40,8 @@
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
 					<td><a href="reportAdmView?rp_idx=${report.rp_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${report.rp_content}</a></td>
-					<td>${report.mb_id}</td>
-					<td>${report.rp_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${report.mb_id}">${report.mb_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${report.rp_id}">${report.rp_id}</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${report.rp_datetime}"/></td>
 					<td>${report.rp_count }</td>
 					<td>${report.rp_status}</td>

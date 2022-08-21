@@ -75,7 +75,7 @@ textarea {
 					<td>
 					<a href="togetherAdmView?ct_idx=${together.ct_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${together.ct_title }</a>
 					</td>
-					<td>${together.mb_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${together.mb_id}">${together.mb_id}</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${together.ct_datetime}"/></td>
 					<td>
 						<c:if test="${together.bb_count eq 0}">
