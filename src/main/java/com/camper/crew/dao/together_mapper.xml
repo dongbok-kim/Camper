@@ -27,6 +27,8 @@
 		ON 
 			a.ca_idx = c.ca_idx 
 		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
 			AND b.mb_fire >= 1500 
 			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 		ORDER BY RAND() 
@@ -68,6 +70,9 @@
 			AND a.mb_id != e.mb_id 
 			AND b.mb_fire >= 1500 
 			AND e.mb_id = #{mb_id} 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 			AND 
 			(
 				(a.ct_gender = '혼성' OR a.ct_gender = (SELECT mb_gender FROM cp_member WHERE mb_id = #{mb_id})) 
@@ -102,8 +107,10 @@
 			cp_member c 
 		ON 
 			a.mb_id = c.mb_id 
-		WHERE 
-			a.ct_end = 0 
+		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 			<if test="ct_gender != null">
 			AND a.ct_gender = #{ct_gender}
 			</if>
@@ -148,8 +155,10 @@
 			cp_member c 
 		ON 
 			a.mb_id = c.mb_id 
-		WHERE 
-			a.ct_end = 0 
+		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 			<if test="ct_gender != null">
 			AND a.ct_gender = #{ct_gender}
 			</if>
@@ -212,8 +221,11 @@
 			cp_member_age d 
 		ON 
 			c.ma_idx = d.ma_idx 
-		WHERE 
-			a.ct_idx = #{ct_idx} 
+		WHERE 1 
+			AND a.ct_idx = #{ct_idx} 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 	</select> 
 	<!-- 크루모집 글 지울려면 채팅방 메시지, 참여자, 그룹 지워야해서  -->
 	<delete id="chatMessageDel" parameterType="int">

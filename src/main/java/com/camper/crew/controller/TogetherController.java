@@ -135,7 +135,11 @@ public class TogetherController {
 		logger.info(ct_idx + "번 크루모집 상세보기");
 
 		TogetherDTO dto = service.view(ct_idx);
-		model.addAttribute("cct", dto);
+		if(dto != null) {
+			model.addAttribute("cct", dto);
+		} else {
+			model.addAttribute("msg", "존재하지 않는 모집글입니다.");
+		}
 
 		return page;
 

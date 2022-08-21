@@ -184,24 +184,31 @@
                         </form>
                     </div>
                     <p id="totalCnt">총 <strong>${crewCnt}</strong>건<a href="crewTogetherReg.go">크루 모집하기</a></p>
-                    <ul id="crewVote" class="crewList">
-                    <c:forEach items="${list}" var="list">
-                        <li>
-                            <a href="crewTogetherView.do?ct_idx=${list.ct_idx}">
-                                <div class="imgBox">
-                                    <span><i class="xi-maker"></i> ${list.ca_sido} ${fn:substring(list.ct_wish_start,5,7)}/${fn:substring(list.ct_wish_start,8,10)} ~ ${fn:substring(list.ct_wish_end,5,7)}/${fn:substring(list.ct_wish_end,8,10)}</span>
-                                    <img src="${list.ca_img}" onerror="javascript:this.src='../../resources/images/no_picture.png';" alt="캠핑장 이미지" />
-                                </div>
-                                <div class="infoBox">
-                                    <strong><span>모집중</span>${list.ct_title}</strong>
-                                    <p>${list.ca_name}</p>
-                                    <span>${list.mb_nickname}</span>
-                                    <span>${list.ct_age}대 ${list.ct_gender} 모집인원:${list.ct_people_cnt}명</span>
-                                </div>
-                            </a>
-                        </li>
-                    </c:forEach>
-                    </ul>
+                    <c:choose>
+                    	<c:when test="${crewCnt eq 0}">
+                    	검색 결과가 없습니다.
+                    	</c:when>
+                    	<c:otherwise>
+		                    <ul id="crewVote" class="crewList">
+		                    <c:forEach items="${list}" var="list">
+		                        <li>
+		                            <a href="crewTogetherView.do?ct_idx=${list.ct_idx}">
+		                                <div class="imgBox">
+		                                    <span><i class="xi-maker"></i> ${list.ca_sido} ${fn:substring(list.ct_wish_start,5,7)}/${fn:substring(list.ct_wish_start,8,10)} ~ ${fn:substring(list.ct_wish_end,5,7)}/${fn:substring(list.ct_wish_end,8,10)}</span>
+		                                    <img src="${list.ca_img}" onerror="javascript:this.src='../../resources/images/no_picture.png';" alt="캠핑장 이미지" />
+		                                </div>
+		                                <div class="infoBox">
+		                                    <strong><span>모집중</span>${list.ct_title}</strong>
+		                                    <p>${list.ca_name}</p>
+		                                    <span>${list.mb_nickname}</span>
+		                                    <span>${list.ct_age}대 ${list.ct_gender} 모집인원:${list.ct_people_cnt}명</span>
+		                                </div>
+		                            </a>
+		                        </li>
+		                    </c:forEach>
+		                    </ul>
+                    	</c:otherwise>
+                    </c:choose>
                     <div style="clear: both;"></div>
 					<ul>	
 						<!-- 이전페이지 버튼 -->
@@ -224,10 +231,6 @@
 	<script>
 		$('ul > li.pageInfo_btn > a').on('click', function() {
 			$('input:hidden[name="pageNum"]').val($(this).attr('data'));
-			if($.trim($('#startDate').val()) == '' || $.trim($('#endDate').val()) == '') {
-				window.alert("시작일 또는 종료일을 선택해 주세요.");
-				return false;
-			}
 			$('#crewTogetherSearchForm').submit();
 		});
 		
