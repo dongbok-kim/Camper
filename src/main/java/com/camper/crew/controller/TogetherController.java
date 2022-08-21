@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.camper.crew.dto.TogetherDTO;
 import com.camper.crew.service.TogetherService;
+import com.camper.lib.dto.PageMakerDTO;
 import com.camper.lib.utils.Criteria;
 
 @Controller
@@ -30,7 +31,19 @@ public class TogetherController {
 
 	// 크루모집 목록
 	@RequestMapping(value = "/crewTogetherList.do")
-	public String crewTogetherList(Model model, HttpSession session) {
+	public String crewTogetherList(
+			Model model,
+			HttpSession session,
+			Criteria cri,
+			@RequestParam(required = false) String ct_gender,
+			@RequestParam(required = false) ArrayList<String> ct_camping_type,
+			@RequestParam(required = false) ArrayList<String> ct_age,
+			@RequestParam(required = false) String ct_pet,
+			@RequestParam(required = false) String ct_tool,
+			@RequestParam(required = false) String ct_wish_start,
+			@RequestParam(required = false) String ct_wish_end,
+			@RequestParam(required = false) String cp_name
+			) {
 		String loginId = (String) session.getAttribute("loginId");
 
 		ArrayList<TogetherDTO> recom;
@@ -42,13 +55,76 @@ public class TogetherController {
 		}
 
 		model.addAttribute("recomList", recom); // 크루추천
-
-		String page = "crewTogetherList";
-		int crewCnt = service.crewCnt();
-		ArrayList<TogetherDTO> list = service.list();
-		model.addAttribute("list", list);
+		
+		cri.setAmount(8);
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		
+		if(ct_gender != null && !ct_gender.trim().equals("")) {
+			params.put("ct_gender", ct_gender);
+			model.addAttribute("ct_gender", ct_gender);
+		}
+		
+		if(ct_camping_type != null && ct_camping_type.size() > 0) {
+			params.put("ct_camping_type", ct_camping_type.toString().replaceAll(",", "|"));
+			model.addAttribute("ct_camping_type", ct_camping_type);
+		}
+		
+		if(ct_age != null && ct_age.size() > 0) {
+			params.put("ct_age", ct_age);
+			model.addAttribute("ct_age", ct_age);
+		}
+		
+		if(ct_pet != null && !ct_pet.trim().equals("")) {
+			params.put("ct_pet", ct_pet);
+			model.addAttribute("ct_pet", ct_pet);
+		}
+		
+		if(ct_tool != null && !ct_tool.trim().equals("")) {
+			params.put("ct_tool", ct_tool);
+			model.addAttribute("ct_tool", ct_tool);
+		}
+		
+		if(ct_wish_start != null && !ct_wish_start.trim().equals("") && ct_wish_end != null && !ct_wish_end.trim().equals("")) {
+			params.put("ct_wish_start", ct_wish_start);
+			model.addAttribute("ct_wish_start", ct_wish_start);
+			
+			params.put("ct_wish_end", ct_wish_end);
+			model.addAttribute("ct_wish_end", ct_wish_end);
+		}
+		
+		if(cp_name != null && !cp_name.trim().equals("")) {
+			params.put("cp_name", cp_name);
+			model.addAttribute("cp_name", cp_name);
+		}
+		
+		int crewCnt = service.crewCnt(params);
 		model.addAttribute("crewCnt", crewCnt);
-
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, crewCnt);
+		
+		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() < 0) {
+			logger.info("startPage : "+pageMaker.getStartPage());
+			pageMaker.setStartPage(1);
+		}
+		
+		if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		int skip = (pageNum - 1) * cri.getAmount();
+		params.put("skip", skip);
+		model.addAttribute("skip", skip);
+		
+		params.put("amount", cri.getAmount());
+		
+		String page = "crewTogetherList";
+		ArrayList<TogetherDTO> list = service.list(params);
+		model.addAttribute("list", list);
+		model.addAttribute("pageMaker", pageMaker);
+		
 		return page;
 	}
 
@@ -59,7 +135,11 @@ public class TogetherController {
 		logger.info(ct_idx + "번 크루모집 상세보기");
 
 		TogetherDTO dto = service.view(ct_idx);
-		model.addAttribute("cct", dto);
+		if(dto != null) {
+			model.addAttribute("cct", dto);
+		} else {
+			model.addAttribute("msg", "존재하지 않는 모집글입니다.");
+		}
 
 		return page;
 

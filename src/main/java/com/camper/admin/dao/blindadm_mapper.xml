@@ -3,35 +3,68 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.BlindAdmDAO">
 	
-	<select id="blindList" resultType="com.camper.admin.dto.BlindAdmDTO">
-		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
-		FROM cp_board_blind ORDER BY bb_datetime DESC
+	<select id="blindCnt" resultType="int">
+		SELECT COUNT(bb_idx)
+		FROM 
+			cp_board_blind ORDER BY bb_datetime DESC
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				in_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+					<choose>
+						<when test="type != null and type.equals('제목')" >
+							in_title LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('내용')" >
+							in_content LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('아이디')" >
+							mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(in_title LIKE CONCAT('%', #{keyword}, '%') 
+								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
+		
 	</select>
 	
-	<select id="blindSearch" parameterType="hashmap" resultType="com.camper.admin.dto.BlindAdmDTO">
+	<select id="blindList" parameterType="hashmap" resultType="admBlind">
 		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
-		FROM cp_board_blind WHERE
-			<choose>
-				<when test="bb_relation.equals('relation')">
-					<if test="option.equals('all')">
-						bb_reason LIKE CONCAT ("%",#{keyword},"%")
-						OR mb_id LIKE CONCAT ("%",#{keyword},"%")
-					</if>
-					<if test="option.equals('bb_reason')">bb_reason LIKE CONCAT ("%",#{keyword},"%")</if>
-					<if test="option.equals('mb_id')">mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
-				</when>
-				<otherwise>
-					bb_relation = #{bb_relation}
-					<if test="option.equals('all') and keyword != '' ">
-						AND
-						bb_reason LIKE CONCAT ("%",#{keyword},"%")
-						OR mb_id LIKE CONCAT ("%",#{keyword},"%")
-					</if>
-					<if test="option.equals('bb_reason') and keyword != '' ">AND bb_reason LIKE CONCAT ("%",#{keyword},"%")</if>
-					<if test="option.equals('mb_id') and keyword != '' ">AND mb_id LIKE CONCAT ("%",#{keyword},"%")</if>
-				</otherwise>
-			</choose>
-		ORDER BY bb_datetime DESC 
+		FROM 
+			cp_board_blind WHERE
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				in_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+					<choose>
+						<when test="type != null and type.equals('제목')" >
+							in_title LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('내용')" >
+							in_content LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<when test="type != null and type.equals('아이디')" >
+							mb_id LIKE CONCAT('%', #{keyword}, '%')
+						</when>
+						<otherwise>
+							(in_title LIKE CONCAT('%', #{keyword}, '%') 
+								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
+						</otherwise>
+					</choose>
+				</if>
+		</where>
+		ORDER BY in_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 </mapper>

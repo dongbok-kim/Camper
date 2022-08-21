@@ -5,7 +5,7 @@
 
 	<select id="recomList" resultType="crTogether">
 		SELECT 
-			a.ct_idx,
+			a.ct_idx, 
 			a.ct_wish_start, 
 			a.ct_wish_end, 
 			a.ct_title, 
@@ -22,13 +22,17 @@
 			cp_member b 
 		ON 
 			a.mb_id = b.mb_id 
-		JOIN
-			cp_camping c
+		JOIN 
+			cp_camping c 
 		ON 
-			a.ca_idx = c.ca_idx
-		WHERE 1
-			and b.mb_fire >= 1500
-		LIMIT 4
+			a.ca_idx = c.ca_idx 
+		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND b.mb_fire >= 1500 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+		ORDER BY RAND() 
+		LIMIT 4 
 	</select>
 
 	<select id="recom" parameterType="String" resultType="crTogether">
@@ -66,25 +70,29 @@
 			AND a.mb_id != e.mb_id 
 			AND b.mb_fire >= 1500 
 			AND e.mb_id = #{mb_id} 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 			AND 
 			(
-				(a.ct_gender = '혼성' OR a.ct_gender = (SELECT mb_gender FROM cp_member WHERE mb_id = #{mb_id}))
+				(a.ct_gender = '혼성' OR a.ct_gender = (SELECT mb_gender FROM cp_member WHERE mb_id = #{mb_id})) 
 				OR 
 				a.ct_age = (SELECT ma_age FROM cp_member_age WHERE ma_idx = (SELECT ma_idx FROM cp_member WHERE mb_id = #{mb_id})) 
-			)
+			) 
+		ORDER BY RAND() 
 		LIMIT 4 
 	</select>
 
-	<select id="list" resultType="hashmap">
+	<select id="list" parameterType="hashmap" resultType="hashmap">
 		SELECT 
-			a.ct_idx,
+			a.ct_idx, 
 			a.ct_wish_start, 
 			a.ct_wish_end, 
 			a.ct_title, 
 			a.ct_age, 
 			a.ct_people_cnt, 
 			a.ct_end, 
-			a.mb_id,
+			a.mb_id, 
 			b.ca_img, 
 			b.ca_sido, 
 			b.ca_name, 
@@ -94,17 +102,88 @@
 		JOIN 
 			cp_camping b 
 		ON 
-			a.ca_idx = b.ca_idx
-		JOIN
+			a.ca_idx = b.ca_idx 
+		JOIN 
 			cp_member c 
 		ON 
-			a.mb_id = c.mb_id
-		WHERE 
-			a.ct_end = 0
+			a.mb_id = c.mb_id 
+		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+			<if test="ct_gender != null">
+			AND a.ct_gender = #{ct_gender}
+			</if>
+			<if test="ct_camping_type != null">
+				AND a.ct_camping_type REGEXP #{ct_camping_type}
+			</if>
+			<if test="ct_age != null">
+				AND a.ct_age IN
+				<foreach collection="ct_age" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="ct_pet != null">
+			AND a.ct_pet = #{ct_pet}
+			</if>
+			<if test="ct_tool != null">
+			AND a.ct_tool = #{ct_tool}
+			</if>
+			<if test="ct_wish_start != null and ct_wish_end != null">
+			AND a.ct_wish_start <![CDATA[>=]]> #{ct_wish_start}
+			AND a.ct_wish_end <![CDATA[<=]]> #{ct_wish_end}
+			</if>
+			<if test="ct_wish_end != null">
+			</if>
+			<if test="cp_name != null">
+			AND b.cp_name = #{cp_name}
+			</if>
+		LIMIT #{amount}
+		<if test="skip >= 0">OFFSET #{skip}</if>
 	</select>
 	
-	<select id="crewCnt" resultType="int">
-		SELECT COUNT(ct_idx) FROM cp_crew_together
+	<select id="crewCnt" parameterType="hashmap" resultType="int">
+		SELECT 
+			COUNT(a.ct_idx) 
+		FROM 
+			cp_crew_together a 
+		JOIN 
+			cp_camping b 
+		ON 
+			a.ca_idx = b.ca_idx 
+		JOIN 
+			cp_member c 
+		ON 
+			a.mb_id = c.mb_id 
+		WHERE 1 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
+			<if test="ct_gender != null">
+			AND a.ct_gender = #{ct_gender}
+			</if>
+			<if test="ct_camping_type != null">
+				AND a.ct_camping_type REGEXP #{ct_camping_type}
+			</if>
+			<if test="ct_age != null">
+				AND a.ct_age IN
+				<foreach collection="ct_age" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+			<if test="ct_pet != null">
+			AND a.ct_pet = #{ct_pet}
+			</if>
+			<if test="ct_tool != null">
+			AND a.ct_tool = #{ct_tool}
+			</if>
+			<if test="ct_wish_start != null and ct_wish_end != null">
+			AND a.ct_wish_start <![CDATA[>=]]> #{ct_wish_start}
+			AND a.ct_wish_end <![CDATA[<=]]> #{ct_wish_end}
+			</if>
+			<if test="cp_name != null">
+			AND b.cp_name = #{cp_name}
+			</if>
 	</select>
 	
 	<select id="view" parameterType="String" resultType="crTogether">
@@ -142,8 +221,11 @@
 			cp_member_age d 
 		ON 
 			c.ma_idx = d.ma_idx 
-		WHERE 
-			a.ct_idx = #{ct_idx}
+		WHERE 1 
+			AND a.ct_idx = #{ct_idx} 
+			AND a.ct_deadline = 0 
+			AND a.ct_wish_start > NOW() 
+			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 	</select> 
 	<!-- 크루모집 글 지울려면 채팅방 메시지, 참여자, 그룹 지워야해서  -->
 	<delete id="chatMessageDel" parameterType="int">
@@ -297,7 +379,7 @@
 			<if test="ca_name != null">and a.ca_name like concat('%',#{ca_name},'%')</if>
 			ORDER BY ca_idx DESC
 			LIMIT #{amount}
-			<if test="campingCnt > 0">OFFSET #{skip}</if>
+			<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 	<!-- 모집글 작성 / 등록 -->

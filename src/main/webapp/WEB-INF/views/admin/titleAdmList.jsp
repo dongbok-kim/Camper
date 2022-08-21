@@ -32,9 +32,9 @@
 							<c:if test="${list.size() == 0}">
 								<tr><td colspan="5">타이틀이 없습니다.</td></tr>
 							</c:if>
-							<c:forEach items="${list}" var="tt">
+							<c:forEach items="${list}" var="tt" varStatus="i">
 								<tr>
-									<td>${tt.mt_idx }</td>
+									<td>${listCnt - skip - i.index}</td>
 									<td>${tt.mt_name}</td>
 									<td>${tt.mt_count } 회</td>
 									<td>${tt.mt_degree } ℃</td>

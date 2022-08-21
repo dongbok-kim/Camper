@@ -3,14 +3,72 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.ReportAdmDAO">
 	
-	<select id="reportList" resultType="com.camper.admin.dto.ReportAdmDTO">
-		SELECT rp_idx, rp_content, rp_datetime, rp_id, rp_status, mb_id,
-			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
-		FROM cp_report cr
-		ORDER BY rp_idx DESC
+	<!-- 신고 관리 총 갯수 -->
+	<select id="reportCnt" parameterType="hashmap" resultType="int">
+		SELECT COUNT(rp_idx)
+		FROM 
+			cp_report cr
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				rp_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+				<choose>
+					<when test="type != null and type.equals('신고당한회원')" >
+						mb_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('신고자')" >
+						rp_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('신고내용')" >
+						rp_content LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<otherwise>
+						(mb_id LIKE CONCAT('%', #{keyword}, '%')
+							OR rp_id LIKE CONCAT('%', #{keyword}, '%')
+							OR rp_content LIKE CONCAT('%', #{keyword}, '%'))
+					</otherwise>
+				</choose>
+			</if>
+		</where>
 	</select>
 	
-	<select id="reportView" resultType="com.camper.admin.dto.ReportAdmDTO">
+	<select id="reportList" parameterType="hashmap" resultType="admReport">
+		SELECT rp_idx, rp_content, rp_datetime, rp_id, rp_status, mb_id,
+			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
+		FROM 
+			cp_report cr
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				rp_status = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+				AND
+				<choose>
+					<when test="type != null and type.equals('신고당한회원')" >
+						mb_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('신고자')" >
+						rp_id LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<when test="type != null and type.equals('신고내용')" >
+						rp_content LIKE CONCAT('%', #{keyword}, '%')
+					</when>
+					<otherwise>
+						(mb_id LIKE CONCAT('%', #{keyword}, '%')
+							OR rp_id LIKE CONCAT('%', #{keyword}, '%')
+							OR rp_content LIKE CONCAT('%', #{keyword}, '%'))
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+		ORDER BY rp_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
+	</select>
+	
+	<select id="reportView" resultType="admReport">
 		SELECT mb_id, rp_id, rp_content, rp_datetime, rp_admin, rp_proc_date, rp_status, rp_idx,
 			(SELECT count(rp_idx)+1 FROM cp_report WHERE mb_id = cr.mb_id and rp_idx <![CDATA[<]]> cr.rp_idx) as rp_count
 		FROM cp_report cr

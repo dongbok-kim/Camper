@@ -2,6 +2,7 @@ package com.camper.mypage.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -71,6 +72,10 @@ public class MyReviewService {
 
 		int pageNum = cri.getPageNum();
 		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
+		
 		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
 		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
 			pageNum = pageMaker.getEndPage();
@@ -100,7 +105,14 @@ public class MyReviewService {
 	// by.승진 2022-08-11
 	public ModelAndView campingReviewDelete(String idx, String loginId) {
 		ModelAndView mav = new ModelAndView("redirect:/myCampingReview.go");
-		dao.campingReviewDelete(idx, loginId);
+		// 삭제 가능 여부 확인
+		MyReviewDTO dto = dao.delAble(idx, loginId);
+		Date delAble = dto.getDelAble();
+		Date today = dto.getToday();
+		
+		if (delAble.after(today)) {
+			dao.campingReviewDelete(idx, loginId);			
+		}
 		return mav;
 	}
 	
@@ -132,20 +144,83 @@ public class MyReviewService {
 
 	// 크루 후기 페이지 (받은 후기)
 	// by.승진 2022-08-15
-	public ModelAndView crewReviewR(String loginId) {
+	public ModelAndView crewReviewR(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("mypage/myCrewReviewR");
-		ArrayList<MyReviewDTO> list = dao.crewReviewR(loginId);
+		
+		// 검색 연동 페이징
+		cri.setAmount(15);
+		
+		int total = (int) dao.totalR(params);
+		mav.addObject("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+
+		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
+		
+		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		// DAO MAPPER OFFSET
+		int skip = (pageNum-1)*cri.getAmount();
+		params.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		// DAO MAPPER LIMIT
+		params.put("amount", cri.getAmount());
+		
+		ArrayList<MyReviewDTO> list = dao.crewReviewR(params);
 		mav.addObject("list", list);
+		mav.addObject("pageMaker", pageMaker);
 		return mav;
 	}
 
 
 	// 크루 후기 페이지 (작성 후기)
 	// by.승진 2022-08-15
-	public ModelAndView crewReviewW(String loginId) {
+	public ModelAndView crewReviewW(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("mypage/myCrewReviewW");
-		ArrayList<MyReviewDTO> list = dao.crewReviewW(loginId);
+		
+		// 검색 연동 페이징
+		cri.setAmount(15);
+		
+		int total = (int) dao.totalW(params);
+		mav.addObject("listCnt", total);
+		
+		PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+
+		int pageNum = cri.getPageNum();
+		
+		if (pageMaker.getStartPage() <0 ) {
+			pageMaker.setStartPage(1);
+		}
+		
+		// 현재 페이지가 마지막 페이지를 초과하지 못하도록 방지하는 코드
+		if (pageMaker.getEndPage()> 0 && pageNum > pageMaker.getEndPage()){
+			pageNum = pageMaker.getEndPage();
+			cri.setPageNum(pageNum);
+		}
+		
+		// DAO MAPPER OFFSET
+		int skip = (pageNum-1)*cri.getAmount();
+		params.put("skip", skip);
+		mav.addObject("skip", skip);
+		
+		// DAO MAPPER LIMIT
+		params.put("amount", cri.getAmount());
+		
+		ArrayList<MyReviewDTO> list = dao.crewReviewW(params);
+		
 		mav.addObject("list", list);
+		
+		mav.addObject("pageMaker", pageMaker);
+		
 		return mav;
 	}
 

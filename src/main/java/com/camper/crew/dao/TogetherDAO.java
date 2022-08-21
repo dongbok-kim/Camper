@@ -10,7 +10,7 @@ public interface TogetherDAO {
 
 	TogetherDTO view(String ct_idx);
 
-	ArrayList<TogetherDTO> list();
+	ArrayList<TogetherDTO> list(HashMap<String, Object> params);
 
 	void chatMessageDel(int cg_idx);
 
@@ -20,7 +20,7 @@ public interface TogetherDAO {
 
 	ArrayList<TogetherDTO> crewRecom();
 
-	int crewCnt();
+	int crewCnt(HashMap<String, Object> params);
 
 	ArrayList<TogetherDTO> recom(String mb_id);
 

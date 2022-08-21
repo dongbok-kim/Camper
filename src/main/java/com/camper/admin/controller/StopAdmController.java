@@ -24,7 +24,7 @@ public class StopAdmController {
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	//정지 회원 목록
-	@RequestMapping(value = "/stopAdmList.go", method = RequestMethod.GET)
+	@RequestMapping(value = "/stopAdmList.go")
 	public ModelAndView stopAdmList(Criteria cri,
 			@RequestParam HashMap<String, Object> params) {
 		

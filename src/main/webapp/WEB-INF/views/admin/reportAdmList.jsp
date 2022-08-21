@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -20,9 +21,10 @@
 					<h3>신고 관리</h3>
 				</div>
 <body>
-	<div>총 신고 수 : ${list.size()}건</div>
+	<div>총 신고 수 : ${listCnt}건</div>
 	<div>
 		<table>
+		<thead>
 			<tr>
 				<th>번호</th>
 				<th>신고내용</th>
@@ -32,40 +34,60 @@
 				<th>신고누적횟수</th>
 				<th>처리상태</th>
 			</tr>
-			<c:forEach items="${list }" var="report">
+			</thead>
+			<tbody>
+			<c:forEach items="${list }" var="report" varStatus="i">
 				<tr>
-					<td>${report.rp_idx}</td>
-					<td><a href="reportAdmView?rp_idx=${report.rp_idx}">${report.rp_content}</a></td>
+					<td>${listCnt - skip - i.index}</td>
+					<td><a href="reportAdmView?rp_idx=${report.rp_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${report.rp_content}</a></td>
 					<td>${report.mb_id}</td>
 					<td>${report.rp_id}</td>
-					<td>${report.rp_datetime}</td>
+					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${report.rp_datetime}"/></td>
 					<td>${report.rp_count }</td>
 					<td>${report.rp_status}</td>
 				</tr>
 			</c:forEach>
+		</tbody>
 		</table>
+		<ul>
+			<!-- 이전 페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+				<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+				<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;type=${type}&amp;filter=${filter}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!--  다음 페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+				<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+			</c:if>
+		</ul>
 	</div>
 	<div>
-		<form action="reportSearch.do" method="post">
-			<select name="rp_status">
-				<option value="처리상태">처리상태</option>
+		<form action="reportAdmList.go" method="post" id="reportList">
+			<select name="filter">
+				<option value="">처리상태</option>
 				<option value="미처리">미처리</option>
 				<option value="처리중">처리중</option>
 				<option value="처리완료">처리완료</option>
 			</select>
-			<select name="option">
+			<select name="type">
 				<option value="전체">전체</option>
 				<option value="신고당한회원">신고당한회원</option>
 				<option value="신고자">신고자</option>
 				<option value="신고내용">신고내용</option>
 			</select>
-			<input type="text" name="keyword" placeholder="검색"/>
+			<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
 			<input type="submit" value="search"/>
 		</form>
 	</div>
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-
+$('#reportList select[name="filter"]').on('change', function() {
+	$('#reportList').submit();
+});
 </script>
 </html>

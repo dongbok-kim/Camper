@@ -6,17 +6,19 @@
 
 	<select id="total" parameterType="hashmap" resultType="int">
 		SELECT count(bl_idx)
-		FROM cp_member_block 
+		FROM cp_member_block cmb 
+		JOIN cp_member cm ON cm.mb_id = cmb.mb_id  
 		WHERE bl_mb = #{loginId}
-		ORDER BY bl_idx DESC
+		ORDER BY bl_idx DESC;
 	</select>
 
 	<!-- 차단한 회원 목록 -->
 	<select id="blockList" parameterType="hashmap" resultType="mypgBlock">
-		SELECT bl_idx, mb_id, bl_datetime 
-		FROM cp_member_block 
+		SELECT bl_idx, cmb.mb_id, mb_nickname, bl_datetime 
+		FROM cp_member_block cmb 
+		JOIN cp_member cm ON cm.mb_id = cmb.mb_id  
 		WHERE bl_mb = #{loginId}
-		ORDER BY bl_idx DESC
+		ORDER BY bl_idx DESC;
 	</select>
 
 </mapper>

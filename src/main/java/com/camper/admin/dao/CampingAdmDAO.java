@@ -15,4 +15,6 @@ public interface CampingAdmDAO {
 
 	CampingAdmDTO campingAdmAPI(HashMap<String, Object> params);
 
+	void campingAdmUpdate(HashMap<String, Object> params);
+
 }

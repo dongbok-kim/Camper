@@ -9,7 +9,11 @@
 		SELECT COUNT(ccr.cr_idx) FROM cp_camping_review ccr JOIN cp_camping cc ON ccr.ca_idx = cc.ca_idx
 		
 		<where>
+			<if test="filter != null and !filter.equals('')">
+				ccr.cr_assessment = #{filter}
+			</if>
 			<if test="keyword != null and !keyword.equals('')">
+			AND
 			<choose>
 				<when test="type != null and type.equals('mb_id')">
 					ccr.mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -47,7 +51,11 @@
 			ccr.ca_idx = cc.ca_idx
 			
 		<where>
+			<if test="filter != null and !filter.equals('')">
+				ccr.cr_assessment = #{filter}
+			</if>
 			<if test="keyword != null and !keyword.equals('')">
+			AND
 			<choose>
 				<when test="type != null and type.equals('mb_id')">
 					ccr.mb_id LIKE CONCAT('%', #{keyword}, '%')
@@ -56,24 +64,85 @@
 					cc.ca_name LIKE CONCAT('%', #{keyword}, '%')
 				</when>
 				<otherwise>
-					<if test="${keyword} != null and !keyword.equals('')">
-					(ccr.mb_id LIKE CONCAT('%', #{keyword}, '%') or cc.ca_name LIKE CONCAT('%', #{keyword}, '%'))
+					<if test="keyword != null and !keyword.equals('')">
+					(ccr.mb_id LIKE CONCAT('%', #{keyword}, '%') 
+					OR cc.ca_name LIKE CONCAT('%', #{keyword}, '%'))
 					</if>
+				</otherwise>
+			</choose>	
+			</if>
+		</where>
+		ORDER BY ccr.cr_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
+	</select>
+	
+	
+	<!-- 회원 후기 총 갯수 -->
+	<select id="reviewMemberCnt" resultType="int">
+		SELECT COUNT(mr_idx)
+		FROM 
+			cp_member_review cmr
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				cmr.mr_assessment = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+			AND
+			<choose>
+				<when test="type != null and type.equals('mb_id')">
+					cmr.mb_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cmr.mr_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cmr.mr_content LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					(cmr.mb_id LIKE CONCAT('%', #{keyword}, '%') 
+					OR cmr.mr_id LIKE CONCAT('%', #{keyword}, '%')
+					OR cmr.mr_content LIKE CONCAT('%', #{keyword}, '%'))
 				</otherwise>
 			</choose>
 			</if>
 		</where>
-		
-		LIMIT #{amount}
-		OFFSET #{skip}
 	</select>
-	
 	
 	<!-- 회원 후기 관리 -->
 	<select id="reviewMemberList" resultType="admReview">
-		SELECT mr_idx, mr_content, mr_id, mb_id, mr_assessment, mr_score, mr_datetime,
+		SELECT mr_idx, mr_content, mr_id, mb_id, 
+			mr_assessment, mr_score, mr_datetime,
 			(select count(bb_idx) from cp_board_blind cbb where cbb.bb_relation_idx = cmr.mr_idx and cbb.bb_relation = 'cp_member_review') as bb_count
-		FROM cp_member_review cmr
+		FROM 
+			cp_member_review cmr
+		<where>
+			<if test="filter != null and !filter.equals('')">
+				cmr.mr_assessment = #{filter}
+			</if>
+			<if test="keyword != null and !keyword.equals('')">
+			AND
+			<choose>
+				<when test="type != null and type.equals('mb_id')">
+					cmr.mb_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cmr.mr_id LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<when test="type != null and type.equals('ca_name')">
+					cmr.mr_content LIKE CONCAT('%', #{keyword}, '%')
+				</when>
+				<otherwise>
+					(cmr.mb_id LIKE CONCAT('%', #{keyword}, '%') 
+					OR cmr.mr_id LIKE CONCAT('%', #{keyword}, '%')
+					OR cmr.mr_content LIKE CONCAT('%', #{keyword}, '%'))
+				</otherwise>
+			</choose>
+			</if>
+		</where>
+		ORDER BY cmr.mr_idx DESC
+		LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>
 	
 </mapper>

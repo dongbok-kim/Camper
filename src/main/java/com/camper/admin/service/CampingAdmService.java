@@ -39,6 +39,7 @@ public class CampingAdmService {
 		}
 		mav.addObject("filterStatus", params.get("filterStatus"));
 		mav.addObject("filterSido", params.get("filterSido"));
+		mav.addObject("apiList",params.get("apiList"));
 		
 		int total = dao.campingTotal(params);
 		mav.addObject("listCnt", total);
@@ -74,7 +75,7 @@ public class CampingAdmService {
 	}
 	
 	// 관리자 페이지 / 캠핑장 상세보기 이동
-	public ModelAndView campingAdmView(Criteria cri, HashMap<String, Object> params) {
+	public ModelAndView campingAdmView(HashMap<String, Object> params) {
 		logger.info("캠핑장 상세보기 : {}",params.get("ca_idx"));
 		
 		// 캠핑장 원본 데이터 요청
@@ -85,8 +86,13 @@ public class CampingAdmService {
 		
 		// 캠핑장 api 업데이트 데이터 요청
 		CampingAdmDTO api = dao.campingAdmAPI(params);
+		if(api == null) {
+			api = dto;
+			mav.addObject("msg","본 캠핑장은 api에서 삭제된 캠핑장입니다.");
+		}
 		mav.addObject("newCamp",api);
-		logger.info("newCamp NAME : "+api.getCa_name());
+		//logger.info("newCamp NAME : "+api.getCa_name());
+		logger.info("api : " + api);
 		
 		/*
 		//캠핑장 이름
@@ -263,6 +269,37 @@ public class CampingAdmService {
 		}
 		mav.addObject("pageNum", pageNum);
 		
+		return mav;
+	}
+
+	public ModelAndView campingAdmUpdate(HashMap<String, Object> params) {
+		ModelAndView mav = new ModelAndView("redirect:/campingAdmView.go?ca_idx="+params.get("ca_idx"));
+		
+		CampingAdmDTO dto = dao.campingAdmView(params);
+		CampingAdmDTO api = dao.campingAdmAPI(params);
+		// 정보 등록 날짜는 변경된 경우에 api 최신날짜에 맞추기 위함
+		params.put("ca_create_date", api.getCa_create_date());
+		
+		// 변경된 주소로 업데이트 한다면 위도, 경도 또한 함께 업데이트 해줘야함
+		if(api.getCa_addr_default().equals(params.get("ca_addr_default")) &&
+				api.getCa_sido().equals(params.get("ca_sido")) &&
+				api.getCa_sigungu().equals(params.get("ca_sigungu"))
+				) {
+			params.put("ca_mapX", api.getCa_mapX());
+			params.put("ca_mapY", api.getCa_mapY());
+			logger.info("주소 업데이트");
+		} else if (dto.getCa_addr_default().equals(params.get("ca_addr_default")) &&
+				dto.getCa_sido().equals(params.get("ca_sido")) &&
+				dto.getCa_sigungu().equals(params.get("ca_sigungu"))
+				){ 
+			// 주소 업데이트가 일어나지 않을 때 위도, 경도 값이 지워지는 것을 방지
+			params.put("ca_mapX", dto.getCa_mapX());
+			params.put("ca_mapY", dto.getCa_mapY());
+			logger.info("기존 주소 유지됨");
+		}
+				
+		dao.campingAdmUpdate(params);
+		mav.addObject("msg", "수정이 완료되었습니다.");
 		return mav;
 	}
 

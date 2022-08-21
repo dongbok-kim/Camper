@@ -20,9 +20,10 @@
 					<h3>블라인드 관리</h3>
 				</div>
 <body>
-	<div>총 블라인드 수 : ${list.size()}건</div>
+	<div>총 블라인드 수 : ${listCnt()}건</div>
 	<div>
 		<table>
+		<thead>
 			<tr>
 				<th>번호</th>
 				<th>구분</th>
@@ -30,9 +31,14 @@
 				<th>블라인드 처리자</th>
 				<th>블라인드 날짜</th>
 			</tr>
-			<c:forEach items="${list }" var="blind">
+			</thead>
+			<tbody>
+			<c:if test="${list.size() == 0}">
+				<tr><td colspan="5">블라인드 글이 없습니다.</td></tr>
+			</c:if>
+			<c:forEach items="${list }" var="blind" varStatus="i">
 				<tr>
-					<td>${blind.bb_idx}</td>
+					<td>${listCnt - skip - i.index}</td>
 					<td>
 					<c:if test="${blind.bb_relation eq 'cp_crew_together'}">모집글</c:if>
 					<c:if test="${blind.bb_relation eq 'cp_member_review'}">회원 후기</c:if>
@@ -43,10 +49,26 @@
 					<td>${blind.bb_datetime}</td>
 				</tr>
 			</c:forEach>
+			</tbody>
 		</table>
+		<ul>
+			<!-- 이전 페이지 버튼 -->
+			<c:if test="${pageMaker.prev}">
+				<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			</c:if>
+			<!-- 각 번호 페이지 버튼 -->
+			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+				<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;type=${type}&amp;filter=${filter}&amp;pageNum=${num}">${num}</a></li>
+			</c:forEach>
+			
+			<!--  다음 페이지 버튼 -->
+			<c:if test="${pageMaker.next}">
+				<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+			</c:if>
+		</ul>
 	</div>
 	<div>
-		<form action="blindAdmSearch.do" method="post">
+		<form action="blindAdmList.go" method="post" id="blindList">
 			<select name="bb_relation">
 				<option value="relation">구분</option>
 				<option value="cp_camping_review">캠핑장 후기</option>
@@ -65,6 +87,8 @@
 	<%@ include file="../../../resources/inc/footer.jsp" %>
 </body>
 <script>
-
+$('#blindList select[name="filter"]').on('change', function() {
+	$('#blindList').submit();
+});
 </script>
 </html>

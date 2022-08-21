@@ -54,13 +54,13 @@
 							<c:if test="${list.size() == 0}">
 								<tr><td colspan="5">작성한 캠핑장 후기가 없습니다.</td></tr>
 							</c:if>
-							<c:forEach items="${list}" var="rv">
+							<c:forEach items="${list}" var="rv" varStatus="i">
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
 									<td  class="subject" >${rv.ca_name}<br/>${rv.cr_content}</td>
 									<td>${rv.cr_assessment}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
-									<c:if test="${rv.delAvail > rv.today}">
+									<c:if test="${rv.delAble > rv.today}">
 										<td><input type="button" value="삭제" onclick="del(${rv.cr_idx})"/></td>
 									</c:if>
 								</tr>

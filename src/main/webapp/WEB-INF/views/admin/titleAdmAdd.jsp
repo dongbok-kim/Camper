@@ -18,25 +18,51 @@
 				</aside>
 				<div>
 					<h3>타이틀 추가</h3>
-					<form action="/titleAdd.do" method="post">
+					<form action="/titleAdd.do" method="post" name="addForm">
 						<table>
 							<tr>
 								<th>타이틀 이름</th>
-								<td><input type="text" name="mt_name"></td>
+								<td><input type="text" name="mt_name" id="mt_name"></td>
 							</tr>
 							<tr>
 								<th>기준 크루장 횟수</th>
-								<td><input type="text" name="mt_count">회</td>
+								<td><input type="text" name="mt_count" id="mt_count">회</td>
 							</tr>
 							<tr>
 								<th>기준 모닥불 온도</th>
-								<td><input type="text" name="mt_degree">℃</td>
+								<td><input type="text" name="mt_degree" id="mt_degree">℃</td>
 							</tr>
 						</table>
-						<input type="submit" value="추가">
+						<input type="button" value="추가" onclick="add()">
 						<input type="button" value="목록" onclick="location.href='/titleList.go'"/>
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
-	<script></script>
+	<script>
+	
+		var msg = "${msg}";
+		if(msg != ""){
+			alert(msg);
+		}
+	
+		function add(){
+			var form = document.addForm;
+			
+			var name = $('#mt_name').val();
+			var count = $('#mt_count').val();
+			var degree = $('#mt_degree').val();
+			
+			if (name == "") {
+				alert("타이틀 이름을 입력해주세요");
+			} else if (count == "") {
+				alert("기준 크루장 횟수를 입력해주세요");
+			} else if (degree == "") {
+				alert("기준 모닥불 온도를 입력해주세요");
+			} else {
+				form.submit();
+			}
+			
+		}
+	
+	</script>
 </html>

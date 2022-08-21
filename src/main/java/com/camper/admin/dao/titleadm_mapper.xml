@@ -3,10 +3,18 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.camper.admin.dao.TitleAdmDAO">
 
+	<select id="total" parameterType="hashmap" resultType="int">
+		SELECT COUNT(mt_idx)
+		FROM cp_member_title 
+		ORDER BY mt_idx DESC
+	</select>
+
 	<select id="titleList" resultType="admTitle">
 		SELECT mt_idx, mt_name, mt_count, mt_degree 
 		FROM cp_member_title 
 		ORDER BY mt_idx DESC
+		<!-- LIMIT #{amount}
+		<if test="skip gt 0">OFFSET #{skip}</if> -->
 	</select>
 	
 	<insert id="titleAdd" parameterType="hashmap">
@@ -33,5 +41,17 @@
 		WHERE mb_fire >= (SELECT mt_degree FROM cp_member_title cmt WHERE mt_idx = #{param1})
 		AND (SELECT count(ct_idx) FROM cp_crew_together cct WHERE cct.mb_id = cm.mb_id) >= (SELECT mt_count FROM cp_member_title cmt WHERE mt_idx = #{param1})
 	</update>
+	
+	<select id="chkDuple" parameterType="hashmap" resultType="int">
+		SELECT COUNT(mt_name) 
+		FROM cp_member_title 
+		WHERE mt_name = #{mt_name}
+	</select>
+	
+	<select id="chkUpdateDuple" parameterType="hashmap" resultType="int">
+		SELECT COUNT(mt_name) 
+		FROM cp_member_title 
+		WHERE mt_name = #{mt_name} AND NOT mt_idx IN (#{mt_idx})
+	</select>
 	
 </mapper>
