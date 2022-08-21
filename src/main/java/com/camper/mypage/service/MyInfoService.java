@@ -1,5 +1,6 @@
 package com.camper.mypage.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -117,6 +118,11 @@ public class MyInfoService {
 	public int myInfoStop(String mb_id) {
 		
 		return dao.myInfoStop(mb_id);
+	}
+
+	public ArrayList<MyInfoDTO> myInfoAge() {
+		
+		return dao.myInfoAge();
 	}
 
 	

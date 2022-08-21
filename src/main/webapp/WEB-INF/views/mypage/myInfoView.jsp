@@ -1,40 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>마이페이지 - 내정보 수정</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<style>
-	aside {
-    width: 30%;
-    margin: 10px;
-    padding: 20px;
-    float: left;
-}
-	section {
-	width: 70%;
-	margin: 10px;
-	padding: 20px;
-	float: right;
-}
-
-	table {
-		border: 2px solid; border-coollapse: collapse; text-align : left;
-	}
-	
-	th, td { border : 1px solid; padding: 10px 5px;}
-	
-	th {background-color : gray; }
-	
-	input[type='text'] {width: 60%; }
-</style>
-</head>
-<body>
-	<aside>
+<aside>
+					<h2>마이 페이지</h2>
 					<ul>
 						<li class="active"><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
@@ -47,9 +15,26 @@
 						<li><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 	</aside>
-	<section>
-	<article>
+	<div>
 	<h3>내 정보 수정</h3>
+	</div>
+<title>마이페이지 - 내정보 수정</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<style>
+	table {
+		border: 2px solid; border-coollapse: collapse; text-align : left;
+	}
+	
+	th, td { border : 1px solid; padding: 10px 5px;}
+	
+	th {background-color : gray; }
+	
+	input[type='text'] {width: 60%; }
+</style>
+</head>
+<body>
+	<div>
 	<form action="myInfoUpdate.do" method="POST" onsubmit="return submitCheck()">
 	<table>
 		<tr>
@@ -100,15 +85,13 @@
                 <td>
                   ${myInfo.mb_gender}
                 </td>
-                <td>연령대</td>
+                <th>연령대</th>
                 <td>
-                	<input type="hidden" name="ma_idx" value="${myInfo.ma_idx}" />
-                   <input type="radio" name="ma_idxradio" value="1" /> 20대 
-                   <input type="radio" name="ma_idxradio" value="2" /> 30대 
-                   <input type="radio" name="ma_idxradio" value="3" /> 40대 
-                   <input type="radio" name="ma_idxradio" value="4" /> 50대 
-                   <input type="radio" name="ma_idxradio" value="5" /> 60대 
-                </td>
+                <c:forEach items="${list }" var="age">
+                <input type="hidden" name="ma_idxradio" value="${myInfo.ma_idx}" >
+            	<input type="radio" name="ma_idx" value="${age.ma_idx}" <c:if test="${myInfo.ma_idx eq age.ma_idx}">checked="checked"</c:if> />${age.ma_age } 대
+            </c:forEach>
+            	</td>
             </tr>
             <tr>
                 <th>이메일</th>
@@ -156,12 +139,16 @@
 	<input type="submit" value="완료" />
 	<br/>
 	</form>
+	</div>
+	<div>
 	<h3>회원탈퇴</h3>
+	</div>
+	<div>
 	<form action="secession.do" onsubmit="return submitCheck_two()">
 	<h5>탈퇴 안내</h5>
 	탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.<br/>
 	탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.
-	<br/><br/>
+	<br/>
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -174,12 +161,11 @@
 			</td>
 		</tr>
 	</table> <br/>
-	<input type="submit" value="탈퇴" />
+	<input type="submit" value="탈퇴" /> <br/> <br/>
 	</form>
-	</article>
-	</section>
-	<%@ include file="/resources/inc/footer.jsp" %>
+	</div>
 </body>
+	<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 function sample6_execDaumPostcode() {
     new daum.Postcode({
@@ -239,31 +225,6 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-
-
-	// console.log($("input[name='ma_idx']").val());
-
-if($("input[name='ma_idx']").val() == 1 ) {
-	$("input:radio[name='ma_idxradio']:radio[value='1']").attr("checked" , true);
-}
-
-if($("input[name='ma_idx']").val() == 2 ) {
-	$("input:radio[name='ma_idxradio']:radio[value='2']").attr("checked" , true);
-}
-
-if($("input[name='ma_idx']").val() == 3 ) {
-	$("input:radio[name='ma_idxradio']:radio[value='3']").attr("checked" , true);
-}
-
-if($("input[name='ma_idx']").val() == 4 ) {
-	$("input:radio[name='ma_idxradio']:radio[value='4']").attr("checked" , true);
-}
-
-if($("input[name='ma_idx']").val() == 5 ) {
-	$("input:radio[name='ma_idxradio']:radio[value='5']").attr("checked" , true);
-}
-
-
 
 var checkEmail = false; // 이메일 중복체크 여부
 function doubleCheckEmail() {
@@ -409,7 +370,27 @@ function submitCheck() {
 	if($('#password').val() == null || $('#password').val() == "" ) {	//원래 비밀번호 값을 누르지 않았을때
 		alert('현재 비밀번호를 입력해 주세요');
 		return false;
-	} else if (newpassword != newpasswordcheck){
+	}
+	
+	//현재 비밀번호 패턴 검사
+	
+	if (newpassword || newpasswordcheck) {
+		
+		//새 비밀번호 입력 여부 검사
+		
+		//새 비밀번호 패턴 검사
+		
+		//새 비밀번호 확인 입력 여부 검사
+		
+		//새 비밀번호 패턴 검사
+		
+		//새 비밀번호 와 새 비밀번호 확인 일치 여부 검사
+		
+	}
+	
+	
+	
+	if (newpassword != newpasswordcheck){
 		alert('새 비밀번호와 새 비밀번호 확인이 일치하지 않습니다.');
 		return false;
 	} else if (newpassword !="" && (!pattern1.test(newpassword) || !pattern2.test(newpassword) || !pattern3.test(newpassword) || newpassword.length < 4)) {

@@ -8,7 +8,18 @@
 <title>회원 가입 페이지</title>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<style></style>
+<style>
+	table {
+		border: 2px solid; border-coollapse: collapse; text-align : left;
+	}
+	
+	th, td { border : 1px solid; padding: 10px 5px;}
+	
+	th {background-color : gray; }
+	
+	input[type='text'] {width: 35%; }
+	input[type='password'] {width: 35%; }
+</style>
 </head>
 <body>
 	 <h3>회원 가입</h3>
@@ -16,8 +27,8 @@
         <table>
             <tr>
                 <th>아이디</th>
-                <td>
-                    <input type="text" name ="mb_id" id= "id" />
+                <td colspan="7">
+                    <input type="text" name ="mb_id" id= "id" maxlength="20" />
                     <input type="button" value="아이디 중복 확인" onclick="doubleCheckId()" />
                     <input type="hidden" id="doublecheckid" />
                     <!-- 아이디 중복 확인은 ajax 명령으로 -->
@@ -25,20 +36,20 @@
             </tr>
             <tr>
                 <th>비밀번호</th>
-                <td>
-                    <input type="password"  name = "mb_pw" id="password"/>
+                <td colspan="7">
+                    <input type="password"  name = "mb_pw" id="password" maxlength="20"/>
                 </td>
             </tr>
             <tr>
                 <th>비밀번호 확인</th>
-                <td>
-                    <input type="password"  name = "passwordcheck" id = "passwordcheck"/>
+                <td colspan="7">
+                    <input type="password"  name = "passwordcheck" id = "passwordcheck" maxlength="20"/>
                 </td>
             </tr>
             <tr>
                 <th>이메일</th>
-                <td>
-                    <input type="text"  name = "mb_email" id="email"/>
+                <td colspan="7">
+                    <input type="text"  name = "mb_email" id="email" maxlength="20"/>
                     <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
                     <input type="hidden" id="doublecheckemail" />
                     <!-- 이메일 중복 확인은 ajax 명령으로 -->
@@ -46,8 +57,8 @@
             </tr>
             <tr>
                 <th>닉네임</th>
-                <td>
-                <input type="text"  name = "mb_nickname" id="nickname"/>
+                <td colspan="7">
+                <input type="text"  name = "mb_nickname" id="nickname" maxlength="20"/>
                 <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
                 <input type="hidden" id="doublecheckname" />
                 <!-- 닉네임 중복 확인은 ajax 명령으로 -->
@@ -55,29 +66,29 @@
             </tr>
             <tr>
                 <th>이름</th>
-                <td>
-                    <input type="text"  name = "mb_name" id= "name"/>
+                <td colspan="7">
+                    <input type="text"  name = "mb_name" id= "name" maxlength="20"/>
                 </td>
+             </tr>
+             <tr>
                 <th>성별</th>
-                <td>
-                 <input type="radio" value="남" name = "mb_gender" /> 남 
-                 <input type="radio" value="여" name = "mb_gender" /> 여 
+                <td colspan="7">
+                 <label><input type="radio" value="남" name = "mb_gender" /> 남 </label>
+                 <label><input type="radio" value="여" name = "mb_gender" /> 여 </label>
                 </td>
-            </tr>
+            </tr>   
             <tr>
-                <th>연령대</th>
-                <td>
-                   <input type="radio" name="ma_idx" value="1" /> 20대 
-                   <input type="radio" name="ma_idx" value="2" /> 30대 
-                   <input type="radio" name="ma_idx" value="3" /> 40대 
-                   <input type="radio" name="ma_idx" value="4" /> 50대 
-                   <input type="radio" name="ma_idx" value="5" /> 60대 
-                </td>
+            		<th>연령대</th>
+            <c:forEach items="${list }" var="age">
+            	<td>
+            	<label><input type="radio" name="ma_idx" value="${age.ma_idx}" />${age.ma_age }대 </label>
+            	</td>
+            </c:forEach>
             </tr>
             <tr>
             	<th>주소</th>
-                <td>
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" readonly>
+                <td colspan="7">
+                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width: 10%;" readonly>
 				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
 				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" readonly><br>
 				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소">
@@ -90,11 +101,12 @@
 				</td>
             </tr>
         </table>
-        
-        <input type="submit" value="회원가입" />
+        <br/><br/>
+        <input type="submit" value="회원가입" /> <!--  -->
         <input type="button" value="취소" onclick="location.href='login.go'" />
         </form>
 </body>
+<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 
 	//다음 우편번호 관련 함수
@@ -146,11 +158,18 @@
                 document.getElementById("sample6_detailAddress").focus();
                 
               
-               console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
+                console.log(data.sido);  // 시/도 (서울, 경기, 경북 등으로 표시)
                 document.getElementById('sample6_sido').value = data.sido;
-                
-               console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
+               
+              
+                //console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
                 document.getElementById('sample6_sigungu').value = data.sigungu;
+                
+                if(data.sido == "세종특별자치시") {
+    				document.getElementById('sample6_sigungu').value = "세종시";
+    			}
+                
+                console.log(data.sigungu); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
                 
                 
             }
@@ -159,47 +178,40 @@
 	
 	var checkId = false; // 아이디 중복체크 여부
 	function doubleCheckId() {
+		checkId = false;
 		
-		var pattern2 = /[a-zA-Z]/;	// 영문 포함
+		var regExpId = /^[0-9a-zA-Z\_]{4,20}$/;	//아이디 정규식
 		
-		//문자열에 공백이 있는 경우
-		var blank_pattern = /[\s]/g;
-		// if( blank_pattern.test(str) == true){
-		   // alert('공백이 입력되었습니다.');
-		// }
-		
-		var id = $("#id").val();
+		var $id = $("#id");
 		//console.log($("#id").val());
 		
-		if(id == "" || id == null){
-	       alert("아이디를 입력해주세요");
-	        return false;
-	     }
-		
-		 if (blank_pattern.test(id)) {		//공백이있는지 체크하는 문
-			alert('아이디에 공백이 있습니다.');
-			return false;
-		} 
-		
-		 if (!pattern2.test(id)){
-			alert('아이디는 영문을 포함해야 합니다');
-			return false;
-		}
+		if($.trim($id.val()) == '') {
+				window.alert("아이디를 입력해 주세요.");
+				$id.val('').focus();
+				return false;
+			}
 		 
-		 console.log('아이디 중복 체크 : '+id);		
+			if(!regExpId.test($id.val())) {
+				window.alert("아이디는 4~20자의 영문과 숫자, _ 조합만 가능합니다.");
+				$id.val('').focus();
+				return false;
+			}
+		 
+		 console.log('아이디 중복 체크 : '+$id.val());		
 			$.ajax({
 				type:'get',
 				url:'doubleCheckId.ajax',
-				data:{chkId:id},
+				data:{chkId:$id.val()},
 				dataType:'JSON',
 				success:function(data){
 					// console.log(data);
 				 if(data.doubleId){
 						alert("이미 사용중인 아이디 입니다.");
+						$id.val('').focus();
 					}else{
 						alert("사용 가능한 아이디 입니다.");
 						checkId = true;
-						document.getElementById('doublecheckid').value = id;
+						document.getElementById('doublecheckid').value = $id.val();
 					}
 					 
 				},
@@ -214,45 +226,39 @@
 		
 	var checkEmail = false; // 이메일 중복체크 여부
 	function doubleCheckEmail() {
+		checkEmail = false;
 		
-		//문자열에 공백이 있는 경우
-		var blank_pattern = /[\s]/g;
-		// if( blank_pattern.test(str) == true){
-		   // alert('공백이 입력되었습니다.');
-		// }
+		var $email = $("#email");
 		
-		var email = $("#email").val();
-		console.log($("#email").val());
+		var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;	//이메일 정규식
 		
-		 if(email == "" || email == null){
-	         alert("이메일를 입력해주세요");
-	         return false;
-	      }
-		 
-		 if (blank_pattern.test(email)) {		// 공백 체크
-			alert('이메일에 공백이 있습니다.');
-			return false;
-		} 
-		 
-		  if (email.indexOf('@') == -1) {
-			alert('이메일에는 @ 를 포함해야합니다. ');
+		if($.trim($email.val()) == '') {
+			window.alert("이메일을 입력해 주세요.");
+			$email.val('').focus();
 			return false;
 		}
 		 
-		 console.log('이메일 중복 체크 : '+email);		
+		if(!regExpEmail.test($email.val())) {
+			window.alert("이메일 형식에 맞게 입력해 주세요. ");
+			$email.val('').focus();
+			return false;
+		}
+		 
+		 console.log('이메일 중복 체크 : '+$email.val());		
 			$.ajax({
 				type:'get',
 				url:'doubleCheckEmail.ajax',
-				data:{chkEmail:email},
+				data:{chkEmail:$email.val()},
 				dataType:'JSON',
 				success:function(data){
 					// console.log(data);
 				 if(data.doubleEmail){
 						alert("이미 사용중인 이메일 입니다.");
+						$email.val('').focus();
 					}else{
 						alert("사용 가능한 이메일 입니다.");
 						checkEmail = true;
-						document.getElementById('doublecheckemail').value = email;
+						document.getElementById('doublecheckemail').value = $email.val();
 					}
 					 
 				},
@@ -268,40 +274,31 @@
 	
 	var checkNickname = false; // 닉네임 중복체크 여부
 	function doubleCheckNickname() {
+		checkNickname = false;
 		
-		//문자열에 공백이 있는 경우
-		var blank_pattern = /[\s]/g;
-		// if( blank_pattern.test(str) == true){
-		   // alert('공백이 입력되었습니다.');
-		// }
+		var $nickname = $("#nickname");
 		
-		var nickname = $("#nickname").val();
-		// console.log($("#nickname").val());
-		
-		 if(nickname == "" || nickname == null){
-	         alert("닉네임을 입력해주세요");
-	         return false;
-	      }
+		if($.trim($nickname.val()) == '') {
+			window.alert("닉네임을 입력해 주세요.");
+			$nickname.val('').focus();
+			return false;
+		}
 		 
-		 if (blank_pattern.test(nickname)) {		//공백이있는지 체크하는 문
-				alert('닉네임에 공백이 있습니다.');
-				return false;
-			} 
-		 
-		 console.log('닉네임 중복 체크 : '+nickname);		
+		 console.log('닉네임 중복 체크 : '+$nickname.val());		
 			$.ajax({
 				type:'get',
 				url:'doubleCheckNickname.ajax',
-				data:{chkNickname:nickname},
+				data:{chkNickname:$nickname.val()},
 				dataType:'JSON',
 				success:function(data){
 					// console.log(data);
 				 if(data.doubleNickname){
 						alert("이미 사용중인 닉네임 입니다.");
+						$nickname.val('').focus();
 					}else{
 						alert("사용 가능한 닉네임 입니다.");
 						checkNickname = true;
-						document.getElementById('doublecheckname').value = nickname;
+						document.getElementById('doublecheckname').value = $nickname.val();
 					}
 					 
 				},
@@ -315,119 +312,170 @@
 	
 		function submitCheck() {  //회원가입 하기전 체크
 			
-			var pattern1 = /[0-9]/;				// 숫자
-			var pattern2 = /[a-zA-Z]/;			// 문자
-			var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
+			var regExpId = /^[0-9a-zA-Z\_]{4,20}$/;	//아이디 정규식
 			
+			var regExpPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,20}$/;	//비밀번호 정규식
 			
-			var id = $('#id').val();	// 아이디
-			//console.log($('#id').val());	
+			var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;	//이메일 정규식
 			
-			var password = $('#password').val(); //비밀번호
-			//console.log($('#password').val());	
+			var $id = $('#id');	// 아이디
 			
-			var passwordcheck = $('#passwordcheck').val(); //비밀번호 확인
-			//console.log($('#passwordcheck').val());	
+			var $pw = $('#password'); //비밀번호
 			
-			var email = $('#email').val(); //이메일
-			//console.log($('#email').val());	
+			var $pwchk = $('#passwordcheck'); //비밀번호 확인
 			
-			var nickname = $("#nickname").val(); //닉네임
-			//console.log($('#nickname').val());	
+			var $email = $('#email'); //이메일
 			
-			var name = $('#name').val(); //이름
-			//console.log($('#name').val());	
+			var $nickname = $("#nickname"); //닉네임
 			
-			var gender = $('input[name=mb_gender]:checked').val(); //성별
-			//console.log($('input[name=mb_gender]:checked').val());
+			var $name = $('#name'); //이름
 			
-			var age = $('input[name=ma_idx]:checked').val(); //나이대
-			//console.log($('input[name=ma_idx]:checked').val());	
+			var $gender = $('input[name=mb_gender]:checked'); //성별
 			
-			var postcode = $('input[name=mb_postcode]').val(); //우편번호
-			//console.log($('input[name=mb_postcode]').val());
+			var $age = $('input[name=ma_idx]:checked'); //나이대
 			
-			var addr = $('input[name=mb_addr_default]').val(); //주소
-			//console.log($('input[name=mb_addr_default]').val());
+			var $postcode = $('input[name=mb_postcode]'); //우편번호
 			
-			var detailaddr = $('input[name=mb_addr_detail]').val(); //상세주소
-			//console.log($('input[name=mb_addr_detail]').val());
+			var $addr = $('input[name=mb_addr_default]'); //주소
 			
-			var sido = $("#sample6_sido").val(); // 시/도 (서울, 경기, 경북 등으로 표시)
-			//console.log($('#sample6_sido').val());
+			var $detailaddr = $('input[name=mb_addr_detail]'); //상세주소
 			
-			if(sido == "세종특별자치시") {
-				document.getElementById('sample6_sigungu').value = "세종시";
+			var $sido = $("#sample6_sido"); // 시/도 (서울, 경기, 경북 등으로 표시)
+			
+			var $sigungu = $("#sample6_sigungu"); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
+			
+			var $doublenickid = $("#doublecheckid");
+			
+			var $doublenickemail = $("#doublecheckemail");
+			
+			var $doublenickname = $("#doublecheckname");
+			
+			if($.trim($id.val()) == '') {
+				window.alert("아이디를 입력해 주세요.");
+				$id.val('').focus();
+				return false;
+			}
+		 
+			if(!regExpId.test($id.val())) {
+				window.alert("아이디는 4~20자의 영문과 숫자, _ 조합만 가능합니다.");
+				$id.val('').focus();
+				return false;
 			}
 			
-			var sigungu = $("#sample6_sigungu").val(); // 시/군/구 (서초구, 광명시 , 곡성군 등으로 표시)
-			//console.log($('#sample6_sigungu').val());
+			if(checkId == false) {
+				window.alert("아이디 중복확인을 진행해 주세요.");
+				return  false;
+			 }
 			
-			var doublenickid = $("#doublecheckid").val();
-			//console.log(doublenickid);
+			if($doublenickid.val() != $id.val()) {
+				window.alert("아이디 중복확인을 진행해 주세요.");
+				checkId = false;
+				// console.log(checkId);
+				return false;
+			}
 			
-			var doublenickemail = $("#doublecheckemail").val();
-			//console.log(doublenickname);
+			if($.trim($pw.val()) == '') {
+				window.alert("비밀번호를 입력해 주세요.");
+				$pw.val('').focus();
+				return false;
+			}
+				
+			if(!regExpPw.test($pw.val())) {
+				window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+				$pw.val('').focus();
+				return false;
+			}
 			
-			var doublenickname = $("#doublecheckname").val();
-			//console.log(doublenickname);
-			
-			
-		if (	//값을 입력하지 않았을때 if문
-				age == null || gender == null || id == "" || 
-				password == "" || passwordcheck == "" || email == "" ||
-				nickname == "" || name== "" || gender == "" ||
-				age == "" || postcode == "" || addr == "" || 
-				detailaddr == "" || sido == "" || sigungu == ""	
-			) {
-			alert("모든 값을 입력해 주세요");
-			return false;
-		} else {
-		 if(password != passwordcheck) {
-			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
-			return false;
-		} else if(!pattern1.test(password) || !pattern2.test(password) || !pattern3.test(password) || password.length < 4) {
-			alert("비밀번호는 영문 , 숫자 , 특수문자를 포함 4자리 이상 입니다.");
-			return false;
-		} else if(checkId == false) {
-			alert("아이디 중복확인을 진행해 주세요.");
-			return  false;
-		 } else 	if(doublenickid != id) {
-			 alert("아이디 중복확인을 진행해 주세요.");
-			 checkId = false;
-			 // console.log(checkNickname);
-			return false;
-		}	else if (checkEmail == false) {
-			 alert("이메일 중복확인을 진행해 주세요.");
-			 return  false;
-		 } else if(doublenickemail != email) {
-			 alert("닉네임 중복확인을 진행해 주세요.");
-			 checkEmail = false;
-			 // console.log(checkNickname);
-			return false;
-		}	else if (checkNickname == false) {
-			 alert("닉네임 중복확인을 진행해 주세요.");
-			 return false;
-		 } else 	if(doublenickname != nickname) {
-			 alert("닉네임 중복확인을 진행해 주세요.");
-			 checkNickname = false;
-			 // console.log(checkNickname);
-			return false;
-		}	 
-		 
-		 
-		 else {
-			  return true;
-		 }
-		 
-		 
-		 
-	} 
+			if($.trim($pwchk.val()) == '') {
+				window.alert("비밀번호 확인을 입력해 주세요.");
+				$pwchk.val('').focus();
+				return false;
+			}
 			
 			
+			if(!regExpPw.test($pwchk.val())) {
+				window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+				$pwchk.val('').focus();
+				return false;
+			}
 			
+			if($pw.val() != $pwchk.val()) {
+				window.alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. ");
+				$pwchk.val('').focus();
+				return false;
+			}
 			
+			if($.trim($email.val()) == '') {
+				window.alert("이메일을 입력해 주세요.");
+				$email.val('').focus();
+				return false;
+			}
 			
+			if(!regExpEmail.test($email.val())) {
+				window.alert("이메일 형식에 맞게 입력해 주세요. ");
+				$email.val('').focus();
+				return false;
+			}
+			
+			if(checkEmail == false) {
+				window.alert("이메일 중복확인을 진행해 주세요.");
+				return  false;
+			 }
+			
+			if($doublenickemail.val() != $email.val()) {
+				window.alert("이메일 중복확인을 진행해 주세요.");
+				checkEmail = false;
+				return false;
+			}
+			
+			if($.trim($nickname.val()) == '') {
+				window.alert("닉네임을 입력해 주세요.");
+				$nickname.val('').focus();
+				return false;
+			}
+			
+			if(checkNickname == false) {
+				window.alert("닉네임 중복확인을 진행해 주세요.");
+				return  false;
+			 }
+			
+			if($doublenickname.val() != $nickname.val()) {
+				window.alert("닉네임 중복확인을 진행해 주세요.");
+				checkNickname = false;
+				return false;
+			}
+			
+			if($.trim($name.val()) == '') {
+				window.alert("이름을 입력해 주세요.");
+				$name.val('').focus();
+				return false;
+			}
+			
+			if($gender.val() == null) {
+				window.alert("성별을 체크해 주세요.");
+				return false;
+			}
+			
+			if($age.val() == null) {
+				window.alert("나이대를 체크해 주세요.");
+				return false;
+			}
+			
+			if($postcode.val() == "" || $postcode.val() == null) {
+				window.alert("우편번호 찾기를 진행해 주세요.");
+				return false;
+			}
+			
+			if($addr.val() == "" || $addr.val() == null) {
+				window.alert("우편번호 찾기를 진행해 주세요.");
+				return false;
+			}
+			
+			if($.trim($detailaddr.val()) == '') {
+				window.alert("상세주소를 입력해 주세요.");
+				$detailaddr.val('').focus();
+				return false;
+			}
 }
 
 

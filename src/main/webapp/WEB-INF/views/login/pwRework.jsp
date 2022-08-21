@@ -13,67 +13,71 @@
 	<h3>비밀번호 재설정</h3>
 	<form action="pwRework.do" method="POST" onsubmit="return submitCheck()">
 	<table>
+			<tr>
+				<th>회원님의 아이디 : ${sessionScope.mb_id }</th>
+			</tr>
             <tr>
-                <th>비밀번호 재설정</th>
+                <th>새 비밀번호</th>
                 <td>
-                    <input type="password"  name="mb_pw" id = "pw"/>  
+                    <input type="password"  name="mb_pw" id = "pw" maxlength="20"/>  
                 </td>
             </tr>
             <tr>
-                <th>비밀번호 확인</th>
+                <th>새 비밀번호 확인</th>
                 <td>
-                    <input type="password" id = "pwcheck"/>
+                    <input type="password" id = "pwcheck" maxlength="20"/>
                 </td>
             </tr>
+			<tr>
+				<th>
+					<br/> <br/>
+            		<input type="submit" value="비밀번호 재설정" />
+           		 	<input type="button" value="취소" onclick="location.href='login.go'" />
+            	</th>
+			</tr>         
         </table>
-            <input type="submit" value="비밀번호 재설정" >
-            <input type="button" value="취소" onclick="location.href='login.go'" />
         </form>
 </body>
+<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 function submitCheck() {
 	
-	var pw = $('#pw').val();
-	// console.log(pw);
+	var regExpPw = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{4,20}$/;	//비밀번호 정규식
 	
-	var pwchk =  $('#pwcheck').val();
-	// console.log(pwchk);
+	var $pw = $('#pw');
 	
+	var $pwchk =  $('#pwcheck');
 	
-	//문자열에 공백이 있는 경우
-	var blank_pattern = /[\s]/g;
-	// if( blank_pattern.test(str) == true){
-	   // alert('공백이 입력되었습니다.');
-	// }
-	
-	var pattern1 = /[0-9]/;				// 숫자
-	var pattern2 = /[a-zA-Z]/;			// 문자
-	var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/;	// 특수문자
-	
-	
-	if( pw == "" || pw == null ) {
-		alert('비밀번호 재설정 을 입력해 주세요');
+	if($.trim($pw.val()) == '') {
+		window.alert("새 비밀번호를 입력해 주세요.");
+		$pw.val('').focus();
 		return false;
-	}  else if (blank_pattern.test(pw)) {		//공백이있는지 체크하는 문
-		alert('비밀번호 재설정 에 공백이 있습니다.');
-		return false;
-	} else if( pwchk == "" || pwchk == null ) {
-		alert('비밀번호 확인 을 입력해 주세요');
-		return false;
-	}  else if (blank_pattern.test(pwchk)) {		//공백이있는지 체크하는 문
-		alert('비밀번호 확인 에 공백이 있습니다.');
-		return false;
-	} else if (pw != pwchk) {
-		alert('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-		return false;
-	} else if(!pattern1.test(pw) || !pattern2.test(pw) || !pattern3.test(pw) || pw.length < 4) {
-		alert("비밀번호는 영문 , 숫자 , 특수문자를 포함 4자리 이상 입니다.");
-		return false;
-	} else {
-		return true;
 	}
 	
-
+	if(!regExpPw.test($pw.val())) {
+		window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+		$pw.val('').focus();
+		return false;
+	}
+	
+	if($.trim($pwchk.val()) == '') {
+		window.alert("새 비밀번호 확인을 입력해 주세요.");
+		$pwchk.val('').focus();
+		return false;
+	}
+	
+	if(!regExpPw.test($pwchk.val())) {
+		window.alert("비밀번호는 4~20자의 영문과 숫자, 특수문자를 포함해야 합니다. ");
+		$pwchk.val('').focus();
+		return false;
+	}
+	
+	if($pw.val() != $pwchk.val()) {
+		window.alert("비밀번호와 비밀번호 확인이 일치하지 않습니다. ");
+		$pwchk.val('').focus();
+		return false;
+	}
+	
 	
 }
 

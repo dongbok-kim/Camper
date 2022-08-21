@@ -69,4 +69,8 @@
 	UPDATE cp_member SET mb_pw = #{param2} where mb_id = #{param1}
 </update>
 
+<select id="joinAge" resultType="logIn">
+	SELECT ma_idx, ma_age FROM cp_member_age
+</select>
+
 </mapper>

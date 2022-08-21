@@ -16,17 +16,18 @@
 			<tr>
 				<th>이름</th>
 				<td>
-					<input type="text"  name = "name" id = "id" />  
+					<input type="text"  name = "name" id = "name" maxlength="20" />  
 				</td>
 			</tr>
 			<tr>
 				<th>이메일</th>
 				<td>
-					<input type="text"  name = "email" id = "email"/>
+					<input type="text"  name = "email" id = "email" maxlength="30"/>
 				</td>
 			</tr>
 		</table>
 		<div>
+			<br/>
 			<input type="submit" value="ID찾기" />
 			<!-- 아이디찾기 명령어-->
 			<input type="button" value="취소" onclick="location.href='login.go'" />
@@ -38,41 +39,32 @@
 <script>
 function submitCheck() {
 	
+	var regExpId = /^[0-9a-zA-Z\_]{4,20}$/;	//아이디 정규식
 	
-	var id = $('#id').val();
-	// console.log(id);
+	var regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;	//이메일 정규식
 	
+	var $name = $('#name');
 	
-	var email = $('#email').val();
-	// console.log(email);
+	var $email = $('#email');
 	
-	
-	//문자열에 공백이 있는 경우
-	var blank_pattern = /[\s]/g;
-	// if( blank_pattern.test(str) == true){
-	   // alert('공백이 입력되었습니다.');
-	// }
-	
-	
-	
-	if( id == "" || id == null ) {
-		alert('이름을 입력해 주세요');
+	if($.trim($name.val()) == '') {
+		window.alert("이름를 입력해 주세요.");
+		$name.val('').focus();
 		return false;
-	} else if (blank_pattern.test(id)) {		//공백이있는지 체크하는 문
-		alert('이름에 공백이 있습니다.');
-		return false;
-	}  else if( email == "" || email == null ) {
-		alert('이메일을 입력해 주세요');
-		return false;
-	} else if (blank_pattern.test(email)) {    //이메일 input type text 로변경
-		alert('이메일에 공백이 있습니다.');
-		return false;
-	} else if (email.indexOf('@') == -1) {
-		alert('이메일에는 @ 를 포함해야합니다. ');
-		return false;
-	} else {
-		return true;
 	}
+	
+	if($.trim($email.val()) == '') {
+		window.alert("이메일을 입력해 주세요.");
+		$email.val('').focus();
+		return false;
+	}
+	
+	if(!regExpEmail.test($email.val())) {
+		window.alert("이메일 형식에 맞게 입력해 주세요. ");
+		$email.val('').focus();
+		return false;
+	}
+
 	
 }
 

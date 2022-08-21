@@ -53,4 +53,8 @@
 	DELETE FROM cp_chat_join WHERE mb_id = #{param1}
 </delete>
 
+<select id="myInfoAge" resultType="mypgMyInfo">
+	SELECT ma_idx, ma_age FROM cp_member_age
+</select>
+
 </mapper>

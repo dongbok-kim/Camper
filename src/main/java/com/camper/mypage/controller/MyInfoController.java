@@ -1,5 +1,6 @@
 package com.camper.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +49,9 @@ public class MyInfoController {
 			
 			int stop = service.myInfoStop(mb_id);
 			model.addAttribute("stop", stop);
+			
+			ArrayList<MyInfoDTO> list = service.myInfoAge();
+			model.addAttribute("list", list);
 			
 			logger.info("정지 횟수 : "+stop);
 			
@@ -104,7 +108,7 @@ public class MyInfoController {
 			logger.info("수정할 상세 주소 : "+mb_addr_detail);
 			
 			//연령대, 시도 , 시군구
-			String ma_idx = request.getParameter("ma_idxradio");
+			String ma_idx = request.getParameter("ma_idx");
 			logger.info("수정할 연령대 : "+ma_idx);
 			
 			String mb_sido = request.getParameter("mb_sido");

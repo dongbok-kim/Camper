@@ -1,5 +1,6 @@
 package com.camper.login.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -146,6 +147,11 @@ public class LoginService {
 		
 		dao.pwRework(mb_id, encoder.encode(mb_pw));
 		
+	}
+
+	public ArrayList<LoginDTO> joinAge() {
+		
+		return dao.joinAge();
 	}
 
 	

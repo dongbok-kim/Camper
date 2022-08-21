@@ -1,5 +1,7 @@
 package com.camper.login.dao;
 
+import java.util.ArrayList;
+
 import com.camper.login.dto.LoginDTO;
 
 public interface LoginDAO {
@@ -29,6 +31,8 @@ public interface LoginDAO {
 	String pwFindstatus(String mb_id, String mb_email);
 
 	void pwRework(String mb_id, String encode);
+
+	ArrayList<LoginDTO> joinAge();
 
 	
 

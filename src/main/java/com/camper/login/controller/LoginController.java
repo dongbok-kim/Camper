@@ -63,6 +63,9 @@ public class LoginController {
 			page = "redirect:/";
 		}
 		
+		ArrayList<LoginDTO> list = service.joinAge();
+		model.addAttribute("list", list);
+		
 		return page;
 	}
 		
@@ -142,6 +145,11 @@ public class LoginController {
 			logger.info("회원 상태 : "+mb_status);	//회원 상태 세션에 저장 (정상, 정지 , 탈퇴)
 			session.setAttribute("mb_status", mb_status);
 			
+			//정지를 판단하는 기준
+			//1. 회원상태가 정지
+			//2. 정지테이블에서 해당 회원으로 정지시작일~정지종료일 데이터가 있는지 검사
+			//3. 2번에서 카운트 0 -> 정지풀렸거나 당한 기록을 찾을 수 없다는 것이니까. 2번+회원상태가 정지인 경우
+			
 			//같은 방식으로 정지도 추가 해야됨 (+정지일수 표시?)
 			if(mb_status.equals("탈퇴")) { //회원 상태가 탈퇴일때 세션 지우고 로그인 불가
 				session.removeAttribute("loginId");
@@ -194,6 +202,18 @@ public class LoginController {
 		logger.info("sido : "+dto.getMb_sido());
 		logger.info("sigungu : "+dto.getMb_sigungu());
 		
+		// 아이디 입력했는지?(공백제거후)
+		// 규칙이 맞는지?
+		// 중복된 아이디가 있는지?
+		// 이메일 입력했는지?(공백제거후)
+		// 이메일 규칙이 맞는지?
+		// 이메일 중복이 잇는지?
+		// 닉네임 입력했는지?(공백제거후)
+		// 닉네임 중복이 잇는지?
+		// 이름, 성별, 연령대
+		// 연령대가 실제로 DB 에 존재하는 연령대를 선택햇는지
+		// 우편번호 입력(선택)했는지, 기본주소 입력(선택)되어있는지, 상세주소 입력했는지
+		// 기본주소를 기반으로 시/도 와 시/군/구를 추출한다
 		
 		return service.join(dto);
 	}
@@ -204,6 +224,9 @@ public class LoginController {
 	@ResponseBody
 	public HashMap<String, Object> doubleCheckId(@RequestParam String chkId) {
 				
+		
+		//아이디입력했는지(공백제거후)
+		//아이디규칙이맞는지
 	logger.info("아이디 중복 체크 : "+chkId);
 	return service.doubleCheckId(chkId);
 	}
@@ -246,7 +269,7 @@ public class LoginController {
 					rttr.addFlashAttribute("msg" , "탈퇴된 회원입니다.");
 					page = "redirect:/idFind.go";
 				} else {
-					rttr.addFlashAttribute("msg", "당신의 아이디 :  "+idFind);
+					rttr.addFlashAttribute("msg", "회원님의 아이디 :  "+idFind);
 					page = "redirect:/login.go";
 				}
 				
@@ -280,7 +303,7 @@ public class LoginController {
 				} else {
 					session.setAttribute("mb_id", mb_id);
 					page = "redirect:/pwRework.go";
-					rttr.addFlashAttribute("msg", "비밀번호 변경 가능");
+					// rttr.addFlashAttribute("msg", "비밀번호 변경 가능");
 				}
 					
 			} else {
