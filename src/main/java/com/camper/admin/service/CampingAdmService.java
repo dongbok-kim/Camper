@@ -80,7 +80,7 @@ public class CampingAdmService {
 		
 		// 캠핑장 원본 데이터 요청
 		CampingAdmDTO dto = dao.campingAdmView(params);
-		ModelAndView mav = new ModelAndView("admin/campingAdmView");
+		ModelAndView mav = new ModelAndView("redirect:/campingAdmView.go?ca_idx="+params.get("ca_idx"));
 		mav.addObject("oriCamp", dto);
 		logger.info("oriCamp NAME : "+dto.getCa_name());
 		
@@ -91,73 +91,72 @@ public class CampingAdmService {
 			mav.addObject("msg","본 캠핑장은 api에서 삭제된 캠핑장입니다.");
 		}
 		mav.addObject("newCamp",api);
-		//logger.info("newCamp NAME : "+api.getCa_name());
-		logger.info("api : " + api);
 		
-		/*
 		//캠핑장 이름
-		String apiCa_name = campingNewApi.getCa_name().toString();
-		String oriCa_name = campingNew.getCa_name().toString();
+		String apiCa_name = api.getCa_name().toString();
+		String oriCa_name = dto.getCa_name().toString();
 
 		//우편번호
-		String apiCa_postcode = campingNewApi.getCa_postcode().toString();
-		String oriCa_postcode = campingNew.getCa_postcode().toString();
+		String apiCa_postcode = api.getCa_postcode().toString();
+		String oriCa_postcode = dto.getCa_postcode().toString();
 
 		//기본주소
-		String apiCa_addr_default = campingNewApi.getCa_addr_default().toString();
-		String oriCa_addr_default = campingNew.getCa_addr_default().toString();
+		String apiCa_addr_default = api.getCa_addr_default().toString();
+		String oriCa_addr_default = dto.getCa_addr_default().toString();
 
 		//상세주소
-		String apiCa_addr_detail = campingNewApi.getCa_addr_detail().toString();
-		String oriCa_addr_detail = campingNew.getCa_addr_detail().toString();
+		String apiCa_addr_detail = api.getCa_addr_detail().toString();
+		String oriCa_addr_detail = dto.getCa_addr_detail().toString();
 
 		//운영일
-		String apiCa_oper_date = campingNewApi.getCa_oper_date().toString();
-		String oriCa_oper_date = campingNew.getCa_oper_date().toString();
+		String apiCa_oper_date = api.getCa_oper_date().toString();
+		String oriCa_oper_date = dto.getCa_oper_date().toString();
 
 		//업종
-		String apiCa_induty = campingNewApi.getCa_induty().toString();
-		String oriCa_induty = campingNew.getCa_induty().toString();
+		String apiCa_induty = api.getCa_induty().toString();
+		String oriCa_induty = dto.getCa_induty().toString();
 
 		//운영시기
-		String apiCa_oper_period = campingNewApi.getCa_oper_period().toString();
-		String oriCa_oper_period = campingNew.getCa_oper_period().toString();
+		String apiCa_oper_period = api.getCa_oper_period().toString();
+		String oriCa_oper_period = dto.getCa_oper_period().toString();
 
 		//운영상태
-		String apiCa_manage_status = campingNewApi.getCa_manage_status().toString();
-		String oriCa_manage_status = campingNew.getCa_manage_status().toString();
+		String apiCa_manage_status = api.getCa_manage_status().toString();
+		String oriCa_manage_status = dto.getCa_manage_status().toString();
 
 		//애견동반
-		String apiCa_pet = campingNewApi.getCa_pet().toString();
-		String oriCa_pet = campingNew.getCa_pet().toString();
+		String apiCa_pet = api.getCa_pet().toString();
+		String oriCa_pet = dto.getCa_pet();
 
 		//캠핑장비대여
-		String apiCa_tool = campingNewApi.getCa_tool().toString();
-		String oriCa_tool = campingNew.getCa_tool().toString();
+		String apiCa_tool = api.getCa_tool().toString();
+		String oriCa_tool = dto.getCa_tool().toString();
 
 		//화로대
-		String apiCa_fire_cnt = campingNewApi.getCa_fire_cnt().toString();
-		String oriCa_fire_cnt = campingNew.getCa_fire_cnt().toString();
+		String apiCa_fire_cnt = api.getCa_fire_cnt().toString();
+		String oriCa_fire_cnt = dto.getCa_fire_cnt().toString();
 
 		//캠핑장 환경 ca_environment
-		String apiCa_environment = campingNewApi.getCa_environment().toString();
-		String oriCa_environment = campingNew.getCa_environment().toString();
+		String apiCa_environment = api.getCa_environment().toString();
+		String oriCa_environment = dto.getCa_environment().toString();
 
 		//부대시설 ca_sub_facility
-		String apiCa_sub_facility = campingNewApi.getCa_sub_facility().toString();
-		String oriCa_sub_facility = campingNew.getCa_sub_facility().toString();
+		String apiCa_sub_facility = api.getCa_sub_facility().toString();
+		String oriCa_sub_facility = dto.getCa_sub_facility().toString();
 
 		//한줄소개 ca_intro
-		String apiCa_intro = campingNewApi.getCa_intro().toString();
-		String oriCa_intro = campingNew.getCa_intro().toString();
+		String apiCa_intro = api.getCa_intro().toString();
+		String oriCa_intro = dto.getCa_intro().toString();
 
 		//주변이용가능시설 ca_possibilty
-		String apiCa_possibilty = campingNewApi.getCa_possibilty().toString();
-		String oriCa_possibilty = campingNew.getCa_possibilty().toString();
+		String apiCa_possibilty = api.getCa_possibilty().toString();
+		String oriCa_possibilty = dto.getCa_possibilty().toString();
 
 		//테마환경 ca_theme
-		String apiCa_theme = campingNewApi.getCa_theme().toString();
-		String oriCa_theme = campingNew.getCa_theme().toString();
+		String apiCa_theme = api.getCa_theme().toString();
+		String oriCa_theme = dto.getCa_theme().toString();
+		
+		logger.info("ori = {} , new = {}",oriCa_theme, oriCa_pet);
 
 		//이름비교
 		if (apiCa_name != oriCa_name) {
@@ -241,9 +240,6 @@ public class CampingAdmService {
 		}
 
 
-		//노가다 시작 !
-		 * */
-
 		
 		
 		
@@ -273,12 +269,13 @@ public class CampingAdmService {
 	}
 
 	public ModelAndView campingAdmUpdate(HashMap<String, Object> params) {
-		ModelAndView mav = new ModelAndView("redirect:/campingAdmView.go?ca_idx="+params.get("ca_idx"));
+		ModelAndView mav = new ModelAndView("/campingAdmView?ca_idx="+params.get("ca_idx"));
 		
 		CampingAdmDTO dto = dao.campingAdmView(params);
 		CampingAdmDTO api = dao.campingAdmAPI(params);
 		// 정보 등록 날짜는 변경된 경우에 api 최신날짜에 맞추기 위함
 		params.put("ca_create_date", api.getCa_create_date());
+		
 		
 		// 변경된 주소로 업데이트 한다면 위도, 경도 또한 함께 업데이트 해줘야함
 		if(api.getCa_addr_default().equals(params.get("ca_addr_default")) &&

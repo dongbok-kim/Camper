@@ -34,12 +34,12 @@
 					<c:if test="${loginId != null && mb_grade == '회원'}">
 					<a href=""><i class="xi-forum xi-2x"></i></a>
 					<a href=""><i class="xi-heart xi-2x"></i></a>
-					<strong class="contextMenu contextMenuMember" data-id="">${sessionScope.loginId}</strong> 님 <a href="/mypageInfo.go">마이페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
+					<strong class="contextMenu contextMenuMember" data-id="${sessionScope.loginId}">${sessionScope.loginId}</strong> 님 <a href="/mypageInfo.go">마이페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 					<c:if test="${loginId != null && mb_grade == '관리자'}">
 					<a href=""><i class="xi-forum xi-2x"></i></a>
 					<a href=""><i class="xi-heart xi-2x"></i></a>
-					<strong class="contextMenu contextMenuMember" data-id="">${sessionScope.loginId}</strong> 님 <a href="/memberAdmList.go">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
+					<strong class="contextMenu contextMenuMember" data-id="${sessionScope.loginId}">${sessionScope.loginId}</strong> 님 <a href="/memberAdmList.go">관리자페이지</a> <span class="verticalBar">|</span> <a href="/logout.do">로그아웃</a>
 					</c:if>
 				</div>
 			</header>

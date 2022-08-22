@@ -22,7 +22,7 @@
 				</div>
 <body>
 	<div>
-	<form action="campingAdmUpdate.do" name="campingUpdate">
+	<form action="campingAdmUpdate.do" name="campingUpdate" method="post">
 		<table>
 			<tr>
 				<th>캠핑장 이름</th>
@@ -319,7 +319,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">안내사항</td>
+				<td colspan="2">
+					안내사항
+				</td>
 			</tr>
 		</table>
 		<input type="submit" value="수정">

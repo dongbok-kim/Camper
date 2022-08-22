@@ -49,12 +49,17 @@ $('#contextMenuMember > #contextMenuMemberProfile > a').on('click', function(e) 
 $('#contextMenuMember > #contextMenuMemberReport > a').on('click', function(e) {
 	e.preventDefault();
 	console.log(this);	
-	window.open('report?mb_id='+contextMenuMemberId, 'report', 'width=500, height=500');
+	javascript:window.open('report?mb_id='+contextMenuMemberId, 'report', 'width=500, height=500');
 });
 
 // 마이페이지 > 회원 차단
 $('#contextMenuMember > #contextMenuMemberBan > a').on('click', function(e) {
 	e.preventDefault();
 	console.log(this);
-	window.open('report?mb_id='+contextMenuMemberId, 'report', 'width=500, height=500');
+
+	if (confirm("이 회원을 차단하시겠습니까?") == true){
+		window.open('/MemberBlock.do?mb_id='+contextMenuMemberId, 'block', 'width=800, height=900');
+		
+	};
+
 });
