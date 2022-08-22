@@ -35,7 +35,7 @@
 							<c:forEach items="${list}" var="bck" varStatus="i">
 								<tr>
 									<td>${listCnt - skip - i.index}</td>
-									<td>${bck.mb_nickname}</td>
+									<td class="contextMenu contextMenuMember" data-id="${bck.mb_nickname}">${bck.mb_nickname}</td>
 									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bck.bl_datetime}"/></td>
 									<td><input  type="button" value="차단해제" onclick="del(${bck.bl_idx})"/></td>
 								</tr>		

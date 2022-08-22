@@ -36,6 +36,7 @@
 			<mvc:mapping path="/crewTogetherReg.do"/>
 			<mvc:mapping path="/crewTogetherUpdate.go"/>
 			<mvc:mapping path="/crewTogetherUpdate.do"/>
+			<mvc:mapping path="/myChatList.do"/>
 			<bean class="com.camper.lib.utils.MypgValidationInter"/>
 		</mvc:interceptor>
 		<mvc:interceptor>
