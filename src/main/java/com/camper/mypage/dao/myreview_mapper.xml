@@ -24,7 +24,7 @@
 	<select id="crewList" resultType="mypgReview">
 		SELECT cm.mb_nickname, ccc.mb_id, ccc.ct_idx 
 		FROM cp_camping_crew ccc, cp_member cm 
-		WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id and not ccc.mb_id in (#{param2});
+		WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id and not ccc.mb_id in (#{param2}) and mb_status = '정상';
 	</select>
 	
 	
