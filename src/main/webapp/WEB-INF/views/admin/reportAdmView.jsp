@@ -46,7 +46,7 @@
 				<th>이미지</th>
 				<td colspan="3">
 				<c:forEach items="${list }" var="report">
-					<p><img src="/report/${report.ri_new_name }" height="200"/></p>
+					<p><img src="/reportImg/${report.ri_new_name }" height="200"/></p>
 				</c:forEach>
 				</td>
 			</tr>
