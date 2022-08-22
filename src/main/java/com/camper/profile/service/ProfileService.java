@@ -31,6 +31,7 @@ public class ProfileService {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	
 
 
 	//프로필 조회(구버전)
@@ -102,16 +103,29 @@ public class ProfileService {
 
 	//차단하기
 	public ModelAndView MemberBlock(String mb_id, String loginId) {		
+		ModelAndView mav = new ModelAndView();
+		
+		
 		if(loginId == null) {
 			logger.info("비회원은 차단 불가능");
-			
-		} else {
-		//String page = "profile";		
-		dao.MemberBlock(mb_id, loginId);				
-	}
-		ModelAndView mav = new ModelAndView("redirect:/profile?mb_id="+mb_id);
-		return mav;
-	}
+			String page = "/login/login";
+			mav.addObject("msg","로그인이 필요한 서비스입니다.");
+			mav.setViewName(page);
+		} else if(loginId.equals(mb_id)) {
+			String page = "/mypage/popupClose";
+			logger.info("본인 차단불가");
+			mav.setViewName(page);
+		}  else {
+			dao.MemberBlock(mb_id, loginId);
+			String page = "redirect:/profile?mb_id="+mb_id;
+			mav.setViewName(page);
+		}
+		
+		
+		
+		//ModelAndView mav = new ModelAndView("redirect:/profile?mb_id="+mb_id);
+		return mav;	
+}		
 
 	//차단해제
 	public ModelAndView MemberBlockDelete(String mb_id, String loginId) {
@@ -420,7 +434,6 @@ public class ProfileService {
 		
 		return pageMakers;
 	}
-	
 	
 
 

@@ -90,12 +90,8 @@ public class ProfileController {
 		logger.info(mb_id + "신고 요청");
 		String loginId = (String) session.getAttribute("loginId");
 		
-		if(!loginId.equals(mb_id)) {
-			return service.report(loginId, mb_id);		
-	  } else {
-		  logger.info("본인 신고 불가");
-		  return null;		  
-	  }
+		return service.report(loginId, mb_id);			
+
 	}
 	
 	//신고하기
@@ -103,7 +99,7 @@ public class ProfileController {
 	   public String write(MultipartFile[] photos, @RequestParam HashMap<String, String> params,@RequestParam String mb_id,
 			   HttpSession session, HttpServletRequest request, Model model){
 		 
-		 HttpSession session1 = request.getSession();		
+		HttpSession session1 = request.getSession();		
 		session1.setAttribute("mb_id", mb_id);
 	
 		 String loginId = (String) session.getAttribute("loginId");
@@ -120,9 +116,10 @@ public class ProfileController {
 	      return "/mypage/popupClose";
 	   
 		 } else {
-	  
-	      return "/mypage/popupClose";
-	   }
+		   
+		   	return "/mypage/popupClose"; 
+	   }		 
+		 
 	 }
 		
 	
