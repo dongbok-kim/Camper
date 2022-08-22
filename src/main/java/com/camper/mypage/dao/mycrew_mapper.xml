@@ -33,7 +33,9 @@
 	</select>
 	
 	<select id="crewList" parameterType="String" resultType="mypgCrew">
-		SELECT cm.mb_nickname, ccc.mb_id, ccc.ct_idx FROM cp_camping_crew ccc, cp_member cm WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id
+		SELECT cm.mb_nickname, ccc.mb_id, ccc.ct_idx 
+		FROM cp_camping_crew ccc, cp_member cm 
+		WHERE ct_idx = #{param1} AND ccc.mb_id = cm.mb_id  and mb_status = '정상'
 	</select>
 	
 	<!-- 크루인원 확정 (캠핑 다녀온 회원들의 cc_is_join을 1로 update) -->
