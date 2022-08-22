@@ -341,7 +341,7 @@
 	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>
-var msg = ${msg};
+var msg = "${msg}";
 if(msg!=''){
 	alert(msg);
 }

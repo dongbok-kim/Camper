@@ -56,21 +56,24 @@ public class CampingAdmController {
 	public ModelAndView campingAdmUpdate(
 			//@RequestParam HashMap<String, Object> params
 			@ModelAttribute CampingAdmDTO dto,
-			@RequestParam(value = "ca_induty") String[] ca_indutyArr,
-			@RequestParam(value = "ca_oper_period") String[] ca_oper_periodArr,
-			@RequestParam(value = "ca_tool") String[] ca_toolArr,
-			@RequestParam(value = "ca_fire_cnt") String[] ca_fire_cntArr,
-			@RequestParam(value = "ca_environment") String[] ca_environmentArr,
-			@RequestParam(value = "ca_sub_facility") String[] ca_sub_facilityArr,
-			@RequestParam(value = "ca_possibilty") String[] ca_possibiltyArr,
-			@RequestParam(value = "ca_theme") String[] ca_themeArr
+			@RequestParam(required = false, value = "ca_induty") String[] ca_indutyArr,
+			@RequestParam(required = false, value = "ca_oper_period") String[] ca_oper_periodArr,
+			@RequestParam(required = false, value = "ca_tool") String[] ca_toolArr,
+			@RequestParam(required = false, value = "ca_fire_cnt") String[] ca_fire_cntArr,
+			@RequestParam(required = false, value = "ca_environment") String[] ca_environmentArr,
+			@RequestParam(required = false, value = "ca_sub_facility") String[] ca_sub_facilityArr,
+			@RequestParam(required = false, value = "ca_possibilty") String[] ca_possibiltyArr,
+			@RequestParam(required = false, value = "ca_theme") String[] ca_themeArr
 			) {
 		logger.info("관리자 캠핑장 정보 수정 idx : "+dto.getCa_idx());	
 		
 		//배열에서 꺼내서 params에 콤마로 구분해서 담기
 				// ca_induty
 				String ca_induty = "";
-				if (ca_indutyArr.length == 1) {
+				if (ca_indutyArr == null) {
+					dto.setCa_induty(ca_induty);
+					logger.info("null임");
+				} else if (ca_indutyArr.length == 1) {
 					dto.setCa_induty(ca_indutyArr[0]);
 				} else {
 					ca_induty = ca_indutyArr[0];
@@ -79,10 +82,27 @@ public class CampingAdmController {
 					}
 					dto.setCa_induty(ca_induty);
 				}
+				//ca_tool
+				String ca_tool = "";
+				if (ca_toolArr == null) {
+					dto.setCa_tool(ca_tool);
+					logger.info("null임");
+				} else if (ca_toolArr.length == 1) {
+					dto.setCa_tool(ca_toolArr[0]);
+				} else {
+					ca_tool = ca_toolArr[0];
+					for (int i = 1; i < ca_toolArr.length; i++) {
+						ca_tool += ',' + ca_toolArr[i];
+					}
+					dto.setCa_tool(ca_tool);
+				}
 				
 				//ca_oper_period
 				String ca_oper_period = "";
-				if (ca_oper_periodArr.length == 1) {
+				if (ca_oper_periodArr == null) {
+					dto.setCa_oper_period(ca_oper_period);
+					logger.info("null임");
+				} else if (ca_oper_periodArr.length == 1) {
 					dto.setCa_oper_period(ca_oper_periodArr[0]);
 				} else {
 					ca_oper_period = ca_oper_periodArr[0];
@@ -93,7 +113,10 @@ public class CampingAdmController {
 				}
 				//ca_fire_cnt
 				String ca_fire_cnt = "";
-				if (ca_fire_cntArr.length == 1) {
+				if (ca_fire_cntArr == null) {
+					dto.setCa_fire_cnt(ca_fire_cnt);
+					logger.info("null임");
+				} else if (ca_fire_cntArr.length == 1) {
 					dto.setCa_fire_cnt(ca_fire_cntArr[0]);
 				} else {
 					ca_fire_cnt = ca_fire_cntArr[0];
@@ -104,7 +127,10 @@ public class CampingAdmController {
 				}
 				//ca_environment
 				String ca_environment = "";
-				if (ca_environmentArr.length == 1) {
+				if (ca_environmentArr == null) {
+					dto.setCa_environment(ca_environment);
+					logger.info("null임");
+				} else if (ca_environmentArr.length == 1) {
 					dto.setCa_environment(ca_environmentArr[0]);
 				} else {
 					ca_environment = ca_environmentArr[0];
@@ -115,7 +141,10 @@ public class CampingAdmController {
 				}
 				//ca_sub_facility
 				String ca_sub_facility = "";
-				if (ca_sub_facilityArr.length == 1) {
+				if (ca_sub_facilityArr == null) {
+					dto.setCa_sub_facility(ca_sub_facility);
+					logger.info("null임");
+				} else if (ca_sub_facilityArr.length == 1) {
 					dto.setCa_sub_facility(ca_sub_facilityArr[0]);
 				} else {
 					ca_sub_facility = ca_sub_facilityArr[0];
@@ -126,7 +155,10 @@ public class CampingAdmController {
 				}
 				//ca_possibilty
 				String ca_possibilty = "";
-				if (ca_possibiltyArr.length == 1) {
+				if (ca_possibiltyArr == null) {
+					dto.setCa_possibilty(ca_possibilty);
+					logger.info("null임");
+				} else if (ca_possibiltyArr.length == 1) {
 					dto.setCa_possibilty(ca_possibiltyArr[0]);
 				} else {
 					ca_possibilty = ca_possibiltyArr[0];
@@ -137,7 +169,10 @@ public class CampingAdmController {
 				}
 				//ca_theme
 				String ca_theme = "";
-				if (ca_themeArr.length == 1) {
+				if (ca_themeArr == null) {
+					dto.setCa_theme(ca_theme);
+					logger.info("null임");
+				} else if (ca_themeArr.length == 1) {
 					dto.setCa_theme(ca_themeArr[0]);
 				} else {
 					ca_theme = ca_themeArr[0];
