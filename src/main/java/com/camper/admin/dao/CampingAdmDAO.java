@@ -11,10 +11,14 @@ public interface CampingAdmDAO {
 
 	int campingTotal(HashMap<String, Object> params);
 
-	CampingAdmDTO campingAdmView(HashMap<String, Object> params);
+	CampingAdmDTO campingAdmView(CampingAdmDTO dto);
 
-	CampingAdmDTO campingAdmAPI(HashMap<String, Object> params);
+	CampingAdmDTO campingAdmAPI(CampingAdmDTO dto);
 
-	void campingAdmUpdate(HashMap<String, Object> params);
+	void campingAdmUpdate(CampingAdmDTO dto);
+
+	CampingAdmDTO campingAdmViewD(HashMap<String, Object> params);
+
+	CampingAdmDTO campingAdmAPID(HashMap<String, Object> params);
 
 }

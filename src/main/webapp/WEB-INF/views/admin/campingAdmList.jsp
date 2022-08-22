@@ -44,7 +44,7 @@
 					<tr>
 						<td>${listCnt - skip - i.index}</td>
 						<td>
-							<a href="campingAdmView.go?ca_idx=${camp.ca_idx}">${camp.ca_name}</a>
+							<a href="campingAdmView.go?ca_idx=${camp.ca_idx}&amp;keyword=${keyword}&amp;filterStatus=${filterStatus}&amp;filterSido=${filterSido}&amp;pageNum=${num}">${camp.ca_name}</a>
 						</td>
 						<td>${camp.ca_sido}</td>
 						<td>${camp.ca_sigungu}</td>
@@ -64,7 +64,7 @@
 			
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;filterStatus=${filterStatus}&amp;filterSido=${filterSido}&amp;pageNum=${num}">${num}</a></li>
 			</c:forEach>
 			
 			<!-- 다음페이지 버튼 -->

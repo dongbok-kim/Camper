@@ -1,7 +1,10 @@
 package com.camper.admin.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,166 +86,152 @@ public class CampingAdmService {
 		ModelAndView mav = new ModelAndView();
 
 		// 캠핑장 원본 데이터 요청
-		CampingAdmDTO dto = dao.campingAdmView(params);
+		CampingAdmDTO dto = dao.campingAdmViewD(params);
 		mav.addObject("oriCamp",dto);
-
+				
 		// 캠핑장 api 업데이트 데이터 요청
-		CampingAdmDTO api = dao.campingAdmAPI(params);
+		CampingAdmDTO api = dao.campingAdmAPID(params);
 		mav.addObject("newCamp",api);
-
-
-		// 캠핑장 idx
-		int apiCa_idx = api.getCa_idx();
-		int oriCa_idx = api.getCa_idx();
-		//캠핑장 이름 
-		String apiCa_name = api.getCa_name().toString();
-		String oriCa_name = dto.getCa_name().toString();
 		
-		logger.info("new : {} / {}",apiCa_name,apiCa_idx);
-		logger.info("ori : {} / {}",oriCa_name, oriCa_idx);
-		 
-		 //우편번호 
-		 String apiCa_postcode = api.getCa_postcode().toString(); 
-		 String oriCa_postcode = dto.getCa_postcode().toString();
-		 
-		 //기본주소 
-		 String apiCa_addr_default = api.getCa_addr_default().toString();
-		 String oriCa_addr_default = dto.getCa_addr_default().toString();
-		 
-		 //상세주소 
-		 String apiCa_addr_detail = api.getCa_addr_detail().toString(); 
-		 String oriCa_addr_detail = dto.getCa_addr_detail().toString();
-		  
-		 //운영일 
-		 String apiCa_oper_date = api.getCa_oper_date().toString(); 
-		 String oriCa_oper_date = dto.getCa_oper_date().toString();
-		 
-		 //업종 
-		 String apiCa_induty = api.getCa_induty().toString(); 
-		 String oriCa_induty = dto.getCa_induty().toString();
-		  
-		 //운영시기 
-		 String apiCa_oper_period = api.getCa_oper_period().toString(); 
-		 String oriCa_oper_period = dto.getCa_oper_period().toString();
-		  
-		 //운영상태 
-		 String apiCa_manage_status = api.getCa_manage_status().toString();
-		 String oriCa_manage_status = dto.getCa_manage_status().toString();
-		  
-		 //애견동반 
-		 String apiCa_pet = api.getCa_pet().toString(); 
-		 String oriCa_pet = dto.getCa_pet();
-		  
-		 //캠핑장비대여 
-		 String apiCa_tool = api.getCa_tool().toString(); 
-		 String oriCa_tool = dto.getCa_tool().toString();
-		 
-		 //화로대 
-		 String apiCa_fire_cnt = api.getCa_fire_cnt().toString(); 
-		 String oriCa_fire_cnt = dto.getCa_fire_cnt().toString();
-		 
-		  //캠핑장 환경
-		 String apiCa_environment = api.getCa_environment().toString();
-		 String oriCa_environment = dto.getCa_environment().toString();
-		 
-		 //부대시설 ca_sub_facility 
-		 String apiCa_sub_facility = api.getCa_sub_facility().toString(); 
-		 String oriCa_sub_facility = dto.getCa_sub_facility().toString();
-		 
-		 //한줄소개 ca_intro 
-		 String apiCa_intro = api.getCa_intro().toString(); 
-		 String oriCa_intro = dto.getCa_intro().toString();
-		  
-		 //주변이용가능시설 ca_possibilty 
-		 String apiCa_possibilty = api.getCa_possibilty().toString(); 
-		 String oriCa_possibilty = dto.getCa_possibilty().toString();
-		  
-		 //테마환경 ca_theme 
-		// 캠핑장 테마
-		String apiCa_theme = api.getCa_theme().toString();
-		String oriCa_theme = dto.getCa_theme().toString();
-		
-		logger.info("new : {} / {}",api.getCa_theme(),apiCa_theme);
-		logger.info("ori : {} / {}", dto.getCa_theme(),oriCa_theme);
-	 
-		 /*
-		 //이름비교 
-		  * if (apiCa_name != oriCa_name) { 
-		  * logger.info("수정된 이름 :" + apiCa_name);
-		 * mav.addObject("apiCa_name", apiCa_name); } 
-		 * 
-		 * //우편번호
-		 *  if (apiCa_postcode !=oriCa_postcode) { 
-		 *  logger.info("수정된 우편번호 :" + apiCa_postcode);
-		 * mav.addObject("apiCa_postcode", apiCa_postcode); } 
-		 * 
-		 * //기본주소 if
-		 * (apiCa_addr_default != oriCa_addr_default) { logger.info("수정된 기본주소" +
-		 * apiCa_addr_default); mav.addObject("apiCa_addr_default", apiCa_addr_default);
-		 * } 
-		 * 
-		 * //상세주소 if (apiCa_addr_detail != oriCa_addr_detail) {
-		 * logger.info("수정된 상세주소 :" + apiCa_addr_detail);
-		 * mav.addObject("apiCa_addr_detail", apiCa_addr_detail); } 
-		 * 
-		 * //운영일 if
-		 * (apiCa_oper_date != oriCa_oper_date) { logger.info("수정된 운영일 :" +
-		 * apiCa_oper_date); mav.addObject("apiCa_oper_date", apiCa_oper_date); } 
-		 * 
-		 * //업종
-		 * if (apiCa_induty != oriCa_induty) { logger.info("수정된 업종 :" + apiCa_induty);
-		 * mav.addObject("apiCa_induty", apiCa_induty); } //운영시기 if (apiCa_oper_period
-		 * != oriCa_oper_period) { logger.info("수정된 운영시기 :" + apiCa_oper_period);
-		 * mav.addObject("apiCa_oper_period", apiCa_oper_period); } 
-		 * 
-		 * //운영상태 if
-		 * (apiCa_manage_status != oriCa_manage_status) { logger.info("수정된 운영상태 :" +
-		 * apiCa_manage_status); mav.addObject("apiCa_manage_status",
-		 * apiCa_manage_status); } 
-		 * 
-		 * //애견동반 if (apiCa_pet != oriCa_pet) {
-		 * logger.info("수정된 운영상태 :" + apiCa_pet); mav.addObject("apiCa_pet", apiCa_pet);
-		 * } //캠핑장비대여 if (apiCa_tool != oriCa_tool) { logger.info("수정된 캠핑장비대여 :" +
-		 * apiCa_tool); mav.addObject("apiCa_tool", apiCa_tool); }
-		 * 
-		 * //화로대 if
-		 * (apiCa_fire_cnt != oriCa_fire_cnt) { logger.info("수정된 화로대 :" +
-		 * apiCa_fire_cnt); mav.addObject("apiCa_fire_cnt", apiCa_fire_cnt); } //캠핑장 환경
-		 * if (apiCa_environment != oriCa_environment) { logger.info("수정된 캠핑장 환경 :" +
-		 * apiCa_environment); mav.addObject("apiCa_environment", apiCa_environment); }
-		 * 
-		 * 
-		 * //부대시설 if (apiCa_sub_facility != oriCa_sub_facility) {
-		 * logger.info("수정된 부대시설 :" + apiCa_sub_facility);
-		 * mav.addObject("apiCa_sub_facility", apiCa_sub_facility); } 
-		 * 
-		 * //한줄소개 if
-		 * (apiCa_intro != oriCa_intro) { logger.info("수정된 한줄소개 :" + apiCa_intro);
-		 * mav.addObject("apiCa_intro", apiCa_intro); } 
-		 */
-		
-		 //주변이용가능시설 
-		 if (apiCa_possibilty != oriCa_possibilty) { 
-		 logger.info("수정된 주변이용가능시설 :" + apiCa_possibilty);
-		 mav.addObject("apiCa_possibilty", apiCa_possibilty); } 		 
-		 
-		 //테마환경 
-		 if (apiCa_theme!= oriCa_theme) { 
-		logger.info("수정된 테마환경 :" + apiCa_theme);
-		 mav.addObject("apiCa_theme", apiCa_theme);
-		 mav.addObject("oriCa_theme", oriCa_theme);
-		 }
-
-
-		
-		mav.setViewName("admin/campingAdmView");
-		/*
 		if (api == null) {
 			api = dto;
 			mav.addObject("msg", "본 캠핑장은 api에서 삭제된 캠핑장입니다.");
 		}
-		*/
-
+		
+		// checkbox 요소들은 array로 받아와서 오름차순으로 정렬하기
+		
+		// ca_theme 
+		String newCa_theme = api.getCa_theme();
+		String oriCa_theme = dto.getCa_theme();
+		
+		String[] newCa_themeArr = newCa_theme.split(",");
+		String[] oriCa_themeArr = oriCa_theme.split(",");
+		
+			// 오름차순 모양으로 정렬한 후 dto에 담기
+		Arrays.sort(newCa_themeArr);
+		Arrays.sort(oriCa_themeArr);
+		
+		if (newCa_themeArr.length == 1) {
+			api.setCa_theme(newCa_themeArr[0]);
+		} else {
+			newCa_theme = newCa_themeArr[0];
+			for (int i = 1; i < newCa_themeArr.length; i++) {
+				newCa_theme += ',' + newCa_themeArr[i];
+			}	
+			api.setCa_theme(newCa_theme);
+		}
+		
+		if (oriCa_themeArr.length == 1) {
+			dto.setCa_theme(oriCa_themeArr[0]);
+		} else {
+			oriCa_theme = oriCa_themeArr[0];
+			for (int i = 1; i < oriCa_themeArr.length; i++) {
+				oriCa_theme += ',' + oriCa_themeArr[i];
+			}	
+			dto.setCa_theme(oriCa_theme);
+		}
+				
+		logger.info("ori : {} / new : {}", dto.getCa_theme(),api.getCa_theme());
+		
+	
+		// ca_sub_facility
+		String newCa_sub_facility = api.getCa_sub_facility();
+		String oriCa_sub_facility = dto.getCa_sub_facility();
+		
+		String[] newCa_sub_facilityArr = newCa_sub_facility.split(",");
+		String[] oriCa_sub_facilityArr = oriCa_sub_facility.split(",");
+		
+			// 오름차순 모양으로 정렬한 후 dto에 담기
+		Arrays.sort(newCa_sub_facilityArr);
+		Arrays.sort(oriCa_sub_facilityArr);
+		
+		if (newCa_sub_facilityArr.length == 1) {
+			api.setCa_sub_facility(newCa_sub_facilityArr[0]);
+		} else {
+			newCa_sub_facility = newCa_sub_facilityArr[0];
+			for (int i = 1; i < newCa_sub_facilityArr.length; i++) {
+				newCa_sub_facility += ',' + newCa_sub_facilityArr[i];
+			}	
+			api.setCa_sub_facility(newCa_sub_facility);
+		}
+		
+		if (oriCa_sub_facilityArr.length == 1) {
+			dto.setCa_sub_facility(oriCa_sub_facilityArr[0]);
+		} else {
+			oriCa_sub_facility = oriCa_sub_facilityArr[0];
+			for (int i = 1; i < oriCa_sub_facilityArr.length; i++) {
+				oriCa_sub_facility += ',' + oriCa_sub_facilityArr[i];
+			}	
+			dto.setCa_sub_facility(oriCa_sub_facility);
+		}
+		
+		// ca_possibilty
+		String newCa_possibilty = api.getCa_possibilty();
+		String oriCa_possibilty = dto.getCa_possibilty();
+		
+		String[] newCa_possibiltyArr = newCa_possibilty.split(",");
+		String[] oriCa_possibiltyArr = oriCa_possibilty.split(",");
+		
+			// 오름차순 모양으로 정렬한 후 dto에 담기
+		Arrays.sort(newCa_possibiltyArr);
+		Arrays.sort(oriCa_possibiltyArr);
+		
+		if (newCa_possibiltyArr.length == 1) {
+			api.setCa_possibilty(newCa_possibiltyArr[0]);
+		} else {
+			newCa_possibilty = newCa_possibiltyArr[0];
+			for (int i = 1; i < newCa_possibiltyArr.length; i++) {
+				newCa_possibilty += ',' + newCa_possibiltyArr[i];
+			}	
+			api.setCa_possibilty(newCa_possibilty);
+		}
+		
+		if (oriCa_possibiltyArr.length == 1) {
+			dto.setCa_possibilty(oriCa_possibiltyArr[0]);
+		} else {
+			oriCa_possibilty = oriCa_possibiltyArr[0];
+			for (int i = 1; i < oriCa_possibiltyArr.length; i++) {
+				oriCa_possibilty += ',' + oriCa_possibiltyArr[i];
+			}	
+			dto.setCa_possibilty(oriCa_possibilty);
+		}
+		
+		
+		// ca_environment
+		String newCa_environment = api.getCa_environment();
+		String oriCa_environment = dto.getCa_environment();
+		
+		String[] newCa_environmentArr = newCa_environment.split(",");
+		String[] oriCa_environmentArr = oriCa_environment.split(",");
+		
+			// 오름차순 모양으로 정렬한 후 dto에 담기
+		Arrays.sort(newCa_environmentArr);
+		Arrays.sort(oriCa_environmentArr);
+		
+		if (newCa_environmentArr.length == 1) {
+			api.setCa_environment(newCa_environmentArr[0]);
+		} else {
+			newCa_environment = newCa_environmentArr[0];
+			for (int i = 1; i < newCa_environmentArr.length; i++) {
+				newCa_environment += ',' + newCa_environmentArr[i];
+			}	
+			api.setCa_environment(newCa_environment);
+		}
+		
+		if (oriCa_environmentArr.length == 1) {
+			dto.setCa_environment(oriCa_environmentArr[0]);
+		} else {
+			oriCa_environment = oriCa_environmentArr[0];
+			for (int i = 1; i < oriCa_environmentArr.length; i++) {
+				oriCa_environment += ',' + oriCa_environmentArr[i];
+			}	
+			dto.setCa_environment(oriCa_environment);
+		}
+		
+		// ca_tool
+		// ca_fire_cnt
+		// ca_oper_period
+		
 		// 페이징 정보
 		String filterStatus = (String) params.get("filterStatus");
 		String filterSido = (String) params.get("filterSido");
@@ -262,35 +251,41 @@ public class CampingAdmService {
 			mav.addObject("pageNum", pageNum);
 		}
 		mav.addObject("pageNum", pageNum);
+		mav.setViewName("admin/campingAdmView");
 
 		return mav;
 	}
 
-	public ModelAndView campingAdmUpdate(HashMap<String, Object> params) {
-		ModelAndView mav = new ModelAndView("/campingAdmView?ca_idx=" + params.get("ca_idx"));
+	public ModelAndView campingAdmUpdate(CampingAdmDTO dto) {
+		ModelAndView mav = new ModelAndView("redirect:/campingAdmView.go?ca_idx=" + dto.getCa_idx());
 
-		CampingAdmDTO dto = dao.campingAdmView(params);
-		CampingAdmDTO api = dao.campingAdmAPI(params);
+		CampingAdmDTO ori = dao.campingAdmView(dto);
+		CampingAdmDTO api = dao.campingAdmAPI(dto);
+		
 		// 정보 등록 날짜는 변경된 경우에 api 최신날짜에 맞추기 위함
-		params.put("ca_create_date", api.getCa_create_date());
+		dto.setCa_create_date(api.getCa_create_date());
 
 		// 변경된 주소로 업데이트 한다면 위도, 경도 또한 함께 업데이트 해줘야함
-		if (api.getCa_addr_default().equals(params.get("ca_addr_default"))
-				&& api.getCa_sido().equals(params.get("ca_sido"))
-				&& api.getCa_sigungu().equals(params.get("ca_sigungu"))) {
-			params.put("ca_mapX", api.getCa_mapX());
-			params.put("ca_mapY", api.getCa_mapY());
+		if (api.getCa_addr_default().equals(dto.getCa_addr_default())
+				&& api.getCa_sido().equals(dto.getCa_sido())
+				&& api.getCa_sigungu().equals(dto.getCa_sigungu())) {
+			
+			dto.setCa_mapX(api.getCa_mapX());
+			dto.setCa_mapY(api.getCa_mapY());
 			logger.info("주소 업데이트");
-		} else if (dto.getCa_addr_default().equals(params.get("ca_addr_default"))
-				&& dto.getCa_sido().equals(params.get("ca_sido"))
-				&& dto.getCa_sigungu().equals(params.get("ca_sigungu"))) {
+			
+		} else if (ori.getCa_addr_default().equals(dto.getCa_addr_default())
+				&& ori.getCa_sido().equals(dto.getCa_sido())
+				&& ori.getCa_sigungu().equals(dto.getCa_sigungu())) {
 			// 주소 업데이트가 일어나지 않을 때 위도, 경도 값이 지워지는 것을 방지
-			params.put("ca_mapX", dto.getCa_mapX());
-			params.put("ca_mapY", dto.getCa_mapY());
+			dto.setCa_mapX(ori.getCa_mapX());
+			dto.setCa_mapY(ori.getCa_mapY());
 			logger.info("기존 주소 유지됨");
 		}
-
-		dao.campingAdmUpdate(params);
+		
+		// array 는 오름차순으로 정렬하여 저장하기
+		dao.campingAdmUpdate(dto);
+		//logger.info("params : "+params);
 		mav.addObject("msg", "수정이 완료되었습니다.");
 		return mav;
 	}
