@@ -146,6 +146,11 @@ public class MyReviewController {
 		service.crewReviewDelete(idx, loginId);
 		// 리뷰받은 회원 모닥불온도 업데이트
 		service.memberUpdate(mb_id);
+		// 타이틀 업데이트
+		ArrayList<TitleAdmDTO> list = service.getTitle();
+		for (TitleAdmDTO dto : list) {
+			service.titleUpdate(dto.getMt_idx(), mb_id);
+		}
 		return "redirect:/myCrewReviewW.go";
 	}	
 }
