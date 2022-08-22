@@ -161,7 +161,7 @@ header > div > a:hover > i {
 	color: #fff;
 }
 
-#wrap > #container > div {
+#wrap > #container > div.right {
 	float: right;
 	max-width: 1000px;
 	width: 100%;
@@ -172,12 +172,16 @@ header > div > a:hover > i {
 	clear: both;
 }
 
-ul > li.pageInfo_btn {
+ul.pageInfo {
+	text-align: center;
 	list-style: none;
+}
+
+ul.pageInfo > li.pageInfo_btn {
 	display: inline-block;
 }
 
-ul > li.pageInfo_btn > a {
+ul.pageInfo > li.pageInfo_btn > a {
 	margin: 5px;
 	padding: 5px 10px;
 	border-radius: 50%;
@@ -185,7 +189,64 @@ ul > li.pageInfo_btn > a {
 	background-color: #f0f0f0;
 }
 
-ul > li.pageInfo_btn.active > a {
+ul.pageInfo > li.pageInfo_btn.active > a {
 	color: #fff;
 	background-color: #32405d;
+}
+
+.ui-datepicker-trigger {
+	position: relative;
+	right: 20px;
+}
+
+.datePicker {
+	width: 100px;
+}
+
+.btn {
+	padding: 5px 10px;
+	cursor: pointer;
+	outline: none;
+	border: none;
+}
+
+.btn.btnList {
+	background-color: #dbdbdb;
+}
+.btn.btnModify, .btn.btnCampingSearch, .btn.btnSubmit {
+	color: #fff;
+	background-color: #32405d;
+}
+.btn.btnDelete {
+	color: #fff;
+	background-color: #ff0000;
+}
+
+#ftCrewTogether {
+	border: 1px solid #787878;
+}
+#ftCrewTogether > tbody > tr > th {
+	padding: 10px;
+	width: 120px;
+	border: 1px solid #787878;
+	background-color: #f9f9f9;
+}
+#ftCrewTogether > tbody > tr > td {
+	padding: 10px;
+	border: 1px solid #787878;
+}
+
+.mypg table {
+	border: 1px solid #787878;
+}
+
+.mypg table th {
+	padding: 10px;
+	border: 1px solid #787878;
+	background-color: #f9f9f9;
+}
+
+.mypg table td {
+	padding: 10px;
+	border: 1px solid #787878;
 }

@@ -49,7 +49,7 @@ textarea {
 						<li class="active"><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right">
 					<h3>모집글 관리</h3>
 				</div>
 <body>
@@ -177,8 +177,10 @@ $(function(){
 		if($("#reason").val() == ""){
 			alert("정지 사유를 입력하세요.");
 		} else {
-			$("#blindfm").submit();
-			$(".modal").fadeOut();
+			if(confirm("블라인드 처리하시겠습니까?")) {
+				$("#blindfm").submit();
+				$(".modal").fadeOut();
+			}
 		}
 	});
 	
