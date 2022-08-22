@@ -29,14 +29,17 @@ public class CampingAdmController {
 		return service.campingAdmList(cri, params);
 	}
 	
-	// 관리자 페이지 / 캠핑장 api 업데이트 수정 목록 보여주기 
-	@RequestMapping(value = "/campingAPI.do")
-	public ModelAndView campingAPI(Criteria cri,
-			@RequestParam HashMap<String, Object> params) {
-			
-		return null;
-		//return service.campingAdmList(cri, params);
-	}
+	/*
+	 * // 관리자 페이지 / 캠핑장 api 업데이트 수정 목록 보여주기
+	 * 
+	 * @RequestMapping(value = "/campingAPI.do") public ModelAndView
+	 * campingAPI(Criteria cri,
+	 * 
+	 * @RequestParam HashMap<String, Object> params) {
+	 * 
+	 * 
+	 * return service.campingAdmList(cri, params); }
+	 */
 	
 	// 관리자 페이지 / 캠핑장 상세보기
 	@RequestMapping(value = "/campingAdmView.go")

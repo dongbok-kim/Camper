@@ -1,41 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 페이지 - 회원 관리</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<style>
-	aside {
-    width: 30%;
-    margin: 10px;
-    padding: 20px;
-    float: left;
-}
-	section {
-	width: 70%;
-	margin: 10px;
-	padding: 20px;
-	float: right;
-}
-
-table, th, td{
-		border: 1px solid black;
-		border-collapse: collapse;
-	}
-	th, td {
-		padding: 5px 10px;
-		text-align: center;
-	}
-	
-	thead{background-color: gray; }
-</style>
-</head>
-
-<body>
-	<aside>
+<aside>
 					<h2>관리자페이지</h2>
 					<ul>
 						<li class="active"><a href="/memberAdmList.go">회원 관리</a></li>
@@ -50,8 +16,26 @@ table, th, td{
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 	</aside>
-	<section>
-	<h4>총 회원 수 :  ${listCnt } 건</h4>
+	<div>
+		<h3>회원 관리</h3>
+	</div>
+<title>관리자 페이지 - 회원 관리</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+table, th, td{
+		border: 1px solid black;
+		border-collapse: collapse;
+	}
+	th, td {
+		padding: 5px 10px;
+		text-align: center;
+	}
+	
+	thead{background-color: gray; }
+</style>
+<body>
+	<div>총 회원 수 :  ${listCnt } 건</div>
+	<div>	<br/>
 	<table>
 		<thead>
 			<tr>
@@ -85,32 +69,32 @@ table, th, td{
 			</c:choose>
 			</tbody>
 		</table>
-	
+		</div>
 	<!-- 페이지 -->
+	<div>
 	<ul>
 			<!-- 이전페이지 버튼 -->
 			<c:if test="${pageMaker.prev}">
-			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+			<li class="pageInfo_btn prev"><a href="?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
 			</c:if>
 			
 			<!-- 각 번호 페이지 버튼 -->
 			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
 			</c:forEach>
 			
 			<!-- 다음페이지 버튼 -->
 			<c:if test="${pageMaker.next}">
-			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+			<li class="pageInfo_btn next"><a href="?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
 			</c:if>
 		</ul>
-		
+		</div>
 		
 	<!-- 검색 -->
-	<br/><br/>
-	<fieldset>
+	<div>
 		<form action="memberAdmList.go" method="post">
 			<select name="filter">
-			<option value="">전체</option>
+			<option value="">회원상태</option>
 			<option value="정상" <c:if test="${filter eq '정상'}">selected="selected"</c:if>>정상</option>
 			<option value="정지" <c:if test="${filter eq '정지'}">selected="selected"</c:if>>정지</option>
 			<option value="탈퇴" <c:if test="${filter eq '탈퇴'}">selected="selected"</c:if>>탈퇴</option>
@@ -124,8 +108,7 @@ table, th, td{
 			<input type="text" name="keyword" value="${keyword }" placeholder="검색" />
 			<input type="submit" value="search" />
 		</form>
-	</fieldset>
-	</section>
+	</div>
 	<%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>

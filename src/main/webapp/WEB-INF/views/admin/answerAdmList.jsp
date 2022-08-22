@@ -40,7 +40,7 @@
 				<tr>
 					<td>${listCnt - skip - i.index}</td>
 					<td><a href="answerAdmView?in_idx=${answer.in_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${answer.in_title}</a></td>
-					<td>${answer.mb_id}</td>
+					<td class="contextMenu contextMenuMember" data-id="${answer.mb_id}">${answer.mb_id}</td>
 					<td>${answer.in_datetime}</td>
 					<td>${answer.in_status}</td>
 				</tr>

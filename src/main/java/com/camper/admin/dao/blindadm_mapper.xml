@@ -6,7 +6,7 @@
 	<select id="blindCnt" resultType="int">
 		SELECT COUNT(bb_idx)
 		FROM 
-			cp_board_blind ORDER BY bb_datetime DESC
+			cp_board_blind
 		<where>
 			<if test="filter != null and !filter.equals('')">
 				in_status = #{filter}
@@ -37,7 +37,7 @@
 	<select id="blindList" parameterType="hashmap" resultType="admBlind">
 		SELECT bb_idx, bb_relation, bb_reason, mb_id, bb_datetime
 		FROM 
-			cp_board_blind WHERE
+			cp_board_blind
 		<where>
 			<if test="filter != null and !filter.equals('')">
 				in_status = #{filter}
@@ -62,7 +62,7 @@
 					</choose>
 				</if>
 		</where>
-		ORDER BY in_idx DESC
+		ORDER BY bb_datetime DESC
 		LIMIT #{amount}
 		<if test="skip gt 0">OFFSET #{skip}</if>
 	</select>

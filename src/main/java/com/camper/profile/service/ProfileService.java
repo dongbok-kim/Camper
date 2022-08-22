@@ -179,7 +179,7 @@ public class ProfileService {
 
 
 	//페이징을 위한 프로필
-	public ModelAndView profileView2(Criteria cri, HashMap<String, Object> params) {
+	public <profileView2> ModelAndView profileView2(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView();
 		
 		String page = "";
@@ -188,7 +188,7 @@ public class ProfileService {
 		
 		String NormalMember = dao.NormalMember(mb_id); //탈퇴회원 여부 확인
 		
-		if(NormalMember != "탈퇴") {
+		if(!NormalMember.equals("탈퇴")) {
 			logger.info("프로필 확인 가능");
 			page = "profile";
 		
@@ -199,12 +199,23 @@ public class ProfileService {
 			String blockCheck = dao.blockCheck(mb_id, loginId);
 			mav.addObject("blockCheck", blockCheck); //차단회원여부 확인
 			
+			
+			
+			
+			
+			
 			//페이징처리 시작
 			cri.setAmount(5);
 			
+			//받은리뷰는 서비스 따로 나누기
+			
+			//mav.addObject("mav2",profileView3(cri, params));
+			
+			
+			
 				
-			int total = (int)dao.total(params);
-			int total2 = (int)dao.total2(params);
+			int total = dao.total(params);
+			int total2 = dao.total2(params);
 			mav.addObject("listCnt", total); //총 글수
 			mav.addObject("listCnt2", total2); //총 글수2
 			
@@ -269,17 +280,19 @@ public class ProfileService {
 			params.put("amount", cri.getAmount());
 			
 			
+			
 			ArrayList<ProfileDTO>list = dao.profileView2(params);
 			ArrayList<ProfileDTO>list2 = dao.profileReview2(params);
 			
 			mav.addObject("list", list);
 			mav.addObject("list2", list2);
-			mav.addObject("pageMaker", pageMaker);
-			
+			mav.addObject("pageMaker", pageMaker);			
 			mav.addObject("pageMaker2", pageMaker2);
 			
-			logger.info("페이지메이커" + pageMaker);
-			logger.info("페이지메이커" + pageMaker2);
+			
+	
+			
+			
 			
 		} else {
 			
@@ -290,6 +303,177 @@ public class ProfileService {
 		mav.setViewName(page);
 		return mav;
 	}
+
+
+	public HashMap<String, Object> getMemberReview(Criteria cri, HashMap<String, Object> params) {
+
+		String NormalMember = dao.NormalMember((String) params.get("mb_id")); //탈퇴회원 여부 확인
+		
+		if(!NormalMember.equals("탈퇴")) {
+		
+			int total = dao.total2(params);
+			PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+			int pageNum = cri.getPageNum();
+			
+			if (pageMaker.getStartPage() <0 ) {
+				pageMaker.setStartPage(1);
+			}
+			
+			if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+				pageNum = pageMaker.getEndPage();
+				cri.setPageNum(pageNum);
+			}
+			
+			int skip = (pageNum - 1) * cri.getAmount();
+			params.put("skip", skip);
+			
+			params.put("amount", cri.getAmount());
+			
+			ArrayList<ProfileDTO> list = dao.profileReview2(params);
+
+			String item = dataList(list, (String) params.get("tabIdx"));
+			params.put("list", item);
+			
+			String pageMakerPageing = pageMakerPageing(pageMaker);
+			params.put("pageMaker", pageMakerPageing);
+			
+		}
+		
+		return params;
+	}
+
+
+	public HashMap<String, Object> getCrewTogether(Criteria cri, HashMap<String, Object> params) {
+
+		String NormalMember = dao.NormalMember((String) params.get("mb_id")); //탈퇴회원 여부 확인
+		
+		if(!NormalMember.equals("탈퇴")) {
+			
+			int total = dao.total(params);
+			PageMakerDTO pageMaker = new PageMakerDTO(cri, total);
+			int pageNum = cri.getPageNum();
+			
+			if (pageMaker.getStartPage() < 0) {
+				pageMaker.setStartPage(1);
+			}
+			
+			if(pageMaker.getEndPage() > 0 && pageNum > pageMaker.getEndPage()) {
+				pageNum = pageMaker.getEndPage();
+				cri.setPageNum(pageNum);
+			}
+			
+			int skip = (pageNum - 1) * cri.getAmount();
+			params.put("skip", skip);
+			
+			params.put("amount", cri.getAmount());
+			
+			ArrayList<ProfileDTO> list = dao.profileView2(params);
+			
+			String item = dataList(list, (String) params.get("tabIdx"));
+			params.put("list", item);
+			
+			String pageMakerPageing = pageMakerPageing(pageMaker);
+			params.put("pageMaker", pageMakerPageing);
+			
+		}
+		
+		return params;
+	}
+	
+	
+	private String dataList(ArrayList<ProfileDTO> arrList, String tabIdx) {
+		
+		String list = "";
+		
+		for (ProfileDTO item : arrList) {
+			if(tabIdx.equals("1")) {
+				list += "<tr>\r\n" + 
+						"	<td>" + item.getMr_assessment() + "</td>\r\n" + 
+						"	<td>" + item.getMr_content() + "</td>\r\n" + 
+						"</tr>";
+			} else {
+				list += "<tr>\r\n" + 
+						"	<td><a href=\"javascript:;\">" + item.getCt_title() + "</a></td>\r\n" + 
+						"	<td>" + item.getName() + "&nbsp;" + item.getCt_wish_start() + "&nbsp;~&nbsp;" + item.getCt_wish_end() + "</td>\r\n" + 
+						"</tr>";
+			}
+		}
+		
+		return list;
+	}
+	
+	
+	private String pageMakerPageing(PageMakerDTO pageMaker) {
+		
+		String pageMakers = "";
+		int pageNum = pageMaker.getCri().getPageNum();
+		
+		if (pageMaker.isPrev() == true) {
+			pageNum = pageMaker.getStartPage()-1;
+			pageMakers += "<li class=\"pageInfo_btn prev\"><a href=\"javascript:;\" data=\"" + pageNum + "\">이전</a></li>";
+		}
+		
+		for (int i = pageMaker.getStartPage(); i <= pageMaker.getEndPage(); i++) {
+			pageNum = i;
+			pageMakers += "<li class=\"pageInfo_btn " + (pageMaker.getCri().getPageNum() == i ? "active" : "") + "\"><a href=\"javascript:;\" data=\"" + pageNum + "\">" + pageNum + "</a></li>";
+		}
+		
+		if (pageMaker.isNext() == true) {
+			pageNum = pageMaker.getEndPage()+1;
+			pageMakers += "<li class=\"pageInfo_btn next\"><a href=\"javascript:;\" data=\"" + pageNum + "\">다음</a></li>";
+		}
+		
+		return pageMakers;
+	}
+	
+	
+//	public ModelAndView profileView3(Criteria cri, HashMap<String, Object> params) {
+//		ModelAndView mav = new ModelAndView();
+//		
+//		int total2 = (int)dao.total2(params);
+//		mav.addObject("listCnt2", total2); //총 글수2
+//		
+//		logger.info("총 글수" + total2);
+//		
+//		
+//		PageMakerDTO pageMaker2 = new PageMakerDTO(cri, total2);
+//		int pageNum2 = cri.getPageNum();
+//		
+//		logger.info("페이지넘버2:" + pageNum2);
+//		
+//		
+//		if (pageMaker2.getStartPage() <0 ) {
+//			pageMaker2.setStartPage(1);
+//		}
+//		
+//		if(pageMaker2.getEndPage() > 0 && pageNum2 > pageMaker2.getEndPage()) {
+//			pageNum2 = pageMaker2.getEndPage();
+//			cri.setPageNum(pageNum2);
+//							
+//		}
+//		
+//		logger.info("끝페이지2:" + pageMaker2.getEndPage() );
+//		
+//		int skip2 = (pageNum2-1)*cri.getAmount();
+//		params.put("skip2", skip2);
+//		mav.addObject("skip2", skip2);
+//		
+//		params.put("amount", cri.getAmount());
+//		
+//		
+//		
+//		ArrayList<ProfileDTO>list2 = dao.profileReview2(params);
+//		mav.addObject("list2", list2);
+//		mav.addObject("pageMaker2", pageMaker2);
+//		
+//		
+//		String page = "profile";
+//		mav.setViewName(page);
+//		
+//		
+//		return mav;
+//	
+//	}
 
 
 

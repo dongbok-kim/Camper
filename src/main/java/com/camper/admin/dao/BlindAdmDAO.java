@@ -7,7 +7,7 @@ import com.camper.admin.dto.BlindAdmDTO;
 
 public interface BlindAdmDAO {
 
-	ArrayList<BlindAdmDTO> blindList();
+	ArrayList<BlindAdmDTO> blindList(HashMap<String, Object> params);
 
 	ArrayList<BlindAdmDTO> blindSearch(HashMap<String, String> params);
 

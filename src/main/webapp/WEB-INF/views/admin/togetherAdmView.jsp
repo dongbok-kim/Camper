@@ -59,7 +59,7 @@ textarea {
 			</tr>
 			<tr>
 				<th>작성자</th>
-				<td>${dto.mb_id }</td>
+				<td class="contextMenu contextMenuMember" data-id="${dto.mb_id}">${dto.mb_id }</td>
 				<th>닉네임</th>
 				<td>${dto.mb_nickname }</td>
 				<th>작성일시</th>
@@ -130,7 +130,7 @@ textarea {
 					</tr>
 					<tr>
 						<th>작성자 아이디</th>
-						<td id="md_ct_writer">작성자</td>
+						<td id="md_ct_writer" >작성자</td>
 					</tr>
 					<tr>
 						<td colspan="2">
