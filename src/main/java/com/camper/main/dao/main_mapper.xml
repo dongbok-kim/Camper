@@ -17,7 +17,7 @@ FROM cp_camping c ORDER by rand() limit 4;
 	SELECT ct_idx, ct_title, ct_people_cnt, ct_gender, ct_age, ct_wish_start, ct_wish_end, mb_id, (select mb_nickname from cp_member where mb_id = cct.mb_id) as name,
 	(select ca_name from cp_camping where ca_idx=cct.ca_idx) as camp_name, (select ca_img from cp_camping where ca_idx=cct.ca_idx) as img,
 	(select ca_sido from cp_camping where ca_idx=cct.ca_idx) as sido
-FROM cp_crew_together cct WHERE ct_deadline=0 AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') ORDER by rand() limit 4;	
+FROM cp_crew_together cct WHERE ct_deadline=0 AND ct_wish_start > NOW() AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') ORDER by rand() limit 4;	
 </select>
 
 </mapper>
