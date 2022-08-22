@@ -74,6 +74,12 @@ public class ProfileService {
 			String page = "/mypage/popupClose";
 			logger.info("비회원은 신고불가능");
 			mav.setViewName(page);
+		} else if(loginId.equals(mb_id)){
+			String page = "/mypage/popupClose";
+			logger.info("자기자신은 신고불가능");
+			mav.setViewName(page);
+			
+			
 		} else {
 		String page = "report";
 		
