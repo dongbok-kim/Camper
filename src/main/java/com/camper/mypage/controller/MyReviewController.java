@@ -1,5 +1,6 @@
 package com.camper.mypage.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.admin.dto.TitleAdmDTO;
 import com.camper.lib.utils.Criteria;
 import com.camper.mypage.service.MyReviewService;
 
@@ -103,6 +105,12 @@ public class MyReviewController {
 			service.crewReview(assessment, score, content, loginId,  mb_id, idx);
 			// 리뷰받은 회원 모닥불온도 업데이트
 			service.memberUpdate(mb_id);
+			// 타이틀 업데이트
+			ArrayList<TitleAdmDTO> list = service.getTitle();
+			for (TitleAdmDTO dto : list) {
+				service.titleUpdate(dto.getMt_idx(), mb_id);
+			}
+			
 		}
 		
 		return "mypage/popupClose";

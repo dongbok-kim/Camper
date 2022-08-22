@@ -47,10 +47,13 @@ public class TitleAdmController {
 		
 		// 타이틀 중복 검사
 		int chkDuple = service.chkDuple(params);
+		
+		// 타이틀이 중복이면
 		if (chkDuple != 0) {
 			rAttr.addFlashAttribute("msg", "이미 등록된 타이틀이 있습니다.");
 			page  = "redirect:/titleAdd.go";
 		} else {
+			// 타이틀 추가
 			service.titleAdd(params);
 			page = "redirect:/titleList.go";
 		}
@@ -74,8 +77,10 @@ public class TitleAdmController {
 		
 		String page = null;
 		logger.info("수정 요청 = "+params);
+		
 		// 타이틀 중복 검사
 		int chkDuple = service.chkUpdateDuple(params);
+		
 		if (chkDuple != 0) {
 			rAttr.addFlashAttribute("msg", "이미 등록된 타이틀이 있습니다.");
 			page  = "redirect:/titleUpdate.go?idx="+params.get("mt_idx");

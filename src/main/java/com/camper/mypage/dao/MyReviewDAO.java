@@ -3,6 +3,7 @@ package com.camper.mypage.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.camper.admin.dto.TitleAdmDTO;
 import com.camper.mypage.dto.MyReviewDTO;
 
 public interface MyReviewDAO {
@@ -40,5 +41,9 @@ public interface MyReviewDAO {
 	int totalW(HashMap<String, Object> params);
 
 	MyReviewDTO delAble(String idx, String loginId);
+
+	ArrayList<TitleAdmDTO> getTitle();
+
+	void titleUpdate(int i, String mb_id);
 
 }
