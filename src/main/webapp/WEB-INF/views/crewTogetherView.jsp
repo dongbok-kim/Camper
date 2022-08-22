@@ -88,7 +88,7 @@
 								<td>크루모집현황 : <strong>${cct.cnt}</strong>명</td>           
 							</tr>
 							<tr>
-								<td><a href="javascript:;" onclick="javascript:window.open('chat.do?cg_idx=${cct.cg_idx}', 'chat', 'width=1200, height=600')">크루신청</a></td>
+								<td><a href="javascript:;" onclick="javascript:window.open('chat.do?cg_idx=${cct.cg_idx}', 'chat', 'width=1200, height=750')">크루신청</a></td>
 							</tr>
 						</tbody>
 					</table>

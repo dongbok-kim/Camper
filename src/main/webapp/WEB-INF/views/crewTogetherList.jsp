@@ -124,7 +124,7 @@
                     </ul>
                     <div style="clear: both;"></div>
                     <div id="searchBox">
-                        <form id="crewTogetherSearchForm" action="crewTogetherList.do" method="post">
+                        <form id="crewTogetherSearchForm" action="crewTogetherList.do" method="post" onsubmit="javascript:return checkCrewTogetherSearchForm();">
                         	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}" />
                             <table>
                                 <tbody>
@@ -244,8 +244,10 @@
 			}
 		});
 		
+		var minEndDate = $.trim($('#startDate').val()) == '' ? 0 : $('#startDate').val();
+		
 		$('#endDate').datepicker({
-			minDate: $.trim($('#startDate').val()) == '' ? 0 : $('#startDate').val(),
+			minDate: minEndDate,
 			dateFormat: 'yy-mm-dd',
 			onSelect: function(selected) {
 				var dt = new Date(selected);
@@ -253,5 +255,11 @@
 				$('#startDate').datepicker('option', 'maxDate', dt);
 			}
 		});
+		
+		function checkCrewTogetherSearchForm() {
+			if($.trim($('#startDate').val()) == '' || $.trim($('#endDate').val()) == '') {
+				$('#startDate, #endDate').val('');
+			}
+		}
 	</script>
 </html>
