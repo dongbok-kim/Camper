@@ -130,6 +130,18 @@
 		WHERE mb_id = #{param1})
 	</update>
 	
+	<!-- 타이틀 목록 가져오기 -->
+	<select id="getTitle" resultType="admTitle">
+		SELECT mt_idx FROM cp_member_title order by mt_degree, mt_count;
+	</select>
+	
+	<!-- 타이틀 업데이트 -->
+	<update id="titleUpdate">
+		UPDATE cp_member cm SET mt_idx = #{param1}
+		WHERE mb_id = #{param2} and mb_fire >= (SELECT mt_degree FROM cp_member_title cmt WHERE mt_idx = #{param1})
+		AND (SELECT count(ct_idx) FROM cp_crew_together cct WHERE cct.mb_id = cm.mb_id) >= (SELECT mt_count FROM cp_member_title cmt WHERE mt_idx = #{param1})
+	</update>
+	
 	<!-- 삭제 리뷰 대상 아이디 찾기 -->
 	<select id="getId" resultType="String">
 		SELECT mb_id FROM cp_member_review WHERE mr_idx = #{param1} and mr_id = #{param2}

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.camper.admin.dto.TitleAdmDTO;
 import com.camper.lib.dto.PageMakerDTO;
 import com.camper.lib.utils.Criteria;
 import com.camper.mypage.dao.MyReviewDAO;
@@ -242,6 +243,17 @@ public class MyReviewService {
 
 	public String getId(String idx, String loginId) {
 		return dao.getId(idx,loginId);
+	}
+
+
+	public void titleUpdate(int i, String mb_id) {
+		dao.titleUpdate(i,mb_id);
+		
+	}
+
+
+	public ArrayList<TitleAdmDTO> getTitle() {
+		return dao.getTitle();
 	}
 
 
