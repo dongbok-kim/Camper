@@ -34,7 +34,7 @@
 					</c:if>
 				</td>
 			</tr>
-			<tr>
+		  	<tr>
 				<th>주소</th>
 				<td>
 					<input type="text" name="ca_postcode" id="ca_postcode" value="${oriCamp.ca_postcode }" readonly/>
@@ -51,11 +51,11 @@
 						<span style="color: red">api 변경정보 : ${newCamp.ca_addr_detail}</span>
 					</c:if>
 					
-					<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
+					<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->  
 					<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
 					
-					<input type="hidden" id="ca_sido" name="ca_sido" value="${oriCamp.ca_sido }"> <!-- 시/도 -->
-					<input type="hidden" id="ca_sigungu" name="ca_sigungu" value="${oriCamp.ca_sigungu }"> <!-- 시/군/구 -->
+					<input type="hidden" id="ca_sido" name="ca_sido" value="${oriCamp.ca_sido }"> 
+					<input type="hidden" id="ca_sigungu" name="ca_sigungu" value="${oriCamp.ca_sigungu }"> 
 				</td>
 			</tr>
 			<tr>
@@ -282,40 +282,40 @@
 					</c:if>
 				</td>
 			</tr>
+			
 			<tr>
 				<th>테마환경</th>
 				<td>
-					<input type="checkbox" name="ca_theme" value="항공레저" ${fn:contains(oriCamp.ca_theme, '항공레저') ? 'checked' : ''} />항공레저
-					<input type="checkbox" name="ca_theme" value="수상레저" ${fn:contains(oriCamp.ca_theme, '수상레저') ? 'checked' : ''} />수상레저
-					<input type="checkbox" name="ca_theme" value="액티비티" ${fn:contains(oriCamp.ca_theme, '액티비티') ? 'checked' : ''} />액티비티
-					<input type="checkbox" name="ca_theme" value="겨울눈꽃명소" ${fn:contains(oriCamp.ca_theme, '겨울눈꽃명소') ? 'checked' : ''} />겨울눈꽃명소
-					<input type="checkbox" name="ca_theme" value="가을단풍명소" ${fn:contains(oriCamp.ca_theme, '가을단풍명소') ? 'checked' : ''} />가을단풍명소
-					<input type="checkbox" name="ca_theme" value="수상레저" ${fn:contains(oriCamp.ca_theme, '수상레저') ? 'checked' : ''} />수상레저
-					<input type="checkbox" name="ca_theme" value="봄꽃여행" ${fn:contains(oriCamp.ca_theme, '봄꽃여행') ? 'checked' : ''} />봄꽃여행<br/>
-					<input type="checkbox" name="ca_theme" value="일출명소" ${fn:contains(oriCamp.ca_theme, '일출명소') ? 'checked' : ''} />일출명소
-					<input type="checkbox" name="ca_theme" value="일몰명소" ${fn:contains(oriCamp.ca_theme, '일몰명소') ? 'checked' : ''} />일몰명소
-					<input type="checkbox" name="ca_theme" value="걷기길" ${fn:contains(oriCamp.ca_theme, '걷기길') ? 'checked' : ''} />걷기길
-					<input type="checkbox" name="ca_theme" value="낚시" ${fn:contains(oriCamp.ca_theme, '낚시') ? 'checked' : ''} />낚시
-					<input type="checkbox" name="ca_theme" value="스키" ${fn:contains(oriCamp.ca_theme, '스키') ? 'checked' : ''} />스키
-					<input type="checkbox" name="ca_theme" value="여름물놀이" ${fn:contains(oriCamp.ca_theme, '여름물놀이') ? 'checked' : ''} />여름물놀이
-					<c:if test="${oriCamp.ca_theme ne newCamp.ca_theme}">
+					<input type="checkbox" name="ca_theme" value="항공레저" ${fn:contains(apiCa_theme, '항공레저') ? 'checked' : ''} />항공레저
+					<input type="checkbox" name="ca_theme" value="수상레저" ${fn:contains(apiCa_theme, '수상레저') ? 'checked' : ''} />수상레저
+					<input type="checkbox" name="ca_theme" value="액티비티" ${fn:contains(apiCa_theme, '액티비티') ? 'checked' : ''} />액티비티
+					<input type="checkbox" name="ca_theme" value="겨울눈꽃명소" ${fn:contains(apiCa_theme, '겨울눈꽃명소') ? 'checked' : ''} />겨울눈꽃명소
+					<input type="checkbox" name="ca_theme" value="가을단풍명소" ${fn:contains(apiCa_theme, '가을단풍명소') ? 'checked' : ''} />가을단풍명소
+					<input type="checkbox" name="ca_theme" value="수상레저" ${fn:contains(apiCa_theme, '수상레저') ? 'checked' : ''} />수상레저
+					<input type="checkbox" name="ca_theme" value="봄꽃여행" ${fn:contains(apiCa_theme, '봄꽃여행') ? 'checked' : ''} />봄꽃여행<br/>
+					<input type="checkbox" name="ca_theme" value="일출명소" ${fn:contains(apiCa_theme, '일출명소') ? 'checked' : ''} />일출명소
+					<input type="checkbox" name="ca_theme" value="일몰명소" ${fn:contains(apiCa_theme, '일몰명소') ? 'checked' : ''} />일몰명소
+					<input type="checkbox" name="ca_theme" value="걷기길" ${fn:contains(apiCa_theme, '걷기길') ? 'checked' : ''} />걷기길
+					<input type="checkbox" name="ca_theme" value="낚시" ${fn:contains(apiCa_theme, '낚시') ? 'checked' : ''} />낚시
+					<input type="checkbox" name="ca_theme" value="스키" ${fn:contains(apiCa_theme, '스키') ? 'checked' : ''} />스키
+					<input type="checkbox" name="ca_theme" value="여름물놀이" ${fn:contains(apiCa_theme, '여름물놀이') ? 'checked' : ''} />여름물놀이
+
 					<div>
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '항공레저') ? 'checked' : ''} />항공레저
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '수상레저') ? 'checked' : ''} />수상레저
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '액티비티') ? 'checked' : ''} />액티비티
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '겨울눈꽃명소') ? 'checked' : ''} />겨울눈꽃명소
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '가을단풍명소') ? 'checked' : ''} />가을단풍명소
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '수상레저') ? 'checked' : ''} />수상레저
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '봄꽃여행') ? 'checked' : ''} />봄꽃여행<br/>
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '일출명소') ? 'checked' : ''} />일출명소
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '일몰명소') ? 'checked' : ''} />일몰명소
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '걷기길') ? 'checked' : ''} />걷기길
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '낚시') ? 'checked' : ''} />낚시
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '스키') ? 'checked' : ''} />스키
-						<input type="checkbox" disabled="disabled" ${fn:contains(newCamp.ca_theme, '여름물놀이') ? 'checked' : ''} />여름물놀이
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '항공레저') ? 'checked' : ''} />항공레저
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '수상레저') ? 'checked' : ''} />수상레저
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '액티비티') ? 'checked' : ''} />액티비티
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '겨울눈꽃명소') ? 'checked' : ''} />겨울눈꽃명소
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '가을단풍명소') ? 'checked' : ''} />가을단풍명소
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '수상레저') ? 'checked' : ''} />수상레저
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '봄꽃여행') ? 'checked' : ''} />봄꽃여행<br/>
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '일출명소') ? 'checked' : ''} />일출명소
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '일몰명소') ? 'checked' : ''} />일몰명소
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '걷기길') ? 'checked' : ''} />걷기길
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '낚시') ? 'checked' : ''} />낚시
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '스키') ? 'checked' : ''} />스키
+						<input type="checkbox" disabled="disabled" ${fn:contains(oriCa_theme, '여름물놀이') ? 'checked' : ''} />여름물놀이
 						<span style="color: red"> api 변경정보 </span>
 					</div>
-					</c:if>
 				</td>
 			</tr>
 			<tr>

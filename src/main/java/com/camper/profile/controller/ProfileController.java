@@ -90,10 +90,13 @@ public class ProfileController {
 		logger.info(mb_id + "신고 요청");
 		String loginId = (String) session.getAttribute("loginId");
 		
-		
-	    return service.report(loginId, mb_id);		
+		if(!loginId.equals(mb_id)) {
+			return service.report(loginId, mb_id);		
+	  } else {
+		  logger.info("본인 신고 불가");
+		  return null;		  
 	  }
-	
+	}
 	
 	//신고하기
 	 @RequestMapping(value = "/report.do")

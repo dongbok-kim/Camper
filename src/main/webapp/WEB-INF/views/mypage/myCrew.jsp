@@ -68,7 +68,7 @@
 											<td><a onclick="popupCrew('${my.ct_idx}')">크루 후기</a></td>
 										</c:when>
 										<c:when test="${my.cc_is_join == 1 and my.cntCR == 0 and my.cntMR != 0}">
-											<td><a onclick="popupCrew('${my.ct_idx}')">캠핑장 후기</a></td>
+											<td><a onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a></td>
 										</c:when>
 										<c:otherwise>
 											<td></td>

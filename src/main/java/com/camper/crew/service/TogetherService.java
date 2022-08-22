@@ -252,7 +252,7 @@ public class TogetherService {
 		int ct_idx = dto.getCt_idx();
 		int cg_limit = dto.getCt_people_cnt()*2; // 채팅방 정원 = 모집인원*2
 		dao.crewChatUpdate(cg_limit, ct_idx);
-		ModelAndView mav = new ModelAndView("crewTogetherList");
+		ModelAndView mav = new ModelAndView("redirect:/crewTogetherList.do");
 		logger.info("dto : "+ct_idx+'/'+cg_limit+'/'+dto.getCa_idx());
 		//ModelAndView mav = new ModelAndView("crewTogetherView.do?ct_idx=");
 		return mav;

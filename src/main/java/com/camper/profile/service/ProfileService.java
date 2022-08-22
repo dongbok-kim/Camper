@@ -58,6 +58,7 @@ public class ProfileService {
 		
 		} else {			
 			logger.info("탈퇴확인은 프로필 확인 불가");
+			mav.addObject("msg","탈퇴회원은 프로필 확인 불가능합니다.");
 			page = "/mypage/popupClose";
 		}
 		
@@ -71,12 +72,14 @@ public class ProfileService {
 		ModelAndView mav = new ModelAndView();
 		
 		if(loginId == null ) {
-			String page = "/mypage/popupClose";
+			String page = "/login/login";
 			logger.info("비회원은 신고불가능");
+			mav.addObject("msg","로그인이 필요한 서비스입니다.");
 			mav.setViewName(page);
 		} else if(loginId.equals(mb_id)){
 			String page = "/mypage/popupClose";
 			logger.info("자기자신은 신고불가능");
+			mav.addObject("msg","자기자신은 신고불가능합니다.");
 			mav.setViewName(page);
 			
 			
@@ -101,6 +104,7 @@ public class ProfileService {
 	public ModelAndView MemberBlock(String mb_id, String loginId) {		
 		if(loginId == null) {
 			logger.info("비회원은 차단 불가능");
+			
 		} else {
 		//String page = "profile";		
 		dao.MemberBlock(mb_id, loginId);				
@@ -384,7 +388,7 @@ public class ProfileService {
 						"</tr>";
 			} else {
 				list += "<tr>\r\n" + 
-						"	<td><a href=\"javascript:;\">" + item.getCt_title() + "</a></td>\r\n" + 
+						"	<td><a href=\"/crewTogetherView.do?ct_idx="+ item.getCt_idx() + "\">" + item.getCt_title() + "</a></td>\r\n" + 
 						"	<td>" + item.getName() + "&nbsp;" + item.getCt_wish_start() + "&nbsp;~&nbsp;" + item.getCt_wish_end() + "</td>\r\n" + 
 						"</tr>";
 			}

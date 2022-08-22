@@ -126,8 +126,9 @@
 	<update id="memberUpdate">
 		UPDATE cp_member 
 		SET mb_fire = (SELECT ROUND(SUM(mr_score)/COUNT(mr_idx)) 
-		FROM cp_member_review cmr 
-		WHERE mb_id = #{param1})
+								FROM cp_member_review cmr 
+								WHERE mb_id = #{param1})
+		WHERE mb_id = #{param1}
 	</update>
 	
 	<!-- 타이틀 목록 가져오기 -->
