@@ -96,7 +96,7 @@ table, th, td{
 	</table>
 		<br/>
 		<input type="submit" value="수정">
-		<input type="button" value="목록" onclick="history.back()" />
+		<input type="button" value="목록" onclick="location.href='memberAdmList.go'" />
 		</form>
 		</div>
 </body>

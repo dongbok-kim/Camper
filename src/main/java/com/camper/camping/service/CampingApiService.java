@@ -30,8 +30,8 @@ public class CampingApiService {
 		//try {
 	          StringBuilder urlBuilder = new StringBuilder("https://api.visitkorea.or.kr/openapi/service/rest/GoCamping/basedList"); /*URL*/
 	          urlBuilder.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "=" + "hZXUq%2BKTXAvCwumYJGHXYx7VT4UFl8QkVYtg03cDfMxqMd7YolwCw4cX3y76PG%2Bc3X2t5xOnY%2F3uCvbbU5jNwA%3D%3D"); /*Service Key*/
-	          urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
-	          urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("2", "UTF-8")); /*페이지 번호*/
+	          urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("500", "UTF-8")); /*한 페이지 결과 수*/
+	          urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
 	          urlBuilder.append("&" + URLEncoder.encode("MobileOS","UTF-8") + "=" + URLEncoder.encode("ETC", "UTF-8")); /*IOS(아이폰),AND(안드로이드),WIN(윈도우폰),ETC*/
 	          urlBuilder.append("&" + URLEncoder.encode("MobileApp","UTF-8") + "=" + URLEncoder.encode("AppTest", "UTF-8")); /*서비스명=어플명*/
 	          urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8"));
