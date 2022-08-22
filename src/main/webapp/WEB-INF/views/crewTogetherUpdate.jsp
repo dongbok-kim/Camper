@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
+<style>
+	#ftCrewTogether > tbody > tr > td > input[type="number"] {
+		text-align: right;
+	}
+
+	#ftCrewTogether > tbody > tr > td > input[name="ct_title"] {
+		width: 99%;
+	}
+</style>
 				
 	<h3>크루 모집 수정하기</h3>
 	<form action="crewTogetherUpdate.do" name="crewUpdate" method="post">
@@ -17,28 +26,28 @@
 				<tr>
 					<th>연령대</th>
 					<td>
-						<input type="radio" name="ct_age" value="20" ${crew.ct_age == 20 ? 'checked' : '' }/>20대
-						<input type="radio" name="ct_age" value="30" ${crew.ct_age == 30 ? 'checked' : '' }/>30대
-						<input type="radio" name="ct_age" value="40" ${crew.ct_age == 40 ? 'checked' : '' }/>40대
-						<input type="radio" name="ct_age" value="50" ${crew.ct_age == 50 ? 'checked' : '' }/>50대
-						<input type="radio" name="ct_age" value="60" ${crew.ct_age == 60 ? 'checked' : '' }/>60대 이상
+						<label><input type="radio" name="ct_age" value="20" ${crew.ct_age == 20 ? 'checked' : '' }/>20대</label>
+						<label><input type="radio" name="ct_age" value="30" ${crew.ct_age == 30 ? 'checked' : '' }/>30대</label>
+						<label><input type="radio" name="ct_age" value="40" ${crew.ct_age == 40 ? 'checked' : '' }/>40대</label>
+						<label><input type="radio" name="ct_age" value="50" ${crew.ct_age == 50 ? 'checked' : '' }/>50대</label>
+						<label><input type="radio" name="ct_age" value="60" ${crew.ct_age == 60 ? 'checked' : '' }/>60대 이상</label>
 					</td>
 					<th>성별</th>
 					<td>
-						<input type="radio" name="ct_gender" value="남" ${crew.ct_gender == "남" ? 'checked' : '' }/>남성
-						<input type="radio" name="ct_gender" value="여" ${crew.ct_gender == "여" ? 'checked' : '' }/>여성
-						<input type="radio" name="ct_gender" value="혼성" ${crew.ct_gender == "혼성" ? 'checked' : '' }/>혼성
+						<label><input type="radio" name="ct_gender" value="남" ${crew.ct_gender == "남" ? 'checked' : '' }/>남성</label>
+						<label><input type="radio" name="ct_gender" value="여" ${crew.ct_gender == "여" ? 'checked' : '' }/>여성</label>
+						<label><input type="radio" name="ct_gender" value="혼성" ${crew.ct_gender == "혼성" ? 'checked' : '' }/>혼성</label>
 					</td>
 				</tr>
 				<tr>
 					<th>캠핑종류</th>
 					<td>
 						<%-- <c:forEach items="${type }" var="type"> ${type =='오토패킹' ? 'checked' : '' } --%>
-							<input type="checkbox" name="ct_camping_type" value="백패킹" ${fn:contains(crew.ct_camping_type, '백패킹') ? 'checked' : ''}/>백패킹
-							<input type="checkbox" name="ct_camping_type" value="오토패킹" ${fn:contains(crew.ct_camping_type, '오토패킹') ? 'checked' : ''}/>오토패킹
-							<input type="checkbox" name="ct_camping_type" value="글램핑" ${fn:contains(crew.ct_camping_type, '글램핑') ? 'checked' : ''}/>글램핑
-							<input type="checkbox" name="ct_camping_type" value="부쉬크래프트" ${fn:contains(crew.ct_camping_type, '부쉬크래프트') ? 'checked' : ''}/>부쉬크래프트				
-							<input type="checkbox" name="ct_camping_type" value="비박" ${fn:contains(crew.ct_camping_type, '비박') ? 'checked' : ''}/>비박
+							<label><input type="checkbox" name="ct_camping_type" value="백패킹" ${fn:contains(crew.ct_camping_type, '백패킹') ? 'checked' : ''}/>백패킹</label>
+							<label><input type="checkbox" name="ct_camping_type" value="오토패킹" ${fn:contains(crew.ct_camping_type, '오토패킹') ? 'checked' : ''}/>오토패킹</label>
+							<label><input type="checkbox" name="ct_camping_type" value="글램핑" ${fn:contains(crew.ct_camping_type, '글램핑') ? 'checked' : ''}/>글램핑</label>
+							<label><input type="checkbox" name="ct_camping_type" value="부쉬크래프트" ${fn:contains(crew.ct_camping_type, '부쉬크래프트') ? 'checked' : ''}/>부쉬크래프트</label>				
+							<label><input type="checkbox" name="ct_camping_type" value="비박" ${fn:contains(crew.ct_camping_type, '비박') ? 'checked' : ''}/>비박</label>
 						
 						<%-- </c:forEach> --%>
 	
@@ -51,8 +60,8 @@
 				<tr>
 					<th>기타정보</th>
 					<td colspan="3">
-						<input type="checkbox" name="ct_pet"  value="1" ${crew.ct_pet == 1 ? 'checked' : '' }/>애견동반
-						<input type="checkbox" name="ct_tool" value="1" ${crew.ct_tool == 1 ? 'checked' : '' }/>장비제공
+						<label><input type="checkbox" name="ct_pet"  value="1" ${crew.ct_pet == 1 ? 'checked' : '' }/>애견동반</label>
+						<label><input type="checkbox" name="ct_tool" value="1" ${crew.ct_tool == 1 ? 'checked' : '' }/>장비제공</label>
 					</td>
 				</tr>
 				<tr>
@@ -66,8 +75,8 @@
 				<tr>
 					<th>캠핑날짜</th>
 					<td colspan="3">
-						<input type="text" id="startDate" name="ct_wish_start" value="${crew.ct_wish_start }"> ~
-				       <input type="text" id= "endDate" name="ct_wish_end" value="${crew.ct_wish_start }">
+						<input type="text" id="startDate" name="ct_wish_start" value="${crew.ct_wish_start }" class="datePicker" readonly> ~
+				       <input type="text" id= "endDate" name="ct_wish_end" value="${crew.ct_wish_start }" class="datePicker" readonly>
 					</td>
 				</tr>
 				<tr>
@@ -92,7 +101,7 @@
 	<script>
 
 		function popupCamping() {
-			window.open('/campPopup.go','popupCaming', 'width=800, height=600');
+			window.open('/campPopup.go','popupCaming', 'width=1200, height=800');
 		}
 		
 		var chatCnt = "${chatCnt}";  // 현재 채팅방 참여 인원 수
@@ -158,6 +167,9 @@
 			$( '#startDate' ).datepicker({
 				minDate : 0,
 				dateFormat : "yy-mm-dd",
+				showOn: 'both',
+				buttonImageOnly: true,
+				buttonImage: '../../resources/images/ico_calendar.jpg',
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());
@@ -165,9 +177,14 @@
 				}
 			});
 			
+			var minEndDate = $.trim($('#startDate').val()) == '' ? 0 : $('#startDate').val();
 			
 			$( '#endDate' ).datepicker({
+				minDate: minEndDate,
 				dateFormat : "yy-mm-dd",
+				showOn: 'both',
+				buttonImageOnly: true,
+				buttonImage: '../../resources/images/ico_calendar.jpg',
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());

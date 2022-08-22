@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -18,7 +16,7 @@
 				</aside>
 				<div class="right mypg">
 					<h3>차단 회원</h3>
-					<h4>차단 회원 수 : ${listCnt} 건</h4>
+					<h4>차단 회원 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -30,15 +28,17 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="4">차단한 회원이 없습니다.</td></tr>
+							<tr>
+								<td colspan="4">차단한 회원이 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="bck" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td class="contextMenu contextMenuMember" data-id="${bck.mb_nickname}">${bck.mb_nickname}</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bck.bl_datetime}"/></td>
-									<td><input  type="button" value="차단해제" onclick="del(${bck.bl_idx})"/></td>
-								</tr>		
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td align="center" class="contextMenu contextMenuMember" data-id="${bck.mb_nickname}">${bck.mb_nickname}</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bck.bl_datetime}"/></td>
+								<td align="center"><input  type="button" class="btn btnDelete" value="차단해제" onclick="del(${bck.bl_idx})"/></td>
+							</tr>		
 							</c:forEach>
 						</tbody>
 					</table>

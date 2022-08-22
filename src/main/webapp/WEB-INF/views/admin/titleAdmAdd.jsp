@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -16,25 +15,33 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
+				<div class="right admpg">
 					<h3>타이틀 추가</h3>
 					<form action="/titleAdd.do" method="post" name="addForm">
 						<table>
-							<tr>
-								<th>타이틀 이름</th>
-								<td><input type="text" name="mt_name" id="mt_name"></td>
-							</tr>
-							<tr>
-								<th>기준 크루장 횟수</th>
-								<td><input type="text" name="mt_count" id="mt_count">회</td>
-							</tr>
-							<tr>
-								<th>기준 모닥불 온도</th>
-								<td><input type="text" name="mt_degree" id="mt_degree">℃</td>
-							</tr>
+							<tbody>
+								<tr>
+									<th>타이틀 이름</th>
+									<td><input type="text" name="mt_name" id="mt_name"></td>
+								</tr>
+								<tr>
+									<th>기준 크루장 횟수</th>
+									<td><input type="text" name="mt_count" id="mt_count" style="width: 120px; text-align: right;">회</td>
+								</tr>
+								<tr>
+									<th>기준 모닥불 온도</th>
+									<td><img src="../../resources/images/flame.png" alt="" /> <input type="text" name="mt_degree" id="mt_degree" style="width: 100px; text-align: right;" min="500" max="2500">℃</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<input type="button" class="btn btnSubmit" value="추가" onclick="add()">
+										<input type="button" class="btn btnList" value="목록" onclick="location.href='/titleList.go'"/>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
-						<input type="button" value="추가" onclick="add()">
-						<input type="button" value="목록" onclick="location.href='/titleList.go'"/>
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>

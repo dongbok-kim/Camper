@@ -42,7 +42,7 @@ $(document).on('click', '#contextMenuMember > #contextMenuMemberView > a', funct
 $(document).on('click', '#contextMenuMember > #contextMenuMemberProfile > a', function(e) {
 	e.preventDefault();
 	console.log(this);
-	window.open('profile?mb_id='+contextMenuMemberId, 'profile', 'width=800, height=900');
+	window.open('profile?mb_id='+contextMenuMemberId, 'profile', 'width=800, height=600');
 });
 
 // 마이페이지 > 회원 신고

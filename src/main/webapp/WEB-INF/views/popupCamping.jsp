@@ -12,33 +12,14 @@
 <link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap"/>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css" />
 <!--  jQuery UI CSS파일  -->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />
 <!--  jQuery 기본 js파일 -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <!--  jQuery UI 라이브러리 js파일 -->
-<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <style>
-	#campingVote {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		text-align: center;
-	}
-	#campingVote > li {
-		margin: 0 20px;
-		display: inline-block;
-		width: 21%;
-	}
-	#campingVote > li > a {
-		text-align: left;
-	}
-	#campingVote > li > a > img {
-		max-width: 100%;
-	}
-	#campingVote > li > a > strong, #campingVote > li > a > span {
-		display: block;
-	}
 	#searchBox {
+		margin: 20px 0;
 		padding: 10px;
 		box-sizing: border-box;
 		border-radius: 10px;
@@ -48,6 +29,8 @@
 		border: 1px solid #787878;
 	}
 	#searchBox > form > table > tbody > tr > th {
+		padding: 10px;
+		width: 120px;
 		border: 1px solid #787878;
 		background-color: #f9f9f9;
 	}
@@ -55,13 +38,19 @@
 		border: 1px solid #787878;
 	}
 	#searchBox > form > table > tbody > tr > td > input[type="text"] {
-		width: 90%;
+		width: 99%;
 	}
 	#searchBox > form > #btn {
 		text-align: center;
 	}
 	#searchBox > form > #btn > input[type="submit"] {
-		
+		margin-top: 20px;
+		padding: 5px 10px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+		color: #fff;
+		background-color: #32405d;
 	}
 	#totalCnt > strong {
 		color: orange;
@@ -74,6 +63,9 @@
 	#campingList > li {
 		margin: 10px 0;
 	}
+	#campingList > li:hover {
+		background-color: #fafafa;
+	}
 	#campingList > li > a > span.imgBox {
 		float: left;
 		width: 200px;
@@ -84,7 +76,7 @@
 	#campingList > li > a > span.infoBox {
 		margin: 0px 10px;
 		float: left;
-		width: 980px;
+		width: 960px;
 		line-height: 180%;
 	}
 	#campingList > li > a > span.infoBox > strong {
@@ -115,6 +107,22 @@
 	#campingList > li > .cnt.cntReview {
 		color: #fff;
 		background-color: #585858;
+	}
+	#campingList > li > div.parentBox {
+		position: relative;
+	}
+	#campingList > li > div.parentBox > div {
+		position: absolute;
+		right: 12px;
+		top: -75px;
+	}
+	#campingList > li > div.parentBox > div > input[type="button"]:not(:disabled) {
+		padding: 5px 10px;
+		outline: none;
+		cursor: pointer;
+		border: none;
+		color: #fff;
+		background-color: #32405d;
 	}
 </style>
 </head>
@@ -214,12 +222,16 @@
 							</a>
 							<span class="cnt cntLike">찜 ${campingList.cntLike}</span>
 							<span class="cnt cntReview">후기 ${campingList.cntReview}</span>
+							<div class="parentBox">
+								<div>
+									<input type="button" class="selectCamping" value="캠핑장 선택" data-idx="${campingList.ca_idx}" data-name="${campingList.ca_name}"/>
+								</div>
+							</div>
 							<div style="clear:both;"></div>
-							<input type="button" class="selectCamping" value="캠핑장 선택" data-idx="${campingList.ca_idx}" data-name="${campingList.ca_name}"/>
 						</li>
 					</c:forEach>
 					</ul>
-					<ul>	
+					<ul class="pageInfo">	
 						<!-- 이전페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>

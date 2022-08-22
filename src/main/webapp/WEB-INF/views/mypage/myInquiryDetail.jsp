@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -19,42 +17,44 @@
 				<div class="right mypg">
 					<h3>1:1 문의 상세보기</h3>
 					<table>
-						<tr>
-							<td colspan='6'>${dto.in_title}</td>
-						</tr>
-						<tr>
-							<th>작성자</th>
-							<td>${dto.mb_id}</td>
-							<th>등록일시</th>
-							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dto.in_datetime}"/></td>
-							<th>답변상태</th>
-							<td>${dto.in_status}</td>
-						</tr>
-						<tr>
-							<td colspan='6'>${dto.in_content}</td>
-						</tr>
+						<thead>
+							<tr>
+								<th colspan="6" style="text-align: left;">${dto.in_title}</th>
+							</tr>
+							<tr>
+								<th>작성자</th>
+								<td>${dto.mb_id}</td>
+								<th>등록일시</th>
+								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dto.in_datetime}"/></td>
+								<th>답변상태</th>
+								<td>${dto.in_status}</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan="6">${dto.in_content}</td>
+							</tr>
 						<c:if test="${dto.in_status eq '답변완료'}">
 							<tr>
-								<table>
-									<tr>
-										<th>관리자</th>
-										<td>${answer.mb_id}</td>
-										<th>답변일시</th>
-										<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${answer.ia_datetime}"/></td>
-									</tr>
-									<tr>
-										<td colspan='4'>${answer.ia_content}</td>
-									</tr>
-								</table>
+								<th>관리자</th>
+								<td>${answer.mb_id}</td>
+								<th>답변일시</th>
+								<td colspan="3"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${answer.ia_datetime}"/></td>
+							</tr>
+							<tr>
+								<td colspan="6">${answer.ia_content}</td>
 							</tr>
 						</c:if>
-						<tr>
-							<th colspan="6">
-								<input type="button" value="목록" onclick="location.href='/myInquiryList.go?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'"/>
-								<input type="button" value="수정" onclick="update(${dto.in_idx})"/>
-								<input type="button" value="삭제" onclick="del(${dto.in_idx})"/>
-							</th>
-						</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="6" style="text-align: right;">
+									<input type="button" class="btn btnList" value="목록" onclick="location.href='/myInquiryList.go?filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageNum}'" style="float: left;"/>
+									<input type="button" class="btn btnModify" value="수정" onclick="update(${dto.in_idx})"/>
+									<input type="button" class="btn btnDelete" value="삭제" onclick="del(${dto.in_idx})"/>
+								</td>
+							</tr>
+						</tfoot>
 					</table>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>

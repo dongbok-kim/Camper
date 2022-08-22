@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.Date"%>
 <% Date now = new Date();%>
 <style>
@@ -32,7 +30,7 @@
 				</aside>
 				<div class="right mypg">
 					<h3>캠핑장 후기</h3>
-					<h4>캠핑장 후기 수 : ${listCnt} 건</h4>
+					<h4>캠핑장 후기 수 : <strong>${listCnt}</strong>건</h4>
 					<table id="campingReview">
 						<colgroup>
 							<col width="60"></col>
@@ -52,18 +50,20 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="5">작성한 캠핑장 후기가 없습니다.</td></tr>
+							<tr align="center" height="180">
+								<td colspan="5">작성한 캠핑장 후기가 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="rv" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td  class="subject" >${rv.ca_name}<br/>${rv.cr_content}</td>
-									<td>${rv.cr_assessment}</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
-									<c:if test="${rv.delAble > rv.today}">
-										<td><input type="button" value="삭제" onclick="del(${rv.cr_idx})"/></td>
-									</c:if>
-								</tr>
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td  class="subject" >${rv.ca_name}<br/>${rv.cr_content}</td>
+								<td align="center">${rv.cr_assessment}</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
+								<c:if test="${rv.delAble > rv.today}">
+								<td align="center"><input type="button" class="btn btnDelete" value="삭제" onclick="del(${rv.cr_idx})"/></td>
+								</c:if>
+							</tr>
 							</c:forEach>
 						</tbody>
 					</table>

@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 <style>
 .modal{
@@ -14,7 +13,7 @@
 .modal_content{
 	position:relative; top:20%; left:20%;
 	background : #fff;
-	width: 50%; height: 50%;
+	width: 50%; height: 58%;
 	text-align:center;
 	box-sizing:border-box; padding:30px 0;
 	/*
@@ -23,10 +22,6 @@
 	margin-top:-100px; margin-left:-200px;		
 	line-height:23px; cursor:pointer;
 	*/
-}
-textarea {
-	resize:none;
-	width: 80%; height: 8.25em;;
 }
 .md_table {
 	border:1px solid black;
@@ -58,131 +53,137 @@ textarea {
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
+				<div class="right admpg">
 					<h3>후기 관리</h3>
-				</div>
-<body>
-	<div>
-		<a href="/reviewAdmList.go">캠핑장 후기</a>
-		<a href="/reviewMemberAdmList.go">회원 후기</a>
-	</div>
-	<div>등록된 회원 후기 수 : ${listCnt}건</div>
-	<div>
-		<table id="memberReview">
-			<colgroup>
-				<col width="50"></col>
-				<col width="200"></col>
-				<col width="50"></col>
-				<col width="50"></col>
-				<col width="50"></col>
-				<col width="50"></col>
-				<col width="50"></col>
-			</colgroup>
-			<thead>
-			<tr>
-				<th>번호</th>
-				<th>후기내용</th>
-				<th>평가한 회원</th>
-				<th>평가받은 회원</th>
-				<th>평가항목<br/>(평가점수)</th>
-				<th>작성일시</th>
-				<th>블라인드</th>
-			</tr>
-			</thead>
-			<tbody>
-			<c:if test="${list.size() eq 0}">
-				<tr><td colspan="7">데이터가 없습니다.</td></tr>
-			</c:if>
-			<c:forEach items="${list }" var="review" varStatus="i">
-				<tr>
-					<td>${listCnt - skip - i.index}</td>
-					<td class="mr_content">${review.mr_content }</td>
-					<td class="contextMenu contextMenuMember" data-id="${review.mr_id}">${review.mr_id}</td>
-					<td class="contextMenu contextMenuMember" data-id="${review.mb_id}">${review.mb_id}</td>
-					<td>
-					${review.mr_assessment} <br/>
-					(${review.mr_score})
-					</td>				
-					<td>${review.mr_datetime}</td>
-					<td>
-						<c:if test="${review.bb_count eq 0}">
-							<button class="blind_button" data-target="#insertBlind" data-content="${review.mr_content }" data-writer="${review.mr_id}" data-idx="${review.mr_idx}">
-							블라인드
-							</button>
+					<div>
+						<a href="/reviewAdmList.go">캠핑장 후기</a>
+						<a href="/reviewMemberAdmList.go">회원 후기</a>
+					</div>
+					<h4>등록된 회원 후기 수 : <strong>${listCnt}</strong>건</h4>
+					<table id="memberReview">
+						<colgroup>
+							<col width="50"></col>
+							<col width="200"></col>
+							<col width="50"></col>
+							<col width="50"></col>
+							<col width="50"></col>
+							<col width="50"></col>
+							<col width="50"></col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>후기내용</th>
+								<th>평가한 회원</th>
+								<th>평가받은 회원</th>
+								<th>평가항목<br/>(평가점수)</th>
+								<th>작성일시</th>
+								<th>블라인드</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:if test="${list.size() eq 0}">
+							<tr align="center" height="180">
+								<td colspan="7">데이터가 없습니다.</td>
+							</tr>
 						</c:if>
-					</td>
-				</tr>
-			</c:forEach>
-			</tbody>
-		</table>
-		<ul>
-			<!-- 이전페이지 버튼 -->
-			<c:if test="${pageMaker.prev}">
-			<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
-			</c:if>
-			
-			<!-- 각 번호 페이지 버튼 -->
-			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-			<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
-			</c:forEach>
-			
-			<!-- 다음페이지 버튼 -->
-			<c:if test="${pageMaker.next}">
-			<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
-			</c:if>
-		</ul>
-	</div>
-	<div>
-		<form action="reviewMemberAdmList.go" method="post" id="reviewList">
-			<select name="filter">
-				<option value="">평가항목</option>
-				<option value="좋아요" <c:if test="${filter eq '좋아요'}">selected="selected"</c:if> >좋아요</option>
-				<option value="싫어요" <c:if test="${filter eq '싫어요'}">selected="selected"</c:if> >싫어요</option>
-				<option value="보통" <c:if test="${filter eq '보통'}">selected="selected"</c:if> >보통</option>
-			</select>
-			<select name="type">
-				<option value="all">전체</option>
-				<option value="mr_id" <c:if test="${type eq 'mr_id'}">selected="selected"</c:if> >평가한 회원</option>
-				<option value="mb_id" <c:if test="${type eq 'mb_id'}">selected="selected"</c:if> >평가받은 회원</option>
-				<option value="mr_content" <c:if test="${type eq 'mr_content'}">selected="selected"</c:if> >후기 내용</option>
-			</select>
-			<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
-			<input type="submit" value="search"/>
-		</form>
-	</div>
-	
-	<!-- 블라인드 모달창 -->
-	<div class="modal" id="insertBlind">
-		<div class="modal_content" title="후기 블라인드">
-			<h2>후기 블라인드</h2>
-			<form action="blindMember.do" method="post" id="blindfm">
-				<table class="md_table">
-					<tr>
-						<th id="md_mr_content" colspan="2">후기 내용</th>
-					</tr>
-					<tr>
-						<th>작성자 아이디</th>
-						<td id="md_mr_writer">후기 작성자</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<input type="hidden" name="idx" value="idx"/>
-							<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
-						</td>
-					</tr>
-					<tr>
-						<th>처리자 아이디</th>
-						<th>${sessionScope.loginId }</th>
-					</tr>
-				</table>
-				<input type="button" id="blindDo" value="완료"/>
-				<input type="button" id="md_close_btn" value="닫기"/>
-			</form>
-		</div>
-	</div>
+						<c:forEach items="${list }" var="review" varStatus="i">
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td class="mr_content">${review.mr_content }</td>
+								<td align="center" class="contextMenu contextMenuMember" data-id="${review.mr_id}">${review.mr_id}</td>
+								<td align="center" class="contextMenu contextMenuMember" data-id="${review.mb_id}">${review.mb_id}</td>
+								<td align="center">
+									${review.mr_assessment} <br/>
+									(${review.mr_score})
+								</td>				
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${review.mr_datetime}"/></td>
+								<td align="center">
+									<c:if test="${review.bb_count eq 0}">
+									<button class="btn btnDelete blind_button" data-target="#insertBlind" data-content="${review.mr_content }" data-writer="${review.mr_id}" data-idx="${review.mr_idx}">블라인드</button>
+									</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
+					<ul class="pageInfo">
+						<!-- 이전페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+						<li class="pageInfo_btn prev"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
+						</c:if>
+						
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+						<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!-- 다음페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+						<li class="pageInfo_btn next"><a href="?type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.endPage+1}">다음</a></li>
+						</c:if>
+					</ul>
+					<form action="reviewMemberAdmList.go" method="post" id="reviewList">
+						<select name="filter">
+							<option value="">평가항목</option>
+							<option value="좋아요" <c:if test="${filter eq '좋아요'}">selected="selected"</c:if> >좋아요</option>
+							<option value="싫어요" <c:if test="${filter eq '싫어요'}">selected="selected"</c:if> >싫어요</option>
+							<option value="보통" <c:if test="${filter eq '보통'}">selected="selected"</c:if> >보통</option>
+						</select>
+						<select name="type">
+							<option value="all">전체</option>
+							<option value="mr_id" <c:if test="${type eq 'mr_id'}">selected="selected"</c:if> >평가한 회원</option>
+							<option value="mb_id" <c:if test="${type eq 'mb_id'}">selected="selected"</c:if> >평가받은 회원</option>
+							<option value="mr_content" <c:if test="${type eq 'mr_content'}">selected="selected"</c:if> >후기 내용</option>
+						</select>
+						<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
+						<input type="submit" class="btn btnSubmit" value="SEARCH"/>
+					</form>
+					
+					<!-- 블라인드 모달창 -->
+					<div class="modal" id="insertBlind">
+						<div class="modal_content" title="후기 블라인드">
+							<h2>후기 블라인드</h2>
+							<form action="blindMember.do" method="post" id="blindfm">
+								<table class="md_table">
+									<colgroup>
+										<col width="180"></col>
+										<col width="*"></col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th id="md_mr_content" colspan="2" style="text-align: left;">후기 내용</th>
+										</tr>
+										<tr>
+											<th>작성자 아이디</th>
+											<td id="md_mr_writer">후기 작성자</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<input type="hidden" name="idx" value="idx"/>
+												<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
+											</td>
+										</tr>
+										<tr>
+											<th>처리자 아이디</th>
+											<th style="text-align: left;">${sessionScope.loginId }</th>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2">
+												<input type="button" class="btn btnSubmit" id="blindDo" value="완료"/>
+												<input type="button" class="btn btnList" id="md_close_btn" value="닫기"/>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
 	
 	<%@ include file="../../../resources/inc/footer.jsp" %>
-</body>
 <script>
 //후기내용 생략
 $('#memberReview > tbody > tr > td.mr_content').on('click', function() {

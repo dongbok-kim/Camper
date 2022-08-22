@@ -29,7 +29,25 @@ a:hover {
 }
 
 textarea {
+	padding: 10px;
+	width: 99%;
+	min-height: 180px;
+	resize: none;
 	overflow-y: scroll;
+	box-sizing: border-box;
+}
+
+input::placeholder,
+textarea::placeholder {
+	text-align: left;
+}
+
+img {
+	vertical-align: middle;
+}
+
+img[src$='flame.png'] {
+	max-width: 20px;
 }
 
 #wrap {
@@ -213,13 +231,21 @@ ul.pageInfo > li.pageInfo_btn.active > a {
 .btn.btnList {
 	background-color: #dbdbdb;
 }
-.btn.btnModify, .btn.btnCampingSearch, .btn.btnSubmit {
+.btn.btnWrite, .btn.btnModify, .btn.btnCampingSearch, .btn.btnSubmit {
 	color: #fff;
 	background-color: #32405d;
 }
 .btn.btnDelete {
 	color: #fff;
 	background-color: #ff0000;
+}
+.btn.btnChk {
+	color: #fff;
+	background-color: #585858;
+}
+.btn.btnPostCode {
+	color: #fff;
+	background-color: #333;
 }
 
 #ftCrewTogether {
@@ -236,6 +262,10 @@ ul.pageInfo > li.pageInfo_btn.active > a {
 	border: 1px solid #787878;
 }
 
+.mypg > h4 > strong {
+	color: #6bbb69;
+}
+
 .mypg table {
 	border: 1px solid #787878;
 }
@@ -249,4 +279,27 @@ ul.pageInfo > li.pageInfo_btn.active > a {
 .mypg table td {
 	padding: 10px;
 	border: 1px solid #787878;
+}
+
+.admpg > h4 > strong {
+	color: #6bbb69;
+}
+
+.admpg table {
+	border: 1px solid #787878;
+}
+
+.admpg table th {
+	padding: 10px;
+	border: 1px solid #787878;
+	background-color: #f9f9f9;
+}
+
+.admpg table td {
+	padding: 10px;
+	border: 1px solid #787878;
+}
+
+table tfoot tr td {
+	text-align: center;
 }

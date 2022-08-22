@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -16,29 +15,29 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
-					<h3>연령대 관리</h3>
+				<div class="right admpg">
+					<h3>연령대 관리 <a href="ageAdmReg.go" class="btn btnWrite" style="float: right;">연령대 추가</a></h3>
+					<h4>총 연령대 수 : <strong>${list.size()}</strong>건</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>연령대</th>
+								<th>수정</th>
+							</tr>
+						</thead>
+						<tbody>
+						<c:forEach items="${list }" var="age">
+							<tr>
+								<td align="center">${age.ma_idx}</td>
+								<td align="right">${age.ma_age}대</td>
+								<td align="center"><a class="btn btnModify" href="ageUpdate.go?ma_idx=${age.ma_idx}">연령대 수정</a></td>
+							</tr>
+						</c:forEach>
+						</tbody>
+					</table>
 				</div>
-<body>
-	<div><button onclick="location.href='ageAdmReg.go' ">연령대 추가</button></div>
-	<div>
-		<table>
-			<tr>
-				<th>번호</th>
-				<th>연령대</th>
-				<th>수정</th>
-			</tr>
-			<c:forEach items="${list }" var="age">
-				<tr>
-					<td>${age.ma_idx}</td>
-					<td>${age.ma_age}대</td>
-					<td><button onclick="location.href='ageUpdate.go?ma_idx=${age.ma_idx}' " >연령대 수정</button></td>
-				</tr>
-			</c:forEach>
-		</table>
-	</div>
 	<%@ include file="../../../resources/inc/footer.jsp" %>
-</body>
 <script>
 </script>
 </html>

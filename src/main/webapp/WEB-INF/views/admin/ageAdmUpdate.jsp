@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -16,22 +15,27 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
+				<div class="right admpg">
 					<h3>연령대 수정</h3>
+					<form action="ageUpdate.do" name="agefm" method="get">
+						<table>
+							<tbody>
+								<tr>
+									<th><input type="hidden" name="ma_idx" value="${age.ma_idx }"> 연령대</th>
+									<td><input type="text" pattern="[0-9]+" name="ma_age" value="${age.ma_age }">대</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<input type="button" class="btn btnSubmit" onclick=up() value="수정"/>
+										<input type="button" class="btn btnList" onclick="location.href='ageAdmList.go' " value="목록"/>
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
 				</div>
-<body>
-	<div>
-		<form action="ageUpdate.do" name="agefm" method="get">
-			<table border="1">
-				<tr>
-					<th><input type="hidden" name="ma_idx" value="${age.ma_idx }"> 연령대</th>
-					<td><input type="text" pattern="[0-9]+" name="ma_age" value="${age.ma_age }">대</td>
-				</tr>
-			</table>
-			<input type="button" onclick=up() value="수정"/>
-			<input type="button" onclick="location.href='ageAdmList.go' " value="목록"/>
-		</form>
-	</div>
 <%@ include file="/resources/inc/footer.jsp" %>
 </body>
 <script>

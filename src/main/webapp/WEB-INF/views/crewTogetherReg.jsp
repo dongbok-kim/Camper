@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../resources/inc/header.jsp" %>
+<style>
+	#ftCrewTogether > tbody > tr > td > input[type="number"] {
+		text-align: right;
+	}
+	
+	#ftCrewTogether > tbody > tr > td > input[name="ct_title"] {
+		width: 99%;
+	}
+</style>
 				
 	<h3>크루 모집하기</h3>
 	<form action="crewReg.do" name="crewReg" method="post">
@@ -15,27 +24,27 @@
 				<tr>
 					<th>연령대</th>
 					<td>
-						<input type="radio" name="ct_age" value="20"/>20대
-						<input type="radio" name="ct_age" value="30"/>30대
-						<input type="radio" name="ct_age" value="40"/>40대
-						<input type="radio" name="ct_age" value="50"/>50대
-						<input type="radio" name="ct_age" value="60"/>60대 이상
+						<label><input type="radio" name="ct_age" value="20"/>20대</label>
+						<label><input type="radio" name="ct_age" value="30"/>30대</label>
+						<label><input type="radio" name="ct_age" value="40"/>40대</label>
+						<label><input type="radio" name="ct_age" value="50"/>50대</label>
+						<label><input type="radio" name="ct_age" value="60"/>60대 이상</label>
 					</td>
 					<th>성별</th>
 					<td>
-						<input type="radio" name="ct_gender" value="남"/>남성
-						<input type="radio" name="ct_gender" value="여"/>여성
-						<input type="radio" name="ct_gender" value="혼성"/>혼성
+						<label><input type="radio" name="ct_gender" value="남"/>남성</label>
+						<label><input type="radio" name="ct_gender" value="여"/>여성</label>
+						<label><input type="radio" name="ct_gender" value="혼성"/>혼성</label>
 					</td>
 				</tr>
 				<tr>
 					<th>캠핑종류</th>
 					<td>
-						<input type="checkbox" name="ct_camping_type" value="백패킹"/>백패킹
-						<input type="checkbox" name="ct_camping_type" value="오토패킹"/>오토패킹
-						<input type="checkbox" name="ct_camping_type" value="글램핑"/>글램핑
-						<input type="checkbox" name="ct_camping_type" value="부쉬크래프트"/>부쉬크래프트
-						<input type="checkbox" name="ct_camping_type" value="비박"/>비박
+						<label><input type="checkbox" name="ct_camping_type" value="백패킹"/>백패킹</label>
+						<label><input type="checkbox" name="ct_camping_type" value="오토패킹"/>오토패킹</label>
+						<label><input type="checkbox" name="ct_camping_type" value="글램핑"/>글램핑</label>
+						<label><input type="checkbox" name="ct_camping_type" value="부쉬크래프트"/>부쉬크래프트</label>
+						<label><input type="checkbox" name="ct_camping_type" value="비박"/>비박</label>
 					</td>
 					<th>모집인원</th>
 					<td>
@@ -45,8 +54,8 @@
 				<tr>
 					<th>기타정보</th>
 					<td colspan="3">
-						<input type="checkbox" name="ct_pet" value="1"/>애견동반
-						<input type="checkbox" name="ct_tool" value="1"/>장비제공
+						<label><input type="checkbox" name="ct_pet" value="1"/>애견동반</label>
+						<label><input type="checkbox" name="ct_tool" value="1"/>장비제공</label>
 					</td>
 				</tr>
 				<tr>
@@ -60,8 +69,8 @@
 				<tr>
 					<th>캠핑날짜</th>
 					<td colspan="3">
-						<input type="text" id="startDate" name="ct_wish_start"> ~
-				       <input type="text" id= "endDate" name="ct_wish_end">
+						<input type="text" id="startDate" name="ct_wish_start" class="datePicker" readonly> ~
+				       <input type="text" id= "endDate" name="ct_wish_end" class="datePicker" readonly>
 					</td>
 				</tr>
 				<tr>
@@ -85,7 +94,7 @@
 <%@ include file="../../resources/inc/footer.jsp" %>
 	<script>
 		function popupCamping() {
-			window.open('/campPopup.go','popupCaming', 'width=800, height=600');
+			window.open('/campPopup.go','popupCaming', 'width=1200, height=800');
 		}
 		
 		$('#crewSubmit').on('click', function(){
@@ -145,6 +154,9 @@
 			$( '#startDate' ).datepicker({
 				minDate : 0,
 				dateFormat : "yy-mm-dd",
+				showOn: 'both',
+				buttonImageOnly: true,
+				buttonImage: '../../resources/images/ico_calendar.jpg',
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());
@@ -152,9 +164,14 @@
 				}
 			});
 			
+			var minEndDate = $.trim($('#startDate').val()) == '' ? 0 : $('#startDate').val();
 			
 			$( '#endDate' ).datepicker({
+				minDate: minEndDate,
 				dateFormat : "yy-mm-dd",
+				showOn: 'both',
+				buttonImageOnly: true,
+				buttonImage: '../../resources/images/ico_calendar.jpg',
 				onSelect : function (selected) {
 					var dt = new Date(selected);
 					dt.setDate(dt.getDate());

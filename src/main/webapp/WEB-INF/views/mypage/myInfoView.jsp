@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
 <style>
 	#memberInfo {
@@ -37,8 +36,8 @@
 								<tr>
 					                <th>아이디</th>
 					                <td class="contextMenu contextMenuMember" data-id="${myInfo.mb_id}">${myInfo.mb_id}</td>
-					                <th>정지</th>
-					                <td>${stop} 회</td>
+					                <th style="color: #fff; background-color: #ff0000;">정지</th>
+					                <td>${stop}회</td>
 					            </tr>
 					            <tr>
 					                <th>현재 비밀번호</th>
@@ -71,7 +70,7 @@
 						                <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}" maxlength="20" />
 						                <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
 						                <input type="hidden" id="doublecheckname" value="${myInfo.mb_nickname}"/>
-					        	        <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
+					        	        <input type="button" value="닉네임 중복 확인" class="btn btnChk" onclick="doubleCheckNickname()" />
 					                </td>
 					            </tr>
 					            <tr>
@@ -93,16 +92,16 @@
 					                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}" maxlength="30"/>
 					                    <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
 					                    <input type="hidden" id="doublecheckemail" value="${myInfo.mb_email}" />
-					                    <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
+					                    <input type="button" value="이메일 중복 확인" class="btn btnChk" onclick="doubleCheckEmail()" />
 					                </td>
 					            </tr>
 					            <tr>
 					            	<th>주소</th>
 					                <td colspan="4">
-						                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
-										<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-										<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
-										<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}" >
+						                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width: 100px;" value="${myInfo.mb_postcode}" readonly>
+										<input type="button" onclick="sample6_execDaumPostcode()" class="btn btnPostCode" value="우편번호 찾기"><br>
+										<input type="text" id="sample6_address" name="mb_addr_default" style="width: 99%;" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
+										<input type="text" id="sample6_detailAddress" name="mb_addr_detail" style="width: 99%;" placeholder="상세주소" value="${myInfo.mb_addr_detail}" >
 										
 										<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
 										<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
@@ -116,7 +115,7 @@
 					            </tr>
 					            <tr>
 					            	<th>모닥불 온도</th>
-					            	<td>${myInfo.mb_fire} ℃</td>
+					            	<td><img src="../../resources/images/flame.png" alt="" />${myInfo.mb_fire} ℃</td>
 					            	<th>타이틀</th>
 					            	<td>
 						            	<c:if test="${title.mt_idx eq null }">
@@ -126,14 +125,18 @@
 					            	</td>
 					            </tr>
 					        </tbody>
+					        <tfoot>
+					        	<tr>
+					        		<td align="center" colspan="4">
+										<input type="submit" class="btn btnSubmit" value="완료" />
+					        		</td>
+					        	</tr>
+					        </tfoot>
 						</table>
-						<div align="center" style="margin: 10px 0;">
-							<input type="submit" class="btn btnSubmit" value="완료" />
-						</div>
 					</form>
 					<h3>회원탈퇴</h3>
 					<div id="memberInfo">
-						<h4>탈퇴 안내</h4>
+						<h4><i class="xi-info"></i> 탈퇴 안내</h4>
 						<p>탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.</p>
 						<p>탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.</p>
 					</div>
@@ -143,23 +146,29 @@
 								<col width="15%"></col>
 								<col width="*"></col>
 							</colgroup>
-							<tr>
-								<th>아이디</th>
-								<td>${myInfo.mb_id}</td>
-							</tr>
-							<tr>
-								<th>비밀번호</th>
-								<td>
-									<input type="password" name = "secession_pw" id="secession_password" maxlength="20"/>
-								</td>
-							</tr>
+							<tbody>
+								<tr>
+									<th>아이디</th>
+									<td>${myInfo.mb_id}</td>
+								</tr>
+								<tr>
+									<th>비밀번호</th>
+									<td>
+										<input type="password" name = "secession_pw" id="secession_password" maxlength="20"/>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr align="center">
+									<td colspan="2">
+										<input type="submit" class="btn btnDelete" value="탈퇴" />
+									</td>
+								</tr>
+							</tfoot>
 						</table>
-						<div align="center" style="margin: 10px 0;">
-							<input type="submit" class="btn btnDelete" value="탈퇴" />
-						</div>
 					</form>
 				</div>
-	<%@ include file="/resources/inc/footer.jsp" %>
+<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 function sample6_execDaumPostcode() {
     new daum.Postcode({

@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -17,8 +15,8 @@
 					</ul>
 				</aside>
 				<div class="right mypg">
-					<h3>1:1 문의<a href="/inquiryWrite.go">1:1 문의하기</a></h3>
-					<h4>총 문의 수 : ${listCnt} 건</h4>
+					<h3>1:1 문의<a href="/inquiryWrite.go" class="btn btnWrite" style="float: right; font-size: 13px;">1:1 문의하기</a></h3>
+					<h4>총 문의 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -30,21 +28,23 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
+							<tr align="center" height="180">
+								<td colspan="4">문의 내역이 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="ask" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td>
-										<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
-									</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
-									<td>${ask.in_status}</td>
-								</tr>		
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td>
+									<a href="inquiryDetail.go?idx=${ask.in_idx}&amp;filter=${filter}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${ask.in_title}</a>
+								</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${ask.in_datetime}"/></td>
+								<td align="center">${ask.in_status}</td>
+							</tr>		
 							</c:forEach>
 						</tbody>
 					</table>
-					<ul>
+					<ul class="pageInfo">
 						<!-- 이전 페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
@@ -72,7 +72,7 @@
 							<option value="in_content"<c:if test="${type eq 'in_content'}">selected="selected"</c:if>>내용</option>
 						</select>
 						<input type="text" name="keyword" value="${keyword}" placeholder="검색"/>
-						<input type="submit" value="search"/>
+						<input type="submit" class="btn btnSubmit" value="SEARCH"/>
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>

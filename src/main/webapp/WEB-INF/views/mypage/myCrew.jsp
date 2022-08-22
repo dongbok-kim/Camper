@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -18,7 +16,7 @@
 				</aside>
 				<div class="right mypg">
 					<h3>참여한 크루 목록</h3>
-					<h4>참여한 크루 목록 수 : ${listCnt} 건</h4>
+					<h4>참여한 크루 목록 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -32,43 +30,45 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="6">참여한 크루 목록이 없습니다.</td></tr>
+								<tr align="center" height="180">
+									<td colspan="6">참여한 크루 목록이 없습니다.</td>
+								</tr>
 							</c:if>
 							<c:forEach items="${list}" var="my" varStatus="i">
 								<tr>
-									<td>${listCnt - skip - i.index}</td>
+									<td align="center">${listCnt - skip - i.index}</td>
 									<td><a href="">${my.ca_name}</a></td>
-									<td>${my.ct_wish_start} ~ ${my.ct_wish_end}</td>
+									<td align="center">${my.ct_wish_start} ~ ${my.ct_wish_end}</td>
 									<c:choose>
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 0}">			
-											<td>${my.cc_crew}<br/>
-												<a onclick="popup('${my.ct_idx}')">크루인원 확정</a>
+											<td align="center">${my.cc_crew}<br/>
+												<a href="javascript:;" class="btn btnWrite" onclick="popup('${my.ct_idx}')">크루인원 확정</a>
 											</td>
 										</c:when>	
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 1}">			
-											<td>${my.cc_crew}</td>
+											<td align="center">${my.cc_crew}</td>
 										</c:when>
 										<c:otherwise>
-											<td>${my.cc_crew}</td>
+											<td align="center">${my.cc_crew}</td>
 										</c:otherwise>					
 									</c:choose>
 									<c:choose>
 										<c:when test="${my.cc_is_join == 1}">
-											<td style="color:blue">참석</td>
+											<td align="center" style="color: #0000ff;">참석</td>
 										</c:when>
 										<c:otherwise>
-											<td style="color:red">불참석</td>
+											<td align="center" style="color: #ff0000;">불참석</td>
 										</c:otherwise>
 									</c:choose>
 									<c:choose>
 										<c:when test="${my.cc_is_join == 1 and my.cntCR == 0 and my.cntMR == 0}">
-											<td><a onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a><br/><a onclick="popupCrew('${my.ct_idx}')">크루 후기</a>
+											<td align="center"><a href="javascript:;" class="btn btnWrite" onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a><br/><br/><a href="javascript:;" class="btn btnWrite" onclick="popupCrew('${my.ct_idx}')">크루 후기</a>
 										</c:when>
 										<c:when test="${my.cc_is_join == 1 and my.cntCR == 1 and my.cntMR ==0}">
-											<td><a onclick="popupCrew('${my.ct_idx}')">크루 후기</a></td>
+											<td align="center"><a href="javascript:;" class="btn btnWrite" onclick="popupCrew('${my.ct_idx}')">크루 후기</a></td>
 										</c:when>
 										<c:when test="${my.cc_is_join == 1 and my.cntCR == 0 and my.cntMR != 0}">
-											<td><a onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a></td>
+											<td align="center"><a href="javascript:;" class="btn btnWrite" onclick="popupCamping('${my.ct_idx}')">캠핑장 후기</a></td>
 										</c:when>
 										<c:otherwise>
 											<td></td>

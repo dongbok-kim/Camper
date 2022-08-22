@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -18,7 +16,7 @@
 				</aside>
 				<div class="right mypg">
 					<h3>찜한 캠핑장</h3>
-					<h4>찜한 캠핑장 수 : ${listCnt} 건</h4>
+					<h4>찜한 캠핑장 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -29,17 +27,19 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${list.size() == 0}">
-								<tr><td colspan="4">찜한 캠핑장이 없습니다.</td></tr>
-							</c:if>
-							<c:forEach items="${list}" var="bbs" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${bbs.ca_name}</a></td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
-									<td><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}">찜해제</a></td>
-								</tr>		
-							</c:forEach>
+						<c:if test="${list.size() == 0}">
+							<tr align="center" height="180">
+								<td colspan="4">찜한 캠핑장이 없습니다.</td>
+							</tr>
+						</c:if>
+						<c:forEach items="${list}" var="bbs" varStatus="i">
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${bbs.ca_name}</a></td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
+								<td align="center"><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}" class="btn btnDelete">찜해제</a></td>
+							</tr>		
+						</c:forEach>
 						</tbody>
 					</table>
 					<ul class="pageInfo">
@@ -59,7 +59,7 @@
 					</ul>
 					<form action="myCampingLikeList.go" method="post">
 						<input type="text" name="keyword" value="${keyword}" placeholder="캠핑장 검색"/>
-						<input type="submit" value="search"/>
+						<input type="submit" class="btn btnSubmit" value="SEARCH"/>
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>

@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
+<style>
+	.mypg > form > table > tbody > tr > td > input[name="subject"] {
+		width: 99%;
+	}
+</style>
 				<aside>
 					<h2>마이페이지</h2>
 					<ul>
@@ -20,24 +23,28 @@
 					<h3>1:1 문의하기</h3>
 					<form action="inquiryWrite.do" method="post" name="inquiryForm">
 						<table>
-							<tr>
-								<th>작성자</th>
-								<td><input type="hidden" name="loginId" value="${loginId}"/>${loginId}</td>
-							</tr>
-							<tr>
-								<th>제목</th>
-								<td><input type="text" name="subject"/></td>
-							</tr>
-							<tr>
-								<th>내용</th>
-								<td><textarea name="content"></textarea></td>
-							</tr>
-							<tr>
-								<th colspan="2">
-									<input type="button" value="완료"  onclick="yn()"/>
-									<input type="button" value="목록" onclick="location.href='/myInquiryList.go'"/>
-								</th>
-							</tr>
+							<tbody>
+								<tr>
+									<th>작성자</th>
+									<td><input type="hidden" name="loginId" value="${loginId}"/>${loginId}</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td><input type="text" name="subject"/></td>
+								</tr>
+								<tr>
+									<th>내용</th>
+									<td><textarea name="content"></textarea></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<input type="button" class="btn btnSubmit" value="완료"  onclick="yn()"/>
+										<input type="button" class="btn btnList" value="목록" onclick="location.href='/myInquiryList.go'"/>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 					</form>
 				</div>

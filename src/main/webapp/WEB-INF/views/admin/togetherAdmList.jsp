@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 <style>
 .modal{
@@ -15,7 +13,7 @@
 .modal_content{
 	position:relative; top:20%; left:20%;
 	background : #fff;
-	width: 50%; height: 50%;
+	width: 50%; height: 58%;
 	text-align:center;
 	box-sizing:border-box; padding:30px 0;
 	/*
@@ -24,10 +22,6 @@
 	margin-top:-100px; margin-left:-200px;		
 	line-height:23px; cursor:pointer;
 	*/
-}
-textarea {
-	resize:none;
-	width: 80%; height: 8.25em;;
 }
 .md_table {
 	border:1px solid black;
@@ -49,106 +43,112 @@ textarea {
 						<li class="active"><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
+				<div class="right admpg">
 					<h3>모집글 관리</h3>
-				</div>
-<body>
-	<div>모집글 수 : ${listCnt}건</div>
-	<div>
-		<table>
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일시</th>
-				<th>블라인드</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:if test="${list.size() == 0}">
-				<tr><td colspan="4">문의 내역이 없습니다.</td></tr>
-			</c:if>
-			<c:forEach items="${list }" var="together" varStatus="i">
-				<tr>
-					<td>${listCnt - skip - i.index}</td>
-					<td>
-					<a href="togetherAdmView?ct_idx=${together.ct_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${together.ct_title }</a>
-					</td>
-					<td class="contextMenu contextMenuMember" data-id="${together.mb_id}">${together.mb_id}</td>
-					<td><fmt:formatDate pattern="yyyy-MM-dd" value="${together.ct_datetime}"/></td>
-					<td>
-						<c:if test="${together.bb_count eq 0}">
-							<button class="blind_button" data-target="#insertBlind" data-title="${together.ct_title }" data-writer="${together.mb_id}" data-idx="${together.ct_idx}">
-								블라인드
-							</button>
+					<h4>모집글 수 : <strong>${listCnt}</strong>건</h4>
+					<table>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>작성자</th>
+								<th>작성일시</th>
+								<th>블라인드</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:if test="${list.size() == 0}">
+							<tr align="center" height="180">
+								<td colspan="4">문의 내역이 없습니다.</td>
+							</tr>
+							</c:if>
+							<c:forEach items="${list }" var="together" varStatus="i">
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td>
+									<a href="togetherAdmView?ct_idx=${together.ct_idx}&amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${together.ct_title }</a>
+								</td>
+								<td align="center" class="contextMenu contextMenuMember" data-id="${together.mb_id}">${together.mb_id}</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${together.ct_datetime}"/></td>
+								<td align="center">
+									<c:if test="${together.bb_count eq 0}">
+									<button class="btn btnDelete blind_button" data-target="#insertBlind" data-title="${together.ct_title }" data-writer="${together.mb_id}" data-idx="${together.ct_idx}">블라인드</button>
+									</c:if>
+								</td>
+							</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<ul class="pageInfo">
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
 						</c:if>
-					</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-		</table>
-		<ul>
-			<!-- 이전 페이지 버튼 -->
-			<c:if test="${pageMaker.prev}">
-				<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>
-			</c:if>
-			<!-- 각 번호 페이지 버튼 -->
-			<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-				<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;type=${type}&amp;pageNum=${num}">${num}</a></li>
-			</c:forEach>
-			
-			<!--  다음 페이지 버튼 -->
-			<c:if test="${pageMaker.next}">
-				<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
-			</c:if>
-		</ul>
-	</div>
-	<div>
-		<form action="togetherAdmList.go" method="post" id="togetherfm">
-			<select name="type">
-				<option value="all">전체</option>
-				<option value="제목">제목</option>
-				<option value="내용">내용</option>
-				<option value="작성자">작성자</option>
-			</select>
-			<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
-			<input type="submit" value="search"/>
-		</form>
-	</div>
-	
-	<!-- 블라인드 모달창 -->
-	<div class="modal" id="insertBlind">
-		<div class="modal_content" title="모집글 블라인드">
-			<h2>모집글 블라인드</h2>
-			<form action="blindTogether.do" method="post" id="blindfm">
-				<table class="md_table">
-					<tr>
-						<th id="md_ct_title" colspan="2">모집글 제목</th>
-					</tr>
-					<tr>
-						<th>작성자 아이디</th>
-						<td id="md_ct_writer">작성자</td>
-					</tr>
-					<tr>
-						<td colspan="2">
-							<input type="hidden" name="idx" value="idx"/>
-							<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
-						</td>
-					</tr>
-					<tr>
-						<th>처리자 아이디</th>
-						<th>${sessionScope.loginId }</th>
-					</tr>
-				</table>
-				<input type="button" id="blindDo" value="완료"/>
-				<input type="button" id="md_close_btn" value="닫기"/>
-			</form>
-		</div>
-	</div>
+						<!-- 각 번호 페이지 버튼 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+							<li class="pageInfo_btn ${pageMaker.cri.pageNum eq num ? 'active' : ''}"><a href="?keyword=${keyword}&amp;type=${type}&amp;pageNum=${num}">${num}</a></li>
+						</c:forEach>
+						
+						<!--  다음 페이지 버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="pageInfo_btn next"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage+1}">다음</a></li>
+						</c:if>
+					</ul>
+					<form action="togetherAdmList.go" method="post" id="togetherfm">
+						<select name="type">
+							<option value="all">전체</option>
+							<option value="제목">제목</option>
+							<option value="내용">내용</option>
+							<option value="작성자">작성자</option>
+						</select>
+						<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
+						<input type="submit" class="btn btnSubmit" value="SEARCH"/>
+					</form>
+					
+					<!-- 블라인드 모달창 -->
+					<div class="modal" id="insertBlind">
+						<div class="modal_content" title="모집글 블라인드">
+							<h2>모집글 블라인드</h2>
+							<form action="blindTogether.do" method="post" id="blindfm">
+								<table class="md_table">
+									<colgroup>
+										<col width="180"></col>
+										<col width="*"></col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th id="md_ct_title" colspan="2" style="text-align: left;">모집글 제목</th>
+										</tr>
+										<tr>
+											<th>작성자 아이디</th>
+											<td id="md_ct_writer">작성자</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<input type="hidden" name="idx" value="idx"/>
+												<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
+											</td>
+										</tr>
+										<tr>
+											<th>처리자 아이디</th>
+											<th style="text-align: left;">${sessionScope.loginId }</th>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2">
+												<input type="button" class="btn btnSubmit" id="blindDo" value="완료"/>
+												<input type="button" class="btn btnList" id="md_close_btn" value="닫기"/>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</form>
+						</div>
+					</div>
+				</div>
 	
 	<%@ include file="/resources/inc/footer.jsp" %>
-</body>
 <script>
 //블라인드 모달창 
 $(function(){

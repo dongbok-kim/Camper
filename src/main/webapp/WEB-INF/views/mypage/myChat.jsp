@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="../../../resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -19,6 +18,12 @@
 					<h3>참여 중인 채팅방</h3>
 					<h4>총 채팅방 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -37,10 +42,10 @@
 							<c:otherwise>
 							<c:forEach items="${list}" var="list" varStatus="i">
 							<tr>
-								<td>${listCnt-i.index}</td>
+								<td align="center">${listCnt-i.index}</td>
 								<td><a href="javascript:;" onclick="javascript:window.open('chat.do?cg_idx=${list.cg_idx}', 'chat', 'width=1200, height=750')">${list.ct_title}</a></td>
-								<td>${list.cntJoin} / ${list.cg_limit}</td>
-								<td>${list.cntCrew}</td>
+								<td align="center"><strong style="color: #6bbb69;">${list.cntJoin}</strong> / ${list.cg_limit}</td>
+								<td align="right">${list.cntCrew}명</td>
 							</tr>
 							</c:forEach>
 							</c:otherwise>

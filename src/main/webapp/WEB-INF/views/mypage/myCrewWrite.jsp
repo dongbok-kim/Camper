@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>마이페이지</h2>
@@ -18,7 +16,7 @@
 				</aside>
 				<div class="right mypg">
 					<h3>내가 쓴 모집글</h3>
-					<h4>참여한 크루 목록 수 : ${list.size()} 건</h4>
+					<h4>참여한 크루 목록 수 : <strong>${list.size()}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -32,17 +30,19 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="6">등록된 크루모집글이 없습니다.</td></tr>
+							<tr align="center" height="180">
+								<td colspan="6">등록된 크루모집글이 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="my" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td><a href="/crewTogetherView.do?ct_idx=${my.ct_idx}">${my.ct_title}</a></td>
-									<td>${my.ct_people_cnt} 명</td>
-									<td>${my.nowCnt} 명</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>
-									<td><input type="button" value="삭제" onclick="yn(${my.ct_idx})"/></td>
-								</tr>		
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td><a href="/crewTogetherView.do?ct_idx=${my.ct_idx}">${my.ct_title}</a></td>
+								<td align="right">${my.ct_people_cnt}명</td>
+								<td align="right">${my.nowCnt}명</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>
+								<td align="center"><input type="button" class="btn btnDelete" value="삭제" onclick="yn(${my.ct_idx})"/></td>
+							</tr>		
 							</c:forEach>
 						</tbody>
 					</table>

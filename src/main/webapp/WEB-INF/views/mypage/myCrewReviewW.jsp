@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <style>
 	#campingReview > tbody > tr > td.subject {
 		cursor: pointer;
@@ -30,7 +28,7 @@
 				<div class="right mypg">
 					<h3>크루 후기 - 작성 후기</h3>
 					<a href="/myCrewReviewR.go">받은 후기</a><a href="/myCrewReviewW.go">작성 후기</a>
-					<h4>작성 후기 수 : ${listCnt} 건</h4>
+					<h4>작성 후기 수 : <strong>${listCnt}</strong>건</h4>
 					<table id="campingReview">
 						<colgroup>
 								<col width="60"></col>
@@ -52,19 +50,21 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="6">작성한 후기가 없습니다.</td></tr>
+							<tr align="center" height="180">
+								<td colspan="6">작성한 후기가 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="rv" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td  class="subject" >${rv.mr_content }</td>
-									<td>${rv.mb_nickname}</td>
-									<td>${rv.mr_assessment}<br/>(+${rv.mr_score })</td>
-									<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.mr_datetime}"/></td>
-									<c:if test="${rv.delAble> rv.today}">
-										<td><input type="button" value="삭제" onclick="del(${rv.mr_idx})"/></td>
-									</c:if>
-								</tr>		
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td  class="subject" >${rv.mr_content }</td>
+								<td align="center">${rv.mb_nickname}</td>
+								<td align="center">${rv.mr_assessment}<br/>(+${rv.mr_score })</td>
+								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.mr_datetime}"/></td>
+								<c:if test="${rv.delAble> rv.today}">
+								<td align="center"><input type="button" class="btn btnDelete" value="삭제" onclick="del(${rv.mr_idx})"/></td>
+								</c:if>
+							</tr>		
 							</c:forEach>
 						</tbody>
 					</table>

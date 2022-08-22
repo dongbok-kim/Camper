@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
@@ -16,8 +15,9 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div class="right">
-					<h3>타이틀 관리<a href="/titleAdd.go">타이틀 추가</a></h3>
+				<div class="right admpg">
+					<h3>타이틀 관리<a href="/titleAdd.go" class="btn btnWrite" style="float: right;">타이틀 추가</a></h3>
+					<h4>총 타이틀 수 : <strong>${list.size()}</strong>건</h4>
 					<table>
 						<thead>
 							<tr>
@@ -30,16 +30,18 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-								<tr><td colspan="5">타이틀이 없습니다.</td></tr>
+							<tr align="center" height="180">
+								<td colspan="5">타이틀이 없습니다.</td>
+							</tr>
 							</c:if>
 							<c:forEach items="${list}" var="tt" varStatus="i">
-								<tr>
-									<td>${listCnt - skip - i.index}</td>
-									<td>${tt.mt_name}</td>
-									<td>${tt.mt_count } 회</td>
-									<td>${tt.mt_degree } ℃</td>
-									<td><a href="/titleUpdate.go?idx=${tt.mt_idx}">수정</a></td>
-								</tr>
+							<tr>
+								<td align="center">${listCnt - skip - i.index}</td>
+								<td>${tt.mt_name}</td>
+								<td align="right">${tt.mt_count }회</td>
+								<td align="right"><img src="../../resources/images/flame.png" alt="" /> ${tt.mt_degree }℃</td>
+								<td align="center"><a href="/titleUpdate.go?idx=${tt.mt_idx}" class="btn btnModify">수정</a></td>
+							</tr>
 							</c:forEach>
 						</tbody>
 					</table>

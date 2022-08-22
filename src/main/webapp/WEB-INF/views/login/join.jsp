@@ -1,112 +1,133 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ include file="/resources/inc/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>회원 가입 페이지</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<%@ include file="../../../resources/inc/header.jsp" %>
 <style>
-	table {
-		border: 2px solid; border-coollapse: collapse; text-align : left;
+	#joinBox {
+		
+	}
+
+	#joinBox > h3 {
+		font-size: 36px;
+		text-align: center;
 	}
 	
-	th, td { border : 1px solid; padding: 10px 5px;}
+	#joinBox > form > table {
+		border: 1px solid #787878;
+	}
 	
-	th {background-color : gray; }
+	#joinBox > form > table > tbody > tr > th {
+		padding: 10px;
+		border: 1px solid #787878;
+		background-color: #f9f9f9;
+	}
 	
-	input[type='text'] {width: 35%; }
-	input[type='password'] {width: 35%; }
+	#joinBox > form > table > tbody > tr > td {
+		padding: 10px;
+		border: 1px solid #787878;
+	}
+	
+	#joinBox > form > table > tfoot > tr > td {
+		padding: 10px;
+		text-align: center;
+	}
 </style>
-</head>
-<body>
-	 <h3>회원 가입</h3>
-	 	<form action="join.do" method="POST" onsubmit="return submitCheck()">
-        <table>
-            <tr>
-                <th>아이디</th>
-                <td colspan="7">
-                    <input type="text" name ="mb_id" id= "id" maxlength="20" />
-                    <input type="button" value="아이디 중복 확인" onclick="doubleCheckId()" />
-                    <input type="hidden" id="doublecheckid" />
-                    <!-- 아이디 중복 확인은 ajax 명령으로 -->
-                </td>
-            </tr>
-            <tr>
-                <th>비밀번호</th>
-                <td colspan="7">
-                    <input type="password"  name = "mb_pw" id="password" maxlength="20"/>
-                </td>
-            </tr>
-            <tr>
-                <th>비밀번호 확인</th>
-                <td colspan="7">
-                    <input type="password"  name = "passwordcheck" id = "passwordcheck" maxlength="20"/>
-                </td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td colspan="7">
-                    <input type="text"  name = "mb_email" id="email" maxlength="20"/>
-                    <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
-                    <input type="hidden" id="doublecheckemail" />
-                    <!-- 이메일 중복 확인은 ajax 명령으로 -->
-                </td>
-            </tr>
-            <tr>
-                <th>닉네임</th>
-                <td colspan="7">
-                <input type="text"  name = "mb_nickname" id="nickname" maxlength="20"/>
-                <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
-                <input type="hidden" id="doublecheckname" />
-                <!-- 닉네임 중복 확인은 ajax 명령으로 -->
-                </td>
-            </tr>
-            <tr>
-                <th>이름</th>
-                <td colspan="7">
-                    <input type="text"  name = "mb_name" id= "name" maxlength="20"/>
-                </td>
-             </tr>
-             <tr>
-                <th>성별</th>
-                <td colspan="7">
-                 <label><input type="radio" value="남" name = "mb_gender" /> 남 </label>
-                 <label><input type="radio" value="여" name = "mb_gender" /> 여 </label>
-                </td>
-            </tr>   
-            <tr>
-            		<th>연령대</th>
-            <c:forEach items="${list }" var="age">
-            	<td>
-            	<label><input type="radio" name="ma_idx" value="${age.ma_idx}" />${age.ma_age }대 </label>
-            	</td>
-            </c:forEach>
-            </tr>
-            <tr>
-            	<th>주소</th>
-                <td colspan="7">
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width: 10%;" readonly>
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" readonly><br>
-				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소">
-				
-				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
-				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
-				
-				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->
-				<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
-				</td>
-            </tr>
-        </table>
-        <br/><br/>
-        <input type="submit" value="회원가입" /> <!--  -->
-        <input type="button" value="취소" onclick="location.href='login.go'" />
-        </form>
-</body>
-<%@ include file="/resources/inc/footer.jsp" %>
+				<div id="joinBox">
+					<h3>회원 가입</h3>
+					<form action="join.do" method="POST" onsubmit="return submitCheck()">
+						<table>
+							<colgroup>
+								<col width="180"></col>
+								<col width="*"></col>
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>아이디</th>
+									<td>
+										<input type="text" name ="mb_id" id= "id" maxlength="20" />
+										<input type="button" value="아이디 중복 확인" class="btn btnChk" onclick="doubleCheckId()" />
+										<input type="hidden" id="doublecheckid" />
+										<!-- 아이디 중복 확인은 ajax 명령으로 -->
+									</td>
+								</tr>
+								<tr>
+									<th>비밀번호</th>
+									<td>
+										<input type="password"  name = "mb_pw" id="password" maxlength="20"/>
+									</td>
+								</tr>
+								<tr>
+									<th>비밀번호 확인</th>
+									<td>
+										<input type="password"  name = "passwordcheck" id = "passwordcheck" maxlength="20"/>
+									</td>
+								</tr>
+								<tr>
+									<th>이메일</th>
+									<td>
+										<input type="text"  name = "mb_email" id="email" maxlength="20"/>
+										<input type="button" value="이메일 중복 확인" class="btn btnChk" onclick="doubleCheckEmail()" />
+										<input type="hidden" id="doublecheckemail" />
+										<!-- 이메일 중복 확인은 ajax 명령으로 -->
+									</td>
+								</tr>
+								<tr>
+									<th>닉네임</th>
+									<td>
+										<input type="text"  name = "mb_nickname" id="nickname" maxlength="20"/>
+										<input type="button" value="닉네임 중복 확인" class="btn btnChk" onclick="doubleCheckNickname()" />
+										<input type="hidden" id="doublecheckname" />
+										<!-- 닉네임 중복 확인은 ajax 명령으로 -->
+									</td>
+								</tr>
+								<tr>
+									<th>이름</th>
+									<td>
+										<input type="text"  name = "mb_name" id= "name" maxlength="20"/>
+									</td>
+								</tr>
+								<tr>
+									<th>성별</th>
+									<td>
+										<label><input type="radio" value="남" name = "mb_gender" /> 남 </label>
+										<label><input type="radio" value="여" name = "mb_gender" /> 여 </label>
+									</td>
+								</tr>   
+								<tr>
+									<th>연령대</th>
+									<td>
+										<c:forEach items="${list }" var="age">
+										<label><input type="radio" name="ma_idx" value="${age.ma_idx}" />${age.ma_age }대 </label>
+										</c:forEach>
+									</td>
+								</tr>
+								<tr>
+									<th>주소</th>
+									<td>
+										<input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width: 10%;" readonly>
+										<input type="button" onclick="sample6_execDaumPostcode()" class="btn btnPostCode" value="우편번호 찾기"><br>
+										<input type="text" id="sample6_address" name="mb_addr_default" style="width: 99%;" placeholder="주소" readonly><br>
+										<input type="text" id="sample6_detailAddress" name="mb_addr_detail" style="width: 99%;" placeholder="상세주소">
+										
+										<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
+										<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
+										
+										<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->
+										<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="2">
+										<input type="submit" class="btn btnSubmit" value="회원가입" /> <!--  -->
+										<input type="button" class="btn btnList" value="취소" onclick="location.href='login.go'" />
+									</td>
+								</tr>
+							</tfoot>
+						</table>
+					</form>
+				</div>
+
+<%@ include file="../../../resources/inc/footer.jsp" %>
 <script>
 
 	//다음 우편번호 관련 함수
