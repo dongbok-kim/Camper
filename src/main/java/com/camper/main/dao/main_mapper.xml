@@ -8,7 +8,7 @@
 <select id="list" resultType="com.camper.main.dto.MainDTO">	
 	SELECT (select count(cl_idx) from cp_camping_like where ca_idx = c.ca_idx) as cl_cnt, ca_idx,
 	(select count(cr_idx) from cp_camping_review where ca_idx = c.ca_idx) as cr_cnt, c.ca_name, c.ca_intro, c.ca_sido, c.ca_sigungu, c.ca_addr_default, c.ca_addr_detail, c.ca_img 	
-FROM cp_camping c ORDER by rand() limit 4;
+FROM cp_camping c WHERE c.ca_manage_status != '확인중' ORDER by rand() limit 4;
 </select>
 
 
