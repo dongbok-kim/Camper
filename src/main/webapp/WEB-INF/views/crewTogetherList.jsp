@@ -55,6 +55,13 @@
 		background-color: #f0f0f0;
 	}
 	
+	.crewList > li > a > div.infoBox > strong {
+		display: block;
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
+	
 	.crewList > li > a > div.infoBox > strong > span {
 		margin-right: 5px;
 		color: rgb(85, 207, 85);
@@ -83,12 +90,38 @@
 		border: 1px solid #787878;
 	}
 	
+	#searchBox > form > table {
+		border: 1px solid #787878;
+	}
+	
+	#searchBox > form > table > tbody > tr > th {
+		padding: 10px;
+		width: 120px;
+		border: 1px solid #787878;
+		background-color: #f9f9f9;
+	}
+	
+	#searchBox > form > table > tbody > tr > td {
+		padding: 10px;
+		border: 1px solid #787878;
+	}
+	
+	#searchBox > form > table > tbody > tr > td > input[name="ca_name"] {
+		width: 99%;
+	}
+	
 	#searchBox > form > #btn {
 		text-align: center;
 	}
 	
 	#searchBox > form > #btn > input[type="submit"] {
-	
+		margin-top: 20px;
+		padding: 5px 10px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+		color: #fff;
+		background-color: #32405d;
 	}
 	
 	#totalCnt > strong {
@@ -166,14 +199,15 @@
                                     <tr>
                                         <th>날짜선택</th>
                                         <td>
-                                            <input type="text" name="ct_wish_start" id="startDate" readonly value="${ct_wish_start}" />
-                                            <input type="text" name="ct_wish_end" id="endDate" readonly value="${ct_wish_end}" />
+                                            <input type="text" name="ct_wish_start" id="startDate" class="datePicker" readonly value="${ct_wish_start}" />
+											~ &nbsp; 
+                                            <input type="text" name="ct_wish_end" id="endDate" class="datePicker" readonly value="${ct_wish_end}" />
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>캠핑장명</th>
                                         <td>
-                                           <input type="text" name="cp_name" value="${cp_name}" />
+                                           <input type="text" name="ca_name" value="${ca_name}" />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -210,7 +244,7 @@
                     	</c:otherwise>
                     </c:choose>
                     <div style="clear: both;"></div>
-					<ul>	
+					<ul class="pageInfo">	
 						<!-- 이전페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>
@@ -237,6 +271,9 @@
 		$('#startDate').datepicker({
 			minDate: 0,
 			dateFormat: 'yy-mm-dd',
+			showOn: 'both',
+			buttonImageOnly: true,
+			buttonImage: '../../resources/images/ico_calendar.jpg',
 			onSelect: function(selected) {
 				var dt = new Date(selected);
 				dt.setDate(dt.getDate());
@@ -249,6 +286,9 @@
 		$('#endDate').datepicker({
 			minDate: minEndDate,
 			dateFormat: 'yy-mm-dd',
+			showOn: 'both',
+			buttonImageOnly: true,
+			buttonImage: '../../resources/images/ico_calendar.jpg',
 			onSelect: function(selected) {
 				var dt = new Date(selected);
 				dt.setDate(dt.getDate());

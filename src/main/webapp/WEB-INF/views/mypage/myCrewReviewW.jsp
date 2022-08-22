@@ -27,7 +27,7 @@
 						<li><a href="">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>크루 후기 - 작성 후기</h3>
 					<a href="/myCrewReviewR.go">받은 후기</a><a href="/myCrewReviewW.go">작성 후기</a>
 					<h4>작성 후기 수 : ${listCnt} 건</h4>
@@ -68,7 +68,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<ul>
+					<ul class="pageInfo">
 						<!-- 이전 페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>

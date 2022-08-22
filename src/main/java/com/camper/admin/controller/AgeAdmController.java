@@ -55,7 +55,7 @@ public class AgeAdmController {
 			@RequestParam int ma_age, @RequestParam int ma_idx) {
 		logger.info("age"+ma_age+ma_idx);
 		int success = service.ageUpdateForm(model,ma_idx,ma_age);
-		return "redirect:/ageAdmList";
+		return "redirect:/ageAdmList.go";
 	}
 	
 	

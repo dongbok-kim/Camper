@@ -4,72 +4,82 @@
 				
 	<h3>크루 모집하기</h3>
 	<form action="crewReg.do" name="crewReg" method="post">
-		<table>
-			<tr>
-				<th>연령대</th>
-				<td>
-					<input type="radio" name="ct_age" value="20"/>20대
-					<input type="radio" name="ct_age" value="30"/>30대
-					<input type="radio" name="ct_age" value="40"/>40대
-					<input type="radio" name="ct_age" value="50"/>50대
-					<input type="radio" name="ct_age" value="60"/>60대 이상
-				</td>
-				<th>성별</th>
-				<td>
-					<input type="radio" name="ct_gender" value="여"/>여성
-					<input type="radio" name="ct_gender" value="남"/>남성
-					<input type="radio" name="ct_gender" value="혼성"/>혼성
-				</td>
-			</tr>
-			<tr>
-				<th>캠핑종류</th>
-				<td>
-					<input type="checkbox" name="ct_camping_type" value="백패킹"/>백패킹
-					<input type="checkbox" name="ct_camping_type" value="오토패킹"/>오토패킹
-					<input type="checkbox" name="ct_camping_type" value="글램핑"/>글램핑
-					<input type="checkbox" name="ct_camping_type" value="부쉬크래프트"/>부쉬크래프트
-					<input type="checkbox" name="ct_camping_type" value="비박"/>비박
-				</td>
-				<th>모집인원</th>
-				<td>
-					<input type="number" class="people_cnt" name="ct_people_cnt" max='20' placeholder="인원수 입력"/>명
-				</td>
-			</tr>
-			<tr>
-				<th>기타정보</th>
-				<td colspan="3">
-					<input type="checkbox" name="ct_pet" value="1"/>애견동반
-					<input type="checkbox" name="ct_tool" value="1"/>장비제공
-				</td>
-			</tr>
-			<tr>
-				<th>캠핑장명</th>
-				<td colspan="3">
-					<span id="campingSelect"></span>
-					<input type="hidden" id="campingSelectIdx" name="ca_idx" value=""/>
-					<input type="button" onclick="popupCamping()" value="캠핑장 찾기"/>
-				</td>
-			</tr>
-			<tr>
-				<th>캠핑날짜</th>
-				<td colspan="3">
-					<input type="text" id="startDate" name="ct_wish_start"> ~
-			       <input type="text" id= "endDate" name="ct_wish_end">
-				</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td colspan="3"><input type="text" name="ct_title" id="ct_title"></td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td colspan="3">
-					<textarea name="ct_content" id="ct_content"></textarea>
-				</td>
-			</tr>
+		<table id="ftCrewTogether">
+			<colgroup>
+				<col width="10%"></col>
+				<col width="40%"></col>
+				<col width="10%"></col>
+				<col width="40%"></col>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>연령대</th>
+					<td>
+						<input type="radio" name="ct_age" value="20"/>20대
+						<input type="radio" name="ct_age" value="30"/>30대
+						<input type="radio" name="ct_age" value="40"/>40대
+						<input type="radio" name="ct_age" value="50"/>50대
+						<input type="radio" name="ct_age" value="60"/>60대 이상
+					</td>
+					<th>성별</th>
+					<td>
+						<input type="radio" name="ct_gender" value="남"/>남성
+						<input type="radio" name="ct_gender" value="여"/>여성
+						<input type="radio" name="ct_gender" value="혼성"/>혼성
+					</td>
+				</tr>
+				<tr>
+					<th>캠핑종류</th>
+					<td>
+						<input type="checkbox" name="ct_camping_type" value="백패킹"/>백패킹
+						<input type="checkbox" name="ct_camping_type" value="오토패킹"/>오토패킹
+						<input type="checkbox" name="ct_camping_type" value="글램핑"/>글램핑
+						<input type="checkbox" name="ct_camping_type" value="부쉬크래프트"/>부쉬크래프트
+						<input type="checkbox" name="ct_camping_type" value="비박"/>비박
+					</td>
+					<th>모집인원</th>
+					<td>
+						<input type="number" class="people_cnt" name="ct_people_cnt" min="1" max="20" placeholder="인원수"/>명
+					</td>
+				</tr>
+				<tr>
+					<th>기타정보</th>
+					<td colspan="3">
+						<input type="checkbox" name="ct_pet" value="1"/>애견동반
+						<input type="checkbox" name="ct_tool" value="1"/>장비제공
+					</td>
+				</tr>
+				<tr>
+					<th>캠핑장명</th>
+					<td colspan="3">
+						<span id="campingSelect"></span>
+						<input type="hidden" id="campingSelectIdx" name="ca_idx" value=""/>
+						<input type="button" class="btn btnCampingSearch" onclick="popupCamping()" value="캠핑장 찾기"/>
+					</td>
+				</tr>
+				<tr>
+					<th>캠핑날짜</th>
+					<td colspan="3">
+						<input type="text" id="startDate" name="ct_wish_start"> ~
+				       <input type="text" id= "endDate" name="ct_wish_end">
+					</td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td colspan="3"><input type="text" name="ct_title" id="ct_title"></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td colspan="3">
+						<textarea name="ct_content" id="ct_content"></textarea>
+					</td>
+				</tr>
+			</tbody>
 		</table>
-		<input type="button" id=crewSubmit value="완료"/>
-		<input type="button" value="목록"/>
+		<div style="margin-top: 20px; text-align: center;">
+			<input type="button" class="btn btnSubmit" id="crewSubmit" value="완료"/>
+			<a class="btn btnList" href="crewTogetherList.do">목록</a>
+		</div>
 	</form>
 				
 <%@ include file="../../resources/inc/footer.jsp" %>

@@ -16,7 +16,7 @@
 						<li><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>차단 회원</h3>
 					<h4>차단 회원 수 : ${listCnt} 건</h4>
 					<table>

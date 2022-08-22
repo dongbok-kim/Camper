@@ -36,7 +36,14 @@ public class MyInfoController {
 		public String loginPage(Model model, 
 		HttpServletRequest request, String mb_id) {
 			
+			String page = "mypage/myInfoView";
+			
 			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("loginId") == null) {
+				model.addAttribute("msg", "로그인이 필요한 서비스 입니다.");
+				page = "login/login";
+			}
 			
 			mb_id = (String) session.getAttribute("loginId");
 			
@@ -55,7 +62,7 @@ public class MyInfoController {
 			
 			logger.info("정지 횟수 : "+stop);
 			
-			return "mypage/myInfoView";
+			return page;
 		}
 		
 		

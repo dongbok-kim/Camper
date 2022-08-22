@@ -3,24 +3,82 @@
 <%@ include file="../../resources/inc/header.jsp" %>
 <style>
 	#left {
+		margin-top: 20px;
 		float: left !important;
-		max-width: 1000px !important;
+		max-width: 980px !important;
 		width: 100% !important;
 	}
 	
+	#left > table {
+		border: 1px solid #787878;
+	}
+	#left > table > thead > tr > td {
+		padding: 10px;
+		background-color: #f9f9f9;
+	}
+	#left > table > thead > tr > td > h3 {
+		margin: 0;
+	}
+	#left > table > tbody > tr > th {
+		padding: 10px;
+		border: 1px solid #787878;
+		background-color: #f9f9f9;
+	}
+	#left > table > tbody > tr > td {
+		padding: 10px;
+		border: 1px solid #787878;
+	}
+	#left > table > tbody > #ctContent {
+		vertical-align: top;
+		height: 180px;
+	}
+	#left > table > tfoot > tr > td {
+		padding: 10px;
+	}
+	
 	#right {
+		margin-top: 20px;
 		float: right !important;
 		max-width: 200px !important;
 		width: 100% !important;
 	}
+	#right > table {
+		border: 1px solid #787878;
+	}
+	#right > table > tbody > tr > th {
+		padding: 10px;
+		border: 1px solid #787878;
+		background-color: #f9f9f9;
+	}
+	#right > table > tbody > tr > td {
+		padding: 10px;
+		border: 1px solid #787878;
+	}
+	#right > table > tbody > tr > td > a {
+		padding: 5px 10px;
+		display: block;
+		text-align: center;
+		color: #fff;
+		background-color: #32405d;
+	}
 </style>
 <c:if test="${cct ne null}">
 				<div id="left">
-					<table>        
-						<tbody>
+					<table>
+						<colgroup>
+							<col width="10%"></col>
+							<col width="*"></col>
+							<col width="10%"></col>
+							<col width="20%"></col>
+							<col width="10%"></col>
+							<col width="20%"></col>
+						</colgroup>
+						<thead>
 							<tr>
-								<td colspan="6">${cct.ct_title}</td>
+								<td colspan="6"><h3>${cct.ct_title}</h3></td>
 							</tr>
+						</thead>
+						<tbody>
 							<tr>
 								<th>성별</th>
 								<td>${cct.ct_gender}<c:if test="${cct.ct_gender ne null and cct.ct_gender ne '혼성'}">성</c:if></td>
@@ -57,17 +115,17 @@
 								<th>캠핑장명</th>
 								<td colspan="5">${cct.ca_name}</td>
 							</tr>        
-							<tr>
+							<tr id="ctContent">
 								<td colspan="6">${cct.ct_content}</td>
 							</tr>
 						</tbody>
 						<tfoot>
 							<tr>
 								<td colspan="6">
-									<input type="button" value="목록" onclick="location.href='crewTogetherList.do'"/> 
+									<input type="button" value="목록" class="btn btnList" onclick="location.href='crewTogetherList.do'"/> 
 									<c:if test="${sessionScope.loginId eq cct.mb_id}">
-									<input type ="button" value="수정" onclick="location.href='crewTogetherUpdate.go?ct_idx=${cct.ct_idx}'" style="float:right; margin-left:5px;"/>
-									<input type="button" value="삭제" onclick="del(${cct.ct_idx})" style="float:right; margin-left:5px;"/>       
+									<input type="button" value="삭제" class="btn btnDelete" onclick="del(${cct.ct_idx})" style="float:right; margin-left:5px;"/>       
+									<input type ="button" value="수정" class="btn btnModify" onclick="location.href='crewTogetherUpdate.go?ct_idx=${cct.ct_idx}'" style="float:right; margin-left:5px;"/>
 									</c:if>
 								</td>
 							</tr>

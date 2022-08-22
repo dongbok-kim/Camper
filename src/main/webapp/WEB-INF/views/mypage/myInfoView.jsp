@@ -1,8 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/resources/inc/header.jsp" %>
-<aside>
-					<h2>마이 페이지</h2>
+<style>
+	#memberInfo {
+		margin-bottom: 5px;
+		padding: 10px;
+		border: 1px solid #787878;
+		background-color: #f0f0f0;
+	}
+</style>
+				<aside>
+					<h2>마이페이지</h2>
 					<ul>
 						<li class="active"><a href="/mypageInfo.go">내 정보 수정</a></li>
 						<li><a href="/myCampingLikeList.go">찜한 캠핑장</a></li>
@@ -14,157 +22,143 @@
 						<li><a href="/myBlockList.go">차단 회원</a></li>
 						<li><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
-	</aside>
-	<div>
-	<h3>내 정보 수정</h3>
-	</div>
-<title>마이페이지 - 내정보 수정</title>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<style>
-	table {
-		border: 2px solid; border-coollapse: collapse; text-align : left;
-	}
-	
-	th, td { border : 1px solid; padding: 10px 5px;}
-	
-	th {background-color : gray; }
-	
-	input[type='text'] {width: 60%; }
-</style>
-</head>
-<body>
-	<div>
-	<form action="myInfoUpdate.do" method="POST" onsubmit="return submitCheck()">
-	<table>
-		<tr>
-                <th>아이디</th>
-                <td class="contextMenu contextMenuMember" data-id="${myInfo.mb_id}">${myInfo.mb_id}</td>
-                <td style="background-color: red ">정지</td>
-                <td>${stop} 회</td>
-            </tr>
-            <tr>
-                <th>현재 비밀번호</th>
-                <td colspan="4">
-                    <input type="password" name = "orimb_pw" id="password" maxlength="20"/>
-                    <input type="hidden" name = "mb_pw" id="hidden_password" value="${myInfo.mb_pw}"/>
-                </td>
-            </tr>
-            <tr>
-                <th>새 비밀번호</th>
-                <td colspan="4">
-                    <input type="password"  name = "newpassword" id = "newpassword" maxlength="20"/>
-                </td>
-            </tr>
-              <tr>
-                <th>새 비밀번호 확인</th>
-                <td colspan="4">
-                    <input type="password"  name = "newpasswordcheck" id = "newpasswordcheck" maxlength="20"/>
-                </td>
-            </tr>
-            <tr>
-            <th>이름</th>
-                <td colspan="4">
-                    ${myInfo.mb_name}
-                </td>
-            </tr>
-            <tr>
-                <th>닉네임</th>
-                <td>
-                <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}" maxlength="20" />
-                <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
-                <input type="hidden" id="doublecheckname" value="${myInfo.mb_nickname}"/>
-                </td>
-                <td colspan="2">
-                <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
-                <!-- 닉네임 중복 확인은 ajax 명령으로 -->
-                </td>
-            </tr>
-            <tr>
-                <th>성별</th>
-                <td>
-                  ${myInfo.mb_gender}
-                </td>
-                <th>연령대</th>
-                <td>
-                <c:forEach items="${list }" var="age">
-                <input type="hidden" name="ma_idxradio" value="${myInfo.ma_idx}" >
-            	<label><input type="radio" name="ma_idx" value="${age.ma_idx}" <c:if test="${myInfo.ma_idx eq age.ma_idx}">checked="checked"</c:if> />${age.ma_age }대</label>
-            </c:forEach>
-            	</td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td>
-                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}" maxlength="30"/>
-                    <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
-                    <input type="hidden" id="doublecheckemail" value="${myInfo.mb_email}" />
-                </td>
-                <td colspan="2">
-                    <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
-                    <!-- 이메일 중복 확인은 ajax 명령으로 -->
-                </td>
-            </tr>
-            <tr>
-            	<th>주소</th>
-                <td colspan="4">
-                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
-				<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-				<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
-				<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}" >
-				
-				<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
-				<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
-				
-				<input type="hidden" id="hidden_mb_sido" name="hidden_mb_sido" value="${myInfo.mb_sido }" >	<!-- 시/도 --> <!-- 원래 주소 -->
-				<input type="hidden" id="hidden_mb_sigungu" name="hidden_mb_sigungu" value="${myInfo.mb_sigungu }"> <!-- 시/군/구 -->
-				
-				<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->	<!-- 주소찾기 했을때 입력되는값  -->
-				<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
-				</td>
-            </tr>
-            <tr>
-            	<th>모닥불 온도</th>
-            	<td>${myInfo.mb_fire} ℃</td>
-            	<td style="background-color: gray ">타이틀</td>
-            	<td>
-            	<c:if test="${title.mt_idx eq null }">
-				타이틀 없음
-				</c:if>
-				${title.mt_name }
-            	</td>
-            </tr>
-	</table>
-	<br/>
-	<input type="submit" value="완료" />
-	<br/>
-	</form>
-	</div>
-	<div>
-	<h3>회원탈퇴</h3>
-	</div>
-	<div>
-	<form action="secession.do" onsubmit="return submitCheck_two()">
-	<h5>탈퇴 안내</h5>
-	탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.<br/>
-	탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.
-	<br/>
-	<table>
-		<tr>
-			<th>아이디</th>
-			<td>${myInfo.mb_id}</td>
-		</tr>
-		<tr>
-			<th>비밀번호</th>
-			<td>
-				<input type="password" name = "secession_pw" id="secession_password" maxlength="20"/>
-			</td>
-		</tr>
-	</table> <br/>
-	<input type="submit" value="탈퇴" /> <br/> <br/>
-	</form>
-	</div>
-</body>
+				</aside>
+				<div class="right mypg">
+					<h3>내 정보 수정</h3>
+					<form action="myInfoUpdate.do" method="POST" onsubmit="return submitCheck()">
+						<table>
+							<colgroup>
+								<col width="20%"></col>
+								<col width="30%"></col>
+								<col width="10%"></col>
+								<col width="40%"></col>
+							</colgroup>
+							<tbody>
+								<tr>
+					                <th>아이디</th>
+					                <td class="contextMenu contextMenuMember" data-id="${myInfo.mb_id}">${myInfo.mb_id}</td>
+					                <th>정지</th>
+					                <td>${stop} 회</td>
+					            </tr>
+					            <tr>
+					                <th>현재 비밀번호</th>
+					                <td colspan="4">
+					                    <input type="password" name = "orimb_pw" id="password" maxlength="20"/>
+					                    <input type="hidden" name = "mb_pw" id="hidden_password" value="${myInfo.mb_pw}"/>
+					                </td>
+					            </tr>
+					            <tr>
+					                <th>새 비밀번호</th>
+					                <td colspan="4">
+					                    <input type="password"  name = "newpassword" id = "newpassword" maxlength="20"/>
+					                </td>
+					            </tr>
+					              <tr>
+					                <th>새 비밀번호 확인</th>
+					                <td colspan="4">
+					                    <input type="password"  name = "newpasswordcheck" id = "newpasswordcheck" maxlength="20"/>
+					                </td>
+					            </tr>
+					            <tr>
+					            <th>이름</th>
+					                <td colspan="4">
+					                    ${myInfo.mb_name}
+					                </td>
+					            </tr>
+					            <tr>
+					                <th>닉네임</th>
+					                <td colspan="4">
+						                <input type="text"  name = "mb_nickname" id="nickname" value="${myInfo.mb_nickname}" maxlength="20" />
+						                <input type="hidden"  name = "hidden_nickname" id="hidden_nickname" value="${myInfo.mb_nickname}"/>
+						                <input type="hidden" id="doublecheckname" value="${myInfo.mb_nickname}"/>
+					        	        <input type="button" value="닉네임 중복 확인" onclick="doubleCheckNickname()" />
+					                </td>
+					            </tr>
+					            <tr>
+					                <th>성별</th>
+					                <td>
+					                	${myInfo.mb_gender}
+					                </td>
+					                <th>연령대</th>
+					                <td>
+						                <c:forEach items="${list }" var="age">
+						                <input type="hidden" name="ma_idxradio" value="${myInfo.ma_idx}" >
+						            	<label><input type="radio" name="ma_idx" value="${age.ma_idx}" <c:if test="${myInfo.ma_idx eq age.ma_idx}">checked="checked"</c:if> />${age.ma_age }대</label>
+						            	</c:forEach>
+					            	</td>
+					            </tr>
+					            <tr>
+					                <th>이메일</th>
+					                <td colspan="4">
+					                    <input type="text"  name = "mb_email" id="email" value="${myInfo.mb_email}" maxlength="30"/>
+					                    <input type="hidden"  name = "hidden_email" id="hidden_email" value="${myInfo.mb_email}"/>
+					                    <input type="hidden" id="doublecheckemail" value="${myInfo.mb_email}" />
+					                    <input type="button" value="이메일 중복 확인" onclick="doubleCheckEmail()" />
+					                </td>
+					            </tr>
+					            <tr>
+					            	<th>주소</th>
+					                <td colspan="4">
+						                <input type="text" id="sample6_postcode" name="mb_postcode" placeholder="우편번호" style="width:100px" value="${myInfo.mb_postcode}" readonly>
+										<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+										<input type="text" id="sample6_address" name="mb_addr_default" placeholder="주소" value="${myInfo.mb_addr_default}" readonly><br>
+										<input type="text" id="sample6_detailAddress" name="mb_addr_detail" placeholder="상세주소" value="${myInfo.mb_addr_detail}" >
+										
+										<!-- 값을 받아와야되기때문에 hidden 으로 처리 -->
+										<input type="hidden" id="sample6_extraAddress" name="sample6_extraAddress" placeholder="참고항목">
+										
+										<input type="hidden" id="hidden_mb_sido" name="hidden_mb_sido" value="${myInfo.mb_sido }" >	<!-- 시/도 --> <!-- 원래 주소 -->
+										<input type="hidden" id="hidden_mb_sigungu" name="hidden_mb_sigungu" value="${myInfo.mb_sigungu }"> <!-- 시/군/구 -->
+										
+										<input type="hidden" id="sample6_sido" name="mb_sido" > <!-- 시/도 -->	<!-- 주소찾기 했을때 입력되는값  -->
+										<input type="hidden" id="sample6_sigungu" name="mb_sigungu" > <!-- 시/군/구 -->
+									</td>
+					            </tr>
+					            <tr>
+					            	<th>모닥불 온도</th>
+					            	<td>${myInfo.mb_fire} ℃</td>
+					            	<th>타이틀</th>
+					            	<td>
+						            	<c:if test="${title.mt_idx eq null }">
+										타이틀 없음
+										</c:if>
+										${title.mt_name }
+					            	</td>
+					            </tr>
+					        </tbody>
+						</table>
+						<div align="center" style="margin: 10px 0;">
+							<input type="submit" class="btn btnSubmit" value="완료" />
+						</div>
+					</form>
+					<h3>회원탈퇴</h3>
+					<div id="memberInfo">
+						<h4>탈퇴 안내</h4>
+						<p>탈퇴 후 같은 아이디로 재 가입을 하실 수 없습니다.</p>
+						<p>탈퇴하시려면, 비밀번호를 입력 후 완료 버튼을 눌러주세요.</p>
+					</div>
+					<form action="secession.do" onsubmit="return submitCheck_two()">
+						<table>
+							<colgroup>
+								<col width="15%"></col>
+								<col width="*"></col>
+							</colgroup>
+							<tr>
+								<th>아이디</th>
+								<td>${myInfo.mb_id}</td>
+							</tr>
+							<tr>
+								<th>비밀번호</th>
+								<td>
+									<input type="password" name = "secession_pw" id="secession_password" maxlength="20"/>
+								</td>
+							</tr>
+						</table>
+						<div align="center" style="margin: 10px 0;">
+							<input type="submit" class="btn btnDelete" value="탈퇴" />
+						</div>
+					</form>
+				</div>
 	<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 function sample6_execDaumPostcode() {

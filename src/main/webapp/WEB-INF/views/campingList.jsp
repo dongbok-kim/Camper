@@ -23,6 +23,7 @@
 		display: block;
 	}
 	#searchBox {
+		margin: 20px 0;
 		padding: 10px;
 		box-sizing: border-box;
 		border-radius: 10px;
@@ -32,20 +33,29 @@
 		border: 1px solid #787878;
 	}
 	#searchBox > form > table > tbody > tr > th {
+		padding: 10px;
+		width: 120px;
 		border: 1px solid #787878;
 		background-color: #f9f9f9;
 	}
 	#searchBox > form > table > tbody > tr > td {
+		padding: 10px;
 		border: 1px solid #787878;
 	}
 	#searchBox > form > table > tbody > tr > td > input[type="text"] {
-		width: 90%;
+		width: 99%;
 	}
 	#searchBox > form > #btn {
 		text-align: center;
 	}
 	#searchBox > form > #btn > input[type="submit"] {
-		
+		margin-top: 20px;
+		padding: 5px 10px;
+		cursor: pointer;
+		outline: none;
+		border: none;
+		color: #fff;
+		background-color: #32405d;
 	}
 	#totalCnt > strong {
 		color: orange;
@@ -209,7 +219,7 @@
 											<span class="intro">등록된 소개글이 없습니다.</span>
 										</c:otherwise>
 									</c:choose>
-									<span class="address">${campingList.ca_addr_default}</span>
+									<span class="address">${campingList.ca_addr_default} ${campingList.ca_addr_detail}</span>
 								</span>
 							</a>
 							<span class="cnt cntLike">좋아요 ${campingList.cntLike}</span>
@@ -218,7 +228,7 @@
 						</li>
 					</c:forEach>
 					</ul>
-					<ul>	
+					<ul class="pageInfo">	
 						<!-- 이전페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 						<li class="pageInfo_btn prev"><a href="javascript:;" data="${pageMaker.startPage-1}">이전</a></li>

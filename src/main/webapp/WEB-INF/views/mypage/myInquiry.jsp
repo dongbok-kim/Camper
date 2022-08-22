@@ -16,7 +16,7 @@
 						<li class="active"><a href="">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>1:1 문의<a href="/inquiryWrite.go">1:1 문의하기</a></h3>
 					<h4>총 문의 수 : ${listCnt} 건</h4>
 					<table>
