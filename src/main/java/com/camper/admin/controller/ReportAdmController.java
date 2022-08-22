@@ -47,8 +47,7 @@ public class ReportAdmController {
 			@RequestParam HashMap<String, String> params
 			) {
 		
-		//String rp_admin = (String) session.getAttribute("loginId"); //신고처리 관리자아이디
-		String rp_admin = "ryu"; //임시
+		String rp_admin = (String) session.getAttribute("loginId"); //신고처리 관리자아이디
 		params.put("rp_admin", rp_admin);
 		service.reportUpdate(params);
 		

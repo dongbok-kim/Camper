@@ -234,8 +234,7 @@ public class TogetherController {
 	@RequestMapping(value = "/crewReg.do")
 	public ModelAndView crewRegForm(HttpSession session, @ModelAttribute TogetherDTO dto,
 			@RequestParam(value = "ct_camping_type") String[] campingArr) {
-		// String loginId = (String) session.getAttribute("loginId");
-		String loginId = "jyr";
+		String loginId = (String) session.getAttribute("loginId");
 		dto.setMb_id(loginId);
 
 		// campingType 배열에서 꺼내서 params에 콤마로 구분해서 담기

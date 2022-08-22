@@ -104,8 +104,7 @@ public class AnswerAdmService {
 	// 답변글 등록
 	public String answerReg(HashMap<String, String> params, HttpSession session) {
 		String status = params.get("in_status");
-		//String ia_admin = (String) session.getAttribute("loginId"); // 답변 작성 관리자
-		String ia_admin = "ryu"; // 임시 답변 관리자 아이디
+		String ia_admin = (String) session.getAttribute("loginId"); // 답변 작성 관리자
 		String idx = params.get("in_idx");
 		
 		if(status.equals("처리중")) {
