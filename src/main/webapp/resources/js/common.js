@@ -49,7 +49,7 @@ $('#contextMenuMember > #contextMenuMemberProfile > a').on('click', function(e) 
 $('#contextMenuMember > #contextMenuMemberReport > a').on('click', function(e) {
 	e.preventDefault();
 	console.log(this);	
-	javascript:window.open('report?mb_id='+contextMenuMemberId, 'report', 'width=500, height=500');
+	window.open('report?mb_id='+contextMenuMemberId, 'report', 'width=500, height=500');
 });
 
 // 마이페이지 > 회원 차단
