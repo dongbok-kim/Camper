@@ -388,7 +388,7 @@ public class ProfileService {
 						"</tr>";
 			} else {
 				list += "<tr>\r\n" + 
-						"	<td><a href=\"javascript:;\">" + item.getCt_title() + "</a></td>\r\n" + 
+						"	<td><a href=\"/crewTogetherView.do?ct_idx="+ item.getCt_idx() + "\">" + item.getCt_title() + "</a></td>\r\n" + 
 						"	<td>" + item.getName() + "&nbsp;" + item.getCt_wish_start() + "&nbsp;~&nbsp;" + item.getCt_wish_end() + "</td>\r\n" + 
 						"</tr>";
 			}
