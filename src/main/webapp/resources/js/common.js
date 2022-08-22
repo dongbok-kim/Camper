@@ -1,6 +1,6 @@
 var contextMenuMemberId = '';
 
-$('.contextMenu').on('click', function() {
+$(document).on('click', '.contextMenu', function() {
 	contextMenuMemberId = $(this).data('id');
 });
 

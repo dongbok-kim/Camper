@@ -189,6 +189,20 @@
 				});
 			}
 		});
+
+		$(document).on('contextmenu', '#msgList > li > span', function(e) {
+			e.preventDefault();
+			
+			msgNoticeIdx = $(this).data('idx');
+			
+			$('.contextMenuList').hide();
+			
+			$('#contextMenuChatNotice').css({
+				'display':'block',
+				'left':e.pageX,
+				'top':e.pageY
+			});
+		});
 		
 		$('#contextMenuChatNotice > li > a').on('click', function() {
 			msgSend = {

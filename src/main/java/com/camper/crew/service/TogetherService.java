@@ -212,7 +212,7 @@ public class TogetherService {
 		logger.info("cg_idx : "+cg_idx +"/"+ dto.getCg_limit());
 		dao.crewChatJoin(mb_id,cg_idx); // 생성된 채팅방에 크루장(=글 작성자) 추가
 		
-		ModelAndView mav = new ModelAndView("crewTogetherList");
+		ModelAndView mav = new ModelAndView("redirect:/crewTogetherList.do");
 		//ModelAndView mav = new ModelAndView("crewTogetherView.do?ct_idx=");
 		return mav;
 	}
