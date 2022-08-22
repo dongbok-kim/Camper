@@ -1,5 +1,6 @@
 package com.camper.login.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -106,39 +107,6 @@ public class LoginService {
 		return dao.idFind(name, email);
 	}
 
-	
-
-	public ModelAndView pwRework(LoginDTO dto) {
-
-		String mb_pw = dto.getMb_pw();
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		dto.setMb_pw(encoder.encode(mb_pw));
-		
-		hashText = encoder.encode(mb_pw);
-		
-		boolean match = encoder.matches(mb_pw, hashText);
-		logger.info("일치 여부 : "+match);
-		
-		int row = dao.pwRework(dto);
-		
-		logger.info("join success : "+row);
-		
-		ModelAndView mav = new ModelAndView();
-		String msg = "비밀번호 변경에 실패 했습니다.";
-		String page = "login/pwFind";
-		
-		if(row > 0) {
-			msg = "비밀번호에 변경 성공 했습니다.";
-			page = "login/login";
-		}
-		
-		mav.addObject("msg", msg);
-		mav.setViewName(page);
-		
-		return mav;
-		
-	}
-
 	public String mbgrade(String id) {
 		
 		return dao.mbgrade(id);
@@ -170,6 +138,20 @@ public class LoginService {
 	public String pwFindstatus(String mb_id, String mb_email) {
 		
 		return dao.pwFindstatus(mb_id, mb_email);
+	}
+
+	public void pwRework(String mb_id, String mb_pw) {
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		
+		dao.pwRework(mb_id, encoder.encode(mb_pw));
+		
+	}
+
+	public ArrayList<LoginDTO> joinAge() {
+		
+		return dao.joinAge();
 	}
 
 	

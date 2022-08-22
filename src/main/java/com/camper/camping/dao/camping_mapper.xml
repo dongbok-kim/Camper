@@ -79,14 +79,14 @@
 	<select id="campingRecom" resultType="cpCamping">
 		SELECT *, ((SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERE cr_assessment = '좋아요' AND ca_idx = a.ca_idx) 
 				- (SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERe cr_assessment = '싫어요' AND ca_idx = a.ca_idx)) 
-			AS ranking from cp_camping a ORDER BY ranking desc limit 4 offset 0
+			AS ranking from cp_camping a WHERE a.ca_manage_status != '확인중' ORDER BY ranking desc limit 4 offset 0
 	</select>
 	
 	<select id="campingRecomUser" resultType="cpCamping">
 		SELECT *, ((SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERE cr_assessment = '좋아요' AND ca_idx = a.ca_idx) 
 				- (SELECT COUNT(cr_idx) AS cnt FROM cp_camping_review WHERe cr_assessment = '싫어요' AND ca_idx = a.ca_idx)) 
 			AS ranking from cp_camping a where ca_sido = (SELECT mb_sido FROM cp_member WHERE mb_id = #{mb_id}) 
-		ORDER BY ranking desc limit 4 offset 0;
+		AND a.ca_manage_status != '확인중' ORDER BY ranking desc limit 4 offset 0
 	</select>
 
 	 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.camper.admin.dto.MemberAdmDTO;
 import com.camper.admin.service.MemberAdmService;
@@ -49,7 +50,7 @@ public class MemberAdmController {
 	
 	//회원 상세보기
 	@RequestMapping(value = "/memberAdmDetail")
-	public String memberAdmDetail(Model model, HttpServletRequest request, @RequestParam String mb_id) {
+	public String memberAdmDetail(Model model, HttpServletRequest request, @RequestParam String mb_id, HttpSession session, RedirectAttributes rttr) {
 		
 		MemberAdmDTO dto = service.memberAdmDetail(mb_id);
 		model.addAttribute("dto", dto);
@@ -60,12 +61,18 @@ public class MemberAdmController {
 		MemberAdmDTO title = service.memberTitle(mb_id);
 		model.addAttribute("title", title);
 		
-		return "admin/memberAdmDetail";
+		if(session.getAttribute("mb_grade").equals("관리자") != true) {
+			rttr.addFlashAttribute("msg", "관리자만 접속 가능");
+			return "redirect:/";
+		} else {
+			return "admin/memberAdmDetail";
+		}
+		
 	}
 	
 	//회원 정보 수정 (일반 > 관리자)
 	@RequestMapping(value = "/memberAdmUpdate.do")
-	public String memberAdmUpdate(Model model, HttpServletRequest request) {
+	public String memberAdmUpdate(Model model, HttpServletRequest request, RedirectAttributes rttr, HttpSession session) {
 		
 		String mb_id = request.getParameter("mb_id");
 		logger.info("mb_id : "+mb_id);
@@ -73,9 +80,20 @@ public class MemberAdmController {
 		logger.info("mb_grade :" +mb_grade);
 		
 		service.memberAdmUpdate(mb_id, mb_grade);
+		rttr.addFlashAttribute("msg", "수정되었습니다.");
 		
-		return "redirect:/memberAdmList.go";
+		if(session.getAttribute("mb_grade").equals("관리자") != true) {
+			rttr.addFlashAttribute("msg", "관리자만 접속 가능");
+			return "redirect:/";
+		} else {
+		return "redirect:/memberAdmDetail?mb_id="+mb_id;
+		}
+		
+		
 	}
+	
+	
+	
 	
 	
 }

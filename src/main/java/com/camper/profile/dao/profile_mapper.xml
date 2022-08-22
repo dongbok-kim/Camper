@@ -66,16 +66,16 @@ FROM cp_crew_together cct WHERE mb_id= #{mb_id}
 
 
  <!-- 프로필 작성글 페이징처리 -->
- <select id="profileView2" parameterType="Hashmap" resultType="com.camper.profile.dto.ProfileDTO">
+ <select id="profileView2" parameterType="hashmap" resultType="com.camper.profile.dto.ProfileDTO">
  SELECT ct_idx, ct_title, ct_wish_start , ct_wish_end, (select ca_name from cp_camping where ca_idx=cct.ca_idx) as name
 FROM cp_crew_together cct WHERE mb_id= #{mb_id} AND cct.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') LIMIT 5
 <if test="skip gt 0">OFFSET #{skip}</if>
  </select>
 
 <!-- 프로필- 받은 리뷰  페이징처리-->
-<select id="profileReview2" resultType="com.camper.profile.dto.ProfileDTO" parameterType="Hashmap" >
+<select id="profileReview2" resultType="com.camper.profile.dto.ProfileDTO" parameterType="hashmap" >
 SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id} LIMIT 5 
-<if test="skip2 gt 0">OFFSET #{skip2}</if>
+<if test="skip gt 0">OFFSET #{skip}</if>
 </select>
 
 

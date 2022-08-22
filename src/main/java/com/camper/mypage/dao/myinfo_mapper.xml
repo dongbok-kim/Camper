@@ -28,7 +28,12 @@
 	UPDATE cp_member SET
 		mb_nickname = #{param2}, mb_email = #{param3},
 		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
-		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9},
+		ma_idx = #{param7}, 
+		<choose>
+		<when test="param8.equals('제주특별자치도')">mb_sido = '제주'</when>
+		<when test="param8.equals('세종특별자치시')">mb_sido = '세종'</when>
+		<otherwise>mb_sido = #{param8}</otherwise></choose>
+		, mb_sigungu = #{param9},
 		mb_pw = #{param10}
 	WHERE mb_id=#{param1}
 </update>
@@ -37,7 +42,12 @@
 	UPDATE cp_member SET
 		mb_nickname = #{param2}, mb_email = #{param3},
 		mb_postcode = #{param4}, mb_addr_default = #{param5}, mb_addr_detail = #{param6},
-		ma_idx = #{param7}, mb_sido = #{param8}, mb_sigungu = #{param9}
+		ma_idx = #{param7},
+		<choose>
+		<when test="param8.equals('제주특별자치도')">mb_sido = '제주'</when>
+		<when test="param8.equals('세종특별자치시')">mb_sido = '세종'</when>
+		<otherwise>mb_sido = #{param8}</otherwise></choose>
+		, mb_sigungu = #{param9}
 	WHERE mb_id=#{param1}
 </update>
 
@@ -52,5 +62,9 @@
 <delete id="chatJoinDelete" parameterType="String">
 	DELETE FROM cp_chat_join WHERE mb_id = #{param1}
 </delete>
+
+<select id="myInfoAge" resultType="mypgMyInfo">
+	SELECT ma_idx, ma_age FROM cp_member_age
+</select>
 
 </mapper>

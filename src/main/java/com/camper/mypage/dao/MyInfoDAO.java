@@ -1,5 +1,7 @@
 package com.camper.mypage.dao;
 
+import java.util.ArrayList;
+
 import com.camper.mypage.dto.MyInfoDTO;
 
 public interface MyInfoDAO {
@@ -25,6 +27,8 @@ public interface MyInfoDAO {
 	int myInfoStop(String mb_id);
 
 	void chatJoinDelete(String mb_id);
+
+	ArrayList<MyInfoDTO> myInfoAge();
 
 
 }

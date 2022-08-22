@@ -294,7 +294,7 @@
 						</tbody>
 					</table>
 					<div id="btn">
-						<a href="" id="btnCrew">크루 모집하기</a>
+						<a href="crewTogetherReg.go?ca_idx=${campingView.ca_idx}" id="btnCrew">크루 모집하기</a>
 						<span id="likeCnt">좋아요 수 : ${campingView.cntLike}</span>
 						<c:choose>
 							<c:when test="${clIdx eq null}">
@@ -415,10 +415,10 @@
 						<!-- 크루모집 -->
 						<li>
 							<ul id="crewVote" class="crewList">
-								<c:if test="${campingTogether.size() == 0}">없어 돌아가</c:if>
+								<c:if test="${campingTogether.size() == 0}">현재 등록된 크루모집이 없습니다.</c:if>
 								<c:forEach items="${campingTogether}" var="campingTogether">
 			                        <li>
-			                            <a href="">
+			                            <a href="crewTogetherView.do?ct_idx=${campingTogether.ct_idx}"">
 			                                <div class="imgBox"> 
 			                                    <span><i class="xi-maker"></i> ${campingTogether.ca_sido}  ${fn:substring(campingTogether.ct_wish_start,5,7)}/${fn:substring(campingTogether.ct_wish_start,8,10)} ~ ${fn:substring(campingTogether.ct_wish_end,5,7)}/${fn:substring(campingTogether.ct_wish_end,8,10)}</span>
 			                                    <c:choose>
