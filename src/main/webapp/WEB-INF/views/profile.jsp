@@ -59,6 +59,7 @@ button {
 .tab_wrap .tab_con {border: 1px solid #ddd;border-top: none;}
 .tab_wrap .tab_con .tab_list {display: none;height: 200px;padding: 15px;}
 .tab_wrap .tab_list > ul {list-style:none; text-align:center; }
+.tab_wrap .tab_con > ul {list-style:none; text-align:center; }
 	
 </style>
 
