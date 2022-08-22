@@ -19,6 +19,7 @@ public class CampingApiController {
 	
 	//매주 월요일 마다 갱신
     public String setCampingApi() throws Exception {
+    	logger.info("스케줄러 확인");
     	return service.setCampingApi();	
     }	
 	
