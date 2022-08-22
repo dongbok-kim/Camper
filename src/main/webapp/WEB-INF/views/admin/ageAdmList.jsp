@@ -16,7 +16,7 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right">
 					<h3>연령대 관리</h3>
 				</div>
 <body>

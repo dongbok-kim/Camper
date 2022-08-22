@@ -15,7 +15,7 @@
 						<li><a href="">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right">
 					<h3>내 정보 수정</h3>
 				</div>
 <%@ include file="../../resources/inc/footer.jsp" %>

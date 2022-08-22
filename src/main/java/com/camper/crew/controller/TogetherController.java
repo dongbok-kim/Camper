@@ -42,7 +42,7 @@ public class TogetherController {
 			@RequestParam(required = false) String ct_tool,
 			@RequestParam(required = false) String ct_wish_start,
 			@RequestParam(required = false) String ct_wish_end,
-			@RequestParam(required = false) String cp_name
+			@RequestParam(required = false) String ca_name
 			) {
 		String loginId = (String) session.getAttribute("loginId");
 
@@ -65,7 +65,7 @@ public class TogetherController {
 		}
 		
 		if(ct_camping_type != null && ct_camping_type.size() > 0) {
-			params.put("ct_camping_type", ct_camping_type.toString().replaceAll(",", "|"));
+			params.put("ct_camping_type", String.join("|", ct_camping_type));
 			model.addAttribute("ct_camping_type", ct_camping_type);
 		}
 		
@@ -92,9 +92,9 @@ public class TogetherController {
 			model.addAttribute("ct_wish_end", ct_wish_end);
 		}
 		
-		if(cp_name != null && !cp_name.trim().equals("")) {
-			params.put("cp_name", cp_name);
-			model.addAttribute("cp_name", cp_name);
+		if(ca_name != null && !ca_name.trim().equals("")) {
+			params.put("ca_name", ca_name);
+			model.addAttribute("ca_name", ca_name);
 		}
 		
 		int crewCnt = service.crewCnt(params);

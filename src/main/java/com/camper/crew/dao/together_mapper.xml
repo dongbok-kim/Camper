@@ -69,12 +69,13 @@
 		WHERE 1 
 			AND a.mb_id != e.mb_id 
 			AND b.mb_fire >= 1500 
-			AND e.mb_id = #{mb_id} 
 			AND a.ct_deadline = 0 
 			AND a.ct_wish_start > NOW() 
 			AND a.ct_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_crew_together') 
 			AND 
 			(
+				e.mb_id = #{mb_id} 
+				OR 
 				(a.ct_gender = '혼성' OR a.ct_gender = (SELECT mb_gender FROM cp_member WHERE mb_id = #{mb_id})) 
 				OR 
 				a.ct_age = (SELECT ma_age FROM cp_member_age WHERE ma_idx = (SELECT ma_idx FROM cp_member WHERE mb_id = #{mb_id})) 
@@ -135,8 +136,8 @@
 			</if>
 			<if test="ct_wish_end != null">
 			</if>
-			<if test="cp_name != null">
-			AND b.cp_name = #{cp_name}
+			<if test="ca_name != null">
+			AND b.ca_name LIKE CONCAT('%', #{ca_name}, '%')
 			</if>
 		LIMIT #{amount}
 		<if test="skip >= 0">OFFSET #{skip}</if>
@@ -181,8 +182,10 @@
 			AND a.ct_wish_start <![CDATA[>=]]> #{ct_wish_start}
 			AND a.ct_wish_end <![CDATA[<=]]> #{ct_wish_end}
 			</if>
-			<if test="cp_name != null">
-			AND b.cp_name = #{cp_name}
+			<if test="ct_wish_end != null">
+			</if>
+			<if test="ca_name != null">
+			AND b.ca_name LIKE CONCAT('%', #{ca_name}, '%')
 			</if>
 	</select>
 	

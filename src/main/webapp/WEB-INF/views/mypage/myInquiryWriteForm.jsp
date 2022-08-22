@@ -16,7 +16,7 @@
 						<li class="active"><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>1:1 문의하기</h3>
 					<form action="inquiryWrite.do" method="post" name="inquiryForm">
 						<table>

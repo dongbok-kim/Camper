@@ -16,7 +16,7 @@
 						<li><a href="/myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>찜한 캠핑장</h3>
 					<h4>찜한 캠핑장 수 : ${listCnt} 건</h4>
 					<table>
@@ -42,7 +42,7 @@
 							</c:forEach>
 						</tbody>
 					</table>
-					<ul>
+					<ul class="pageInfo">
 						<!-- 이전 페이지 버튼 -->
 						<c:if test="${pageMaker.prev}">
 							<li class="pageInfo_btn_prev"><a href="?keyword=${keyword}&amp;pageNum=${pageMaker.startPage-1}">이전</a></li>

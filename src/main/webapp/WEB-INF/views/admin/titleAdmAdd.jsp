@@ -16,7 +16,7 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right">
 					<h3>타이틀 추가</h3>
 					<form action="/titleAdd.do" method="post" name="addForm">
 						<table>

@@ -15,7 +15,7 @@
 						<li><a href="myInquiryList.go">1:1 문의</a></li>
 					</ul>
 				</aside>
-				<div>
+				<div class="right mypg">
 					<h3>참여 중인 채팅방</h3>
 					<h4>총 채팅방 수 : <strong>${listCnt}</strong>건</h4>
 					<table>

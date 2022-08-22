@@ -16,7 +16,7 @@
 						<li><a href="/togetherAdmList.go">모집글 관리</a></li>
 					</ul>
 	</aside>
-	<div>
+	<div class="right">
 		<h3>회원 상세 보기</h3>
 	</div>
 <title>관리자 페이지 - 회원상세보기</title>

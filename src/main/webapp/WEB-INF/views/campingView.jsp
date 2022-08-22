@@ -13,30 +13,37 @@
 		max-width: 100%;
 	}
 	#infoBox {
+		padding-left: 20px;
 		float: left;
 		max-width: 1000px;
 		width: 100%;
+		box-sizing: border-box;
 	}
 	#infoBox > table {
 		border: 1px solid #787878;
 	}
 	#infoBox > table > tbody > tr > th {
+		padding: 10px;
 		border: 1px solid #787878;
 		background-color: #f9f9f9;
 	}
 	#infoBox > table > tbody > tr > td {
+		padding: 10px;
 		border: 1px solid #787878;
 	}
 	#btn {
+		margin: 10px 0 20px 0;
 		text-align: right;
 	}
 	#btn > #btnCrew {
+		padding: 5px 10px;
 		display: inline-block;
 		width: 120px;
 		text-align: center;
 		border: 1px solid #787878;
 	}
 	#btn > #likeCnt {
+		padding: 5px 10px;
 		display: inline-block;
 		width: 120px;
 		text-align: center;
@@ -45,6 +52,7 @@
 		background-color: #32405d;
 	}
 	#btn > #btnLike {
+		padding: 5px 10px;
 		display: inline-block;
 		width: 120px;
 		text-align: center;
@@ -60,9 +68,10 @@
 	#tab > li {
 		float: left;
 		width: 25%;
-		height: 30px;
-		line-height: 25px;
+		height: 50px;
+		line-height: 50px;
 		text-align: center;
+		font-size: 18px;
 		cursor: pointer;
 		box-sizing: border-box;
 		border: 1px solid black;
@@ -84,17 +93,19 @@
 		background-color: #f9f9f9;
 	}
 	#tabContent > li > #ico > li {
+		padding: 10px;
 		display: inline-block;
-		width: 75px;
-		height: 75px;
-		background-position: 10px 0;
+		width: 80px;
+		height: 80px;
+		background-position: 30px 15px;
 		background-repeat: no-repeat;
 	}
 	#tabContent > li > #ico > li:before {
-		position: relative;
-		width: 80px;
+		padding-top: 40px;
+		display: block;
+		width: 75px;
 		height: 30px;
-		top: 30px;
+		text-align: center;
 	}
 	#tabContent > li:not(:first-child) {
 		display: none;
@@ -128,6 +139,8 @@
 	#tabContent > li > #ico > #icoTramp {background-image: url('../../resources/images/ico_tramp.png');}
 	#tabContent > li > #ico > #icoTramp:before {content: '트렘폴린';}
 	#tabContent > li > #otherInfo, #tabContent > li > #otherInfo > tbody > tr > th, #tabContent > li > #otherInfo > tbody > tr > td {
+		margin: 20px 0;
+		padding: 10px;
 		vertical-align: top;
 		border: 1px solid #787878;
 	}
@@ -158,9 +171,25 @@
 		width: 100%;
 		height: 400px;
 	}
+	#infoWindow {
+		width: 150px;
+		height: 20px;
+		overflow: hidden;
+	}
 	
 	
-	
+	#campingReview {
+		border: 1px solid #787878;
+	}
+	#campingReview > thead > tr > th {
+		padding: 10px;
+		border: 1px solid #787878;
+		background-color: #f9f9f9;
+	}
+	#campingReview > tbody > tr > td {
+		padding: 10px;
+		border: 1px solid #787878;
+	}
 	
 	 .crewList {
       margin: 0;
@@ -233,17 +262,6 @@
    .crewList > li > a > div.infoBox > span:last-child {
       float: right;
    }
-	
-	.listbtn{
-		text-align: center;
-	}
-	.listbtn > #btnlist {
-		margin-right: 190px;
-		text-align: center;
-		color: #fff;
-		border: 1px solid #787878;
-		background-color: #32405d;
-	}
 	
 </style>
 
@@ -318,19 +336,6 @@
 						<li>
 							<h2>부대시설</h2>
 							<ul id="ico">
-								<!-- 
-								<li id="icoWifi"></li>
-								<li id="icoPool"></li>
-								<li id="icoVolt"></li>
-								<li id="icoWood"></li>
-								<li id="icoMart"></li>
-								<li id="icoWalk"></li>
-								<li id="icoGround"></li>
-								<li id="icoPlayZone"></li>
-								<li id="icoHotWater"></li>
-								<li id="icoSports"></li>
-								<li id="icoTramp"></li>
-								 -->
 								<c:forEach items="${icoList}" var="ico">
 									<li id="${ico}"></li>
 								</c:forEach>
@@ -375,7 +380,7 @@
 							<table id="campingReview">
 								<colgroup>
 									<col width="58"></col>
-									<col width="75"></col>
+									<col width="120"></col>
 									<col width="*"></col>
 									<col width="120"></col>
 									<col width="150"></col>
@@ -392,8 +397,8 @@
 								<tbody>
 								<c:choose>
 									<c:when test="${campingReview.size() == 0}">
-										<tr>
-											<td colspan="5">등록된 후기가 없습니다.</td>
+										<tr align="center" height="180">
+											<td colspan="5">등록된 캠핑장 후기가 없습니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
@@ -414,8 +419,8 @@
 						
 						<!-- 크루모집 -->
 						<li>
+							<c:if test="${campingTogether.size() == 0}"><div style="text-align: center; height: 180px; line-height: 180px;">현재 등록된 크루모집이 없습니다.</div></c:if>
 							<ul id="crewVote" class="crewList">
-								<c:if test="${campingTogether.size() == 0}">현재 등록된 크루모집이 없습니다.</c:if>
 								<c:forEach items="${campingTogether}" var="campingTogether">
 			                        <li>
 			                            <a href="crewTogetherView.do?ct_idx=${campingTogether.ct_idx}"">
@@ -443,9 +448,8 @@
 						</li>
 					</ul>
 				</div>
-				<div class="listbtn">
-					<a href="campingList.go" id="btnlist">목록</a>
-					
+				<div style="margin-top: 20px; text-align: center;">
+					<a href="campingList.go" class="btn btnList">목록</a>
 				</div>
 				
 <%@ include file="../../resources/inc/footer.jsp" %>
@@ -486,11 +490,9 @@
 	marker.setMap(map);
 	
 	// 캠핑장 이름, 주소, 연락처 표시 
-	var iwContent = '<div style="padding:4px;">'+'${campingView.ca_name}'+'<br>'
-					+'${campingView.ca_addr_default}'+'<br>'
-					+'${campingView.ca_tel}'+'</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+	var iwContent = '<div id="infoWindow">'+'${campingView.ca_name}'+'</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 	    iwPosition = mapPosition; //인포윈도우 표시 위치입니다
-	
+
 	// 인포윈도우를 생성합니다
 	var infowindow = new kakao.maps.InfoWindow({
 	    position : iwPosition, 
