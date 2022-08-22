@@ -64,7 +64,7 @@ public class ReviewAdmController {
 		
 		logger.info("params"+params);
 		comService.blind(params);
-		return "redirect:/reviewMemberList.go";
+		return "redirect:/reviewMemberAdmList.go";
 	}
 	
 }

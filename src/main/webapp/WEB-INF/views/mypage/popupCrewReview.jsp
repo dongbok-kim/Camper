@@ -52,10 +52,13 @@
 		
 		var form = document.crewForm;
 		
-		if ($('input[type=radio][id="assessment"]:checked').val()) {
-			console.log($('input[type=radio][id="assessment"]:checked').val())
+		if ($('input[type=radio][id="assessment"]:checked').length == $('input[type=radio][id="assessment"]').length/3) {
+			console.log($('input[type=radio][id="assessment"]:checked').length)
+			console.log($('input[type=radio][id="assessment"]').length);
 			form.submit();
 		} else {
+			console.log($('input[type=radio][id="assessment"]:checked').length)
+			console.log($('input[type=radio][id="assessment"]').length);
 			alert('평가 항목을 선택해주세요.');
 		}
 		

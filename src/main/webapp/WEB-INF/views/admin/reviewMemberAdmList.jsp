@@ -222,8 +222,13 @@ $(function(){
 		if($("#reason").val() == ""){
 			alert("정지 사유를 입력하세요.");
 		} else {
-			$("#blindfm").submit();
-			$(".modal").fadeOut();
+			
+			// by.승진 2022-08-22
+			var cf = confirm("블라인드 처리하시겠습니까?");
+			if (cf == true) {			
+				$("#blindfm").submit();
+				$(".modal").fadeOut();
+			}
 		}
 	});
 	
