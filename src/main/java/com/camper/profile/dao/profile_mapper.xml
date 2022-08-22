@@ -74,7 +74,8 @@ FROM cp_crew_together cct WHERE mb_id= #{mb_id} AND cct.ct_idx NOT IN (SELECT bb
 
 <!-- 프로필- 받은 리뷰  페이징처리-->
 <select id="profileReview2" resultType="com.camper.profile.dto.ProfileDTO" parameterType="hashmap" >
-SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id} LIMIT 5 
+SELECT mr_assessment,mr_content FROM cp_member_review WHERE mb_id= #{mb_id}
+AND mr_idx NOT IN (SELECT bb_relation_idx FROM cp_board_blind WHERE bb_relation = 'cp_member_review') LIMIT 5 
 <if test="skip gt 0">OFFSET #{skip}</if>
 </select>
 

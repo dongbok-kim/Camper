@@ -92,7 +92,8 @@ public class ProfileController {
 		
 		if(!loginId.equals(mb_id)) {
 			return service.report(loginId, mb_id);		
-	  } else {		  
+	  } else {
+		  logger.info("본인 신고 불가");
 		  return null;		  
 	  }
 	}
