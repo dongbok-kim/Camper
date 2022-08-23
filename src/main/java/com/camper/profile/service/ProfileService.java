@@ -181,7 +181,7 @@ public class ProfileService {
 	            
 	            try {
 	               byte[] arr =photo.getBytes();
-	               Path path = Paths.get("C:\\STUDY\\JAVA_ADVANCE\\Camper\\src\\main\\webapp\\resources\\reportPhoto/" + ri_new_name);
+	               Path path = Paths.get("C:\\STUDY\\SPRING_ADVANCE\\Camper\\src\\main\\webapp\\resources\\reportPhoto/" + ri_new_name);
 	               Files.write(path, arr);
 	               logger.info(ri_new_name + "save ok");
 	               //4. 업로드 후 테이블에 데이터 입력

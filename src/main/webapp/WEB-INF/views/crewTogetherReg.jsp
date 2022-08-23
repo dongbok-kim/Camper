@@ -61,9 +61,10 @@
 				<tr>
 					<th>캠핑장명</th>
 					<td colspan="3">
-						<span id="campingSelect"></span>
-						<input type="hidden" id="campingSelectIdx" name="ca_idx" value=""/>
+						<span id="campingSelect"><c:if test="${ca_name ne null}"> ${ca_name }</c:if></span>
+						<input type="hidden" id="campingSelectIdx" name="ca_idx" value = "<c:if test="${ca_idx ne null}"> ${ca_idx }</c:if>" />
 						<input type="button" class="btn btnCampingSearch" onclick="popupCamping()" value="캠핑장 찾기"/>
+						
 					</td>
 				</tr>
 				<tr>
@@ -91,8 +92,14 @@
 		</div>
 	</form>
 				
-<%@ include file="../../resources/inc/footer.jsp" %>
+<%@ include file="/resources/inc/footer.jsp" %>
 	<script>
+	
+	if ("${ca_idx}" != null) {
+		
+	}
+	
+	
 		function popupCamping() {
 			window.open('/campPopup.go','popupCaming', 'width=1200, height=800');
 		}

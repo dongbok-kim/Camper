@@ -312,7 +312,7 @@
 						</tbody>
 					</table>
 					<div id="btn">
-						<a href="crewTogetherReg.go?ca_idx=${campingView.ca_idx}" id="btnCrew">크루 모집하기</a>
+						<a href="crewTogetherReg.go?ca_idx=${campingView.ca_idx}&amp;ca_name=${campingView.ca_name}" id="btnCrew">크루 모집하기</a>
 						<span id="likeCnt">좋아요 수 : ${campingView.cntLike}</span>
 						<c:choose>
 							<c:when test="${clIdx eq null}">

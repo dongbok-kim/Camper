@@ -191,8 +191,16 @@ public class TogetherController {
 	// 지윤 : 크루 모집글 작성, 수정
 	// 크루 모집글 이동
 	@RequestMapping(value = "/crewTogetherReg.go")
-	public String crewReg() {
-
+	public String crewReg(@RequestParam(required = false) String ca_idx,
+			@RequestParam(required = false) String ca_name,
+			Model model) {
+		
+		if (ca_idx != null) {
+			model.addAttribute("ca_idx", ca_idx);
+			model.addAttribute("ca_name",ca_name);
+			logger.info("idx : "+ca_idx);
+		}
+		
 		return "crewTogetherReg";
 	}
 
