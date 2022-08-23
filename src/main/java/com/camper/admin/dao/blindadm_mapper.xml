@@ -9,23 +9,19 @@
 			cp_board_blind
 		<where>
 			<if test="filter != null and !filter.equals('')">
-				in_status = #{filter}
+				bb_relation = #{filter}
 			</if>
 			<if test="keyword != null and !keyword.equals('')">
 				AND
 					<choose>
-						<when test="type != null and type.equals('제목')" >
-							in_title LIKE CONCAT('%', #{keyword}, '%')
+						<when test="type != null and type.equals('bb_reason')" >
+							bb_reason LIKE CONCAT('%', #{keyword}, '%')
 						</when>
-						<when test="type != null and type.equals('내용')" >
-							in_content LIKE CONCAT('%', #{keyword}, '%')
-						</when>
-						<when test="type != null and type.equals('아이디')" >
+						<when test="type != null and type.equals('mb_id')" >
 							mb_id LIKE CONCAT('%', #{keyword}, '%')
 						</when>
 						<otherwise>
-							(in_title LIKE CONCAT('%', #{keyword}, '%') 
-								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+							(bb_reason LIKE CONCAT('%', #{keyword}, '%') 
 								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
 						</otherwise>
 					</choose>
@@ -40,23 +36,19 @@
 			cp_board_blind
 		<where>
 			<if test="filter != null and !filter.equals('')">
-				in_status = #{filter}
+				bb_relation = #{filter}
 			</if>
 			<if test="keyword != null and !keyword.equals('')">
 				AND
 					<choose>
-						<when test="type != null and type.equals('제목')" >
-							in_title LIKE CONCAT('%', #{keyword}, '%')
+						<when test="type != null and type.equals('bb_reason')" >
+							bb_reason LIKE CONCAT('%', #{keyword}, '%')
 						</when>
-						<when test="type != null and type.equals('내용')" >
-							in_content LIKE CONCAT('%', #{keyword}, '%')
-						</when>
-						<when test="type != null and type.equals('아이디')" >
+						<when test="type != null and type.equals('mb_id')" >
 							mb_id LIKE CONCAT('%', #{keyword}, '%')
 						</when>
 						<otherwise>
-							(in_title LIKE CONCAT('%', #{keyword}, '%') 
-								OR in_content LIKE CONCAT('%', #{keyword}, '%')
+							(bb_reason LIKE CONCAT('%', #{keyword}, '%') 
 								OR mb_id LIKE CONCAT('%', #{keyword}, '%'))
 						</otherwise>
 					</choose>
