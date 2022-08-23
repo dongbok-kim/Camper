@@ -448,6 +448,7 @@
 						</li>
 					</ul>
 				</div>
+				<div style="clear: both;"></div>
 				<div style="margin-top: 20px; text-align: center;">
 					<a href="campingList.go" class="btn btnList">목록</a>
 				</div>
