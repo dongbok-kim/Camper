@@ -17,18 +17,22 @@
 				</aside>
 				<div class="right admpg">
 					<h3>연령대 수정</h3>
-					<form action="ageUpdate.do" name="agefm" method="get">
+					<form action="ageUpdate.do" name="agefm" method="get" onsubmit="return ageAgeUpdate()">
 						<table>
+							<colgroup>
+								<col width="75"></col>
+								<col width="*"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th><input type="hidden" name="ma_idx" value="${age.ma_idx }"> 연령대</th>
-									<td><input type="text" pattern="[0-9]+" name="ma_age" value="${age.ma_age }">대</td>
+									<td><input type="text" name="ma_age" id="ma_age" maxlength="2" value="${age.ma_age }" style="width: 58px; text-align: right;">대</td>
 								</tr>
 							</tbody>
 							<tfoot>
 								<tr>
 									<td colspan="2">
-										<input type="button" class="btn btnSubmit" onclick=up() value="수정"/>
+										<input type="submit" class="btn btnSubmit" value="수정"/>
 										<input type="button" class="btn btnList" onclick="location.href='ageAdmList.go' " value="목록"/>
 									</td>
 								</tr>
@@ -37,12 +41,24 @@
 					</form>
 				</div>
 <%@ include file="/resources/inc/footer.jsp" %>
-</body>
 <script>
-function up() {
-	if (confirm("수정하시겠습니까?") == true){
-		document.agefm.submit();
+	function ageAgeUpdate() {
+		var age = document.getElementById('ma_age');
+		
+		if (age.value == '') {
+			window.alert("연령대를 입력해 주십시오.");
+			age.focus();
+			return false;
+		}
+		
+		if (age.value % 10 != 0) {
+			window.alert("연령대는 10단위로만 입력할 수 있습니다.");
+			age.value = '';
+			age.focus();
+			return false;
+		} else {
+			return confirm("수정하시겠습니까?");
+		}
 	}
-}
 </script>
 </html>

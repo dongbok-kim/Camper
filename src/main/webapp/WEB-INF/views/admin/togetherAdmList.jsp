@@ -47,6 +47,13 @@
 					<h3>모집글 관리</h3>
 					<h4>모집글 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="180"></col>
+							<col width="100"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -121,7 +128,7 @@
 										</tr>
 										<tr>
 											<th>작성자 아이디</th>
-											<td id="md_ct_writer">작성자</td>
+											<td style="text-align: left;" id="md_ct_writer">작성자</td>
 										</tr>
 										<tr>
 											<td colspan="2">

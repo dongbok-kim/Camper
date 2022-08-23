@@ -18,6 +18,14 @@
 					<h3>참여한 크루 목록</h3>
 					<h4>참여한 크루 목록 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="200"></col>
+							<col width="150"></col>
+							<col width="100"></col>
+							<col width="120"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -37,11 +45,11 @@
 							<c:forEach items="${list}" var="my" varStatus="i">
 								<tr>
 									<td align="center">${listCnt - skip - i.index}</td>
-									<td><a href="">${my.ca_name}</a></td>
+									<td><a href="campingView.go?ca_idx=${my.ca_idx}" target="_blank">${my.ca_name}</a></td>
 									<td align="center">${my.ct_wish_start} ~ ${my.ct_wish_end}</td>
 									<c:choose>
 										<c:when test="${my.cc_crew eq '크루장' and my.ct_end == 0}">			
-											<td align="center">${my.cc_crew}<br/>
+											<td align="center">${my.cc_crew}<br/><br/>
 												<a href="javascript:;" class="btn btnWrite" onclick="popup('${my.ct_idx}')">크루인원 확정</a>
 											</td>
 										</c:when>	

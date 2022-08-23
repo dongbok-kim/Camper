@@ -17,18 +17,22 @@
 				</aside>
 				<div class="right admpg">
 					<h3>연령대 추가</h3>
-					<form action="ageReg.do" name="agefm" method="get">
+					<form action="ageReg.do" name="agefm" method="get" onsubmit="return ageAdmReg()">
 						<table>
+							<colgroup>
+								<col width="75"></col>
+								<col width="*"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th>연령대</th>
-									<td><input type="text" name="ma_age" id="ma_age">대</td>
+									<td><input type="text" name="ma_age" id="ma_age" maxlength="2" style="width: 58px; text-align: right;">대</td>
 								</tr>
 							</tbody>
 							<tfoot>
 								<tr>
 									<td colspan="2">
-										<input type="button" class="btn btnSubmit" onclick=add() value="추가"/>
+										<input type="submit" class="btn btnSubmit" value="추가"/>
 										<input type="button" class="btn btnList" onclick="location.href='ageAdmList.go' " value="목록"/>
 									</td>
 								</tr>
@@ -36,19 +40,22 @@
 						</table>
 					</form>
 				</div>
-	<%@ include file="/resources/inc/footer.jsp" %>
+<%@ include file="/resources/inc/footer.jsp" %>
 <script>
-function add() {
-	var age = document.getElementById('ma_age').value;
-	if (isNaN(age)== false) {
-		var yn = confirm("수정하시겠습니까?");
-		if (yn == true){
-			document.agefm.submit();
+	function ageAdmReg() {
+		var age = document.getElementById('ma_age');
+		
+		if (age.value == '') {
+			window.alert("연령대를 입력해 주십시오.");
+			age.focus();
+			return false;
 		}
-	} else {
-		console.log("true");
-		alert("숫자만 입력하세요.");
+		
+		if (age.value % 10 != 0) {
+			window.alert("연령대는 10단위로만 입력할 수 있습니다.");
+		} else {
+			return confirm("추가하시겠습니까?");
+		}
 	}
-}
 </script>
 </html>

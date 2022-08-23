@@ -19,6 +19,12 @@
 					<h3>신고 상세보기</h3>
 					<form action="reportUpdate.do" method="post" enctype="multipart/form-data">
 						<table>
+							<colgroup>
+								<col width="15%"></col>
+								<col width="35%"></col>
+								<col width="15%"></col>
+								<col width="35%"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th>신고대상아이디</th>
@@ -54,8 +60,8 @@
 									<td colspan="3">${report.rp_admin }</td>
 								</tr>
 								<tr>
-									<th>처리일자</th>
-									<td colspan="3">${report.rp_proc_date }</td>
+									<th>처리일시</th>
+									<td colspan="3"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${report.rp_proc_date }"/></td>
 								</tr>
 								<tr>
 									<th>처리여부</th>

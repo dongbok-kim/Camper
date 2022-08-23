@@ -14,7 +14,7 @@
 
 
 	<select id="myCrewList" resultType="mypgCrew" parameterType="hashmap">
-		SELECT cct.ct_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end,
+		SELECT cct.ct_idx, cc.ca_idx, cc.ca_name, cct.ct_wish_start, cct.ct_wish_end, ccc.cc_crew, ccc.cc_is_join, cct.ct_end,
 			(select count(cr_idx) from cp_camping_review ccr where mb_id = #{loginId} and ct_idx = cct.ct_idx) as cntCR,
 			(select count(mr_idx) from cp_member_review cmr where mr_id = #{loginId} and ct_idx = cct.ct_idx) as cntMR
 		FROM cp_crew_together cct

@@ -18,6 +18,12 @@
 					<h3>1:1 문의<a href="/inquiryWrite.go" class="btn btnWrite" style="float: right; font-size: 13px;">1:1 문의하기</a></h3>
 					<h4>총 문의 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>

@@ -19,6 +19,11 @@
 					<h3>연령대 관리 <a href="ageAdmReg.go" class="btn btnWrite" style="float: right;">연령대 추가</a></h3>
 					<h4>총 연령대 수 : <strong>${list.size()}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -27,9 +32,9 @@
 							</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${list }" var="age">
+						<c:forEach items="${list }" var="age" varStatus="i">
 							<tr>
-								<td align="center">${age.ma_idx}</td>
+								<td align="center">${list.size() - i.index}</td>
 								<td align="right">${age.ma_age}대</td>
 								<td align="center"><a class="btn btnModify" href="ageUpdate.go?ma_idx=${age.ma_idx}">연령대 수정</a></td>
 							</tr>

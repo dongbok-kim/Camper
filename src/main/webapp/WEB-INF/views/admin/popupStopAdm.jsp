@@ -52,6 +52,12 @@
 	<body>
 		<form action="stopAdmReg.do" method="post" name="crewfm">
 			<table>
+				<colgroup>
+					<col width="15%"></col>
+					<col width="35%"></col>
+					<col width="15%"></col>
+					<col width="35%"></col>
+				</colgroup>
 				<tbody>
 					<tr>
 						<th>회원아이디</th>
@@ -81,15 +87,20 @@
 				</tfoot>
 			</table>
 		</form>
-		<h3><strong>${mb_id }</strong> 님에 대한 정지 기록 </h3>
+		<p align="center"><strong>${mb_id }</strong> 님에 대한 정지 기록 </p>
 		<table>
+			<colgroup>
+				<col width="58"></col>
+				<col width="*"></col>
+				<col width="120"></col>
+				<col width="200"></col>
+				<col width="100"></col>
+			</colgroup>
 			<thead>
 				<tr>
 					<th>번호</th>
-					<th>이름</th>
-					<th>닉네임</th>
 					<th>정지사유</th>
-					<th>정지 시킨 관리자</th>
+					<th>정지 시킨<br />관리자</th>
 					<th>정지기간</th>
 					<th>정지누적횟수</th>
 				</tr>
@@ -97,7 +108,7 @@
 			<tbody>
 			<c:if test="${list.size() eq 0}">
 				<tr align="center" height="180">
-					<td colspan="7">
+					<td colspan="5">
 						정지 기록이 없습니다
 					</td>
 				</tr>
@@ -105,8 +116,6 @@
 			<c:forEach items="${list}" var="stop" varStatus="i">
 				<tr>
 					<td align="center">${i.index + 1}</td>
-					<td align="center">${stop.mb_name}</td>
-					<td align="center">${stop.mb_nickname}</td>
 					<td>${stop.ms_reason}</td>
 					<td align="center">${stop.ms_admin_id}</td>
 					<td align="center">${stop.ms_start_date}-${stop.ms_end_date }</td>

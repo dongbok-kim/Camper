@@ -18,6 +18,14 @@
 					<h3>내가 쓴 모집글</h3>
 					<h4>참여한 크루 목록 수 : <strong>${list.size()}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="120"></col>
+							<col width="120"></col>
+							<col width="75"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -37,7 +45,7 @@
 							<c:forEach items="${list}" var="my" varStatus="i">
 							<tr>
 								<td align="center">${listCnt - skip - i.index}</td>
-								<td><a href="/crewTogetherView.do?ct_idx=${my.ct_idx}">${my.ct_title}</a></td>
+								<td><a href="/crewTogetherView.do?ct_idx=${my.ct_idx}" target="_blank">${my.ct_title}</a></td>
 								<td align="right">${my.ct_people_cnt}명</td>
 								<td align="right">${my.nowCnt}명</td>
 								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${my.ct_datetime}"/></td>

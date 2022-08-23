@@ -57,19 +57,19 @@
 				</aside>
 				<div class="right admpg">
 					<h3>후기 관리</h3>
-					<div>
-						<a href="/reviewAdmList.go">캠핑장 후기</a>
-						<a href="/reviewMemberAdmList.go">회원 후기</a>
-					</div>
+					<ul class="tab">
+						<li class="active"><a href="/reviewAdmList.go">캠핑장 후기</a></li>
+						<li><a href="/reviewMemberAdmList.go">회원 후기</a></li>
+					</ul>
 					<h4>등록된 캠핑장 후기 수 : <strong>${listCnt}</strong>건</h4>
 					<table id="campingReview">
 						<colgroup>
-							<col width="50"></col>
-							<col width="200"></col>
-							<col width="50"></col>
-							<col width="50"></col>
-							<col width="50"></col>
-							<col width="50"></col>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="100"></col>
+							<col width="120"></col>
+							<col width="180"></col>
+							<col width="100"></col>
 						</colgroup>
 						<thead>
 							<tr>
@@ -97,7 +97,7 @@
 									<!-- 
 									<a href="?idx=${review.cr_idx}      &amp;type=${type}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}"></a>
 									-->
-									${review.ca_name }<br/>
+									<strong style="color: #6bbb69;">${review.ca_name }</strong><br/>
 									${review.cr_content }
 								</td>
 								<td align="center">${review.cr_assessment}</td>

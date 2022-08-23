@@ -27,15 +27,18 @@
 				</aside>
 				<div class="right mypg">
 					<h3>크루 후기 - 받은 후기</h3>
-					<a href="/myCrewReviewR.go">받은 후기</a><a href="/myCrewReviewW.go">작성 후기</a>
+					<ul class="tab">
+						<li class="active"><a href="/myCrewReviewR.go">받은 후기</a></li>
+						<li><a href="/myCrewReviewW.go">작성 후기</a></li>
+					</ul>
 					<h4>받은 후기 수 : <strong>${listCnt}</strong>건</h4>
 					<table  id="campingReview">
 						<colgroup>
-							<col width="60"></col>
+							<col width="58"></col>
 							<col width="*"></col>
-							<col width="80"></col>
-							<col width="80"></col>
 							<col width="120"></col>
+							<col width="100"></col>
+							<col width="180"></col>
 						</colgroup>
 						<thead>
 							<tr>

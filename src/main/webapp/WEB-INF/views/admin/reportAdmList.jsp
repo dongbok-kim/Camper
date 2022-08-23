@@ -19,6 +19,15 @@
 					<h3>신고 관리</h3>
 					<h4>총 신고 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>

@@ -23,10 +23,6 @@
 	line-height:23px; cursor:pointer;
 	*/
 }
-textarea {
-	resize:none;
-	width: 80%; height: 8.25em;
-}
 .md_table {
 	border:1px solid black;
 	border-collapse:collapse;
@@ -50,9 +46,17 @@ textarea {
 				<div class="right admpg">
 					<h3>모집글 상세보기</h3>
 					<table>
+						<colgroup>
+							<col width="120"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="*"></col>
+						</colgroup>
 						<tbody>
 							<tr>
-								<th colspan="6">${dto.ct_title }</th>
+								<th colspan="6" style="text-align: left;">${dto.ct_title }</th>
 							</tr>
 							<tr>
 								<th>작성자</th>
@@ -60,7 +64,7 @@ textarea {
 								<th>닉네임</th>
 								<td>${dto.mb_nickname }</td>
 								<th>작성일시</th>
-								<td>${dto.ct_datetime }</td>
+								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${dto.ct_datetime }"/></td>
 							</tr>
 							<tr>
 								<th>성별</th>
@@ -114,26 +118,38 @@ textarea {
 							<h2>모집글 블라인드</h2>
 							<form action="blindTogether.do" method="post" id="blindfm">
 								<table class="md_table">
-									<tr>
-										<th id="md_ct_title" colspan="2">모집글 제목</th>
-									</tr>
-									<tr>
-										<th>작성자 아이디</th>
-										<td id="md_ct_writer" >작성자</td>
-									</tr>
-									<tr>
-										<td colspan="2">
-											<input type="hidden" name="idx" value="idx"/>
-											<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
-										</td>
-									</tr>
-									<tr>
-										<th>처리자 아이디</th>
-										<th>${sessionScope.loginId }</th>
-									</tr>
+									<colgroup>
+										<col width="180"></col>
+										<col width="*"></col>
+									</colgroup>
+									<tbody>
+										<tr>
+											<th id="md_ct_title" colspan="2" style="text-align: left;">모집글 제목</th>
+										</tr>
+										<tr>
+											<th>작성자 아이디</th>
+											<td style="text-align: left;" id="md_ct_writer" >작성자</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<input type="hidden" name="idx" value="idx"/>
+												<textarea name="reason" id="reason" placeholder="사유를 입력하세요."></textarea>
+											</td>
+										</tr>
+										<tr>
+											<th>처리자 아이디</th>
+											<th style="text-align: left;">${sessionScope.loginId }</th>
+										</tr>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="2">
+												<input type="button" class="btn btnSubmit" id="blindDo" value="완료"/>
+												<input type="button" class="btn btnList" id="md_close_btn" value="닫기"/>
+											</td>
+										</tr>
+									</tfoot>
 								</table>
-								<input type="button" id="blindDo" value="완료"/>
-								<input type="button" id="md_close_btn" value="닫기"/>
 							</form>
 						</div>
 					</div>

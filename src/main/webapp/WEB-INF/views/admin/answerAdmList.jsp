@@ -19,16 +19,23 @@
 					<h3>문의글 관리</h3>
 					<h4>총 문의 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
-					<thead>
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>아이디</th>
-							<th>문의날짜</th>
-							<th>답변상태</th>
-						</tr>
-					</thead>
-					<tbody>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+						</colgroup>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>아이디</th>
+								<th>문의날짜</th>
+								<th>답변상태</th>
+							</tr>
+						</thead>
+						<tbody>
 						<c:if test="${list.size() == 0}">
 							<tr align="center" height="180">
 								<td colspan="5">문의 내역이 없습니다.</td>

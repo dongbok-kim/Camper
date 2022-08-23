@@ -19,6 +19,13 @@
 					<h3>타이틀 관리<a href="/titleAdd.go" class="btn btnWrite" style="float: right;">타이틀 추가</a></h3>
 					<h4>총 타이틀 수 : <strong>${list.size()}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="180"></col>
+							<col width="180"></col>
+							<col width="75"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>

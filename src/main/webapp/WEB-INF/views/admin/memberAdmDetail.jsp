@@ -19,6 +19,12 @@
 					<h3>회원 상세 보기</h3>
 						<form action="memberAdmUpdate.do" method="post">
 						<table>
+							<colgroup>
+								<col width="15%"></col>
+								<col width="35%"></col>
+								<col width="15%"></col>
+								<col width="35%"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th>아이디</th>

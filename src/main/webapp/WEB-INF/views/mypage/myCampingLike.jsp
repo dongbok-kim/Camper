@@ -18,6 +18,12 @@
 					<h3>찜한 캠핑장</h3>
 					<h4>찜한 캠핑장 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="*"></col>
+							<col width="120"></col>
+							<col width="100"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -35,7 +41,7 @@
 						<c:forEach items="${list}" var="bbs" varStatus="i">
 							<tr>
 								<td align="center">${listCnt - skip - i.index}</td>
-								<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}&amp;keyword=${keyword}&amp;pageNum=${pageMaker.cri.pageNum}">${bbs.ca_name}</a></td>
+								<td><a href="/campingView.go?ca_idx=${bbs.ca_idx}" target="_blank">${bbs.ca_name}</a></td>
 								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd" value="${bbs.cl_datetime}"/></td>
 								<td align="center"><a href="myCampingLikeDelete.do?idx=${bbs.cl_idx}" class="btn btnDelete">찜해제</a></td>
 							</tr>		
