@@ -34,7 +34,7 @@
 						</thead>
 						<tbody>
 							<c:if test="${list.size() == 0}">
-							<tr>
+							<tr align="center" height="180">
 								<td colspan="4">차단한 회원이 없습니다.</td>
 							</tr>
 							</c:if>
