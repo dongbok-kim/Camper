@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="../../../resources/inc/header.jsp" %>
+<%@ include file="/resources/inc/header.jsp" %>
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
@@ -36,7 +36,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${list.size() == 0}">
+							<c:if test="${list.size() eq 0}">
 							<tr align="center" height="180">
 								<td colspan="5">블라인드 글이 없습니다.</td>
 							</tr>
@@ -72,22 +72,22 @@
 						</c:if>
 					</ul>
 					<form action="blindAdmList.go" method="post" id="blindList">
-						<select name="bb_relation">
-							<option value="relation">구분</option>
-							<option value="cp_camping_review">캠핑장 후기</option>
-							<option value="cp_member_review">회원 후기</option>
-							<option value="cp_camping_together">모집글</option>
+						<select name="filter">
+							<option value=""  >해당 게시판</option>
+							<option value="cp_camping_review" <c:if test="${filter eq 'cp_camping_review'}">selected="selected"</c:if> >캠핑장 후기</option>
+							<option value="cp_member_review" <c:if test="${filter eq 'cp_member_review'}">selected="selected"</c:if> >회원 후기</option>
+							<option value="cp_camping_together" <c:if test="${filter eq 'cp_camping_together'}">selected="selected"</c:if> >모집글</option>
 						</select>
-						<select name="option">
-							<option value="all">전체</option>
-							<option value="bb_reason">블라인드 사유</option>
-							<option value="mb_id">블라인드 처리자</option>
+						<select name="type">
+							<option value="">전체</option>
+							<option value="bb_reason" <c:if test="${filter eq 'bb_reason'}">selected="selected"</c:if> >블라인드 사유</option>
+							<option value="mb_id" <c:if test="${filter eq 'mb_id'}">selected="selected"</c:if> >블라인드 처리자</option>
 						</select>
-						<input type="text" name="keyword" placeholder="검색"/>
+						<input type="text" name="keyword" value="${keyword }" placeholder="검색"/>
 						<input type="submit" class="btn btnSubmit" value="SEARCH"/>
 					</form>
 				</div>
-	<%@ include file="../../../resources/inc/footer.jsp" %>
+	<%@ include file="/resources/inc/footer.jsp" %>
 <script>
 $('#blindList select[name="filter"]').on('change', function() {
 	$('#blindList').submit();
