@@ -27,7 +27,10 @@
 			a.ct_idx = c.ct_idx 
 			
 		WHERE 
-			b.mb_id = #{loginId}
+			b.mb_id = #{loginId} 
+			
+		ORDER BY 
+			b.cj_datetime DESC
 	</select>
 
 </mapper>
