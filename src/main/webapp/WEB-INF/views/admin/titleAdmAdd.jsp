@@ -19,6 +19,10 @@
 					<h3>타이틀 추가</h3>
 					<form action="/titleAdd.do" method="post" name="addForm">
 						<table>
+							<colgroup>
+								<col width="180"></col>
+								<col width="*"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th>타이틀 이름</th>

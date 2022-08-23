@@ -28,6 +28,11 @@ a:hover {
 	color: #333;
 }
 
+select {
+	padding: 1px 2px;
+	outline: none;
+}
+
 textarea {
 	padding: 10px;
 	width: 99%;
@@ -255,11 +260,31 @@ ul.pageInfo > li.pageInfo_btn.active > a {
 	padding: 10px;
 	width: 120px;
 	border: 1px solid #787878;
-	background-color: #f9f9f9;
+	background-color: #f0f0f0;
 }
 #ftCrewTogether > tbody > tr > td {
 	padding: 10px;
 	border: 1px solid #787878;
+}
+
+ul.tab {
+	padding: 0;
+	text-align: center;
+	list-style: none;
+}
+ul.tab > li {
+	display: inline-block;
+	background-color: #f0f0f0;
+}
+ul.tab > li.active {
+	background-color: #32405d;
+}
+ul.tab > li.active > a {
+	color: #fff;
+}
+ul.tab > li > a {
+	padding: 5px 10px;
+	display: inline-block;
 }
 
 .mypg > h4 > strong {

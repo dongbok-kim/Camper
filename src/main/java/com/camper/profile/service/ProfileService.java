@@ -396,14 +396,14 @@ public class ProfileService {
 		
 		for (ProfileDTO item : arrList) {
 			if(tabIdx.equals("1")) {
-				list += "<tr>\r\n" + 
-						"	<td>" + item.getMr_assessment() + "</td>\r\n" + 
+				list += "<tr class=\"memberReview\">\r\n" + 
 						"	<td>" + item.getMr_content() + "</td>\r\n" + 
+						"	<td style=\"wodth: 75px; text-align: center;\">" + item.getMr_assessment() + "</td>\r\n" + 
 						"</tr>";
 			} else {
-				list += "<tr>\r\n" + 
+				list += "<tr class=\"crewTogether\">\r\n" + 
 						"	<td><a href=\"crewTogetherView.do?ct_idx="+ item.getCt_idx() + "\" target=\"_blank\">" + item.getCt_title() + "</a></td>\r\n" + 
-						"	<td>" + item.getName() + "&nbsp;" + item.getCt_wish_start() + "&nbsp;~&nbsp;" + item.getCt_wish_end() + "</td>\r\n" + 
+						"	<td style=\"width: 180px; text-align: center;\">" + item.getName() + "<br/><span class=\"date\">" + item.getCt_wish_start() + "&nbsp;~&nbsp;" + item.getCt_wish_end() + "</span></td>\r\n" + 
 						"</tr>";
 			}
 		}

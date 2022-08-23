@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/resources/inc/header.jsp" %>
+<style>
+	tr.answer > th {
+		color: #fff;
+		background-color: #32405d !important;
+	}
+</style>
 				<aside>
 					<h2>관리자페이지</h2>
 					<ul>
@@ -35,14 +41,19 @@
 										<input type="hidden" name="in_idx" value="${answer.in_idx }"/>
 									</td>
 								</tr>
-								<tr>
+								<tr class="answer">
 									<th>답변자 아이디</th>
 									<td>
-										<c:if test="${answer.in_status == ('답변완료') }">${answer.ia_admin }</c:if>
+										<c:choose>
+										<c:when test="${answer.in_status == ('답변완료') }">${answer.ia_admin }</c:when>
+										<c:otherwise>
+										${sessionScope.loginId}
+										</c:otherwise>
+										</c:choose>
 									</td>
-									<th>답변 일자</th>
+									<th>답변 일시</th>
 									<td>
-										<c:if test="${answer.in_status == ('답변완료') }">${answer.ia_datetime }</c:if>
+										<c:if test="${answer.in_status == ('답변완료') }"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${answer.ia_datetime}"/></c:if>
 									</td>
 									<th>답변상태</th>
 									<td>
@@ -58,7 +69,7 @@
 										</c:choose>
 									</td>
 								</tr>
-								<tr>
+								<tr class="answer">
 									<th>답변내용</th>
 									<td colspan="5">
 										<!-- 답변상태 -->
@@ -73,7 +84,7 @@
 								<tr>
 									<td colspan="6">
 										<c:if test="${answer.in_status != ('답변완료') }"><input type="button" onclick=reg() value="완료"></c:if>
-										<input type="button" onclick="location.href='/answerAdmList.go' " value="목록">
+										<input type="button" class="btn btnList" onclick="location.href='/answerAdmList.go' " value="목록">
 									</td>
 								</tr>
 							</tfoot>

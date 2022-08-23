@@ -197,7 +197,7 @@
                                 <strong><span>모집중</span>${crew.ct_title}</strong>
                                 <p>${crew.camp_name}</p>
                                 <span>${crew.name}</span>
-                                <span>${crew.ct_age}대 ${crew.ct_gender} 모집인원:${crew.ct_people_cnt}명</span>
+                                <span>${crew.ct_age}대 ${crew.ct_gender}<c:if test="${crew.ct_gender ne '혼성'}">성</c:if> 모집인원:${crew.ct_people_cnt}명</span>
                             </div>
                         </a>
                     </li>

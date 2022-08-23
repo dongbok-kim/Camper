@@ -149,7 +149,7 @@
                                     <strong><span>모집중</span>${recomList.ct_title}</strong>
                                     <p>${recomList.ca_name}</p>
                                     <span>${recomList.mb_nickname}</span>
-                                    <span>${recomList.ct_age}대 ${recomList.ct_gender} 모집인원:${recomList.ct_people_cnt}명</span>
+                                    <span>${recomList.ct_age}대 ${recomList.ct_gender}<c:if test="${recomList.ct_gender ne '혼성'}">성</c:if> 모집인원:${recomList.ct_people_cnt}명</span>
                                 </div>
                             </a>
                         </li>
@@ -235,7 +235,7 @@
 		                                    <strong><span>모집중</span>${list.ct_title}</strong>
 		                                    <p>${list.ca_name}</p>
 		                                    <span>${list.mb_nickname}</span>
-		                                    <span>${list.ct_age}대 ${list.ct_gender} 모집인원:${list.ct_people_cnt}명</span>
+		                                    <span>${list.ct_age}대 ${list.ct_gender}<c:if test="${list.ct_gender ne '혼성'}">성</c:if> 모집인원:${list.ct_people_cnt}명</span>
 		                                </div>
 		                            </a>
 		                        </li>

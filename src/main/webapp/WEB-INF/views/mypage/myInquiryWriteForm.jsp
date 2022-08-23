@@ -23,6 +23,10 @@
 					<h3>1:1 문의하기</h3>
 					<form action="inquiryWrite.do" method="post" name="inquiryForm">
 						<table>
+							<colgroup>
+								<col width="120"></col>
+								<col width="*"></col>
+							</colgroup>
 							<tbody>
 								<tr>
 									<th>작성자</th>

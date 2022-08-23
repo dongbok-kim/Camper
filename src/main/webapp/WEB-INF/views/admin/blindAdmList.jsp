@@ -19,6 +19,13 @@
 					<h3>블라인드 관리</h3>
 					<h4>총 블라인드 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="120"></col>
+							<col width="*"></col>
+							<col width="125"></col>
+							<col width="180"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>

@@ -19,11 +19,19 @@
 					<h3>정지 회원 관리</h3>
 					<h4>총 정지회원 수 : <strong>${listCnt}</strong>건</h4>
 					<table>
+						<colgroup>
+							<col width="58"></col>
+							<col width="120"></col>
+							<col width="180"></col>
+							<col width="*"></col>
+							<col width="125"></col>
+							<col width="200"></col>
+							<col width="80"></col>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>번호</th>
 								<th>회원 아이디</th>
-								<th>이름</th>
 								<th>닉네임</th>
 								<th>정지사유</th>
 								<th>정지시킨 관리자</th>
@@ -35,7 +43,7 @@
 							<c:choose>
 							<c:when test="${list.size() eq 0}">
 							<tr align="center" height="180">
-								<td colspan="8">데이터가 없습니다</td>
+								<td colspan="7">데이터가 없습니다</td>
 							</tr>
 							</c:when>
 							<c:otherwise>
@@ -43,7 +51,6 @@
 								<tr>
 									<td align="center">${listCnt - skip - i.index}</td>
 									<td align="center" class="contextMenu contextMenuMember" data-id="${stop.mb_id}">${stop.mb_id}</td>
-									<td align="center">${stop.mb_name}</td>
 									<td align="center">${stop.mb_nickname}</td>
 									<td>${stop.ms_reason}</td>
 									<td align="center">${stop.ms_admin_id }</td>

@@ -111,6 +111,15 @@
 				background-color: #32405d;
 			}
 			
+			tr.crewTogether > td > a {
+				text-decoration: none;
+				color: #585858;
+			}
+			
+			tr.crewTogether > td > span {
+				color: #969696;
+			}
+			
 		</style>
 		
 		</head>

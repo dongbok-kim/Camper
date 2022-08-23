@@ -19,20 +19,26 @@
 					<h3>타이틀 수정</h3>
 					<form action="/titleUpdate.do" method="post" name="addForm">
 						<table>
+							<colgroup>
+								<col width="180"></col>
+								<col width="*"></col>
+							</colgroup>
 							<tbody>
-							<tr>
-								<th>타이틀 이름</th>
-								<td><input type="hidden" name="mt_idx" value="${dto.mt_idx}">
-								<input type="text" name="mt_name"  id="mt_name" value="${dto.mt_name }"></td>
-							</tr>
-							<tr>
-								<th>기준 크루장 횟수</th>
-								<td><input type="text" name="mt_count"  id="mt_count" value="${dto.mt_count }" style="width: 120px; text-align: right;">회</td>
-							</tr>
-							<tr>
-								<th>기준 모닥불 온도</th>
-								<td><img src="../../resources/images/flame.png" alt="" /> <input type="text" name="mt_degree"  id="mt_degree" value="${dto.mt_degree }" style="width: 100px; text-align: right;" min="500" max="2500">℃</td>
-							</tr>
+								<tr>
+									<th>타이틀 이름</th>
+									<td>
+										<input type="hidden" name="mt_idx" value="${dto.mt_idx}">
+										<input type="text" name="mt_name"  id="mt_name" value="${dto.mt_name }">
+									</td>
+								</tr>
+								<tr>
+									<th>기준 크루장 횟수</th>
+									<td><input type="text" name="mt_count"  id="mt_count" value="${dto.mt_count }" style="width: 120px; text-align: right;">회</td>
+								</tr>
+								<tr>
+									<th>기준 모닥불 온도</th>
+									<td><img src="../../resources/images/flame.png" alt="" /> <input type="text" name="mt_degree"  id="mt_degree" value="${dto.mt_degree }" style="width: 100px; text-align: right;" min="500" max="2500">℃</td>
+								</tr>
 							</tbody>
 							<tfoot>
 								<tr>

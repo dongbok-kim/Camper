@@ -33,11 +33,11 @@
 					<h4>캠핑장 후기 수 : <strong>${listCnt}</strong>건</h4>
 					<table id="campingReview">
 						<colgroup>
-							<col width="60"></col>
+							<col width="58"></col>
 							<col width="*"></col>
-							<col width="80"></col>
-							<col width="120"></col>
-							<col width="60"></col>
+							<col width="100"></col>
+							<col width="180"></col>
+							<col width="75"></col>
 						</colgroup>
 						<thead>
 							<tr>
@@ -57,7 +57,7 @@
 							<c:forEach items="${list}" var="rv" varStatus="i">
 							<tr>
 								<td align="center">${listCnt - skip - i.index}</td>
-								<td  class="subject" >${rv.ca_name}<br/>${rv.cr_content}</td>
+								<td  class="subject" ><strong style="color: #6bbb69;">${rv.ca_name}</strong><br/>${rv.cr_content}</td>
 								<td align="center">${rv.cr_assessment}</td>
 								<td align="center"><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${rv.cr_datetime}"/></td>
 								<c:if test="${rv.delAble > rv.today}">

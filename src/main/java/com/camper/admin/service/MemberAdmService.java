@@ -34,7 +34,7 @@ public class MemberAdmService {
 	public ModelAndView memberAdmList(Criteria cri, HashMap<String, Object> params) {
 		ModelAndView mav = new ModelAndView("admin/memberAdmList");
 		
-		cri.setAmount(5);
+		cri.setAmount(15);
 		if(params.get("keyword") != null && !params.get("keyword").toString().trim().equals("")) {
 			cri.setKeyword((String) params.get("keyword"));
 			cri.setType((String) params.get("type"));
